@@ -22,7 +22,8 @@
 	    font-weight: 400;
 	}
 	.container{
-		width: 100%;
+		width: 1000px; 
+    	margin: auto;
 		padding: 10px 40px;
 	}
 	.logo{

@@ -780,5 +780,7 @@
 				</div></a>
 		</section>
 	</div>
+	<!-- footer -->
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
