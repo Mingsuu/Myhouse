@@ -20,6 +20,13 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
+	 * index.do ->index.jsp
+	 */
+	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
+	public String index() {
+		return "index";
+	}
+	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
