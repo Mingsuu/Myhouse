@@ -182,6 +182,7 @@
 	    justify-content: flex-end;
 	    position: absolute;
 	    right: 8px;
+	    float:right;
 	}
 	
 	.layout-navigation-primary__right {
@@ -372,7 +373,6 @@
 					<a class="layout-navigation-primary__menu__item" href="http://localhost:9000/myhouse/index.do">커뮤니티</a>
 					<a class="layout-navigation-primary__menu__item" href="http://localhost:9000/myhouse/index.do">스토어</a>
 				</nav>
-			<div class="right">
 				<div class="layout-navigation-primary__right">
 					<div class="layout-navigation-bar-search">
 						<div class="layout-navigation-search" id="id-1">
@@ -421,7 +421,6 @@
 						</button>
 					</div>
 				</div>
-			</div>
 			</div>
 	</header>
 </body>
