@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>Home</title>
+	<title>Home</title>
 <style>
 .form-select:after {
 	content: "";
@@ -6180,148 +6180,469 @@ body.show-modal {
 		opacity: .7
 	}
 }
+
+[class*=icon-page-login__], [class*=icon-page-pro-login__] {
+	background-repeat: no-repeat;
+	display: inline-block
+}
+
+[class*=icon-page-login__], [class*=icon-page-pro-login__] {
+	background-repeat: no-repeat;
+	display: inline-block
+}
+
+[class*=icon-page-login__] {
+	background-image:
+		url("https://ohou.se/assets/icon_map/v4/page-login.png");
+	background-size: 320px auto
+}
+
+@media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 2dppx) , (
+		min-resolution : 192dpi) {
+	[class*=icon-page-login__] {
+		background-image: url("/assets/icon_map/v4/page-login@2x.png")
+	}
+}
+
+@media ( -webkit-min-device-pixel-ratio : 3) , ( min-resolution : 3dppx) , (
+		min-resolution : 288dpi) {
+	[class*=icon-page-login__] {
+		background-image: url("/assets/icon_map/v4/page-login@3x.png")
+	}
+}
+
+.icon-page-login__a-1 {
+	width: 146px;
+	height: 50px;
+	background-position: left 0px top 0px
+}
+
+.icon-page-login__a-3 {
+	width: 48px;
+	height: 48px;
+	background-position: left 0px top -80px
+}
+
+.icon-page-login__c-3 {
+	width: 48px;
+	height: 48px;
+	background-position: left -80px top -80px
+}
+
+.icon-page-login__e-3 {
+	width: 48px;
+	height: 48px;
+	background-position: left -160px top -80px
+}
+
+[class*=icon-page-pro-login__] {
+	background-image: url("/assets/icon_map/v4/page-pro-login.png");
+	background-size: 198px auto
+}
+
+@media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 2dppx) , (
+		min-resolution : 192dpi) {
+	[class*=icon-page-pro-login__] {
+		background-image: url("/assets/icon_map/v4/page-pro-login@2x.png")
+	}
+}
+
+@media ( -webkit-min-device-pixel-ratio : 3) , ( min-resolution : 3dppx) , (
+		min-resolution : 288dpi) {
+	[class*=icon-page-pro-login__] {
+		background-image: url("/assets/icon_map/v4/page-pro-login@3x.png")
+	}
+}
+
+.icon-page-pro-login__a-1 {
+	width: 198px;
+	height: 30px;
+	background-position: left 0px top 0px
+}
+
+.sign-in-form {
+	width: 100%;
+	max-width: 360px;
+	padding: 150px 30px 0 30px;
+	margin: 0 auto;
+	box-sizing: border-box
+}
+
+.sign-in-form__header {
+	display: block;
+	margin: 0 0 30px
+}
+
+.sign-in-form__header__link {
+	display: block;
+	text-align: center
+}
+
+.sign-in-form__app-banner {
+	margin: 0 0 30px
+}
+
+.sign-in-form__app-banner__link {
+	display: block;
+	max-width: 300px;
+	margin: 0 auto
+}
+
+.sign-in-form__app-banner__link>img {
+	display: block;
+	width: 100%;
+	max-width: 300px
+}
+
+.sign-in-form__app-banner__caption {
+	margin-top: 10px;
+	font-size: 11px;
+	color: #424242;
+	text-align: center
+}
+
+.sign-in-form__caption {
+	margin: 40px 0 30px;
+	font-size: 15px;
+	text-align: center;
+	line-height: 1.4;
+	color: #424242
+}
+
+.sign-in-form__form__input {
+	display: block;
+	width: 100%;
+	height: 50px;
+	margin: 0;
+	font-size: 15px;
+	line-height: 50px;
+	color: #424242
+}
+
+.sign-in-form__form__input::-webkit-input-placeholder {
+	color: #424242
+}
+
+.sign-in-form__form__input::-moz-placeholder {
+	color: #424242;
+	opacity: 1
+}
+
+.sign-in-form__form__input:-ms-input-placeholder {
+	color: #424242
+}
+
+.sign-in-form__form__input:-moz-placeholder {
+	color: #424242
+}
+
+.sign-in-form__form__input:focus {
+	position: relative;
+	z-index: 1
+}
+
+.sign-in-form__form__submit {
+	display: block;
+	width: 100%;
+	height: 50px;
+	margin: 20px 0;
+	padding: 13px 15px;
+	font-size: 17px;
+	line-height: 1.41
+}
+
+.sign-in-form__form__email {
+	border-radius: 4px 4px 0 0
+}
+
+.sign-in-form__form__password {
+	position: relative;
+	margin: -1px 0 0
+}
+
+.sign-in-form__form__password>.form-control {
+	border-radius: 0 0 4px 4px
+}
+
+.sign-in-form__form__password__caps {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	margin-left: 15px;
+	transform: translate(0, -50%);
+	color: #ffffff;
+	background-color: #f77;
+	padding: 10px;
+	border-radius: 4px;
+	font-size: 11px;
+	line-height: 13px;
+	font-weight: bold;
+	white-space: nowrap;
+	z-index: 2;
+	opacity: 0;
+	transition: opacity ease .3s
+}
+
+@media ( max-width : 767px) {
+	.sign-in-form__form__password__caps {
+		display: none
+	}
+}
+
+.sign-in-form__form__password__caps.show {
+	opacity: 1
+}
+
+.sign-in-form__form__password__caps:after {
+	content: '';
+	display: block;
+	position: absolute;
+	border-top: solid 5px transparent;
+	border-bottom: solid 5px transparent;
+	border-right: solid 11px #f77;
+	left: 1px;
+	top: 50%;
+	transform: translate(-100%, -50%)
+}
+
+.sign-in-form__form>.errors {
+	margin: 10px 0 0;
+	color: #f77;
+	font-size: 13px;
+	font-weight: bold
+}
+
+.sign-in-form__action {
+	margin: 20px 0;
+	text-align: center;
+	color: #424242;
+	font-size: 15px;
+	line-height: 1.4
+}
+
+.sign-in-form__action__entry {
+	display: inline-block;
+	padding: 3px 5px;
+	margin: -3px 10px
+}
+
+.sign-in-form__action__entry:hover, .sign-in-form__action__entry:focus,
+	.sign-in-form__action__entry:active {
+	text-decoration: underline
+}
+
+.sign-in-form__sns {
+	display: block;
+	margin: 30px 0
+}
+
+.sign-in-form__sns__title {
+	margin: 15px 0;
+	color: #757575;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 1.33;
+	text-align: center
+}
+
+.sign-in-form__sns__list {
+	text-align: center;
+	font-size: 0
+}
+
+.sign-in-form__sns__entry {
+	display: inline-block;
+	margin: 0 10px;
+	transition: opacity .1s
+}
+
+.sign-in-form__sns__entry:hover, .sign-in-form__sns__entry:focus,
+	.sign-in-form__sns__entry:active {
+	opacity: 0.6
+}
+
+.sign-in-form__guest-order {
+	margin: 30px 0 0;
+	padding: 30px 0 0;
+	border-top: 1px solid #dbdbdb
+}
+
+.sign-in-form__guest-order__title {
+	display: block;
+	width: 100%;
+	margin: -10px 0 20px;
+	padding: 10px 0;
+	background: none;
+	border: none;
+	color: #424242;
+	font-family: inherit;
+	font-size: 15px;
+	line-height: 1.4;
+	text-align: center
+}
+
+.sign-in-form__guest-order__title:hover,
+	.sign-in-form__guest-order__title:focus,
+	.sign-in-form__guest-order__title:active {
+	text-decoration: underline
+}
+
+.sign-in-form__guest-order .sign-in-form__form {
+	max-height: 0;
+	margin: -5px -10px;
+	padding: 5px 10px;
+	overflow: hidden;
+	opacity: 0;
+	transition: max-height .2s, opacity .2s
+}
+
+.sign-in-form__guest-order .sign-in-form__form.open {
+	max-height: 250px;
+	opacity: 1
+}
+
+.sign-in-form__guest-order .sign-in-form__form__input {
+	margin: 0 0 10px
+}
+
+.sign-in-form__guest-continue, .sign-in-form__expert-signup,
+	.sign-in-form__expert-contact {
+	display: block;
+	width: 100%;
+	height: 50px;
+	padding: 13px 15px;
+	font-size: 17px;
+	line-height: 1.41
+}
+
+.sign-in-form__guest-continue {
+	margin: 20px 0 0
+}
+
+.sign-in-form__expert-signup {
+	margin: 40px 0 0;
+	background: none
+}
+
+.sign-in-form__expert-contact {
+	margin: 10px 0 0;
+	background: none
+}
+
+.sign-in-form-footer {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 auto;
+	-moz-box-flex: 0;
+	-moz-flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	margin: -5px 0 25px;
+	text-align: center;
+	color: #757575;
+	font-size: 10px;
+	line-height: 20px
+}
+
+.sign-in-form-footer a:hover, .sign-in-form-footer a:focus,
+	.sign-in-form-footer a:active {
+	text-decoration: underline
+}
+
+header#simplified-gnb {
+	display: none
+}
+
+footer#simplified-footer {
+	display: none
+}
+
+html {
+	background-color: #fafafa
+}
+
+html, body {
+	height: 100%
+}
+
+body {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column
+}
+
+main {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 0 auto;
+	-moz-box-flex: 1;
+	-moz-flex: 1 0 auto;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto
+}
+
+.sign-in-form-wrap {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 0 auto;
+	-moz-box-flex: 1;
+	-moz-flex: 1 0 auto;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	justify-content: center
+}
 </style>
 </head>
 <body>
-	<section class="container user-sign-up">
-		<div class="user-sign-up__form-wrap">
-			<h1 class="user-sign-up__title">회원가입</h1>
-			<div class="user-sign-up__sns">
-				<p class="user-sign-up__sns__title">SNS계정으로 간편하게 회원가입</p>
-				<ol class="user-sign-up__sns__list">
-					<li class="user-sign-up__sns__list__item"><a
-						href="/users/auth/facebook"><svg width="48" height="48"
-								viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet">
-								<g fill="none" fill-rule="evenodd">
-								<path fill="#3B5998"
-									d="M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24-10.745 24-24 24S0 37.255 0 24z"></path>
-								<path fill="#FFF"
-									d="M25.77 35V24h3.384v-3.385h-3.385v-2.538c-.012-.756.08-1.285 1.693-1.692h1.692V13h-3.385c-3.25 0-4.52 1.84-4.23 5.077v2.538H19V24h2.538v11h4.231z"></path></g></svg></a></li>
-					<li class="user-sign-up__sns__list__item"><a
-						href="/users/auth/kakao"><svg width="48" height="48"
-								viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet">
-								<g fill="none" fill-rule="evenodd">
-								<path fill="#FFEB00"
-									d="M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24-10.745 24-24 24S0 37.255 0 24z"></path>
-								<path fill="#3C2929"
-									d="M24 11.277c8.284 0 15 5.306 15 11.85 0 6.545-6.716 11.85-15 11.85-.92 0-1.822-.066-2.697-.191l-6.081 4.105a.43.43 0 0 1-.674-.476l1.414-5.282C11.777 31.031 9 27.335 9 23.127c0-6.544 6.716-11.85 15-11.85zm6.22 8.407c-.416 0-.718.297-.718.707v5.939c0 .41.289.686.718.686.41 0 .718-.295.718-.686v-1.932l.515-.526 1.885 2.57c.277.374.426.54.691.568.037.003.075.005.112.005.154 0 .66-.04.716-.563.038-.293-.137-.52-.348-.796l-2.043-2.675 1.727-1.743.176-.196c.234-.26.353-.39.353-.587.009-.422-.34-.652-.687-.661-.274 0-.457.15-.57.262l-2.528 2.634v-2.3c0-.422-.288-.706-.717-.706zm-9.364 0c-.56 0-.918.432-1.067.837l-2.083 5.517a.84.84 0 0 0-.065.315c0 .372.31.663.706.663.359 0 .578-.162.69-.51l.321-.97h2.999l.313.982c.111.335.34.498.7.498.367 0 .655-.273.655-.62 0-.056-.017-.196-.081-.369l-2.019-5.508c-.187-.53-.577-.835-1.069-.835zm-2.92.064h-4.452c-.417 0-.642.337-.642.654 0 .3.168.652.642.652h1.51v5.21c0 .464.274.752.716.752.443 0 .718-.288.718-.751v-5.21h1.508c.474 0 .643-.352.643-.653 0-.317-.225-.654-.643-.654zm7.554-.064c-.442 0-.717.287-.717.75v5.707c0 .497.28.794.75.794h2.674c.434 0 .677-.321.686-.627a.642.642 0 0 0-.17-.479c-.122-.13-.3-.2-.516-.2h-1.99v-5.195c0-.463-.274-.75-.717-.75zm-4.628 1.306l.008.01 1.083 3.265h-2.192L20.842 21a.015.015 0 0 1 .028 0z"></path></g></svg></a></li>
-					<li class="user-sign-up__sns__list__item"><a
-						href="/users/auth/naver"><svg width="48" height="48"
-								viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet">
-								<g fill="none" fill-rule="evenodd">
-								<path fill="#00C63B"
-									d="M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24-10.745 24-24 24S0 37.255 0 24z"></path>
-								<path fill="#FFF"
-									d="M21 25.231V34h-7V15h7l6 8.769V15h7v19h-7l-6-8.769z"></path></g></svg></a></li>
-				</ol>
-			</div>
-			<form class="user-sign-up__form" name="join_form"action="http://localhost:9000/myhouse/join_proc.do">
-				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">이메일</div>
-					<div class="user-sign-up-form__form-group__input">
-						<div class="input-group email-input">
-							<span class="email-input__local"><input
-								class="form-control" value="" placeholder="이메일" size="1"></span><span
-								class="email-input__separator">@</span><span
-								class="email-input__domain"><select
-								class="form-control empty"><option selected="" value=""
-										disabled="">선택해주세요</option>
-									<option value="naver.com">naver.com</option>
-									<option value="hanmail.net">hanmail.net</option>
-									<option value="daum.net">daum.net</option>
-									<option value="gmail.com">gmail.com</option>
-									<option value="nate.com">nate.com</option>
-									<option value="hotmail.com">hotmail.com</option>
-									<option value="outlook.com">outlook.com</option>
-									<option value="icloud.com">icloud.com</option>
-									<option value="_manual">직접입력</option></select>
-							<button class="email-input__domain__expand" aria-label="초기화"
-									type="button" tabindex="-1">
-									<svg class="icon" width="10" height="10"
-										style="fill: currentColor" preserveAspectRatio="xMidYMid meet">
-										<path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path></svg>
-								</button></span>
-						</div>
-					</div>
-				</div>
-				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호</div>
-					<div class="user-sign-up-form__form-group__description">8자 이상
-						입력해주세요.</div>
-					<div class="user-sign-up-form__form-group__input">
-						<input type="password" placeholder="비밀번호" value=""
-							class="form-control">
-					</div>
-				</div>
-				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호 확인</div>
-					<div class="user-sign-up-form__form-group__input">
-						<input type="password" placeholder="비밀번호 확인" value=""
-							class="form-control">
-					</div>
-				</div>
-				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">별명</div>
-					<div class="user-sign-up-form__form-group__description">다른
-						유저와 겹치지 않는 별명을 입력해주세요. (2~15자)</div>
-					<div class="user-sign-up-form__form-group__input">
-						<input placeholder="별명 (2~15자)" value="" class="form-control">
-					</div>
-				</div>
-				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">약관 동의</div>
-					<div class="user-sign-up-form__form-group__input">
-						<div class="user-sign-up__form__terms-agree">
-							<div class="user-sign-up__form__terms-agree__all">
-								<div class="form-check checkbox-input">
-									<label class="form-check-label">
-									<input type="checkbox" class="form-check">
-										<span class="check-img"></span><span
-										class="user-sign-up__form__terms-agree__all__text">전체동의</span></label>
-								</div>
-							</div>
-							<div class="user-sign-up__form__terms-agree__list">
-								<div class="user-sign-up__form__terms-agree__row">
-									<div class="form-check checkbox-input">
-										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
-											class="user-sign-up__form__terms-agree__text">만 14세
-												이상입니다.<span
-												class="user-sign-up__form__terms-agree__required">(필수)</span>
-										</span></label>
-									</div>
-								</div>
-								<div class="user-sign-up__form__terms-agree__row">
-									<div class="form-check checkbox-input">
-										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
-											class="user-sign-up__form__terms-agree__text"><a
-												class="user-sign-up__form__terms-agree__link"
-												href="/usepolicy" target="_blank">이용약관</a><span
-												class="user-sign-up__form__terms-agree__required">(필수)</span></span></label>
-									</div>
-								</div>
-								<div class="user-sign-up__form__terms-agree__row">
-									<div class="form-check checkbox-input">
-										<label class="form-check-label"><input type="checkbox"
-											class="form-check"><span class="check-img"></span><span
-											class="user-sign-up__form__terms-agree__text"><a
-												class="user-sign-up__form__terms-agree__link"
-												href="/privacy" target="_blank">개인정보처리방침</a><span
-												class="user-sign-up__form__terms-agree__required">(필수)</span></span></label>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-				<button class="user-sign-up__submit" id="join_btn">회원가입 완료</button>
-			<p class="user-sign-up__sign-in">
-				이미 아이디가 있으신가요?<a href="http://localhost:9000/myhouse/login.do"
-					class="user-sign-up__sign-in__link">로그인</a>
-			</p>
-		</div>
-	</section>
+	<div class="sign-in-form">
+		<h1 class="sign-in-form__header">
+			<a class="sign-in-form__header__link" href="http://localhost:9000/myhouse/index.do"> <span
+				class="icon-page-login__a-1" aria-label="오늘의집"></span>
+			</a>
+		</h1>
+		<form class="sign-in-form__form" id="new_user"
+			action="http://localhost:9000/myhouse/pass_update_proc.do" accept-charset="UTF-8" method="post">
+			<input name="utf8" type="hidden" value="✓"><input
+				type="hidden" name="authenticity_token"
+				value="0MkHPkRtW+TRg4wcRb7Ov7fPSL1jPqg2dJuAdRYFZal8UA5GkiQ6gn7E5nu2b6nntFBa+TgjR/HbevCdiZCGqw==">
+			<input placeholder="이메일" autofocus="autofocus"
+				class="sign-in-form__form__input form-control" type="text"
+				name="user[email]" id="user_email"> <input type="submit"
+				name="commit" value="이메일로 비밀번호 찾기"
+				class="sign-in-form__form__submit btn btn-priority"
+				data-disable-with="이메일로 비밀번호 찾기">
+		</form>
+	</div>
 </body>
 </html>
