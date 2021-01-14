@@ -765,14 +765,14 @@
 		<section class="home-b2b-notice container">
 			<a class="home-b2b-notice__entry" href="/contacts/b2b"><div
 					class="home-b2b-notice__entry__title">
-					사업자 구매 회원 전환
+					판매 회원 전환 (사업자)
 					<svg class="caret" width="1em" height="1em" viewBox="0 0 24 24"
 						preserveAspectRatio="xMidYMid meet">
 						<path fill="currentColor" fill-rule="nonzero"
 							d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"></path></svg>
 				</div>
 				<div class="home-b2b-notice__entry__caption">
-					사업자 회원에게 구매 시 혜택을 드립니다
+					사업자 판매 시 혜택을 드립니다
 					<svg class="caret" width="1em" height="1em" viewBox="0 0 24 24"
 						preserveAspectRatio="xMidYMid meet">
 						<path fill="currentColor" fill-rule="nonzero"
