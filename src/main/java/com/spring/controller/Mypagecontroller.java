@@ -27,4 +27,29 @@ public class Mypagecontroller {
 	public String scrap() {
 		return "/mypage/scrap";
 	}
+	
+	@RequestMapping(value="/mypage_like.do", method=RequestMethod.GET)
+	public String like() {
+		return "/mypage/like";
+	}
+	
+	@RequestMapping(value="/mypage_activity.do", method=RequestMethod.GET)
+	public String activity() {
+		return "/mypage/activity";
+	}
+	
+	@RequestMapping(value="/mypage_orderlist.do", method=RequestMethod.GET)
+	public String orderlist() {
+		return "/mypage/orderlist";
+	}
+	
+	@RequestMapping(value="/mypage_reception.do", method=RequestMethod.GET)
+	public String reception() {
+		return "/mypage/reception";
+	}
+	
+	@RequestMapping(value="/mypage_notice.do", method=RequestMethod.GET)
+	public String notice() {
+		return "/mypage/notice";
+	}
 }
