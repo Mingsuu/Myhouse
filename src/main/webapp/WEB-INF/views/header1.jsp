@@ -30,7 +30,7 @@
 						<a href="http://localhost:9000/myhouse/index.do"><img src="http://localhost:9000/myhouse/images/logo.png"></a>
 				</div>
 				<nav class="layout-navigation-primary__menu">
-					<a class="layout-navigation-primary__menu__item" href="http://localhost:9000/myhouse/index.do">커뮤니티</a>
+					<a class="layout-navigation-primary__menu__item" id="marginpadding" href="http://localhost:9000/myhouse/index.do">커뮤니티</a>
 					<a class="layout-navigation-primary__menu__item" href="http://localhost:9000/myhouse/index.do">스토어</a>
 				</nav>
 				<div class="layout-navigation-primary__right">
