@@ -15,11 +15,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-.carousel {
-	width: 230px;
-}
-</style>
 </head>
 <body>
 	<!-- header -->
@@ -53,45 +48,54 @@
 							</div></a>
 					</article>
 				</div>
-				<section class="carousel">
-					<!-- 캐러셀 start-->
-					<div id="demo" class="carousel slide" data-ride="carousel">
-						<!-- Indicators -->
-						<ul class="carousel-indicators">
-							<li data-target="#demo" data-slide-to="0" class="active"></li>
-							<li data-target="#demo" data-slide-to="1"></li>
-							<!-- <li data-target="#demo" data-slide-to="2"></li> -->
-						</ul>
-
-						<!-- The slideshow -->
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<img
-									src="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=512&amp;webp=1"
-									srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=850&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=1024&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=1536&amp;webp=1 3x"
-									width="230" height="470">
-							</div>
-							<div class="carousel-item">
-								<img
-									src="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=512&amp;webp=1"
-									srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=850&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=1024&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=1536&amp;webp=1 3x"
-									width="230" height="470">
-							</div>
-							<!-- <div class="carousel-item">
-								<img src="ny.jpg" alt="New York">
-							</div> -->
-						</div>
-
-						<!-- Left and right controls -->
-						<a class="carousel-control-prev" href="#demo" data-slide="prev">
-							<span class="carousel-control-prev-icon"></span>
-						</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-							<span class="carousel-control-next-icon"></span>
-						</a>
-
-					</div>
-					<!-- 캐러셀  end-->
+				<div class="col-12 col-md-3 home-header__banner-col">
+				<div class="home-header__banner-wrap">
+						<div class="carousel home-header__banner-container" role="region"
+							aria-roledescription="carousel">
+							<div class="carousel__list-wrap home-header__banner">
+				<section>
+									<!-- 캐러셀 start-->
+									<div id="demo" class="carousel slide" data-ride="carousel">
+										<!-- Indicators -->
+										<ul class="carousel-indicators">
+											<li data-target="#demo" data-slide-to="0" class="active"></li>
+											<li data-target="#demo" data-slide-to="1"></li>
+											<!-- <li data-target="#demo" data-slide-to="2"></li> -->
+										</ul>
+				
+										<!-- The slideshow -->
+										<div class="carousel-inner">
+											<div class="carousel-item active">
+												<img class="carousel-img"
+													src="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=512&amp;webp=1"
+													srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=850&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=1024&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160934220770214930.png?gif=1&amp;w=1536&amp;webp=1 3x"
+													>
+											</div>
+											<div class="carousel-item">
+												<img class="carousel-img"
+													src="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=512&amp;webp=1"
+													srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=850&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=1024&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/contests/pc_banner/160976394606228781.png?gif=1&amp;w=1536&amp;webp=1 3x"
+													>
+											</div>
+											<!-- <div class="carousel-item">
+												<img src="ny.jpg" alt="New York">
+											</div> -->
+										</div>
+				
+										<!-- Left and right controls -->
+										<a class="carousel-control-prev" href="#demo" data-slide="prev">
+											<span class="carousel-control-prev-icon"></span>
+										</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+											<span class="carousel-control-next-icon"></span>
+										</a>
+				
+									</div>
+									<!-- 캐러셀  end-->	
 				</section>
+				</div>
+				</div>
+				</div>
+				</div>
 				<!-- <div class="col-12 col-md-3 home-header__banner-col">
 					<div class="home-header__banner-wrap">
 						<div class="carousel home-header__banner-container" role="region"
@@ -761,14 +765,14 @@
 		<section class="home-b2b-notice container">
 			<a class="home-b2b-notice__entry" href="/contacts/b2b"><div
 					class="home-b2b-notice__entry__title">
-					사업자 구매 회원 전환
+					판매 회원 전환 (사업자)
 					<svg class="caret" width="1em" height="1em" viewBox="0 0 24 24"
 						preserveAspectRatio="xMidYMid meet">
 						<path fill="currentColor" fill-rule="nonzero"
 							d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"></path></svg>
 				</div>
 				<div class="home-b2b-notice__entry__caption">
-					사업자 회원에게 구매 시 혜택을 드립니다
+					사업자 판매 시 혜택을 드립니다
 					<svg class="caret" width="1em" height="1em" viewBox="0 0 24 24"
 						preserveAspectRatio="xMidYMid meet">
 						<path fill="currentColor" fill-rule="nonzero"
@@ -776,5 +780,7 @@
 				</div></a>
 		</section>
 	</div>
+	<!-- footer -->
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
