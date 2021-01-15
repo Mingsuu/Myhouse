@@ -7,7 +7,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class StoreController {
-	
+
+	/*
+	 * store_page 화면
+	 */
+	@RequestMapping(value="/store_page.do",method=RequestMethod.GET) 
+		public String store_page() {
+			
+			return "/store/store_page";
+		}
+		
+	/*
+	 * store_index 화면
+	 */
 	@RequestMapping(value="/store_index.do", method=RequestMethod.GET)
 	public ModelAndView store_index(String category) {
 		ModelAndView mv = new ModelAndView();
