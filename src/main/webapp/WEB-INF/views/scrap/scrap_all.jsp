@@ -5,152 +5,296 @@
 <head>
 <meta charset="UTF-8">
 <title>스크랩</title>
-
-<style>
-body.scrap_all {
-	width: 1200px;
-	margin: 0 auto;
-}
-
-h1 {
-	font-size: 30px;
-	text-align: center;
-}
-
-div.username {
-	margin: 0 auto;
-	text-align: center;
-}
-
-div.username img {
-	width: 30px;
-	height: 30px;
-	vertical-align: top;
-}
-
-div.username a {
-	font-size: 20px;
-	color: #757575;
-	text-decoration: none;
-}
-
-div#navbar {
-	width: 100%;
-	overflow: hidden;
-	border-bottom: 1px solid black;
-	margin: 0;
-	padding: 0 0 0 12px;
-	position: -webkit-sticky;
-	position: sticky;
-	top: -1px;
-	background-color: white;
-}
-
-div#navbar a {
-	color: #424242;
-	float: left;
-	display: block;
-	font-size: 18px;
-	font-weight: 900;
-	text-align: center;
-	padding: 14px;
-	text-decoration: none;
-}
-div#navbar ul li.all a{
-	color: #35c5f0;
-}
-
-div#navbar ul {
-	list-style: none;
-	width: 300px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-div#navbar ul li {
-	display: inline-block;
-	text-align: center;
-}
-
-div#navbar div a {
-	float: right;
-	color: #35c5f0;
-}
-/*  session.scrap_listAll{
-		margin: auto;
-} */
-div session.scrap_listAll ul li {
-	margin: auto;
-	list-style: none;
-	display: inline-block;
-}
-
-div session.scrap_listAll img {
-	width: 280px;
-	height: 280px;
-	padding:10px 0 0 0 ;
-}
-</style>
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/gr.css">
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body class="scrap_all">
-	<h1>스크랩북</h1>
-	<div class="username">
-		<p>
-			<a href="#"><img
-				src="http://localhost:9000/myhouse/images/11.webp">username</a>
-		</p>
+<body>
+<jsp:include page="../header1.jsp" />
 
-	</div>
-	<div id="navbar">
-		<ul>
-			<li class="all"><a href="http://localhost:9000/myhouse/scrap_all.do">모두()</a></li>
-			<li class="product"><a href="http://localhost:9000/myhouse/scrap_product.do">상품()</a></li>
-			<li class="houses"><a href="http://localhost:9000/myhouse/scrap_houses.do">집들이()</a></li>
-		</ul>
-		<div>
-			<a href="#">편집</a>
-		</div>
+	<div class="container collection-feed">
+		<main>
+			<header class="row collection-book-header">
+				<div>
+					<h1 class="collection-book-title__book-name">스크랩북</h1>
+					<p class="collection-book-owner">
+						<a class="collection-book-owner__link" href="/users/7109166"><img
+							class="profile-image"
+							src="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1"
+							srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x"><span
+							class="collection-book-owner__name">기림6</span></a>
+					</p>
+				</div>
+				<div class="collection-book-actions">
+					<div class="drop-down">
+						<a><svg class="collection-book-actions__share-icon" width="24"
+								height="24" viewBox="0 0 24 24" fill="currentColor"
+								preserveAspectRatio="xMidYMid meet">
+								<path
+									d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path></svg></a>
+					</div>
+				</div>
+			</header>
+			<div data-sticky-enabled="false" data-sticky-disabled="false"
+				data-sticky-always="false" data-sticky-ignore="false"
+				data-direction="top" data-offset="81"
+				class="sticky-container collection-feed__navi"
+				style="position: sticky; top: 81px;">
+				<div class="sticky-child" style="position: relative;">
+					<nav class="page-navigation collection-book-nav">
+						<ul style="transform: translateX(0px);">
+							<li class="page-navigation__item"><a class="active"
+								href="http://localhost:9000/myhouse/scrap_all.do" target="_self">모두 (37)</a></li>
+							<li class="page-navigation__item"><a class=""
+								href="http://localhost:9000/myhouse/scrap_product.do"
+								target="_self">상품 (35)</a></li>
+							<li class="page-navigation__item"><a class=""
+								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">집들이
+									(2)</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div data-sticky-enabled="false" data-sticky-disabled="false"
+				data-sticky-always="false" data-sticky-ignore="false"
+				data-direction="top" data-offset="142"
+				class="sticky-container collection-feed__edit-panel"
+				style="position: sticky; top: 142px;">
+				<div class="sticky-child" style="position: relative;">
+					<div class="collection-feed__edit-panel__wrap">
+						<div class="collection-feed__edit-panel__left">
+							<div class="collection-feed-filter__empty"></div>
+						</div>
+						<div class="collection-feed__edit-panel__menus">
+							<button type="button"
+								class="collection-feed__edit-panel__menus__menu
+                  collection-feed__edit-panel__menus__menu--skyblue">편집</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="virtualized-list collection-feed-collections row"
+				style="padding-top: 0px; padding-bottom: 2320px; transform: translateY(0px);">
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/154487/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/71236/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156558608512369617.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156558608512369617.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156558608512369617.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156558608512369617.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/598722/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160706202503325733.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160706202503325733.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160706202503325733.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160706202503325733.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/537871/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1603846029_102963_1.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1603846029_102963_1.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1603846029_102963_1.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1603846029_102963_1.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/424597/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159583798207886091.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159583798207886091.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159583798207886091.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159583798207886091.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/400359/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159410955831810252.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159410955831810252.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159410955831810252.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159410955831810252.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/447038/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159721089874267945.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159721089874267945.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159721089874267945.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/159721089874267945.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/379643/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/395500/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159374101422369733.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159374101422369733.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159374101422369733.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159374101422369733.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/371630/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1592295093_114813_1.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1592295093_114813_1.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1592295093_114813_1.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1592295093_114813_1.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/390566/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500765_102864_20.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500765_102864_20.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500765_102864_20.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500765_102864_20.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/390565/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500758_103277_20.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500758_103277_20.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500758_103277_20.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1593500758_103277_20.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/305437/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/39233/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/229192/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">상품</span>
+							</div></a>
+					</div>
+				</div>
+			</div>
+		</main>
 	</div>
 
-	<div>
-		<session class="scrap_listAll">
-		<ul>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/1.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/2.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/3.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/4.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/5.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/6.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/7.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/8.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/9.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-			<li><a href="#"><img
-					src="http://localhost:9000/myhouse/images/10.webp"></a></li>
-					
-		</ul>
-		</session>
-	</div>
-	<tr class="page">
-		<td colspan="4"><< 1 2 3 4 5 6 7 8 9 10 페이징 처리예정 >></td>
-	</tr>
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

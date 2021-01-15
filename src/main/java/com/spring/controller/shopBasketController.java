@@ -9,6 +9,6 @@ public class shopBasketController {
 
 	@RequestMapping(value="/shoppingBasket_list.do",method=RequestMethod.GET)
 	public String shoppingBasket_list() {
-		return "/shoppingBasket/shppingBasket_list";
+		return "/shoppingBasket/shoppingBasket_list";
 	}
 }
