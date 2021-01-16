@@ -7,6 +7,18 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage.css"> -->
 <!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		
+		
+		
+	});//ready
+
+
+</script>
+
 <style>
 
 * {
@@ -64,30 +76,46 @@
 	height:596px;
 	text-align:center;
 }
-.reception {
-	width:930px;
-	height:260px;
-	border:1px solid lightgray;
-	border-radius:15px;
+.review {
 	display:inline-block;
-	margin-top:70px;
-	padding-top:50px;
-	padding-left:70px;
-	box-shadow: 0 1px 4px 0 rgba(14, 14, 14, 0.1);
+	width:1000px;
+	height:auto;
+	margin-top:50px;
+	padding-bottom:20px;
 }
-.re-title {
-	height:80px;
+.option {
+	display:inline-block;
+	border:1px solid red;
+	width:1000px;
+	height:1000px;
+	margin-left:50px;
 }
-.re-title p {
-	font-size:30px;
+.option1 {
+	border:1px solid red;
+	display:inline-block;
+	margin-top:60px;
+	margin-bottom:100px;
+	width:900px;
+}
+.option1 span {
+	font-size:24px;
 	font-weight:bold;
 	float:left;
 }
-.re-title1 {
-	font-size:15px;
-	margin-left:170px;
-	margin-top:100px;
+.option2 {
+	border:1px solid red;
+	display:inline-block;
+	width:900px;
+}
+.option2 span {
 	float:left;
+}
+.op1 {
+	font-size:15px;
+}
+.op2 {
+	font-size:13px;
+	color:#757575;
 }
 </style>
 </head>
@@ -97,27 +125,30 @@
 	<div class="nav">
 		<ul class="nav1">
 			<a href="#"><li class="nav1-1">프로필</li></a>
-			<a href="#"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
+			<a href="#"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">설정</li></a>
+			<a href="#"><li class="nav1-1" style="color:#35c5f0;">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="#"><li class="nav2-2">주문배송내역</li></a>
-			<a href="#"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">상품문의내역</li></a>
-			<a href="#"><li class="nav2-2">공지사항</li></a>
-			<a href="#"><li class="nav2-2">고객센터</li></a>
+			<a href="#"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">회원정보수정</li></a>
+			<a href="#"><li class="nav2-2">비밀번호변경</li></a>
+			<a href="#"><li class="nav2-2">회원탈퇴</li></a>
 		</ul>
 	</div>
 </div>
 <div class="profile">
 <div class="mid">
-	<div class="reception">
-		<div class="re-title"><p>상품문의내역</p></div>
-		<span class="re-title1">아직 문의한 내역이 없습니다.</span>
+	<div class="review">
+		<div class="option">
+			<div class="option1"><span>회원정보수정</span></div>
+			<div class="option2">
+				<span class="op1">이메일</span><br>
+				<span class="op2">* 필수항목</span>
+			</div>
+		</div>
 	</div>
-		
 </div>
 </div>
 </body>

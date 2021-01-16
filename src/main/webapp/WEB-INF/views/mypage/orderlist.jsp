@@ -135,7 +135,7 @@
 			<a href="#"><li class="nav1-1">프로필</li></a>
 			<a href="#"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
 			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">프로필</li></a>
+			<a href="#"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">

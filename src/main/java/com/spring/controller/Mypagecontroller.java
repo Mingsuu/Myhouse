@@ -52,4 +52,26 @@ public class Mypagecontroller {
 	public String notice() {
 		return "/mypage/notice";
 	}
+	
+	@RequestMapping(value="/mypage_clientcenter.do", method=RequestMethod.GET)
+	public String clientcenter() {
+		return "/mypage/clientcenter";
+	}
+	
+	
+	@RequestMapping(value="/mypage_review.do", method=RequestMethod.GET)
+	public String rivew() {
+		return "/mypage/review";
+	}
+	
+	@RequestMapping(value="/mypage_review1.do", method=RequestMethod.GET)
+	public String rivew1() {
+		return "/mypage/review1";
+	}
+	
+	@RequestMapping(value="/mypage_option.do", method=RequestMethod.GET)
+	public String option() {
+		return "/mypage/option";
+	}
+	
 }

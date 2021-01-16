@@ -64,7 +64,52 @@
 	height:596px;
 	text-align:center;
 }
-
+.notice {
+	display:inline-block;
+	width:900px;
+	height:350px;
+	margin-top:40px;
+}
+.notice a {
+	text-decoration:none;
+}
+.notice h1 {
+	padding-right:600px;
+	font-size:24px;
+	margin-bottom:0px;
+}
+.notlist {
+	height:66px;
+	margin-top:20px;
+}
+.notlist:hover {
+	opacity:0.5;
+}
+.notlist:active {
+	opacity:0.5;
+}
+.notlist span {
+	margin-right:450px;
+	font-size:15px;
+	color:black;
+}
+.notlist p {
+	margin-right:610px;
+	margin-top:5px;
+	font-size:14px;
+	font-weight:bold;
+	color:rgb(130, 140, 148);
+}
+.noticebar {
+	width:750px;
+	opacity:0.5;
+	margin:0px;
+	margin-left:107px;
+	border:1px solid lightgray;
+}
+.no2 {
+	margin-left:30px;
+}
 </style>
 </head>
 <body>
@@ -75,7 +120,7 @@
 			<a href="#"><li class="nav1-1">프로필</li></a>
 			<a href="#"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
 			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">프로필</li></a>
+			<a href="#"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
@@ -89,7 +134,24 @@
 </div>
 <div class="profile">
 <div class="mid">
-	
+	<div class="notice">
+		<h1>공지사항</h1>
+		<a href="#"><div class="notlist">
+			<span>오늘의집 개인정보처리방침 변경 안내</span>
+			<p>2020.12.31</p>
+		<hr class="noticebar">
+		</div></a>
+		<a href="#"><div class="notlist">
+			<span class="no2">오늘의집 VIP 등급 정책 변경사항 사전안내</span>
+			<p>2020.12.03</p>
+		<hr class="noticebar">
+		</div></a>
+		<a href="#"><div class="notlist">
+			<span>오늘의집 개인정보처리방침 변경 안내</span>
+			<p>2020.10.28</p>
+		<hr class="noticebar">
+		</div></a>
+	</div>
 		
 </div>
 </div>
