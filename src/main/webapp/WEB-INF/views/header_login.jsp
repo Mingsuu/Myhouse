@@ -70,7 +70,7 @@
 				</div>
 				<a
 					class="layout-navigation-bar-icon layout-navigation-bar-icon--hide-mobile"
-					title="스크랩북" aria-label="스크랩북" href="/users/11945345/collections">
+					title="스크랩북" aria-label="스크랩북" href="http://localhost:9000/myhouse/scrap_all.do">
 					<svg class="icon" width="24" height="24" stroke="currentColor"
 						viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 						<path fill="none" stroke-width="2"
@@ -79,7 +79,7 @@
 					</svg>
 				</a> <a
 					class="layout-navigation-bar-icon layout-navigation-bar-icon--hide-mobile"
-					title="알림" aria-label="알림" href="/notifications/feed"> <svg
+					title="알림" aria-label="알림" href="http://localhost:9000/myhouse/allam_mynews.do"> <svg
 						class="icon" width="24" height="24" viewBox="0 0 24 24"
 						preserveAspectRatio="xMidYMid meet">
 						<path fill="none" stroke="currentColor" stroke-linecap="round"
@@ -88,7 +88,7 @@
 						</path>
 					</svg> <span class="layout-navigation-bar-icon__ticker">1</span>
 				</a> <a class="layout-navigation-bar-icon" title="장바구니"
-					aria-label="장바구니" href="http://localhost:9000/myhouse/index.do">
+					aria-label="장바구니" href="http://localhost:9000/myhouse/shoppingBasket_list.do">
 					<svg class="icon" width="24" height="24" viewBox="0 0 24 24"
 						stroke="currentColor" fill="none" stroke-linejoin="round"
 						stroke-width="2" preserveAspectRatio="xMidYMid meet">
@@ -167,7 +167,7 @@
 			<div class="animated-popout drop-down__content open open-active">
 				<div class="_2TAbe navigation-upload-dropdown-content">
 					<a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/upload_photo.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -190,7 +190,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">우리집
 								사진을 공유해보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/product_review.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -222,7 +222,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">상품
 								리뷰를 작성하고 포인트도 받아보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/service_center.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
