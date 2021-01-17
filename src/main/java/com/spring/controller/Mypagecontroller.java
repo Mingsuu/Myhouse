@@ -74,4 +74,24 @@ public class Mypagecontroller {
 		return "/mypage/option";
 	}
 	
+	@RequestMapping(value="/mypage_password.do", method=RequestMethod.GET)
+	public String password() {
+		return "/mypage/password";
+	}
+	
+	@RequestMapping(value="/mypage_memberdelete.do", method=RequestMethod.GET)
+	public String memberdelete() {
+		return "/mypage/memberdelete";
+	}
+	
+	@RequestMapping(value="/mypage_picture.do", method=RequestMethod.GET)
+	public String picture() {
+		return "/mypage/picture";
+	}
+	
+	@RequestMapping(value="/mypage_noticecontent.do", method=RequestMethod.GET)
+	public String noticecontent() {
+		return "/mypage/noticecontent";
+	}
+	
 }

@@ -2,11 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
-    <link rel="stylesheet" media="screen" href="https://static.ohou.se/dist/css/19-edc534e5.chunk.css" />
-<link rel="stylesheet" media="screen" href="https://static.ohou.se/dist/css/39-16e469a0.chunk.css" />
-<link rel="stylesheet" media="screen" href="https://static.ohou.se/dist/css/templates-Review-MyHome-WriteReview-cd0b5f5f.chunk.css" />
-
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -96,13 +91,21 @@
 	font-weight:bold;
 	margin-left:10px;
 }
-.form-control {
-	border:1px solid lightgray;
-	border-radius:5px;
-}
-.review-my-home__search__title {
-	padding-right:910px;
+.review-title {
+	padding-right:800px;
 	color:#424242;
+	font-size:18px;
+	font-weight:bold;
+	margin-top:100px;
+	margin-bottom:10px;
+}
+.review-box1 {
+	width:900px;
+	height:50px;
+	font-size:18px;
+	padding-left:10px;
+	border-radius:4px;
+	border:1px solid lightgray;
 }
 </style>
 </head>
@@ -111,35 +114,31 @@
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav11">
-			<a href="#"><li class="nav1-1">프로필</li></a>
-			<a href="#"><li class="nav1-1">나의 쇼핑</li></a>
-			<a href="#"><li class="nav1-1" style="color:#35c5f0;">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">설정</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
+			<a href="mypage_review.do"><li class="nav1-1" style="color:#35c5f0;">나의 리뷰</li></a>
+			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="#"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰쓰기</li></a>
-			<a href="#"><li class="nav2-2">내가 작성한 리뷰</li></a>
+			<a href="mypage_review.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰쓰기</li></a>
+			<a href="mypage_review1.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
 		</ul>
 	</div>
 </div>
 <div class="profile">
 <div class="mid">
 
-	<div class="review-my-home__search__title">내가 사용하는 상품 리뷰쓰기</div>
-		<form class="review-my-home__search__form">
-			<div class="review-my-home__search__form__wrap">
-				<input placeholder="브랜드명 혹은 상품명을 입력하세요." value="" class="form-control review-my-home__search__form__input"/>
+	<div class="review-title">내가 사용하는 상품 리뷰쓰기</div>
+		<form class="review-form">
+			<div class="review-box">
+				<input placeholder="브랜드명 혹은 상품명을 입력하세요." value="" class="review-box1"/>
 				<button class="gum" type="submit">검색</button>
 			</div>
 		</form>
-		<div class="virtualized-list review-my-home__review-list"></div>
-	
-
 
 </div>	
 </div>
-<script src="https://static.ohou.se/dist/js/templates-Review-MyHome-WriteReview-14734a09a8610d2edf30.chunk.js"></script>  <script src="https://static.ohou.se/dist/js/4-022d8473f8afb07c4522.chunk.js"></script>
 </body>
 </html>

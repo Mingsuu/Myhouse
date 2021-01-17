@@ -7,6 +7,26 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage.css"> -->
 <!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		$("#share").click(function(){
+			if($("#share1").css("display") == "none") {
+				$("#share1").css("display","inline-block");
+			}else if($("#share1").css("display") == "inline-block") {
+				$("#share1").css("display","none");				
+			}
+		});
+		
+		
+		
+		
+		
+	});//ready
+
+
+</script>
 <style>
 
 * {
@@ -73,6 +93,7 @@
 	margin-top:60px;
 	margin-left:60px;
 	box-shadow: 0 1px 4px 0 rgba(17, 17, 17, 0.1);
+	z-index:5;
 }
 .share {
 	float:right;
@@ -235,6 +256,9 @@
 	height:60px;
 	z-index:6;
 	clear:right;
+	border:1px solid lightgray;
+	border-radius:4px;
+	margin-left:-40px;
 }
 .sharebox img {
 	margin-left:8px;
@@ -250,20 +274,20 @@
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="#"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
-			<a href="#"><li class="nav1-1">나의 쇼핑</li></a>
-			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">설정</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
+			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
+			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
+			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="#"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
-			<a href="#"><li class="nav2-2">사진</li></a>
-			<a href="#"><li class="nav2-2">질문과답변</li></a>
-			<a href="#"><li class="nav2-2">스크랩북</li></a>
-			<a href="#"><li class="nav2-2">좋아요</li></a>
-			<a href="#"><li class="nav2-2">나의활동</li></a>
+			<a href="mypage_profile.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
+			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
+			<a href="mypage_ask.do"><li class="nav2-2">질문과답변</li></a>
+			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
+			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
+			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
 		</ul>
 	</div>
 </div>
@@ -271,11 +295,14 @@
 <div class="mid">
 	<div class="left">
 		<div class="sh">
-			<img src="http://localhost:9000/myhouse/images/mypage/share.PNG" class="share">
-			<div class="sharebox">
-				<img src="http://localhost:9000/myhouse/images/mypage/facebook.PNG" class="img1">
-				<img src="http://localhost:9000/myhouse/images/mypage/kakao.PNG" class="img2">
-				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3">
+			<img src="http://localhost:9000/myhouse/images/mypage/share.PNG" class="share" id="share">
+			<div class="sharebox" id="share1">
+				<a href ="https://www.facebook.com/login.php?skip_api_login=1&api_key=966242223397117&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fsharer.php%3Fu%3Dhttps%253A%252F%252Fozip.me%252FknTZP3P&cancel_url=https%3A%2F%2Fwww.facebook.com%2Fdialog%2Fclose_window%2F%3Fapp_id%3D966242223397117%26connect%3D0%23_%3D_&display=popup&locale=ko_KR">
+				<img src="http://localhost:9000/myhouse/images/mypage/facebook.PNG" class="img1"></a>
+				<a href="https://accounts.kakao.com/login/kakaostory?continue=https%3A%2F%2Fstory.kakao.com%2Fs%2Fshare%3Furl%3Dhttps%253A%252F%252Fozip.me%252FknTZP3P%26kakao_agent%3Dsdk%252F1.39.10%2520os%252Fjavascript%2520sdk_type%252Fjavascript%2520lang%252Fko-KR%2520device%252FWin32%2520origin%252Fhttps%25253A%25252F%25252Fohou.se%26app_key%3D3019c756ec77dd7e0a24e56d9d784f77%26text%3D%25EA%25B7%25A4%25EB%25A8%25B9%25EA%25B3%25A0%25EA%25B0%2588%25EB%259E%2598%25EB%258B%2598%25EC%259D%2598%2520%25EC%259C%25A0%25EC%25A0%2580%25ED%2599%2588%25EC%2597%2590%2520%25EB%2586%2580%25EB%259F%25AC%25EC%2598%25A4%25EC%2584%25B8%25EC%259A%2594!">
+				<img src="http://localhost:9000/myhouse/images/mypage/kakao.PNG" class="img2"></a>
+				<a href="http://share.naver.com/web/shareView.nhn?url=https://ozip.me/knTZP3P&title=%EA%B7%A4%EB%A8%B9%EA%B3%A0%EA%B0%88%EB%9E%98%EB%8B%98%EC%9D%98%20%EC%9C%A0%EC%A0%80%ED%99%88%EC%97%90%20%EB%86%80%EB%9F%AC%EC%98%A4%EC%84%B8%EC%9A%94!">
+				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
 		<img src="http://localhost:9000/myhouse/images/mypage/myprofile.jpg" class="pro">

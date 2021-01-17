@@ -203,56 +203,30 @@
 .share:hover {
 	opacity:0.7;
 }
-.r-title {
-	border-bottom:1px solid lightgray;
-	margin-top:37px;
-	font-size:18px;
-	font-weight:bold;
-	height:40px;
-	padding-bottom:10px;
+.pic1 {
+	width:250px;
+	height:250px;
+	border-radius:5px;
 }
-.r-title a {
-	text-decoration:none;
-}
-.rt3 {
-	float:right;
-	font-size:16px;
-	color:white;
-	background-color:#35c5f0;
-	width:180px;
-	height:33px;
-	border-radius:4px;
-	text-align:center;
-	padding-top:7px;
-}
-.rt3:hover {
-	background-color:rgb(16,175,222);
-}
-.rt1 {
-	margin-left:35px;
-	color:#35c5f0;
-}
-.rt:hover {
-	color:#35c5f0;
-}
-.rt {
-	color:black;
-}
-.r-con {
+.picture {
 	display:inline-block;
-	width:270px;
-	text-align:center;
-	margin-left:230px;
-	margin-top:100px;
+	width:250px;
+	height:320px;
 }
-.r-con span {
-	font-size:20px;
+.pic4 {
+	width:33px;
+	height:33px;
 }
-.r-con p {
-	font-size:15px;
-	color:gray;
-	margin:0px;
-	margin-top:10px;
+.pic2,
+.pic3,
+.pic4 {
+	margin-left:25px;
+	margin-right:20px;
+}
+.pic2:hover,
+.pic3:hover,
+.pic4:hover {
+	opacity:0.5;
 }
 </style>
 </head>
@@ -270,8 +244,8 @@
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_profile.do"><li class="nav2-2">모두보기</li></a>
-			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
-			<a href="mypage_ask.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">질문과답변</li></a>
+			<a href="mypage_picture.do"><li class="nav2-2"   style="color:#35c5f0; border-bottom:5px solid #35c5f0;">사진</li></a>
+			<a href="mypage_ask.do"><li class="nav2-2">질문과답변</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
 			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
@@ -310,16 +284,12 @@
 		</div>
 	</div>
 	<div class="right">
-		<div class="r-title">
-			<a href="mypage_ask.do"><span class="rt">나의 질문</span></a>
-			<a href="mypage_ask1.do"><span class="rt1">나의 답변</span></a>
-			<a href="#" class="rt3">질문과답변 바로가기</a>
-		</div>
-		<div class="r-con"> 
-			<span>인테리어에 대해</span><br>
-			<span>궁금한 점이 있으신가요?</span>
-			<p>오늘의집 질문과답변에서 인테리어<br>
-			고수들과 전문가들에게 조언을 받으세요.</p>
+		<div class="picture">
+			<a href="#"><img src="http://localhost:9000/myhouse/images/mypage/pic1.jpg" class="pic1"></a>
+			<a href="#"><img src="http://localhost:9000/myhouse/images/mypage/like.PNG" class="pic2"></a>
+			<a href="#"><img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG" class="pic3"></a>
+			<a href="#"><img src="http://localhost:9000/myhouse/images/mypage/talk.png" class="pic4"></a>
+			
 		</div>
 	</div>
 

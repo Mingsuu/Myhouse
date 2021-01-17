@@ -222,20 +222,20 @@
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="#"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
-			<a href="#"><li class="nav1-1">나의 쇼핑</li></a>
-			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">설정</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
+			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
+			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
+			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="#"><li class="nav2-2">모두보기</li></a>
-			<a href="#"><li class="nav2-2">사진</li></a>
-			<a href="#"><li class="nav2-2">질문과답변</li></a>
-			<a href="#"><li class="nav2-2">스크랩북</li></a>
-			<a href="#"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">좋아요</li></a>
-			<a href="#"><li class="nav2-2">나의활동</li></a>
+			<a href="mypage_profile.do"><li class="nav2-2">모두보기</li></a>
+			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
+			<a href="mypage_ask.do"><li class="nav2-2">질문과답변</li></a>
+			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
+			<a href="mypage_like.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">좋아요</li></a>
+			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
 		</ul>
 	</div>
 </div>

@@ -117,18 +117,18 @@
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="#"><li class="nav1-1">프로필</li></a>
-			<a href="#"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
-			<a href="#"><li class="nav1-1">나의 리뷰</li></a>
-			<a href="#"><li class="nav1-1">설정</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_orderlist.do"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
+			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
+			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
 		</ul>
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="#"><li class="nav2-2">주문배송내역</li></a>
-			<a href="#"><li class="nav2-2">상품문의내역</li></a>
-			<a href="#"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">공지사항</li></a>
-			<a href="#"><li class="nav2-2">고객센터</li></a>
+			<a href="mypage_orderlist.do"><li class="nav2-2">주문배송내역</li></a>
+			<a href="mypage_reception.do"><li class="nav2-2">상품문의내역</li></a>
+			<a href="mypage_notice.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">공지사항</li></a>
+			<a href="mypage_clientcenter.do"><li class="nav2-2">고객센터</li></a>
 		</ul>
 	</div>
 </div>
@@ -136,7 +136,7 @@
 <div class="mid">
 	<div class="notice">
 		<h1>공지사항</h1>
-		<a href="#"><div class="notlist">
+		<a href="mypage_noticecontent.do"><div class="notlist">
 			<span>오늘의집 개인정보처리방침 변경 안내</span>
 			<p>2020.12.31</p>
 		<hr class="noticebar">
