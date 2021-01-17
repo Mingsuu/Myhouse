@@ -16,7 +16,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../header1.jsp" />
+<jsp:include page="../header_login.jsp" />
 
 	<div class="container collection-feed">
 		<main>
@@ -50,10 +50,10 @@
 					<nav class="page-navigation collection-book-nav">
 						<ul style="transform: translateX(0px);">
 							<li class="page-navigation__item"><a class="active"
-								href="http://localhost:9000/myhouse/scrap_all.do" target="_self">모두 (37)</a></li>
+								href="http://localhost:9000/myhouse/scrap_all.do" target="_self">모두 (14)</a></li>
 							<li class="page-navigation__item"><a class=""
 								href="http://localhost:9000/myhouse/scrap_product.do"
-								target="_self">상품 (35)</a></li>
+								target="_self">상품 (12)</a></li>
 							<li class="page-navigation__item"><a class=""
 								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">집들이
 									(2)</a></li>
@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<div class="virtualized-list collection-feed-collections row"
-				style="padding-top: 0px; padding-bottom: 2320px; transform: translateY(0px);">
+				style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 						<a
@@ -182,20 +182,6 @@
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 						<a
-							href="/productions/379643/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
-								class="collection collection--total">
-								<div class="collection__image-wrap">
-									<img class="collection__image"
-										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
-										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1500297437712_UwyguWu9g.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
-								</div>
-								<span class="collection__type">상품</span>
-							</div></a>
-					</div>
-				</div>
-				<div class="col-6 col-md-4 col-lg-3">
-					<div class="collection__wrap">
-						<a
 							href="/productions/395500/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
 								class="collection collection--total">
 								<div class="collection__image-wrap">
@@ -252,12 +238,26 @@
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 						<a
-							href="/productions/305437/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+							href="/projects/34342/detail?affect_type=UserScrapbook&amp;affect_id=7109166"><div
 								class="collection collection--total">
 								<div class="collection__image-wrap">
 									<img class="collection__image"
-										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
-										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1589374712_117250_1.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+								</div>
+								<span class="collection__type">집들이</span>
+							</div></a>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 col-lg-3">
+					<div class="collection__wrap">
+						<a
+							href="/productions/45083/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+								class="collection collection--total">
+								<div class="collection__image-wrap">
+									<img class="collection__image"
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1522312366_105506_1.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1522312366_105506_1.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1522312366_105506_1.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1522312366_105506_1.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 								</div>
 								<span class="collection__type">상품</span>
 							</div></a>
@@ -266,35 +266,20 @@
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 						<a
-							href="/productions/39233/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
+							href="/projects/14112/detail?affect_type=UserScrapbook&amp;affect_id=7109166"><div
 								class="collection collection--total">
 								<div class="collection__image-wrap">
 									<img class="collection__image"
-										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
-										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1513406427674_KNijhzpOdx.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
+										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/156525572389082261.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
+										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/156525572389082261.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/156525572389082261.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/156525572389082261.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 								</div>
-								<span class="collection__type">상품</span>
-							</div></a>
-					</div>
-				</div>
-				<div class="col-6 col-md-4 col-lg-3">
-					<div class="collection__wrap">
-						<a
-							href="/productions/229192/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
-								class="collection collection--total">
-								<div class="collection__image-wrap">
-									<img class="collection__image"
-										src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1"
-										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160516917175412107.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
-								</div>
-								<span class="collection__type">상품</span>
+								<span class="collection__type">집들이</span>
 							</div></a>
 					</div>
 				</div>
 			</div>
 		</main>
 	</div>
-
-	<jsp:include page="../footer.jsp" />
+<%-- 	<jsp:include page="../footer.jsp" /> --%>
 </body>
 </html>
