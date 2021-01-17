@@ -10,4 +10,12 @@ public class CommunityController {
 	public String community_index() {
 		return "/community/community_index";
 	}
+	@RequestMapping(value="/community_page.do", method=RequestMethod.GET)
+	public String community_page() {
+		return "/community/community_page";
+	}
+	@RequestMapping(value="/salesApplication.do", method=RequestMethod.GET)
+	public String newpage() {
+		return "salesApplication";
+	}
 }
