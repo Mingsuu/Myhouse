@@ -968,22 +968,24 @@
 	    width: 470px;
 	    box-sizing: border-box;
 	}
-	.toast-message-root.toast-none {
+	/* .toast-message-root.toast-none {
 		display:none;
-	}
+	} */
 	/* 스크랩 취소 */
 	.toast-message__body:last-child {
 		margin-right: 20px;
 	}
-	
+	.btn-orderby {
+		display:block;
+	}
+	.btn-none {
+		display:none;
+	}
 </style>
 <script>
 $(document).ready(function(){
-	//list 부분 
-		/* $("#link1").attr("href", "?category=0"); */
-		/* var para = document.location.href;
-		var para_split = para.split("?"); */
-		//alert(para_split[1]); 
+	
+	/* 사이드 카테고리 선택 */
 	if("<%=category%>" == "0")  {
 		select_list();
 		$("#list-1").removeClass('disable');
@@ -1089,6 +1091,7 @@ $(document).ready(function(){
 		$("#swiper11").addClass('swiper_none');
 		$("#swiper12").addClass('swiper_none');
 	}
+	
 	//swiper
 	 var swiper = new Swiper('.swiper-container', {
 	      spaceBetween: 30,
@@ -1106,11 +1109,8 @@ $(document).ready(function(){
 	        prevEl: '.swiper-button-prev',
 	      },
 	    });
-	/* $("#btn1-1").click(function(){
-		$(this).addClass('category-filter-bar-button--modal-open');
-	}); */
 	
-
+	/* 상세 카테고리 상단 - 섹깔/모양 변경 */
 	$("#btn1-1").click(function(){
 		var btn_id = $("#btn1-1").attr('id');
 		btn_filter(btn_id);
@@ -1144,35 +1144,58 @@ $(document).ready(function(){
 		if( $("#"+btn_id).hasClass("category-filter-bar-button")) {
 			$("#"+btn_id).addClass("category-filter-bar-button--modal-open");
 			$("#"+btn_id).removeClass("category-filter-bar-button");
+			$("#"+btn_id+"-category").css("display","block");
 		} else {
 			$("#"+btn_id).addClass("category-filter-bar-button");
 			$("#"+btn_id).removeClass("category-filter-bar-button--modal-open");
+			$("#"+btn_id+"-category").css("display","none");
 		} 
 	}
 	
-	$("#pro-img-1").click(function(){
-		if($(this).hasClass("production-item-scrap-badge")) {
-			$("#pro-img-1").addClass("production-item-scrap-badge--active");
-			$("#pro-img-1").removeClass("production-item-scrap-badge");
+	
+	/* 인기순 , 최신순 등 선택창 */
+	$(".category-feed-filter-secondary__right__item").click(function(){
+		if($("#btn-orderby").hasClass("btn-none")) {
+			$("#btn-orderby").removeClass("btn-none");
+			$("#btn-orderby").addClass("btn-orderby");
 		} else {
-			$("#pro-img-1").addClass("production-item-scrap-badge");
-			$("#pro-img-1").removeClass("production-item-scrap-badge--active");
-		}
+			$("#btn-orderby").addClass("btn-none");
+			$("#btn-orderby").removeClass("btn-orderby");
+		} 
 	});
 	
-	$(".production-item-scrap-badge").click(function(){
-		if($(".toast-message-root").hasClass("toast-none")) {
-			$("#toast-none").removeClass("toast-none");
-			
-			$(".toast-message__footer").click(function(){
-				$("#toast-none").addClass("toast-none");
-			});
-		} else {
-			$("#toast-none").addClass("toast-none");
+	/* /* 인기순, 최신순 등 선택하면 나타나는 화면 */
+	/* $(".property-filter-panel-entry-list__item-wrap").click(function(){
+		var val = $('input[name="btn-filter"]:checked').val();
+		var val2 =  $(".category-filter-bar-order-button").attr("value");
+		if(val.equals("판매순") && val2.equals("판매순")) {
+			$(".category-filter-bar-order-button").css("display","none");
+			$("#btn-list-1").css("display","block");
 		}
-	});
+		
+	});  */  
 
 	
+	/* 상품 스크랩 */
+	$("#pro-scrap").click(function(){
+		if($(this).hasClass("production-item-scrap-badge")) {
+			$("#pro-scrap").addClass("production-item-scrap-badge--active");
+			$("#pro-scrap").removeClass("production-item-scrap-badge");
+			$("#scrap-add").css("display","flex");
+			$("#scrap-del").css("display","none");
+			$("#scrap-add").fadeOut(3800);
+		} else {
+			$("#pro-scrap").addClass("production-item-scrap-badge");
+			$("#pro-scrap").removeClass("production-item-scrap-badge--active");
+			$("#scrap-add").css("display","none");
+			$("#scrap-del").css("display","flex");
+			$("#scrap-del").fadeOut(3800);
+		}
+	});
+	/* 싱품 스크랩 닫기버튼 */
+	$(".toast-message__footer__close").click(function(){
+			$(".toast-message").css("display","none");
+	});
 	
 });
 
@@ -1432,7 +1455,7 @@ $(document).ready(function(){
 												우드톤<svg class="chevron" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M2.154 3L1 4.125 6 9l5-4.875L9.846 3 6 6.75z"></path></g></svg>
 											</button>
 										</div>
-										<div style="display:none;">
+										<div style="display:none;" id="btn1-1-category">
 											<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="우드톤" data-panel-parents="">
@@ -1442,7 +1465,7 @@ $(document).ready(function(){
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz" value="" checked="">
+																				<input type="checkbox" class="_3UImz" value="" >
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">밝은 톤</span></div></div></button></li>
@@ -1451,7 +1474,7 @@ $(document).ready(function(){
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz" value="" checked="">
+																				<input type="checkbox" class="_3UImz" value="">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">중간 톤</span></div></div></button></li>
@@ -1460,7 +1483,7 @@ $(document).ready(function(){
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz" value="" checked="">
+																				<input type="checkbox" class="_3UImz" value="" >
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">어두운 톤</span></div></div></button></li>
@@ -1476,7 +1499,7 @@ $(document).ready(function(){
 											색상<svg class="chevron" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M2.154 3L1 4.125 6 9l5-4.875L9.846 3 6 6.75z"></path></g></svg>
 											</button>
 										</div>
-										<div style="display:none;">
+										<div style="display:none;" id="btn1-2-category">
 											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="색상" data-panel-parents="">
@@ -1646,25 +1669,25 @@ $(document).ready(function(){
 											가격<svg class="chevron" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M2.154 3L1 4.125 6 9l5-4.875L9.846 3 6 6.75z"></path></g></svg>
 											</button>
 										</div>
-										<div>
+										<div style="display:none;" id="btn1-6-category">
 											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="가격" data-panel-parents="">
 														<section class="property-filter-panel-range-control">
 																<ul class="property-filter-panel-entry-list property-filter-panel-range-control__list">
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""  checked=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">전체</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">50,000원 이하</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">50,000원 ~ 100,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">100,000원 ~ 200,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">200,000원 ~ 300,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">300,000원 ~ 400,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">400,000원 ~ 500,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">500,000원 ~ 600,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">600,000원 ~ 700,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">700,000원 ~ 800,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">800,000원 ~ 900,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">900,000원 ~ 1000,000원</div></span></div></div></button></li>
-																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">1,000,000원 이상</div></span></div></div></button></li></ul>				
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""  checked="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">전체</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">50,000원 이하</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">50,000원 ~ 100,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">100,000원 ~ 200,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">200,000원 ~ 300,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">300,000원 ~ 400,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">400,000원 ~ 500,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">500,000원 ~ 600,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">600,000원 ~ 700,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">700,000원 ~ 800,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">800,000원 ~ 900,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">900,000원 ~ 1000,000원</div></span></div></div></button></li>
+																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value="" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">1,000,000원 이상</div></span></div></div></button></li></ul>				
 										</section></div></div></div>
 										</div> <!-- 가격 선택창 -->
 									</li>
@@ -1674,46 +1697,61 @@ $(document).ready(function(){
 							<div class="category-feed-filter-secondary">
 								<p class="category-feed-filter-secondary__summary">전체 77,485개</p>
 								<div class="category-feed-filter-secondary__right">
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item">
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">판매순
+											<button class="category-filter-bar-order-button" type="button" value="판매순" style="display:none;"  id="btn-list-1">판매순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
 									<div class="category-feed-filter-secondary__right__item">
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">인기순
+											<button class="category-filter-bar-order-button" type="button" value="인기순"  id="btn-list-2">인기순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item" >
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">낮은가격순
+											<button class="category-filter-bar-order-button" type="button" value="낮은가격순" style="display:none;"  id="btn-list-2">낮은가격순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item" >
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">높은가격순
+											<button class="category-filter-bar-order-button" type="button" value="높은가격순" style="display:none;"  id="btn-list-3">높은가격순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item" >
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">많은리뷰순
+											<button class="category-filter-bar-order-button" type="button" value="많은리뷰순" style="display:none;"  id="btn-list-4">많은리뷰순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item" >
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">유저 사진많은순
+											<button class="category-filter-bar-order-button" type="button" value="유저 사진많은순" style="display:none;"  id="btn-list-5">유저 사진많은순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div class="category-feed-filter-secondary__right__item" style="display:none;">
+									<div class="category-feed-filter-secondary__right__item" >
 										<div class="drop-down panel-drop-down">
-											<button class="category-filter-bar-order-button" type="button">최신순
+											<button class="category-filter-bar-order-button" type="button" value="최신순" style="display:none;"  id="btn-list-6">최신순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
-									<div>
-										<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 1000; right:10px; margin-top:20px;"><div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active"><div class="drop-down-panel" data-panel-title="정렬" data-panel-parents=""><ul class="property-filter-panel-entry-list"><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
-										<input type="radio" class="fs-4H" value=""  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">판매순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
-										<input type="radio" class="fs-4H" value="" checked=""  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">인기순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
-										<input type="radio" class="fs-4H" value=""  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">낮은가격순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">높은가격순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">많은리뷰순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">유저사진 많은순</span></div></div></button></li><li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H" value=""><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">최신순</span></div></div></button></li></ul></div></div></div></div>
+									<div class="btn-none" id="btn-orderby">
+										<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 1000; right:10px; margin-top:20px;">
+										<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
+										<div class="drop-down-panel" data-panel-title="정렬" data-panel-parents="">
+										<ul class="property-filter-panel-entry-list">
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="판매순"  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">판매순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="인기순" checked=""  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">인기순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="낮은가격순"  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">낮은가격순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="높은가격순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">높은가격순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="많은리뷰순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">많은리뷰순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="유저사진 많은순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">유저사진 많은순</span></div></div></button></li>
+											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
+												<input type="radio" class="fs-4H" value="최신순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">최신순</span></div></div></button></li></ul></div></div></div>
+									</div>
 								</div>
 							</div>
 						</div> <!-- filter-bar category-feed-filter-bar -->
@@ -1725,7 +1763,7 @@ $(document).ready(function(){
 							<a class="production-item__overlay" href="#"></a>
 							<div class="production-item-image production-item__image">
 								<img class="image" src="http://localhost:9000/myhouse/images/list1_image1.jpg">
-								<button class="production-item-scrap-badge" type="button" id="pro-img-1">
+								<button class="production-item-scrap-badge" type="button" id="pro-scrap">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="inactive-icon"><defs><path id="scrap-icon-7-b" d="M12.472 6.93l7.056-3.811A1 1 0 0 1 21 4.002v15.496c0 .83-.672 1.502-1.5 1.502h-15c-.828 0-1.5-.673-1.5-1.502V4.002a1 1 0 0 1 1.472-.883l7.056 3.811a.999.999 0 0 0 .944 0z"></path><filter id="scrap-icon-7-a" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1.5"></feGaussianBlur><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.26 0"></feColorMatrix></filter><filter id="scrap-icon-7-c" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceAlpha" result="shadowBlurInner1" stdDeviation="1.5"></feGaussianBlur><feOffset in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset><feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"></feComposite><feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"></feColorMatrix></filter></defs><g fill="none" fill-rule="nonzero" transform="matrix(1 0 0 -1 0 24)"><use fill="#000" filter="url(#scrap-icon-7-a)" href="#scrap-icon-7-b"></use><use fill="#FFF" fill-opacity=".4" href="#scrap-icon-7-b"></use><use fill="#000" filter="url(#scrap-icon-7-c)" href="#scrap-icon-7-b"></use><path stroke="#FFF" d="M12.71 7.37h-.002a1.5 1.5 0 0 1-1.417 0L4.236 3.56a.499.499 0 0 0-.736.442v15.496c0 .553.448 1.002 1 1.002h15c.552 0 1-.449 1-1.002V4.002a.499.499 0 0 0-.734-.443l-7.057 3.81zm-.475-.88h-.001z"></path></g></svg>
 									<svg class="active-icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#35C5F0" fill-rule="nonzero" d="M12.472 17.07a.999.999 0 0 0-.944 0l-7.056 3.811A.999.999 0 0 1 3 19.998V4.502C3 3.672 3.672 3 4.5 3h15c.828 0 1.5.673 1.5 1.502v15.496a1 1 0 0 1-1.472.883l-7.056-3.811z"></path></svg>
 								</button>
@@ -2008,8 +2046,8 @@ $(document).ready(function(){
 
 
 <!-- 스크랩 팝업 -->
-<div class="toast-message-root" id="toast-none">
-	<div class="toast-message toast-message-transition-enter-done">
+<div class="toast-message-root">
+	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-add">
 		<button class="toast-message__footer" type="button" id="taost-none2">
 			<div class="toast-message__footer__close">
 				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>
@@ -2019,7 +2057,7 @@ $(document).ready(function(){
 		<button class="button button--color-blue button--size-40 button--shape-4 toast-message__button 
 		toast-message__button--last">폴더에 담기</button>
 	</div>
-	<div class="toast-message toast-message-transition-enter-done">
+	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-del">
 		<button class="toast-message__footer" type="button">
 			<div class="toast-message__footer__close">
 				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>

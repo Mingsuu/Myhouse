@@ -9,13 +9,48 @@ import org.springframework.web.servlet.ModelAndView;
 public class StoreController {
 
 	/*
+	 * store_pay_cancel 화면
+	 */
+	@RequestMapping(value="/store_pay_cancel.do",method=RequestMethod.GET) 
+	public String store_pay_cancel() {
+		
+		return "/store/store_pay_cancel";
+	}
+	
+	/*
+	 * store_pay_fin_card 화면
+	 */
+	@RequestMapping(value="/store_pay_fin_card.do",method=RequestMethod.GET) 
+	public String store_pay_fin_card() {
+		
+		return "/store/store_pay_fin_card";
+	}
+	/*
+	 * store_pay_finish 화면
+	 */
+	@RequestMapping(value="/store_pay_finish.do",method=RequestMethod.GET) 
+	public String store_pay_finish() {
+		
+		return "/store/store_pay_finish";
+	}
+	
+	/*
+	 * store_payment 화면
+	 */
+	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
+		public String store_payment() {
+			
+			return "/store/store_payment";
+		}
+	
+	/*
 	 * store_page 화면
 	 */
 	@RequestMapping(value="/store_page.do",method=RequestMethod.GET) 
-		public String store_page() {
-			
-			return "/store/store_page";
-		}
+	public String store_page() {
+		
+		return "/store/store_page";
+	}
 		
 	/*
 	 * store_index 화면
