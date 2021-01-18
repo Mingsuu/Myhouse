@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: User
-=======
-Built-By: lyj60
->>>>>>> 691533a428b84a957aefc452402d540b2e7fa66b
-Build-Jdk: 14
+Built-By: LG
+Build-Jdk: 15.0.1
 Created-By: Maven Integration for Eclipse
 
