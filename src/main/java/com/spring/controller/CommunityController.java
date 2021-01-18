@@ -14,8 +14,5 @@ public class CommunityController {
 	public String community_page() {
 		return "/community/community_page";
 	}
-	@RequestMapping(value="/salesApplication.do", method=RequestMethod.GET)
-	public String newpage() {
-		return "salesApplication";
-	}
+	
 }
