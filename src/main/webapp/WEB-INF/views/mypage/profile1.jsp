@@ -217,10 +217,27 @@
  	margin-top:10px;
  	margin-left:40px;
 }
-.pic {
-	margin-bottom:15px;
+.right a {
+	text-decoration:none;
 }
-.pic,
+.poto {
+	display:inline-block;
+	width:700px;
+	height:40px;
+	border:1px solid lightgray;
+	border-radius:5px;
+	text-align:center;
+	font-size:13px;
+	font-weight:bold;
+	color:#757575;
+	margin-left:40px;
+	text-decoration:none;
+	margin-bottom:15px;
+	padding-top:20px;
+}
+.poto:hover{
+	background-color:#f5f5f5;
+}
 .pic1 {
 	display:inline-block;
 	width:700px;
@@ -235,16 +252,47 @@
 	margin-left:40px;
 	text-decoration:none;
 }
-.pic img,
+.poto img,
 .pic1 img {
 	opacity:0.4;
 }
 .right p {
 	color:#35c5f0;
 }
-.pic:hover,
 .pic1:hover {
 	text-decoration:underline;
+}
+.pic2 {
+	display:inline-block;
+	width:750px;
+	height:160px;
+	border-radius:5px;
+	text-align:center;
+	font-size:13px;
+	font-weight:bold;
+	color:#757575;
+	margin-left:40px;
+	text-decoration:none;
+	margin-bottom:30px;
+	margin-top:-20px;
+	padding-top:20px;
+}
+.poto1 {
+	width:150px;
+	height:150px;
+	margin-right:30px;
+	margin-top:-5px;
+	background-color:#f5f5f5;
+	border:none;
+	border-radius:5px;
+	display:inline-block;
+	float:left;
+	background-size:100%;
+}
+.poto1 img {
+	width:150px;
+	height:150px;
+	border:none;
 }
 .sh {
 	display:inline-block;
@@ -291,6 +339,13 @@
     width:176px;
 	height:60px;
 }
+.allsee {
+	font-size:13px;
+	color:#35c5f0;
+	margin-left:30px;
+}
+/*  */
+
 </style>
 </head>
 <body>
@@ -308,6 +363,7 @@
 		<ul class="nav2-1">
 			<a href="mypage_profile.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
+			<a href="mypage_ask.do"><li class="nav2-2">질문과답변</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
 			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
@@ -332,16 +388,16 @@
 		<div class="leftbox">
 			<span>귤먹고갈래</span>
 			<a href="#" class="mybtn1">팔로워 2</a><div></div><a href="#" class="mybtn1">팔로잉 1</a>
-			<a href="mypage_option.do" class="mybtn">설정</a>
+			<a href="#" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
-			<a href="mypage_scrap.do"><div class="scrap">
+			<a href="#"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
 				<span class="left3">0</span>
 			</div></a>
-			<a href="mypage_like.do"><div class="like">
+			<a href="#"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
 				<span class="left2">좋아요</span><br>
 				<span class="left4">0</span>
@@ -349,9 +405,15 @@
 		</div>
 	</div>
 	<div class="right">
-		<h5>사진 <p>0</p></h5>
-		<a href="#" class="pic">
-		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
+		<h5>사진 <p>1</p></h5><a href="mypage_picture.do"><span class="allsee">전체보기</span></a>
+		<div class="pic2">
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/pic1.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
+		</div>
+		<a href="#" class="poto">
+		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 사진 올리기</a>
 		<h5>집들이 <p>0</p></h5>
 		<a href="#" class="pic1">
 		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 집들이를 올려보세요</a>

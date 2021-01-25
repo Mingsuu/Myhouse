@@ -167,8 +167,8 @@
 <div class="mid">
 	<div class="review">
 		<div class="review1">
-			<a href="mypage_review2.do"><span>베스트순</span></a>
-			<span style="color:#35c5f0;">최신순</span>
+			<span style="color:#35c5f0;">베스트순</span>
+			<a href="mypage_review1.do"><span>최신순</span></a>
 		</div>
 		<div class="review2">
 			<div class="simsa"><span>리뷰심사중</span><a href="#">수정</a></div>
