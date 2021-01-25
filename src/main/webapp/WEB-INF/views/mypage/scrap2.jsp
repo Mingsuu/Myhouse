@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage1.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -17,23 +16,7 @@ $(document).ready(function(){
 				$("#share1").css("visibility","hidden");				
 			}
 		});
-	
-		
-		$("#update").click(function(){
-			if($("#update1").css("display") == "none") {
-				$("#update1").css("display","block");
-				$("#update").css("display","none");
-			}else if($("#update1").css("display") == "block") {
-				$("#update1").css("display","none");				
-			}
-		});
-		
-		$("#update1").click(function(){
-			if($("#update").css("display") == "none") {
-				$("#update").css("display","block");
-				$("#update1").css("display","none");
-			}
-		});
+
 });
 </script>
 <style>
@@ -152,12 +135,8 @@ $(document).ready(function(){
 .share:hover {
 	opacity:0.7;
 }
-.virtualized-list collection-feed-collections row {
-	display:inline-block;
-	border:1px solid red;
-}
 </style>
-
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage1.css">
 </head>
 <body>
 	<div class="total">
@@ -179,53 +158,18 @@ $(document).ready(function(){
 		</div>
 		<div class="book2">
 			<ul class="book2-1">
-				<a class="modu"><li>모두 (2)</li></a>
+				<a href="mypage_scrap.do" class="modu1"><li>모두 (2)</li></a>
 				<a href="mypage_scrap1.do" class="modu1"><li>상품 (1)</li></a>
-				<a href="mypage_scrap2.do" class="modu1"><li>사진 (1)</li></a>
+				<a  class="modu"><li>사진 (1)</li></a>
 			</ul>
 		</div>
-	
 		<div calss="updatebtn">
-			<div data-sticky-enabled="false" data-sticky-disabled="false" data-sticky-always="false" data-sticky-ignore="false" data-direction="top" data-offset="142" class="sticky-container collection-feed__edit-panel" style="position: sticky; top: 142px;">
-				<div class="sticky-child" style="position: relative;">
-					<div class="collection-feed__edit-panel__wrap">
-						<div class="collection-feed__edit-panel__left">
-							<div class="collection-feed-filter__empty"></div>
-						</div>
-						<div class="collection-feed__edit-panel__menus">
-							<button type="button" class="collection-feed__edit-panel__menus__menucollection-feed__edit-panel__menus__menu--skyblue" id="update">
-							편집</button>
-						<div id="update1" data-sticky-enabled="false" data-sticky-disabled="false" data-sticky-always="false" data-sticky-ignore="false" data-direction="top" data-offset="142" class="sticky-container collection-feed__edit-panel" style="position: sticky; top: 142px; display:none;">
-							<div class="sticky-child" style="position: relative;">
-								<div class="collection-feed__edit-panel__wrap">
-									<div class="collection-feed__edit-panel__left">
-									<span class="collection-feed__edit-panel__left__value">0</span> / 50 개 선택</div>
-									<div class="collection-feed__edit-panel__menus">
-										<button type="button" class="collection-feed__edit-panel__menus__menu">폴더이동</button>
-										<button type="button" class="collection-feed__edit-panel__menus__menu">삭제</button>
-										<button type="button" class="collection-feed__edit-panel__menus__menucollection-feed__edit-panel__menus__menu--close">취소</button>
-			               			</div>
-		               			</div>
-	               			</div>
-               			</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!-- <button type="button" class="upbtn">편집</button> -->
+			<div data-sticky-enabled="false" data-sticky-disabled="false" data-sticky-always="false" data-sticky-ignore="false" data-direction="top" data-offset="142" class="sticky-container collection-feed__edit-panel" style="position: sticky; top: 142px;"><div class="sticky-child" style="position: relative;"><div class="collection-feed__edit-panel__wrap"><div class="collection-feed__edit-panel__left"><div class="collection-feed-filter__empty"></div></div><div class="collection-feed__edit-panel__menus"><button type="button" class="collection-feed__edit-panel__menus__menu
+                  collection-feed__edit-panel__menus__menu--skyblue">편집</button></div></div></div></div>
 		</div>
+		<div class="grim">
 			<div class="virtualized-list collection-feed-collections row" style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
-				<div class="col-6 col-md-4 col-lg-3">
-					<div class="collection__wrap">
-					<a href="#">
-						<div class="collection collection--total">
-							<div class="collection__image-wrap">
-								<img class="collection__image" src="http://localhost:9000/myhouse/images/mypage/pic2.jpg" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
-							</div>
-							<span class="collection__type">상품</span>
-						</div>
-					</a>
-					</div>
-				</div>
 				<div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 					<a href="#">
@@ -233,13 +177,13 @@ $(document).ready(function(){
 							<div class="collection__image-wrap">
 								<img class="collection__image" src="http://localhost:9000/myhouse/images/mypage/pic1.jpg" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/160750159124130756.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 							</div>
-							<span class="collection__type">상품</span>
+							<span class="collection__type">사진</span>
 						</div>
 					</a>
 					</div>
 				</div>
 			</div>
-			
+		</div>
 	</div>
 
 </body>
