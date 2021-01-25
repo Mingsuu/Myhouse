@@ -10,13 +10,56 @@
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/myhouse.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script>
+	<!--이미지 미리보기-->
+<script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        
+        var sel_file;
+ 
+        $(document).ready(function() {
+            $("#imageSelector").on("change", handleImgFileSelect);
+        }); 
+ 
+        function handleImgFileSelect(e) {
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+ 
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+ 
+                sel_file = f;
+ 
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#img").attr("src", e.target.result);
+                }
+                reader.readAsDataURL(f);
+            });
+        }
+        
+        /*이미지 태그 워치*/
+        function test(){
+            alert("이미지태그위치" + event.offsetX  + "/" + event.offsetY)
+            
+    }
+ 
+    </script>
 	
-	</script>
+	<style>
+	div#w_picture img#img{
+	width:450px;
+	height:500px;
+	}
+	
+	</style>
 </head>
 
 <body>
@@ -94,17 +137,21 @@
 							class="card-collection-form__card-item">
 							<div class="card-collection-form__card-item__image-wrap"
 								draggable="true">
-								<button
-									class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture"
-									type="button">
-									<input type="file" id="w_picture">
-									<span class="content"><svg class="icon" width="48"
-											height="48" viewBox="0 0 48 48" fill="currentColor"
+								
+								<!--이미지파일만 선택,우선은 다중선택가능-->
+								<input type="file" class="hidden_input" id="imageSelector" name="imageSelector" 
+									accept="image/jpeg, image/jpg, image/png" multiple />	
+								<div class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture">
+									<img id="img" onclick="test()"/>
+									
+									<!-- <span class="content"> -->
+									<!-- <svg class="icon" width="48"
+											height="400" viewBox="0 0 48 48" fill="currentColor"
 											preserveAspectRatio="xMidYMid meet">
-											<path d="M11.952 9.778l2.397-5.994A1.778 1.778 0 0 1 16 2.667h16c.727 0 1.38.442 1.65 1.117l2.398 5.994h10.174c.982 0 1.778.796 1.778 1.778v32c0 .981-.796 1.777-1.778 1.777H1.778A1.778 1.778 0 0 1 0 43.556v-32c0-.982.796-1.778 1.778-1.778h10.174zM24 38c6.075 0 11-4.925 11-11s-4.925-11-11-11-11 4.925-11 11 4.925 11 11 11z"></path></svg>
-											<span class="text">사진 올리기<br><!-- *최대 10장까지 -->
-									</span></span>
-								</button>
+											</svg> -->
+											<!-- <span class="text">파일을 선택해주세요<br>*최대 10장까지 -->
+									<!-- </span> --><!-- </span> -->
+								</div>
 							</div>
 							<div class="card-collection-form__card-item__content">
 								<div class="card-collection-form__card-item__content__row">
@@ -138,7 +185,7 @@
 								</div>
 								<div class="card-collection-form__card-item__content__row">
 									<div class="keyword-input">
-										<div class="keyword-input__input-item"
+										<!-- <div class="keyword-input__input-item"
 											style="display: inline-block">
 											<input class="keyword-input__input-item__input" value=""
 												placeholder="키워드"
@@ -147,7 +194,7 @@
 												style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 15px; font-family: &amp; quot; Noto Sans KR&amp;quot; , &amp; quot; Apple SD Gothic Neo&amp;quot; , &amp; quot; 맑은 고딕&amp;quot; , &amp; quot; Malgun Gothic&amp;quot; , sans-serif; font-weight: 400; font-style: normal; letter-spacing: normal; text-transform: none;"></div>
 											<div
 												style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 15px; font-family: &amp; quot; Noto Sans KR&amp;quot; , &amp; quot; Apple SD Gothic Neo&amp;quot; , &amp; quot; 맑은 고딕&amp;quot; , &amp; quot; Malgun Gothic&amp;quot; , sans-serif; font-weight: 400; font-style: normal; letter-spacing: normal; text-transform: none;">키워드</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -155,11 +202,11 @@
 				</ol>
 			</div>
 		</section>
-		<div class="card-collection-form__mobile-footer">
+	<!-- 	<div class="card-collection-form__mobile-footer">
 			<button
 				class="button button--color-blue button--size-50 button--shape-4 card-collection-form__mobile-footer__submit"
 				type="submit">올리기</button>
-		</div>
+		</div> -->
 		<div data-sticky-enabled="true" data-sticky-disabled="false"
 			data-sticky-always="true" data-sticky-ignore="false"
 			data-direction="bottom" data-offset="0"
