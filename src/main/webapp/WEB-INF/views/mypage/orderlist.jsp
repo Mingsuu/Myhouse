@@ -58,35 +58,15 @@
 	padding-top:15px;
 	color:black;
 }
-.mid {
+.mid1 {
 	display:inline-block;
 	width:1136px;
-	height:596px;
+	height:auto;
 	text-align:center;
+	border:1px solid red;
+	margin-top:20px;
 }
-.orderbox,
-.orderstatus {
-	border:1px solid lightgray;
-	border-radius:9px;
-	display:inline-block;
-	width:1000px;
-	height:140px;
-	margin-top:70px;
-	box-shadow: 0 1px 4px 0 rgba(17,17,17,0.1);
-}
-.orderbox a {
-	color:#424242;
-}
-.orderbox a:hover {
-	color:black;
-}
-.orderbox1 {
-	display:inline-block;
-	font-size:20px;
-	width:300px;
-	height:80px;
-	margin-top:35px;
-}
+
 .icon {
 	width:20px;
 	height:40px;
@@ -121,9 +101,335 @@
 	font-weight:bold;
 	float:left;
 }
-.status {
-	height:40px;
+/*  */
+
+.order-list__item__title {
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 50px;
+	border-bottom: 2px solid #ededed;
+	padding-left: 20px;
 	margin-top:30px;
+}
+
+.order-list__item__title__order{
+	color: #424242;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	min-width: 160px;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 25px;
+}
+.order-list__item__title__link{
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	position: relative;
+	display: block;
+	font-size: 13px;
+	line-height: 25px;
+	text-align: right;
+	padding-right: 40px;
+	margin-left: auto;
+	min-width: 50px;
+}
+.order-list__item__production{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+}
+.order-list__item__production__wrap {
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	margin-bottom:40px;
+}
+.order-list__item__production__item{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	-webkit-box-align: center;
+	align-items: center;
+	padding: 20px;
+	min-height: 110px;
+	display: flex;
+}
+.order-list__item__production__item__wrap{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	-webkit-box-flex: 1;
+	flex: 1 0 0px;
+	align-items: center;
+}
+.order-list__item__production__item__img{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	border: 0;
+	width: 100px;
+	height: 100px;
+	margin-right: 10px;
+	border-radius: 4px;
+}
+.order-list__item__production__item__info{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-flex: 1;
+	flex: 1 0 0px;
+}
+.order-list__item__production__item__info__wrap{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	margin-right: 10px;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	flex-direction: column;
+	-webkit-box-flex: 1;
+	flex: 1 0 0px;
+	max-width: 45%;
+}
+
+.order-list__item__production__item__info__brand{
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	display: block;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+.order-list__item__production__item__info__name{
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	display: block;
+	font-size: 18px;
+	line-height: 25px;
+	font-weight: 700;
+}
+.order-list__item__production__item__info__option{
+	color: #424242;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 30px;
+}
+.order-list__item__production__item__info__price{
+	color: #424242;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 30px;
+}
+.order-list__item__production__item__info__status{
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 30px;
+	color: #35c5f0;
+}
+.order-list__item__production__item__delivery {
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	flex-direction: column;
+	width: 150px;
+	min-height: 110px;
+}
+.order-list__item__production__item__seller{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-tap-highlight-color: transparent;
+	display: flex;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	width: calc(100% - 40px);
+	height: 65px;
+	padding: 5px;
+	border-radius: 4px;
+	background-color: #f5f5f5;
+	font-size: 14px;
+	margin: 0 auto 10px;
+}
+.order-list__item__production__item__seller__delivery-pay{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	text-align: center;
+	font-size: 14px;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	color: #757575;
+	margin-bottom: 15px;
+}
+.order-list__item__production__item__seller__brand{
+	color: #424242;
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	text-align: center;
+	font-size: 14px;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-weight: 600;
+}
+.order-list__item__production__item__seller__brand__phone{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 600;
+	-webkit-tap-highlight-color: transparent;
+	text-decoration: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	margin-left: 10px;
+	color: #35c5f0;
+}
+.besong {
+	border:1px solid lightgray;
+	box-shadow: 1px 5px 5px 2px rgba(17, 17, 17, 0.1);
+}
+.besongnull {
+	height:500px;
+	text-align:center;
+	display:none;
+}
+.besongnull span {
+	margin-top:100px;
+	font-size:15px;
+	color:#424242;
+	display:inline-block;
 }
 </style>
 </head>
@@ -141,42 +447,79 @@
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_orderlist.do"><li class="nav2-2"   style="color:#35c5f0; border-bottom:5px solid #35c5f0;">주문배송내역</li></a>
-			<a href="mypage_reception.do"><li class="nav2-2">상품문의내역</li></a>
 			<a href="mypage_notice.do"><li class="nav2-2">공지사항</li></a>
 			<a href="mypage_clientcenter.do"><li class="nav2-2">고객센터</li></a>
 		</ul>
 	</div>
 </div>
 <div class="profile">
-<div class="mid">
-	
-		<div class="orderbox">
-			<a href="#"><div class="orderbox1">
-				<div class="orderlist">입금대기</div>
-				<div class="orderlist1" style="color:#35c5f0;">0</div>
-			</div></a>
-			
-		<img src="http://localhost:9000/myhouse/images/mypage/order.png" class="icon">
-			
-			<a href="#"><div class="orderbox1">
-				<div class="orderlist">결재완료</div>
-				<div class="orderlist1" style="color:#35c5f0;">0</div>
-			</div></a>
-			
-		<img src="http://localhost:9000/myhouse/images/mypage/order.png" class="icon">
-			
-			<a href="#"><div class="orderbox1">
-				<div class="orderlist">구매확정</div>
-				<div class="orderlist1" style="color:#35c5f0;">0</div>
-			</div></a>
+<h2>배송내역</h2>
+	<div class="besongnull"><span>현재 구입한 상품이 존재하지 않습니다.</span></div>
+<div class="besong">
+	 <div class="order-list__item__title">
+		<div class="order-list__item__title__order">45684156 | 2021.01.21</div>
+		<a class="order-list__item__title__link" href="#">상세보기</a>
+	</div>
+	<div class="order-list__item__production">
+	<div class="order-list__item__production__wrap">
+		<div class="order-list__item__production__item">
+			<div class="order-list__item__production__item__wrap">
+				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/pic1.jpg">
+				<div class="order-list__item__production__item__info">
+					<div class="order-list__item__production__item__info__wrap">
+						<a class="order-list__item__production__item__info__brand" href="#">듀커소파</a>
+						<a class="order-list__item__production__item__info__name" href="#">[쿠폰할인]DK053 3인용 풀커버 그레이 발수 패브릭 소파 (스툴 기본포함)</a>
+					</div>
+					<div class="order-list__item__production__item__info__wrap">
+						<div class="order-list__item__production__item__info__option">사이즈 선택: 176cm / 색상 선택: 베이지</div>
+						<div class="order-list__item__production__item__info__price">261,000원 | 1개</div>
+						<div class="order-list__item__production__item__info__status">입금대기 | 업체직접배달</div>
+					</div>
+				</div>
+			</div>
+			<div class="order-list__item__production__item__delivery"></div>
 		</div>
-	<div class="orderstatus">
-		<div class="status">
-			<button class="gigan">기간 <img src="http://localhost:9000/myhouse/images/mypage/order1.png"></button>
-			<button class="jumun">주문상태 <img src="http://localhost:9000/myhouse/images/mypage/order1.png"></button>
+		<div class="order-list__item__production__item__seller">
+			<div class="order-list__item__production__item__seller__delivery-pay">착불 배송비는 상품 상세정보 참고</div>
+			<div class="order-list__item__production__item__seller__brand">
+				듀커소파<a href="tel:031-761-6003" class="order-list__item__production__item__seller__brand__phone">031-761-6003</a>
+			</div>
 		</div>
 	</div>
-</div>
+	</div>
+	
+	<div class="order-list__item__title">
+		<div class="order-list__item__title__order">45684156 | 2021.01.21</div>
+		<a class="order-list__item__title__link" href="#">상세보기</a>
+	</div>
+	<div class="order-list__item__production">
+	<div class="order-list__item__production__wrap">
+		<div class="order-list__item__production__item">
+			<div class="order-list__item__production__item__wrap">
+				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/pic2.jpg">
+				<div class="order-list__item__production__item__info">
+					<div class="order-list__item__production__item__info__wrap">
+						<a class="order-list__item__production__item__info__brand" href="#">듀커소파</a>
+						<a class="order-list__item__production__item__info__name" href="#">[쿠폰할인]DK053 3인용 풀커버 그레이 발수 패브릭 소파 (스툴 기본포함)</a>
+					</div>
+					<div class="order-list__item__production__item__info__wrap">
+						<div class="order-list__item__production__item__info__option">사이즈 선택: 176cm / 색상 선택: 베이지</div>
+						<div class="order-list__item__production__item__info__price">261,000원 | 1개</div>
+						<div class="order-list__item__production__item__info__status">입금대기 | 업체직접배달</div>
+					</div>
+				</div>
+			</div>
+			<div class="order-list__item__production__item__delivery"></div>
+		</div>
+		<div class="order-list__item__production__item__seller">
+			<div class="order-list__item__production__item__seller__delivery-pay">착불 배송비는 상품 상세정보 참고</div>
+			<div class="order-list__item__production__item__seller__brand">
+				듀커소파<a href="tel:031-761-6003" class="order-list__item__production__item__seller__brand__phone">031-761-6003</a>
+			</div>
+		</div>
+	</div>
+	</div>
+	
 </div>
 </body>
 </html>

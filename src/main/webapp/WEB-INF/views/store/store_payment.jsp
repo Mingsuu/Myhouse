@@ -733,6 +733,54 @@
 	    font-weight:700;
 	    margin-left:10px;
 	}
+	._2Jn8D {
+		padding-top:10px;
+	    max-width: 642px;
+	}
+	._3Bt8k {
+	    position: relative;
+	    display: inline-block;
+	    width: 100%;
+	}
+	._3Bt8k ._3K8Q8 {
+	    padding-right: 30px;
+	}
+	._1qwAY {
+	    padding: 8px 15px 9px;
+	}
+	._3ASDR {
+	    display: inline-block;
+	    width: 100%;
+	    margin: 0;
+	    border: 1px solid #dbdbdb;
+	    background-color: #fff;
+	    color: #000;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	    font-family: Noto Sans KR,Noto Sans CJK KR,맑은 고딕,Malgun Gothic,sans-serif;
+	    font-size: 15px;
+	    line-height: 21px;
+	    transition: border-color .1s,background-color .1s;
+	    resize: none;
+	}
+	._3wKau {
+	    position: relative;
+	    margin-bottom: 8px;
+	}
+	._1FAgO._17HFC._1FAgO._17HFC._1FAgO._17HFC {
+	    padding-bottom: 25px;
+	}
+	._1qwAY {
+	    padding: 8px 15px 9px;
+	}
+	._2CKA7 {
+	    position: absolute;
+	    font-size: 12px;
+	    color: #757575;
+	    bottom: 10px;
+	    right: 15px;
+	    user-select: none;
+	}
 </style> 
 <script>
 	$(document).ready(function(){
@@ -882,7 +930,19 @@
 		        <div class="field">
 		          <div class="label vertical">배송 메모</div>
 		          <div class="input vertical">
-		            <input type="text" name="delivery_message" id="delivery_message" class="delivery_memo donot_check_before_payment full view_delivery_preset" autocomplete="off" data-hj-suppress="">
+		                 <div class="_2Jn8D">
+		                 	<div class="_3wKau">
+		                 		<textarea class="_3ASDR _1qwAY _1FAgO _17HFC" placeholder="배송 요청사항을 입력해주세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+		                 		<div class="_2CKA7">0<span> / 50</span></div>
+		                 	</div>
+		                  	<div class="_3Bt8k">
+		                  		<select class="_3ASDR _1qwAY _3K8Q8">
+			                  		<option value="0">배송시 요청사항을 선택해주세요</option><option value="1">부재시 문앞에 놓아주세요</option>
+			                  		<option value="2">배송전에 미리 연락주세요</option><option value="3">부재시 경비실에 맡겨 주세요</option>
+			                  		<option value="4">부재시 전화주시거나 문자 남겨 주세요</option><option value="5">직접입력</option>
+		                  		</select>
+		                  	</div>
+		                  </div>
 		            <div id="delivery_messages" style="display: none;">
 		                <div class="delivery_message first">
 		                  <div class="product_name">[잉글랜더][단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
@@ -891,11 +951,6 @@
 		                <input class="products_delivery_is_backwoods" type="hidden" value="false" name="order[order_productions_attributes][0][is_backwoods]" id="order_order_productions_attributes_0_is_backwoods">
 						<input type="hidden" value="85249289" name="order[order_productions_attributes][0][id]" id="order_order_productions_attributes_0_id">            
 					</div>
-		            <div id="delivery_message_presets" style="top:854; display: none;">
-		              <div class="preset" id="msg-1">배송 전에 미리 연락 바랍니다.</div>
-		              <div class="preset" id="msg-2">부재시 경비실에 맡겨주세요.</div>
-		              <div class="preset" id="msg-3">부재시 전화 주시거나 문자 남겨 주세요.</div>
-		            </div>
 		          </div> <!-- input vertical -->
 		        </div>
 	      </div>

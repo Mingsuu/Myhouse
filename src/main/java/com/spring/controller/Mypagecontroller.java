@@ -69,6 +69,11 @@ public class Mypagecontroller {
 		return "/mypage/review1";
 	}
 	
+	@RequestMapping(value="/mypage_review2.do", method=RequestMethod.GET)
+	public String rivew2() {
+		return "/mypage/review2";
+	}
+	
 	@RequestMapping(value="/mypage_option.do", method=RequestMethod.GET)
 	public String option() {
 		return "/mypage/option";
@@ -92,6 +97,21 @@ public class Mypagecontroller {
 	@RequestMapping(value="/mypage_noticecontent.do", method=RequestMethod.GET)
 	public String noticecontent() {
 		return "/mypage/noticecontent";
+	}
+	
+	@RequestMapping(value="/mypage_profile1.do", method=RequestMethod.GET)
+	public String profile1() {
+		return "/mypage/profile1";
+	}
+	
+	@RequestMapping(value="/mypage_scrap1.do", method=RequestMethod.GET)
+	public String scrap1() {
+		return "/mypage/scrap1";
+	}
+	
+	@RequestMapping(value="/mypage_scrap2.do", method=RequestMethod.GET)
+	public String scrap2() {
+		return "/mypage/scrap2";
 	}
 	
 }

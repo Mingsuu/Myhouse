@@ -22,6 +22,7 @@
 		});//click
 		
 		
+		
 	});//ready
 
 
@@ -151,6 +152,7 @@
 	float:left;
 	font-size:15px;
 }
+
 /* 수정버튼 클릭시 나오는 리뷰 수정 */
 .container review-my-home{
 	color: #424242;
@@ -1374,6 +1376,75 @@ list-style-position: inside;
 color: #f06060;
 font-weight: 700;
 }
+.select-picture{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	color: #292929;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+	height: 226px;
+	background-color: #eaebef;
+	border-radius: 4px;
+	overflow: hidden;
+}
+.select-picture__contents{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	color: #292929;
+	-webkit-tap-highlight-color: transparent;
+	border: 0;
+	height: 100%;
+}
+.select-picture__delete{
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-appearance: none;
+	touch-action: manipulation;
+	user-select: none;
+	margin: 0;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	background: none;
+	font-family: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	text-align: center;
+	transition: color .1s,background-color .1s,border-color .1s;
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: #35c5f0;
+	border-color: #35c5f0;
+	color: #fff;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 70px;
+	height: 32px;
+	box-shadow: 0 0 6px 0 rgba(47,52,56,.2);
+	font-size: 15px;
+	padding: 0;
+	line-height: 1;
+}
 </style>
 </head>
 <body>
@@ -1398,8 +1469,8 @@ font-weight: 700;
 <div class="mid">
 	<div class="review">
 		<div class="review1">
-			<a href="mypage_review2.do"><span>베스트순</span></a>
-			<span style="color:#35c5f0;">최신순</span>
+			<span style="color:#35c5f0;">베스트순</span>
+			<a href="mypage_review1.do"><span>최신순</span></a>
 		</div>
 		<div class="review2">
 			<div class="simsa"><span>리뷰심사중</span><a href="#" id="sujung">수정</a></div>
@@ -1422,7 +1493,8 @@ font-weight: 700;
 	</div>
 </div>
 
-<div class="react-modal react-modal--center review-modal__modal__wrap open open-active" id="modal">
+
+	<div class="react-modal react-modal--center review-modal__modal__wrap open open-active" id="modal">
 	<div class="react-modal__content-wrap">
 		<div class="react-modal__content review-modal__modal">
 			<div class="review-modal">
@@ -1498,7 +1570,7 @@ font-weight: 700;
 					<div class="review-modal__section__title">사진 첨부 (선택) 
 					</div>
 					<div class="review-modal__section__explain">오늘의집에 올렸던 사진에서 고르거나 새로운 사진을 첨부해주세요. (최대 1장)</div>
-					<div class="select-my-card">
+					<!-- <div class="select-my-card">
 						<div class="select-my-card__content">
 						<img class="select-my-card__content__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=180&amp;h=180&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 3x">
 							<div class="round-checkbox-input round-checkbox-input--blue">
@@ -1526,7 +1598,35 @@ font-weight: 700;
 								</label>
 							</div>
 						</div>
+					</div> -->
+					<div class="select-picture">
+						<img class="select-picture__contents" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=480&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=640&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=850&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=1280&amp;webp=1 3x">
+						<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button">
+							<svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
+								<defs>
+									<filter id="delete-a" width="134.3%" height="175%" x="-17.1%" y="-37.5%" filterUnits="objectBoundingBox">
+										<feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+										<feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="3"></feGaussianBlur>
+										<feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.182857143 0 0 0 0 0.205714286 0 0 0 0 0.22 0 0 0 0.2 0"></feColorMatrix>
+										<feMerge>
+											<feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+											<feMergeNode in="SourceGraphic"></feMergeNode>
+										</feMerge>
+									</filter>
+									<path id="delete-b" d="M11 3.83v10c0 .92-.75 1.67-1.67 1.67H2.67c-.92 0-1.67-.75-1.67-1.67v-10h10zM8.08.5l.84.83h2.91V3H.17V1.33h2.91L3.92.5h4.16z"></path>
+								</defs>
+								<g fill="none" fill-rule="evenodd" filter="url(#delete-a)" transform="translate(4 2)">
+									<mask id="delete-c" fill="#fff">
+										<use xlink:href="#delete-b"></use>
+									</mask>
+									<g fill="#FFF" mask="url(#delete-c)">
+										<path d="M-4-2h20v20H-4z"></path>
+									</g>
+								</g>
+							</svg>삭제
+						</button>
 					</div>
+					
 					<button class="button button--color-blue-inverted button--size-50 button--shape-4 upload-button" type="button">
 						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 							<path d="M21.1 4c.5 0 .9.4.9.9v14.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V4.9c0-.5.4-.9.9-.9h18.2zm-.91 1.8H3.8v10.85l5.54-6.27c.12-.17.38-.17.52 0l3.1 3.54c.06.06.08.14.06.2l-.4 1.84c-.02.14.15.23.23.12l3.16-3.43a.27.27 0 01.38 0l3.79 4.12V5.8zm-3.37 4.8a1.47 1.47 0 01-1.47-1.45c0-.81.66-1.46 1.47-1.46s1.48.65 1.48 1.46c0 .8-.66 1.45-1.48 1.45z"></path>
@@ -1569,6 +1669,16 @@ font-weight: 700;
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

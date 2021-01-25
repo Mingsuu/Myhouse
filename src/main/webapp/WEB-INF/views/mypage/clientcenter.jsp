@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage.css"> -->
 <!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
+<script src="webpack:///./node_modules/vue/dist/vue.runtime.esm.js"></script>
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
@@ -20,6 +21,13 @@
 		});
 		
 		
+		$("#chat").click(function(){
+			if($("#chat-frame-box").css("visibility") == "hidden") {
+				$("#chat-frame-box").css("visibility","visible");
+			}else if($("#chat-frame-box").css("visibility") == "visible") {
+				$("#chat-frame-box").css("visibility","hidden");				
+			}
+		});
 		
 		
 		
@@ -29,6 +37,7 @@
 </script>
 
 <style>
+
 
 * {
 	font-family: "Noto Sans KR";
@@ -45,7 +54,7 @@
 .nav2 {
 	list-style:none;
 	text-align:center;
-	}
+}
 .nav2 {
 	display:block;
 	border-top:1px solid lightgray;
@@ -227,6 +236,30 @@
 .qa1 {
 	display:none;
 }
+/*  */
+#twc-chat-plugin #chat-frame-box {
+    box-sizing: border-box;
+    position: fixed;
+    right: 25px;
+    z-index: 20;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: 0.4s cubic-bezier(0.25, 0.8, 0.5, 1);
+    box-shadow: 2px 2px 25px rgba(94, 94, 94, 0.5);
+}
+
+element.style {
+    height: 730px;
+}
+#twc-chat-plugin #chat-frame-box iframe {
+    width: 410px;
+    border: 0;
+    vertical-align: top;
+}
+.chatbox {
+	visibility:hidden;
+}
 </style>
 </head>
 <body>
@@ -243,7 +276,6 @@
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_orderlist.do"><li class="nav2-2">주문배송내역</li></a>
-			<a href="mypage_reception.do"><li class="nav2-2">상품문의내역</li></a>
 			<a href="mypage_notice.do"><li class="nav2-2">공지사항</li></a>
 			<a href="mypage_clientcenter.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">고객센터</li></a>
 		</ul>
@@ -257,7 +289,7 @@
 			<span>전화 및 1:1문의하기 상담이 지연되고 있는 점 너른 양해 부탁드립니다.</span><br>
 			<span>순차적으로 최대한 빠르게 안내해 드리도록 노력하겠습니다.</span>
 		</div>
-		<button class="mon">1:1 문의하기</button>
+		<button class="mon" id="chat">1:1 문의하기</button>
 	</div>
 	<div class="center1">
 		<div class="go">고객센터</div>
@@ -320,6 +352,18 @@
 		<span class="Q">Q</span><span>결제 시 에러 메시지가 나오는 경우 해야하나요?</span>
 	</div>
 	<hr class="centerbar1">
+	<div id="twc-chat-plugin" class="">
+		<div id="chat-icon" style="transform: scale(0);">
+			<img src="https://storage.googleapis.com/cloud-gate-cdn/image/icon_webchat_v2.png">
+			<div class="loader">Loading...</div>
+		</div>
+		<div id="chat-frame-box" style="bottom: 25px;" class="chatbox">
+		<iframe id="chat-frame" src="https://webchat.thecloudgate.io/webChat?channelType=chat&amp;brandKey=GkuoN89G8pns6pIjYHM9og" style="height: 730px;">
+		</iframe>
+		</div>
+		
+	</div>
+	
 </div>
 </div>
 </body>
