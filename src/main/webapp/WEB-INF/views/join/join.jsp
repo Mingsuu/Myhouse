@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>Home</title>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <style>
 .form-select:after {
 	content: "";
@@ -6181,6 +6182,45 @@ body.show-modal {
 	}
 }
 </style>
+<script>
+ $(document).ready(function(){
+	//체크박스        
+		function allCheckFunc(obj) {
+			$("[name=checkTerms]").prop("checked", $(obj).prop("checked"));
+			//alert($("[name=checkAll]:checked").val());
+			
+		}
+		/* 체크박스 체크시 전체선택 체크 여부 */
+		function oneCheckFunc(obj) {
+			var allObj = $("[name=checkAll]");
+			var objName = $(obj).attr("name");
+
+			if($(obj).prop("checked")){
+				checkBoxLength = $("[name="+ objName +"]").length;
+				checkedLength = $("[name="+ objName +"]:checked").length;                
+
+				if(checkBoxLength == checkedLength){
+					allObj.prop("checked", true);    
+				}else{
+					allObj.prop("checked", false);
+				}
+			}else{
+				allObj.prop("checked", false); 
+			}
+		}
+
+		$(function(){
+			$("[name=checkAll]").click(function(){
+				allCheckFunc(this);
+					});
+			});
+			$("[name=checkTerms]").each(function(){
+				$(this).click(function(){
+					oneCheckFunc($(this));
+				});                
+			}); 
+ });
+</script>
 </head>
 <body>
 	<section class="container user-sign-up">
@@ -6275,7 +6315,7 @@ body.show-modal {
 							<div class="user-sign-up__form__terms-agree__all">
 								<div class="form-check checkbox-input">
 									<label class="form-check-label">
-									<input type="checkbox" class="form-check">
+									<input type="checkbox" class="form-check" name="checkAll" >
 										<span class="check-img"></span><span
 										class="user-sign-up__form__terms-agree__all__text">전체동의</span></label>
 								</div>
@@ -6284,7 +6324,7 @@ body.show-modal {
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
 										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
+										<input type="checkbox" class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text">만 14세
 												이상입니다.<span
 												class="user-sign-up__form__terms-agree__required">(필수)</span>
@@ -6294,7 +6334,7 @@ body.show-modal {
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
 										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
+										<input type="checkbox" class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text"><a
 												class="user-sign-up__form__terms-agree__link"
 												href="/usepolicy" target="_blank">이용약관</a><span
@@ -6303,8 +6343,8 @@ body.show-modal {
 								</div>
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
-										<label class="form-check-label"><input type="checkbox"
-											class="form-check"><span class="check-img"></span><span
+										<label class="form-check-label">
+										<input type="checkbox"class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text"><a
 												class="user-sign-up__form__terms-agree__link"
 												href="/privacy" target="_blank">개인정보처리방침</a><span
