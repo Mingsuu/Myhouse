@@ -387,7 +387,7 @@
 							<div class="home-category-item__title">인테리어시공</div>
 						</div>
 					</div>
-					<div class="home-category-list__next">
+					<!-- <div class="home-category-list__next">
 						<button type="button">
 							<svg width="32" height="32" viewBox="0 0 32 32"
 								preserveAspectRatio="xMidYMid meet">
@@ -397,7 +397,7 @@
 								<path fill="#FFF" fill-rule="nonzero"
 									d="M12 21.13l1.5 1.54L20 16l-6.5-6.67-1.5 1.54L17 16z"></path></g></svg>
 						</button>
-					</div>
+					</div> -->
 				</div>
 			</section>
 		</section>
