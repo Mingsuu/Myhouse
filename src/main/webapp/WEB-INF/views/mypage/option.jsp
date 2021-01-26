@@ -10,15 +10,25 @@
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 		$(document).ready(function(){
-			$('#p_picture').change(function (e) {
-				var file = (e.target || window.event.srcElement).files[0];
+			
+			alert("이미지");
+			$('#p_picture').on('change',function () {
+				alert("이미지");
+				if(input.files && input.files[0]) {
+			        var reader = new FileReader();
+			        reader.onload = function (e) {
+			        	alert(e.target.result);
+			            $("#profile_image").attr("url",e.target.result);
+			        }
+			        reader.readAsDataURL(input.files[0]);
+			    }
+			}
 		
-				var reader = new FileReader();
-				reader.onload = function() {
-					$('#profile_image').css("background-image", "url('"+reader.result+"')");			
-				}
-				reader.readAsDataURL(file);
-			});
+		
+			
+			
+			
+			});//ready
 		
 
 </script>

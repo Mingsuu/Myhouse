@@ -1340,7 +1340,7 @@ font-weight: 700;
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_review.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰쓰기</li></a>
-			<a href="mypage_review1.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
+			<a href="mypage_review2.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
 		</ul>
 	</div>
 </div>
