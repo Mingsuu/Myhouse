@@ -11,5 +11,5 @@ public interface MemberService {
 	ModelAndView getMemberContent(String id);
 	ModelAndView getMemberList(String rpage);
 	String getResultJoin(MemberVO vo);
-	String getResultLogin(MemberVO vo,HttpSession session);
+	String getResultLoginCheck(MemberVO vo,HttpSession session);
 }

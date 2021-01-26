@@ -37,7 +37,19 @@
 			return false;
 		}else{
 			//서버 전송:폼이름.submit();
-			loginForm.submit();
+			//loginForm.submit();
+			//ajax를 활용한 서버연동
+			$.ajax({
+				url:"loginCheck.do?email="+$("#email").val()+"&pass="+$("#pass").val(),
+				success:function(result){
+					if(result!=0){
+						location.replace('http://localhost:9000/myhouse/index.do');
+					}else{
+						$("#flash_alert").show().text("이메일 주소 또는 비밀번호가 틀립니다.").delay(2000).fadeOut(2000);
+						$("#id").focus();
+					}
+				}
+			});
 		}		
 	});
 	

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.dao.MemberDAO;
 import com.myhouse.vo.MemberVO;
+import com.myhouse.vo.SessionVO;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -44,9 +45,22 @@ public class MemberServiceImpl implements MemberService {
 		};
 		return result;
 	};
+	/*
+	 * @Override public String getResultLogin(MemberVO vo,HttpSession session) {
+	 * 
+	 * SessionVO svo= memberDAO.getLogin(vo); String result="/errorPage";
+	 * if(svo!=null) { if(svo.getResult()!=0) { session.setAttribute("svo", svo);
+	 * result="/index"; } } return result; };
+	 */
 	@Override
-	public String getResultLogin(MemberVO vo,HttpSession session) {
-		
-		return "";
+	public String getResultLoginCheck(MemberVO vo,HttpSession session) {
+		String result="";
+		SessionVO svo= memberDAO.getLogin(vo); 
+		 if(svo==null) {result="0";
+		 }else { 
+			 session.setAttribute("svo", svo); 
+			 result=Integer.toString(svo.getResult());
+		 }
+		return result;
 	};
 }

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" 
+	import="com.myhouse.vo.*"
+    %>
+<%
+	//로그인 성공 시 저장한 세션객체 가져오기
+	SessionVO svo = (SessionVO)session.getAttribute("svo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
