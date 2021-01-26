@@ -6181,6 +6181,10 @@ body.show-modal {
 		{
 		opacity: .7
 	}
+	#msg,#idcheck_result{
+		font-size: 12px;
+		margin: 10px 0 10px 10px;
+	}
 }
 </style>
 <script>
@@ -6259,16 +6263,17 @@ body.show-modal {
 			<form class="user-sign-up__form" name="joinForm" method="post" 
 			action="http://localhost:9000/myhouse/join_proc.do">
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">이메일</div>
+					<div class="user-sign-up-form__form-group__label" id="email_label">이메일</div>
 					<div class="user-sign-up-form__form-group__input">
 						<div class="input-group email-input">
 							<span class="email-input__local"><input name="email" id="email"
 								class="form-control" value="" placeholder="이메일" size="1"></span>
 						</div>
 					</div>
+					<div id="idcheck_result"></div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호</div>
+					<div class="user-sign-up-form__form-group__label" id="pass_label">비밀번호</div>
 					<div class="user-sign-up-form__form-group__description">8자 이상
 						입력해주세요.</div>
 					<div class="user-sign-up-form__form-group__input">
@@ -6277,14 +6282,15 @@ body.show-modal {
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호 확인</div>
+					<div class="user-sign-up-form__form-group__label" id="cpass_label">비밀번호 확인</div>
 					<div class="user-sign-up-form__form-group__input">
 						<input type="password" placeholder="비밀번호 확인" value=""
 							class="form-control" name="cpass" id="cpass">
+						<div id="msg"></div>
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">별명</div>
+					<div class="user-sign-up-form__form-group__label" id="nickname_label">별명</div>
 					<div class="user-sign-up-form__form-group__description">다른
 						유저와 겹치지 않는 별명을 입력해주세요. (2~15자)</div>
 					<div class="user-sign-up-form__form-group__input">
@@ -6293,14 +6299,14 @@ body.show-modal {
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">약관 동의</div>
+					<div class="user-sign-up-form__form-group__label" id="agree_label">약관 동의</div>
 					<div class="user-sign-up-form__form-group__input">
 						<div class="user-sign-up__form__terms-agree">
 							<div class="user-sign-up__form__terms-agree__all">
 								<div class="form-check checkbox-input">
 									<label class="form-check-label">
 									<input type="checkbox" class="form-check" name="checkAll" id="checkAll">
-										<span class="check-img"></span><span
+										<span class="check-img" id="agree_span"></span><span
 										class="user-sign-up__form__terms-agree__all__text">전체동의</span></label>
 								</div>
 							</div>

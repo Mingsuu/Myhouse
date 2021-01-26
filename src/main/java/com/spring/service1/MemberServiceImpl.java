@@ -14,6 +14,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+	
+	/**
+	 * 아이디 중복체크
+	 */
+	public String getResultIdCheck(String email) {
+		int result= memberDAO.getIdCheck(email);
+		return String.valueOf(result);
+	}
 	@Override
 	public ModelAndView getMemberContent(String id) {
 		ModelAndView mv=new ModelAndView();

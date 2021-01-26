@@ -2,10 +2,17 @@ package com.myhouse.dao;
 
 import java.sql.ResultSet;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.myhouse.vo.MemberVO;
 
 public class MemberDAO extends DBConn{
 	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	private static String namespace="mapper.member";
 	/**
 	 * Select 로그인
 	 */
@@ -23,7 +30,12 @@ public class MemberDAO extends DBConn{
 	 * 
 	 * return svo; }
 	 */
-	
+	/**
+	 *   회원가입 - 아이디 중복체크l
+	 */
+	public int getIdCheck(String email) {
+		return sqlSession.selectOne(namespace+".idcheck", email);
+	}
 	/**
 	 * Select 로그인
 	 */
