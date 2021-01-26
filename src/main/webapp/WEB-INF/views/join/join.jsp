@@ -3,6 +3,8 @@
 <html>
 <head>
 <title>Home</title>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/yj_js.js"></script>
 <style>
 .form-select:after {
 	content: "";
@@ -1049,7 +1051,7 @@ textarea.form-control {
 	width: 14px;
 	height: 14px;
 	background-size: 14px;
-	background-image: url("/assets/icon_map/v3/ic-checkbox.png");
+	/* background-image: url("/assets/icon_map/v3/ic-checkbox.png"); */
 	opacity: 0
 }
 
@@ -6179,8 +6181,51 @@ body.show-modal {
 		{
 		opacity: .7
 	}
+	#msg,#idcheck_result{
+		font-size: 12px;
+		margin: 10px 0 10px 10px;
+	}
 }
 </style>
+<script>
+ $(document).ready(function(){
+	//체크박스        
+		function allCheckFunc(obj) {
+			$("[name=checkTerms]").prop("checked", $(obj).prop("checked"));
+			//alert($("[name=checkAll]:checked").val());
+			
+		}
+		/* 체크박스 체크시 전체선택 체크 여부 */
+		function oneCheckFunc(obj) {
+			var allObj = $("[name=checkAll]");
+			var objName = $(obj).attr("name");
+
+			if($(obj).prop("checked")){
+				checkBoxLength = $("[name="+ objName +"]").length;
+				checkedLength = $("[name="+ objName +"]:checked").length;                
+
+				if(checkBoxLength == checkedLength){
+					allObj.prop("checked", true);    
+				}else{
+					allObj.prop("checked", false);
+				}
+			}else{
+				allObj.prop("checked", false); 
+			}
+		}
+
+		$(function(){
+			$("[name=checkAll]").click(function(){
+				allCheckFunc(this);
+					});
+			});
+			$("[name=checkTerms]").each(function(){
+				$(this).click(function(){
+					oneCheckFunc($(this));
+				});                
+			}); 
+ });
+</script>
 </head>
 <body>
 	<section class="container user-sign-up">
@@ -6215,68 +6260,53 @@ body.show-modal {
 									d="M21 25.231V34h-7V15h7l6 8.769V15h7v19h-7l-6-8.769z"></path></g></svg></a></li>
 				</ol>
 			</div>
-			<form class="user-sign-up__form" name="join_form"action="http://localhost:9000/myhouse/join_proc.do">
+			<form class="user-sign-up__form" name="joinForm" method="post" 
+			action="http://localhost:9000/myhouse/join_proc.do">
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">이메일</div>
+					<div class="user-sign-up-form__form-group__label" id="email_label">이메일</div>
 					<div class="user-sign-up-form__form-group__input">
 						<div class="input-group email-input">
-							<span class="email-input__local"><input
-								class="form-control" value="" placeholder="이메일" size="1"></span><span
-								class="email-input__separator">@</span><span
-								class="email-input__domain"><select
-								class="form-control empty"><option selected="" value=""
-										disabled="">선택해주세요</option>
-									<option value="naver.com">naver.com</option>
-									<option value="hanmail.net">hanmail.net</option>
-									<option value="daum.net">daum.net</option>
-									<option value="gmail.com">gmail.com</option>
-									<option value="nate.com">nate.com</option>
-									<option value="hotmail.com">hotmail.com</option>
-									<option value="outlook.com">outlook.com</option>
-									<option value="icloud.com">icloud.com</option>
-									<option value="_manual">직접입력</option></select>
-							<button class="email-input__domain__expand" aria-label="초기화"
-									type="button" tabindex="-1">
-									<svg class="icon" width="10" height="10"
-										style="fill: currentColor" preserveAspectRatio="xMidYMid meet">
-										<path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path></svg>
-								</button></span>
+							<span class="email-input__local"><input name="email" id="email"
+								class="form-control" value="" placeholder="이메일" size="1"></span>
 						</div>
 					</div>
+					<div id="idcheck_result"></div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호</div>
+					<div class="user-sign-up-form__form-group__label" id="pass_label">비밀번호</div>
 					<div class="user-sign-up-form__form-group__description">8자 이상
 						입력해주세요.</div>
 					<div class="user-sign-up-form__form-group__input">
 						<input type="password" placeholder="비밀번호" value=""
-							class="form-control">
+							class="form-control" name="pass" id="pass">
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">비밀번호 확인</div>
+					<div class="user-sign-up-form__form-group__label" id="cpass_label">비밀번호 확인</div>
 					<div class="user-sign-up-form__form-group__input">
 						<input type="password" placeholder="비밀번호 확인" value=""
-							class="form-control">
+							class="form-control" name="cpass" id="cpass">
+						<div id="msg"></div>
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">별명</div>
+					<div class="user-sign-up-form__form-group__label" id="nickname_label">별명</div>
 					<div class="user-sign-up-form__form-group__description">다른
 						유저와 겹치지 않는 별명을 입력해주세요. (2~15자)</div>
 					<div class="user-sign-up-form__form-group__input">
-						<input placeholder="별명 (2~15자)" value="" class="form-control">
+						<input placeholder="별명 (2~15자)" value="" class="form-control"
+						name="nickname" id="nickname">
 					</div>
 				</div>
 				<div class="user-sign-up-form__form-group">
-					<div class="user-sign-up-form__form-group__label">약관 동의</div>
+					<div class="user-sign-up-form__form-group__label" id="agree_label">약관 동의</div>
 					<div class="user-sign-up-form__form-group__input">
 						<div class="user-sign-up__form__terms-agree">
 							<div class="user-sign-up__form__terms-agree__all">
 								<div class="form-check checkbox-input">
 									<label class="form-check-label">
-									<input type="checkbox" class="form-check">
-										<span class="check-img"></span><span
+									<input type="checkbox" class="form-check" name="checkAll" id="checkAll">
+										<span class="check-img" id="agree_span"></span><span
 										class="user-sign-up__form__terms-agree__all__text">전체동의</span></label>
 								</div>
 							</div>
@@ -6284,7 +6314,7 @@ body.show-modal {
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
 										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
+										<input type="checkbox" class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text">만 14세
 												이상입니다.<span
 												class="user-sign-up__form__terms-agree__required">(필수)</span>
@@ -6294,7 +6324,7 @@ body.show-modal {
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
 										<label class="form-check-label">
-										<input type="checkbox" class="form-check"><span class="check-img"></span><span
+										<input type="checkbox" class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text"><a
 												class="user-sign-up__form__terms-agree__link"
 												href="/usepolicy" target="_blank">이용약관</a><span
@@ -6303,8 +6333,8 @@ body.show-modal {
 								</div>
 								<div class="user-sign-up__form__terms-agree__row">
 									<div class="form-check checkbox-input">
-										<label class="form-check-label"><input type="checkbox"
-											class="form-check"><span class="check-img"></span><span
+										<label class="form-check-label">
+										<input type="checkbox"class="form-check" name="checkTerms" ><span class="check-img"></span><span
 											class="user-sign-up__form__terms-agree__text"><a
 												class="user-sign-up__form__terms-agree__link"
 												href="/privacy" target="_blank">개인정보처리방침</a><span
@@ -6316,7 +6346,9 @@ body.show-modal {
 					</div>
 				</div>
 			</form>
-				<button class="user-sign-up__submit" id="join_btn">회원가입 완료</button>
+			
+			<button type ="button" class="user-sign-up__submit" id="btnJoin">회원가입 완료</button>
+			
 			<p class="user-sign-up__sign-in">
 				이미 아이디가 있으신가요?<a href="http://localhost:9000/myhouse/login.do"
 					class="user-sign-up__sign-in__link">로그인</a>

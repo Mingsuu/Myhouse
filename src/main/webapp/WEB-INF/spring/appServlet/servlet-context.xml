@@ -18,6 +18,9 @@
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/images/**" location="/resources/images/" />
 	
+	<!-- DAO Object생성 -->
+	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
+	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 
 	

@@ -18,7 +18,7 @@
 </head>
 <body>
 	<!-- header -->
-	<jsp:include page="header_login.jsp" />
+	<jsp:include page="header1.jsp" />
 	<!-- index content -->
 	<div class="home-page">
 		<div class="container home-header">
