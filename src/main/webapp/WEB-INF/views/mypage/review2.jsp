@@ -29,24 +29,31 @@
 		
 		
 		 
-		$("#file_upload").on('change', function(){
-		    $("#card").css("display","none");
-		    $("#del").css("display","block");
-		    readInputFile(this);
-		});
+		
 
-		function readInputFile(input) {
+		/* function readInputFile(input) {
 		    if(input.files && input.files[0]) {
+		    	alert("체크");
 		        var reader = new FileReader();
 		        reader.onload = function (e) {
 		        	alert(e.target.result);
-		            $("#img_priview").att("src",e.target.result);
+		            $("#img_priview").attr("src",e.target.result);
 		        }
 		        reader.readAsDataURL(input.files[0]);
 		    }
-		}
+		    
+		} */
 
-
+		$("#file_upload").on('change', function(){
+		    $("#card").css("display","none");
+		    $("#del").css("display","block");
+		    /* readInputFile(this); */
+		    if(window.FileReader){
+		      var fileName = $(this)[0].files[0].name;
+		      alert(fileName);
+		      $("#img_priview").attr("src",fileName);
+  			 }
+		});
 		
 		
 		
@@ -1441,6 +1448,9 @@ font-weight: 700;
 	-webkit-tap-highlight-color: transparent;
 	border: 0;
 	height: 100%;
+	width:401px;
+	height:226px;
+	margin-left:140px;
 }
 .select-picture__delete{
 	-webkit-font-smoothing: antialiased;
@@ -1499,6 +1509,22 @@ font-weight: 700;
 }
 .img_preview{
 	border:1px solid red;
+}
+#file_upload{
+	border:1px solid red;
+	margin-top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height:45px;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+    position:absolute;
+}
+#file_upload:hover{
+	background-color:rgb(170,232,255);
 }
 </style>
 </head>
@@ -1657,7 +1683,7 @@ font-weight: 700;
 					
 					
 					<div class="select-picture" id="del">
-						<img class="select-picture__contents" id="img_preview" src="">
+						<img class="select-picture__contents" id="img_preview" src="http://localhost:9000/myhouse/images/mypage/pic1.jpg">
 						<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button" id="delbtn">
 							<svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
 								<defs>
