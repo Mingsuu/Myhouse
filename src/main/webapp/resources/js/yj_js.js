@@ -32,8 +32,9 @@
 		if(!ruleCheck2($("#email"))){
 			return false;
 		}else if($("#pass").val() == ""){
+			$("#pass").css("border-color","#f77");
 			$("#flash_alert").show().text("패스워드를 입력해주세요").delay(2000).fadeOut(2000);
-			$("$pass").focus();
+			$("#pass").focus();
 			return false;
 		}else{
 			//서버 전송:폼이름.submit();
@@ -150,14 +151,17 @@
 		if(obj.val() == ""){
 			$("#email_label").css("color","#f77");
 			$("#email").css("border-color","#f77");
+			$("#flash_alert").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 			obj.focus();
 			return false;
 		}else{
 			if(regExp.test(obj.val())){
+				$("#email").css("border-color","#bdbdbd");
 				return true;	//이메일 형식에 맞는 경우
 			}else{
 				$("#email_label").css("color","#f77");
 				$("#email").css("border-color","#f77");
+				$("#flash_alert").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 				obj.focus();
 				return false;
 			}
