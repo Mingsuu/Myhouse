@@ -21,6 +21,38 @@
 			$("#modal").css("display","none");
 		});//click
 		
+		$("#delbtn").click(function(){
+			$("#del").css("display","none");
+			$("#card").css("display","block");
+		});
+		
+		
+		
+		 
+		$("#file_upload").on('change', function(){
+		    $("#card").css("display","none");
+		    $("#del").css("display","block");
+		    readInputFile(this);
+		});
+
+		function readInputFile(input) {
+		    if(input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+		        	alert(e.target.result);
+		            $("#img_priview").att("src",e.target.result);
+		        }
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+
+
+		
+		
+		
+		
+		
+		
 		
 		
 	});//ready
@@ -1396,6 +1428,7 @@ font-weight: 700;
 	background-color: #eaebef;
 	border-radius: 4px;
 	overflow: hidden;
+	display:none;
 }
 .select-picture__contents{
 	line-height: 1;
@@ -1444,6 +1477,28 @@ font-weight: 700;
 	font-size: 15px;
 	padding: 0;
 	line-height: 1;
+}
+.select-picture__delete:hover {
+	background-color:rgb(16,175,222);
+}
+.select-picture__delete>svg {
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-direction: normal;
+	user-select: none;
+	font-family: inherit;
+	font-weight: 700;
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+	font-size: 15px;
+	line-height: 1;
+	-webkit-tap-highlight-color: transparent;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+}
+.img_preview{
+	border:1px solid red;
 }
 </style>
 </head>
@@ -1570,7 +1625,7 @@ font-weight: 700;
 					<div class="review-modal__section__title">사진 첨부 (선택) 
 					</div>
 					<div class="review-modal__section__explain">오늘의집에 올렸던 사진에서 고르거나 새로운 사진을 첨부해주세요. (최대 1장)</div>
-					<!-- <div class="select-my-card">
+					<div class="select-my-card" id="card">
 						<div class="select-my-card__content">
 						<img class="select-my-card__content__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=180&amp;h=180&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 3x">
 							<div class="round-checkbox-input round-checkbox-input--blue">
@@ -1598,10 +1653,12 @@ font-weight: 700;
 								</label>
 							</div>
 						</div>
-					</div> -->
-					<div class="select-picture">
-						<img class="select-picture__contents" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=480&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=640&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=850&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161155276610026663.png?gif=1&amp;w=1280&amp;webp=1 3x">
-						<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button">
+					</div> 
+					
+					
+					<div class="select-picture" id="del">
+						<img class="select-picture__contents" id="img_preview" src="">
+						<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button" id="delbtn">
 							<svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
 								<defs>
 									<filter id="delete-a" width="134.3%" height="175%" x="-17.1%" y="-37.5%" filterUnits="objectBoundingBox">
@@ -1627,7 +1684,9 @@ font-weight: 700;
 						</button>
 					</div>
 					
+					
 					<button class="button button--color-blue-inverted button--size-50 button--shape-4 upload-button" type="button">
+						<input type="file" name="fileup" id="file_upload">
 						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 							<path d="M21.1 4c.5 0 .9.4.9.9v14.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V4.9c0-.5.4-.9.9-.9h18.2zm-.91 1.8H3.8v10.85l5.54-6.27c.12-.17.38-.17.52 0l3.1 3.54c.06.06.08.14.06.2l-.4 1.84c-.02.14.15.23.23.12l3.16-3.43a.27.27 0 01.38 0l3.79 4.12V5.8zm-3.37 4.8a1.47 1.47 0 01-1.47-1.45c0-.81.66-1.46 1.47-1.46s1.48.65 1.48 1.46c0 .8-.66 1.45-1.48 1.45z"></path>
 						</svg> 사진 첨부하기
