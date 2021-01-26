@@ -18,9 +18,9 @@
 	<!--이미지 미리보기-->
 <script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-        
         var sel_file;
- 
+     
+        /**이미지 미리보기**/
         $(document).ready(function() {
             $("#imageSelector").on("change", handleImgFileSelect);
         }); 
@@ -31,7 +31,7 @@
  
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    /* alert("확장자는 이미지 확장자만 가능합니다."); */
                     return;
                 }
  
@@ -43,13 +43,15 @@
                 }
                 reader.readAsDataURL(f);
             });
+            
         }
         
-        /*이미지 태그 워치*/
+        /*이미지 태그 위치*/
         function test(){
-            alert("이미지태그위치" + event.offsetX  + "/" + event.offsetY)
+            alert("이미지 좌표 test /" + event.offsetX  + "/" + event.offsetY);    
             
     }
+            
  
     </script>
 	
@@ -143,7 +145,7 @@
 									accept="image/jpeg, image/jpg, image/png" multiple />	
 								<div class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture">
 									<img id="img" onclick="test()"/>
-									
+								
 									<!-- <span class="content"> -->
 									<!-- <svg class="icon" width="48"
 											height="400" viewBox="0 0 48 48" fill="currentColor"
