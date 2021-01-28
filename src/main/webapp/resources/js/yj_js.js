@@ -4,8 +4,20 @@
 	**/
 	$("#user_email").click(function(){
 		if(ruleCheck($("#email"))){
-			$("#flash_alert").show().text("이메일 확인 부탁드립니다.").delay(2000).fadeOut(2000);
-			passUpdateForm.submit();
+		
+			//ajax를 활용한 서버연동
+			$.ajax({
+				url:"idCheck.do?email="+$("#email").val(),
+				success:function(result){
+					if(result==1){
+						$("#flash_alert").css("background-color","#b1d8b1").show().text("이메일 확인 부탁드립니다.").delay(2000).fadeOut(2000);
+						passUpdateForm.submit();
+					}else{
+						$("#flash_alert").css("background-color","#ff7d7d").show().text("존재하지않는 이메일입니다. 다시 입력해주세요.").delay(2000).fadeOut(2000);
+					}
+				}
+			});
+			
 		}
 	});
 	/** 
@@ -159,7 +171,7 @@
 		if(obj.val() == ""){
 			$("#email_label").css("color","#f77");
 			$("#email").css("border-color","#f77");
-			$("#flash_alert").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
+			$("#flash_alert").css("background-color","#ff7d7d").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 			obj.focus();
 			return false;
 		}else{
@@ -169,7 +181,7 @@
 			}else{
 				$("#email_label").css("color","#f77");
 				$("#email").css("border-color","#f77");
-				$("#flash_alert").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
+				$("#flash_alert").css("background-color","#ff7d7d").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 				obj.focus();
 				return false;
 			}
