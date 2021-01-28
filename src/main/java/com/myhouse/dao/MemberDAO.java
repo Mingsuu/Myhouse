@@ -13,6 +13,14 @@ public class MemberDAO extends DBConn{
 	
 	private static String namespace="mapper.member";
 	
+	
+	/**
+	 *  select : 이메일 입력 시 회원 정보 가져옴 
+	 */
+	public String getPass(String email) {
+		return sqlSession.selectOne(namespace+".getinfo", email);
+	}
+	
 	/**
 	 *   회원가입 - 아이디 중복체크l
 	 */
@@ -33,6 +41,11 @@ public class MemberDAO extends DBConn{
 	 */
 	public boolean getInsert(MemberVO vo) {
 		boolean result=false;
+		int value= sqlSession.insert(namespace+".insert", vo);
+		if(value!=0) result=true;
+		return result;
+		/*
+		boolean result=false;
 		
 		try {
 			String sql="insert into h_member values(?,?,?,'','','','','','','','','','',sysdate,'','','','','')";
@@ -50,6 +63,7 @@ public class MemberDAO extends DBConn{
 			e.printStackTrace();
 		}
 		return result;
+		*/
 	}
 	
 	

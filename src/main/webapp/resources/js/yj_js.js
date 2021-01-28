@@ -1,5 +1,13 @@
 	$(document).ready(function(){
-		
+	/**
+	*  비밀번호 찾기 버튼 클릭 시 서버전송
+	**/
+	$("#user_email").click(function(){
+		if(ruleCheck($("#email"))){
+			$("#flash_alert").show().text("이메일 확인 부탁드립니다.").delay(2000).fadeOut(2000);
+			passUpdateForm.submit();
+		}
+	});
 	/** 
 	*  아이디 중복 확인 체크
 	**/

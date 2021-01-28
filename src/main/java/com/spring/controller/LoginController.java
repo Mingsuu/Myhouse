@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.myhouse.dao.MemberDAO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.SessionVO;
 import com.spring.service1.MemberServiceImpl;
@@ -18,16 +17,7 @@ public class LoginController {
 	
 	@Autowired
 	private MemberServiceImpl memberService;
-	/**
-	 * 로그인 처리
-	 */
 	
-	/*
-	 * @RequestMapping(value="/login_proc.do", method=RequestMethod.POST) public
-	 * String login_proc(MemberVO vo,HttpSession session) {
-	 * 
-	 * return memberService.getResultLogin(vo, session); }
-	 */
 	/**
 	 * 로그인 - 로그인 처리
 	 */
@@ -35,6 +25,13 @@ public class LoginController {
 	@ResponseBody
 	public String idCheck(MemberVO vo,HttpSession session) {
 		return memberService.getResultLoginCheck(vo,session);//ajax 전송
+	}
+	/**
+	 * 비밀번호 찾기 처리
+	 */
+	@RequestMapping(value="/pass_update_proc.do",method=RequestMethod.POST)
+	public String pass_update(String email) {
+		return memberService.mailSendWithPassword(email);//ajax 전송
 	}
 	/**
 	 * 비밀번호 찾기 화면

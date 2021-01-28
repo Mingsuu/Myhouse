@@ -18,6 +18,25 @@
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/images/**" location="/resources/images/" />
 	
+	<!--  메일전송을 위한 bean  -->
+	<!-- Gmail -->
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" /><!-- 465 or 25 -->
+		<beans:property name="username" value="lyj6054@gmail.com" />
+		<beans:property name="password" value="dudwofkrh1@" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
 	<!-- DAO Object생성 -->
 	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
 	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
