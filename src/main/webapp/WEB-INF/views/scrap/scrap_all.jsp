@@ -95,7 +95,7 @@
 							</div></a>
 					</div>
 				</div>
-				<div class="col-6 col-md-4 col-lg-3">
+				<!-- <div class="col-6 col-md-4 col-lg-3">
 					<div class="collection__wrap">
 						<a
 							href="/productions/71236/selling?affect_type=UserScrapbook&amp;affect_id=7109166"><div
@@ -276,7 +276,7 @@
 								<span class="collection__type">집들이</span>
 							</div></a>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</main>
 	</div>
