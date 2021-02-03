@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mapper.interior">
+
+<!-- 문의하기 -->
+<select id="interior-question" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
+		TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company
+	from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+		from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+		from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno order by ino asc)
+		where ino=#{ino}) q, h_member m, h_interior i
+	where q.email = m.email and i.ino = q.ino
+</select>
+
+<!-- 리뷰작성하기 -->
+<!-- <insert id="interior-review-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	insert into h_review values('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},#{review_image},#{review_simage},sysdate)
+</insert> -->
+
+<!-- 리뷰 포토 -->
+<select id="interior-review-photo" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
+	from h_review r, h_member m, h_goods g
+	where r.email = m.email and r.gno=g.gno and ino=#{ino} and review_simage IS NOT NULL
+</select>
+<!-- 리뷰 최신순 -->
+<select id="interior-review-recently" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
+	from h_review r, h_member m, h_goods g
+	where r.email = m.email and r.gno=g.gno and ino=#{ino}
+	order by vdate desc
+</select>
+
+<!-- 리뷰 베스트순 -->
+<select id="interior-review" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
+	from h_review r, h_member m, h_goods g
+	where r.email = m.email and r.gno=g.gno and ino=#{ino}
+	order by star desc
+</select>
+
+<!-- 스크랩 등록여부 -->
+<select id="interior-scrap-exist" parameterType="map" resultType="int">
+	select count(*) from h_scrap where email=#{email} and ino=#{ino}
+</select>
+
+<!-- 스크랩 처리 :: 삭제 -->
+<delete id="interior-scrap-delete" parameterType="map">
+	delete from h_scrap where email =#{email} and ino=#{ino}
+</delete>
+
+<!-- 스크랩 처리 -->
+<insert id="interior-scrap-insert" parameterType="map">
+	insert into h_scrap values('s_'||seq_h_scrap.nextval,#{email},'',#{ino},sysdate)
+</insert>
+
+<!-- 상세페이지 : 상단부분 -->
+<select id="interior-top" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select distinct rno, ino, company, ititle, interior_simage, icontent, category, gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, 
+		gno_cnt, star_count, star_float, qno, qno_count
+	from (select distinct rno, list.ino, company, ititle, interior_simage, icontent, category, list.gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, gno_cnt, star_count,
+		star_float, qno, qno_count, row_number() over(partition by list.gno order by sno asc) as RowIdx
+		from (select rownum rno, i.ino, company, ititle, interior_simage, icontent, category, g.gno, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price,
+		count(gno)over(partition by i.ino) as gno_cnt
+		from h_interior i, h_goods g where i.ino = g.ino and i.ino = #{ino} order by i.ino asc) list, 
+		(select sno, ino, count(sno)over(partition by ino) as scrap_cnt  from h_scrap) scrap, 
+		(select email, vno, star, g.gno, ino, count(vno)over(partition by ino) as review_cnt, ceil(avg(star)over(partition by ino)) as star_count, avg(star)over(partition by ino) as star_float
+		from h_review v, h_goods g where v.gno = g.gno) review,
+		(select qno, q.gno, ino, count(qno)over(partition by ino) as qno_count from h_question q, h_goods g where q.gno = g.gno) question
+		where list.ino = scrap.ino(+) and list.ino = review.ino(+)  and list.ino = question.ino(+)
+		order by ino, sno asc)
+	where RowIdx=1 order by gno asc, goods_price desc
+</select>
+
+<!-- store_index - list -->
+<select id="interior-list"  parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, star_avg, star_count
+	from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, avg(star)over(partition by ino) as star_avg, 
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
+		from(select i.ino, company, ititle, interior_simage, category, tone, color, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
+	where RowIdx='1' and category=#{category}
+</select>
+
+<!-- 카테고리별 인테리어게시물 총 갯수 -->
+<select id="interior-list-count" parameterType="java.lang.String" resultType="int">
+	select count(*) from h_interior where category=#{category}
+</select>
+
+
+</mapper>

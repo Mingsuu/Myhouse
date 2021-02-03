@@ -860,6 +860,8 @@
 </script>
 </head>
 <body>
+<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div id="pre_order" class="single product">
 	<form id="edit_order" class="edit_order" action="#" accept-charset="UTF-8" method="post">
 		<input name="utf8" type="hidden" value="✓">
@@ -1286,6 +1288,7 @@
 		</div>
 	</div>
 </div>
-
+<!-- footer -->
+	<jsp:include page="../footer.jsp"/>
 </body>
 </html>
