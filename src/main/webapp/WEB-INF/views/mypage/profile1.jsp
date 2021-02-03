@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +29,6 @@
 </script>
 <style>
 
-
-
 * {
 	font-family: "Noto Sans KR";
 }
@@ -43,9 +39,6 @@
 .navigation {
 	margin:auto;
 	width:100%
-}
-.nav1{
-	height:60px;
 }
 .nav1,
 .nav2 {
@@ -65,7 +58,6 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
-	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -73,18 +65,16 @@
 }
 .nav2-1 {
 	margin:0px;
-	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
-	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:17px;
+	padding-bottom:15px;
 	padding-top:15px;
 	color:black;
 }
@@ -124,23 +114,15 @@
 }
 .leftbox {
 	display:inline-block;
-	width:160px;
+	width:150px;
 	height:99px;
 	margin-left:63px;
 	text-align:center;
 }
-.leftbox>div {
-	margin-top:5px;
-	float:left;
-}
 .leftbox span {
-	display:inline-block;
-	width:120px;
 	font-size:26px;
 	font-weight:bold;
-	margin-left:20px;
-	margin-bottom:10px;
-	float:left;
+	margin-left:3px;
 }
 .leftbox div {
 	width:1px;
@@ -152,21 +134,18 @@
 	font-size:13px;
 	padding-left:11px;
 	padding-right:11px;
-	float:left;
 }
 .mybtn {
 	display:inline-block;
-	width:70px;
-	height:37px;
+	width:45px;
+	height:27px;
 	border:1px solid lightgray;
 	border-radius:6px;
 	color:black;
 	font-size:13px;
-	padding-top:10px;
-	margin-top:10px;
-	margin-left:43px;
+	padding-top:7px;
+	margin-top:5px;
 	text-decoration:none;
-	float:left;
 }
 .mybtn:hover {
 	background-color:lightgray;
@@ -174,7 +153,6 @@
 .mybtn1 {
 	color:black;
 	text-decoration:none;
-	margin-left:1px;
 }
 .mybtn1:hover {
 	opacity:0.7;
@@ -187,7 +165,6 @@
 }
 .leftbox1 img {
 	margin-left:20px;
-	margin-bottom:10px;
 }
 .leftbox1 span {
 	font-size:13px;
@@ -196,17 +173,12 @@
 }
 .left1 {
 	margin-left:12px;
-	display:inline-block;
-	margin-bottom:7px;
 }
 .left2 {
 	margin-left:18px;
-	display:inline-block;
-	margin-bottom:7px;
 }
 .left3 {
 	margin-left:32px;
-	margin-top:8px;
 }
 .left4 {
 	margin-left:32px;
@@ -234,20 +206,16 @@
 	margin-top:20px;
 	float:right;
 }
-.mytitle,
+.right h5,
 .right p {
 	display:inline-block;
 	font-size:18px;
 }
-.mytitle {
+.right h5 {
  	width:600px;
  	margin:0px;
  	margin-top:10px;
  	margin-left:40px;
- 	font-weight:bold;
-}
-.mytitle p {
-	font-weight:bold;
 }
 .right a {
 	text-decoration:none;
@@ -255,7 +223,7 @@
 .poto {
 	display:inline-block;
 	width:700px;
-	height:60px;
+	height:40px;
 	border:1px solid lightgray;
 	border-radius:5px;
 	text-align:center;
@@ -306,6 +274,7 @@
 	margin-left:40px;
 	text-decoration:none;
 	margin-bottom:30px;
+	margin-top:-20px;
 	padding-top:20px;
 }
 .poto1 {
@@ -380,13 +349,11 @@
 </style>
 </head>
 <body>
-	<!-- header -->
-	<jsp:include page="../header1.jsp" />
-	
+
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile1.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -394,8 +361,9 @@
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="mypage_profile1.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
+			<a href="mypage_profile.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
+			<a href="mypage_ask.do"><li class="nav2-2">질문과답변</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
 			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
@@ -416,11 +384,11 @@
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
+		<img src="http://localhost:9000/myhouse/images/mypage/myprofile.jpg" class="pro">
 		<div class="leftbox">
-			<span>${prof.nickname}</span>
-			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
-			<a href="mypage_option.do" class="mybtn">설정</a>
+			<span>귤먹고갈래</span>
+			<a href="#" class="mybtn1">팔로워 2</a><div></div><a href="#" class="mybtn1">팔로잉 1</a>
+			<a href="#" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
@@ -437,25 +405,18 @@
 		</div>
 	</div>
 	<div class="right">
-		<h5 class="mytitle">사진 <p>${count}</p></h5><a href="mypage_picture.do"><span class="allsee">전체보기</span></a>
+		<h5>사진 <p>1</p></h5><a href="mypage_picture.do"><span class="allsee">전체보기</span></a>
 		<div class="pic2">
-	<c:forEach var ="vo" items="${list}" begin="0" end="4" step="1">
-		<c:if test="${count == 0}">
-			<a href="#" class="pic">
-			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
-		</c:if>
-		<c:if test="${count != 0}">
-			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno})"></div></a>
-		</c:if>
-	</c:forEach>	
-			<!-- <a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
-			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
-			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a> -->
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/pic1.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
+			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/.jpg);"></div></a>
 		</div>
-		<c:if test="${count != 0}">
-			<a href="#" class="poto">
-			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 사진 올리기</a>
-		</c:if>
+		<a href="#" class="poto">
+		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 사진 올리기</a>
+		<h5>집들이 <p>0</p></h5>
+		<a href="#" class="pic1">
+		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 집들이를 올려보세요</a>
 	</div>
 
 
@@ -464,7 +425,5 @@
 
 
 </div>
-	<!-- footer -->
-	<jsp:include page="../footer.jsp" />
 </body>
 </html>

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,6 +76,9 @@ $(document).ready(function(){
 * {
 	font-family: "Noto Sans KR";
 }
+*:focus{
+		outline:none;
+	}
 .profile {
 	margin:auto;
 	width:1200px;
@@ -85,9 +86,6 @@ $(document).ready(function(){
 .navigation {
 	margin:auto;
 	width:100%
-}
-.nav1{
-	height:60px;
 }
 .nav1,
 .nav2 {
@@ -107,7 +105,6 @@ $(document).ready(function(){
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
-	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -115,18 +112,16 @@ $(document).ready(function(){
 }
 .nav2-1 {
 	margin:0px;
-	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
-	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:17px;
+	padding-bottom:15px;
 	padding-top:15px;
 	color:black;
 }
@@ -145,7 +140,6 @@ $(document).ready(function(){
 	margin-top:60px;
 	margin-left:60px;
 	box-shadow: 0 1px 4px 0 rgba(17, 17, 17, 0.1);
-	z-index:5;
 }
 .share {
 	float:right;
@@ -158,7 +152,6 @@ $(document).ready(function(){
 .pro {
 	width:120px;
 	height:120px;
-	z-index:2;
 	border-radius:100%;
 	margin-left:75px;
 	margin-bottom:15px;
@@ -166,23 +159,15 @@ $(document).ready(function(){
 }
 .leftbox {
 	display:inline-block;
-	width:160px;
+	width:150px;
 	height:99px;
 	margin-left:63px;
 	text-align:center;
 }
-.leftbox>div {
-	margin-top:5px;
-	float:left;
-}
 .leftbox span {
-	display:inline-block;
-	width:120px;
 	font-size:26px;
 	font-weight:bold;
-	margin-left:20px;
-	margin-bottom:10px;
-	float:left;
+	margin-left:3px;
 }
 .leftbox div {
 	width:1px;
@@ -194,21 +179,18 @@ $(document).ready(function(){
 	font-size:13px;
 	padding-left:11px;
 	padding-right:11px;
-	float:left;
 }
 .mybtn {
 	display:inline-block;
-	width:70px;
-	height:37px;
+	width:45px;
+	height:27px;
 	border:1px solid lightgray;
 	border-radius:6px;
 	color:black;
 	font-size:13px;
-	padding-top:10px;
-	margin-top:10px;
-	margin-left:43px;
+	padding-top:7px;
+	margin-top:5px;
 	text-decoration:none;
-	float:left;
 }
 .mybtn:hover {
 	background-color:lightgray;
@@ -216,7 +198,6 @@ $(document).ready(function(){
 .mybtn1 {
 	color:black;
 	text-decoration:none;
-	margin-left:1px;
 }
 .mybtn1:hover {
 	opacity:0.7;
@@ -229,7 +210,6 @@ $(document).ready(function(){
 }
 .leftbox1 img {
 	margin-left:20px;
-	margin-bottom:10px;
 }
 .leftbox1 span {
 	font-size:13px;
@@ -238,17 +218,12 @@ $(document).ready(function(){
 }
 .left1 {
 	margin-left:12px;
-	display:inline-block;
-	margin-bottom:7px;
 }
 .left2 {
 	margin-left:18px;
-	display:inline-block;
-	margin-bottom:7px;
 }
 .left3 {
 	margin-left:32px;
-	margin-top:8px;
 }
 .left4 {
 	margin-left:32px;
@@ -642,13 +617,11 @@ div.card_item_content{
 </style>
 </head>
 <body>
-	<!-- header -->
-	<jsp:include page="../header1.jsp" />
-	
+
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile1.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
+			<a href="mypage_profile.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -656,7 +629,7 @@ div.card_item_content{
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="mypage_profile1.do"><li class="nav2-2">모두보기</li></a>
+			<a href="mypage_profile.do"><li class="nav2-2">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2"   style="color:#35c5f0; border-bottom:5px solid #35c5f0;">사진</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
@@ -678,10 +651,10 @@ div.card_item_content{
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
+		<img src="http://localhost:9000/myhouse/images/mypage/myprofile.jpg" class="pro">
 		<div class="leftbox">
-			<span>${prof.nickname}</span>
-			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+			<span>귤먹고갈래</span>
+			<a href="#" class="mybtn1">팔로워 2</a><div></div><a href="#" class="mybtn1">팔로잉 1</a>
 			<a href="mypage_option.do" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
@@ -699,11 +672,62 @@ div.card_item_content{
 		</div>
 	</div>
 	<div class="right">
+	<div class="picpic"><span>게시한 사진이 없습니다. 사진을 올려보세요.</span></div>
 	<div class="user-card-feed">
 		<div class="virtualized-list user-card-feed__content row" style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
 		
-	<c:forEach var="vo" items="${list}">
-		<c:if test="${vo.photo_simage != null}" >
+		<div class="user-card-feed__item-wrap col-12 col-md-4">
+			<div class="user-card-feed__item">
+				<article class="card-item">
+					<div class="card-item-writer">
+						<address class="card-item-writer__content">
+							<div class="card-item-writer__header">
+								<a class="card-item-writer__link" href="/users/11910615">
+									<img class="card-item-writer__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x" alt="">
+									<span class="card-item-writer__name">귤먹고갈래</span>
+								</a>
+							</div>
+							<p class="card-item-writer__introduction"></p>
+						</address>
+					</div>
+					<div id="card-item-7744666" class="card-item__content">
+						<a class="card-item__content__link" aria-describedby="card-item-7744666" href="/contents/card_collections/6354883?affect_type=UserHome&amp;affect_id=11910615"></a>
+						<div class="card-item__image">
+							<div class="card-item-image">
+								<img class="image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;q=80&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 3x" alt="">
+								<span class="card-item-image__view-count">조회수 <!-- -->0</span>
+							</div>
+						</div>
+						<aside class="card-item-action-list">
+							<button class="card_action" type="button" id="card_action1">
+								<svg class="icon icon--stroke" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z">
+								</path>
+								</svg>
+								<span class="count">2</span>
+							</button>
+							<button class="card_action" type="button" id="card_action2">
+								<svg class="icon icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
+								</svg>
+								<span class="count">1</span>
+							</button>
+							<a class="card-item-action-list__action" href="#">
+								<svg class="icon" aria-label="댓글 달기" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+									<path fill="currentColor" fill-rule="nonzero" d="M13.665 18.434l.53-.066C19.69 17.679 23 14.348 23 10c0-4.942-4.235-8.5-11-8.5S1 5.058 1 10c0 4.348 3.31 7.68 8.804 8.368l.531.066L12 21.764l1.665-3.33zm-3.985.926C3.493 18.585 0 14.69 0 10 0 4.753 4.373.5 12 .5S24 4.753 24 10c0 4.69-3.493 8.585-9.68 9.36l-1.647 3.293c-.374.75-.974.744-1.346 0L9.68 19.36z">
+									</path>
+								</svg>
+							</a>
+							<div class="drop-down card-item-action-list__action-wrap card-item-action-list__action-share"><button class="card-item-action-list__action" type="button">
+								<svg class="icon" aria-label="공유하기" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" preserveAspectRatio="xMidYMid meet">
+									<path d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z">
+									</path>
+								</svg>
+								</button>
+							</div>
+						</aside>
+					</div>
+				</article>
+			</div>
+		</div>
 		<div class="user-card-feed__item-wrap col-12 col-md-4">
 			<div class="user-card-feed__item">
 			<article class="card-item">
@@ -718,14 +742,14 @@ div.card_item_content{
 					</address>
 				</div>
 				<div id="card-item-7734689" class="card-item__content">
-					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="#"></a>
+					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="/contents/card_collections/6346249?affect_type=UserHome&amp;affect_id=11910615"></a>
 					<div class="expandable-text card-item-description card-item__description">
-						<div class="card-item-description__content">${vo.pcontent}</div>
+						<div class="card-item-description__content">시작합니다</div>
 					</div>
 					<div class="card-item__image">
 						<div class="card-item-image">
-							<img class="image" src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}">
-							<span class="card-item-image__view-count">조회수 <!-- -->${vo.phits }</span>
+							<img class="image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161103933114767119.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;q=80&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161103933114767119.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161103933114767119.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161103933114767119.jpeg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=80&amp;webp=1 3x" alt="">
+							<span class="card-item-image__view-count">조회수 <!-- -->4</span>
 						</div>
 					</div>
 					<aside class="card-item-action-list">
@@ -758,12 +782,6 @@ div.card_item_content{
 			</article>
 			</div>
 		</div>
-		</c:if>
-		<c:if test="${vo.photo_simage == null}">
-			<div class="picpic"><span>게시한 사진이 없습니다. 사진을 올려보세요.</span></div>
-		</c:if>
-	</c:forEach>	
-		
 		</div>
 	</div>
 		
@@ -773,8 +791,6 @@ div.card_item_content{
 </div>
 <div class="toast-message-root" id="toast-none"> 
 	</div>
-	<!-- footer -->
-	<jsp:include page="../footer.jsp" />
 </body>
 
 </html>

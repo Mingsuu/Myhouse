@@ -28,12 +28,12 @@
 	<!-- 댓글 작성 -->
 	<insert id="getwrite" parameterType="java.lang.String">
 		insert into h_photo_comment values('c'||COMMENT_SEQUENCE.nextval,
-				'alstndkrl@naver.com',#{pno},'',#{content},'', sysdate, 1, 'c'||COMMENT_SEQUENCE.nextval)
+				'test1234',#{pno},'',#{content},'', sysdate, 1, 'c'||COMMENT_SEQUENCE.nextval)
 	</insert>
 	
 	<!-- 답글 작성 -->
 	<insert id="getreplywrite" parameterType="java.lang.String">
 		insert into h_photo_comment values('c'||COMMENT_SEQUENCE.nextval,
-				'alstndkrl@naver.com',#{pno},#{tag},#{content}, '', sysdate, 2, #{cgroup})
+				'hong111',#{pno},#{tag},#{content}, '', sysdate, 2, #{cgroup})
 	</insert>
 </mapper> 
