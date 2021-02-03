@@ -375,7 +375,7 @@
 	color:#35c5f0;
 	margin-left:30px;
 }
-/*  */
+
 
 </style>
 </head>
@@ -396,7 +396,7 @@
 		<ul class="nav2-1">
 			<a href="mypage_profile1.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
-			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
+			<a href="scrap_all.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
 			<a href="mypage_activity.do"><li class="nav2-2">나의활동</li></a>
 		</ul>
