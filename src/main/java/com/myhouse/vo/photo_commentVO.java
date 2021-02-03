@@ -1,10 +1,27 @@
 package com.myhouse.vo;
 
 public class photo_commentVO {
-	String cno,email,pno,c_content,c_like,cdate,c_group;
-	int c_depth;
+	String cno,email,pno,c_tag,c_content,c_like,cdate,c_group,nickname,member_simage;
+	int c_depth, rcount;
 	
-	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getMember_simage() {
+		return member_simage;
+	}
+	public void setMember_simage(String member_simage) {
+		this.member_simage = member_simage;
+	}
+	public int getRcount() {
+		return rcount;
+	}
+	public void setRcount(int rcount) {
+		this.rcount = rcount;
+	}
 	public String getCno() {
 		return cno;
 	}
@@ -22,6 +39,12 @@ public class photo_commentVO {
 	}
 	public void setPno(String pno) {
 		this.pno = pno;
+	}
+	public String getC_tag() {
+		return c_tag;
+	}
+	public void setC_tag(String c_tag) {
+		this.c_tag = c_tag;
 	}
 	public String getC_content() {
 		return c_content;

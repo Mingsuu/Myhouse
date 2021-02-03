@@ -1,14 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/am-pagination.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/am-pagination.js"></script>
 <script>
 	$(document).ready(function(){
+		var order= "";
+		var type= "";
+		var style= "";
+		
+		community_list("","","","");
 		$("div.popout_drop_down").css("display","none");
 		
 		$("button#sort").mouseover(function(){
@@ -20,12 +29,16 @@
 			$("div.popout_drop_down").css("display","none");
 			$(this).children().css("display", "");
 		});
+		$("div.popout").mouseleave(function(){
+			$(this).children().css("display", "none");
+		});
 		
 		$("button#sort").mouseleave(function(){
 			$(this).parent().children().children().children().children().parent().css("display", "none");
 		});
 		
-		$("button#btn_list").click(function(){
+		
+		$(document).on("click","button#btn_list",function(){
 			$("div.popout_drop_down").css("display","none");
 			var uname = $(this).parent().parent().attr('class');
 			var list = $("ul."+uname+" button");
@@ -45,14 +58,22 @@
 					output += "<svg class='tagIcon' width='12' height='12' viewBox='0 0 12 12' fill='currentColor' preserveAspectRatio='xMidYMid meet'>"
 					output += "<path d='M6 4.94L3.879 2.817l-1.061 1.06L4.939 6 2.818 8.121l1.06 1.061L6 7.061l2.121 2.121 1.061-1.06L7.061 6l2.121-2.121-1.06-1.061L6 4.939zM6 12A6 6 0 1 1 6 0a6 6 0 0 1 0 12z'></path>"
 					output +="</svg></button></li>";
-					if($('li.filter_bar_tag_list_item').length !=0){
-						$("li#clear").before(output);
+					
+					if($(this).val()!='최근인기순'){
+						if($('li.filter_bar_tag_list_item').length !=0){
+							$("li#clear").before(output);
+							
+						}else{
+							output += "<li class='filter_bar_tag_list_item' id='clear'>";
+							output += "<button class='filter_bar_tag_list_clear' id='tagClear' type='button'>초기화</button>";
+							output +="</li>"; 
+						 	$("ul.fliter_bar_tag_list").after(output);
+						}
 						
+						$(this).parent().parent().parent().parent().parent().parent().parent().children('button').removeClass('sort');
+						$(this).parent().parent().parent().parent().parent().parent().parent().children('button').addClass('sort_selected');
 					}else{
-						output += "<li class='filter_bar_tag_list_item' id='clear'>";
-						output += "<button class='filter_bar_tag_list_clear' id='tagClear' type='button'>초기화</button>";
-						output +="</li>"; 
-					 	$("ul.fliter_bar_tag_list").after(output);
+						$("li#clear").remove();
 					}
 			}else{
 				if($('li.filter_bar_tag_list_item').length == 2){
@@ -60,18 +81,53 @@
 				}
 				$(this).removeClass("panel_entry_list_item_selected");
 				$(this).addClass("panel_entry_list_item");
+				
+				if(uname =='panel_entry_list1'){
+					var count = 0;
+					for(var i=0; i<list.length; i++){
+						if(list[i].className=="panel_entry_list_item_selected"){
+							count++;
+						}
+					}
+					if(count == 0){
+						$(list[0]).addClass("panel_entry_list_item_selected");
+						$(list[0]).removeClass("panel_entry_list_item");
+					}
+				}
+		
 				$("li#"+$(this).children().children().text()).remove();
+				$(this).parent().parent().parent().parent().parent().parent().parent().children('button').removeClass('sort_selected');
+				$(this).parent().parent().parent().parent().parent().parent().parent().children('button').addClass('sort');
 				
 			}
+			
+			 $(".panel_entry_list_item_selected" ).each( function(){
+				 if($(this).parent().parent().attr('class') =="panel_entry_list1") order = $(this).val();
+				 else if($(this).parent().parent().attr('class') =="panel_entry_list2") type=$(this).val();
+				 else if($(this).parent().parent().attr('class') =="panel_entry_list3") style=$(this).val();
+				 
+		    });
+			 community_list(order, type, style, "");
 		});
 		
 		$(document).on("click","#tag_btn",function(){
+			var tag_id=$(this).text().replace("&", "")
+			var btn = $('span#'+tag_id).parent().parent().parent().parent().parent().parent().parent().parent().parent().children('button');
 			if($('li.filter_bar_tag_list_item').length == 2){
 				$("li#clear").remove();
+				$("ul.panel_entry_list1").children().first().children('button').addClass("panel_entry_list_item_selected")
+				$("ul.panel_entry_list1").children().first().children('button').removeClass("panel_entry_list_item")
 			}
 			$(this).parent().remove();
-			$("span#"+$(this).text()).parent().parent().removeClass("panel_entry_list_item_selected");
-			$("span#"+$(this).text()).parent().parent().addClass("panel_entry_list_item");
+			$("span#"+tag_id).parent().parent().removeClass("panel_entry_list_item_selected");
+			$("span#"+tag_id).parent().parent().addClass("panel_entry_list_item");
+			btn.removeClass('sort_selected');
+			btn.addClass('sort');
+			 if($('span#'+tag_id).parent().parent().parent().parent().attr('class') =="panel_entry_list1") order="최근인기순";
+			 if($('span#'+tag_id).parent().parent().parent().parent().attr('class') =="panel_entry_list2") type="";
+			 if($('span#'+tag_id).parent().parent().parent().parent().attr('class') =="panel_entry_list3") style="";
+			
+			 community_list(order, type, style, ""); 
 		});
 		
 		$(document).on("click","#tagClear",function(){
@@ -83,22 +139,30 @@
 				$("li#"+tag_list[i].id).remove();
 			}
 			$("li#clear").remove();
-			$("ul.panel_entry_list1 button").first().addClass("panel_entry_list_item_selected")
-			$("ul.panel_entry_list1 button").first().removeClass("panel_entry_list_item")
+			$("ul.panel_entry_list1").children().first().children('button').addClass("panel_entry_list_item_selected")
+			$("ul.panel_entry_list1").children().first().children('button').removeClass("panel_entry_list_item")
+			$("button#sort").removeClass('sort_selected');
+			$("button#sort").addClass('sort');
+			
+			community_list("", "", "", "");
 			
 		});
 		
-		$("button#card_action1").click(function(){
+		$(document).on("click","button#card_action1",function(){
+			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
 				$(this).removeClass("card_action");
 				$(this).addClass("card_action_active");
+				$(this).children('span.count').text(count+1);
 			}else{
 				$(this).removeClass("card_action_active");
 				$(this).addClass("card_action");
+				$(this).children('span.count').text(count-1);
 			}
 		});
 		
-		$("button#card_action2").click(function(){
+		$(document).on("click","button#card_action2",function(){
+			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
 				$(this).removeClass("card_action");
 				$(this).addClass("card_action_active");
@@ -108,11 +172,12 @@
 				output +="<div class='toast-message__body'>스크랩했습니다</div>"
 				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
 				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
+				$(this).children('span.count').text(count+1);
 				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				$('div.toast-message').fadeOut(3800);
 				
 			}else{
 				$(this).removeClass("card_action_active");
@@ -121,11 +186,12 @@
 				output+="<div class='toast-message__footer__close'><svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 				output+="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
 				output+="<div class='toast-message__body'>스크랩북에서 삭제했습니다.</div></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
+				$(this).children('span.count').text(count-1);
 				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				$('div.toast-message').fadeOut(3800);
 			}
 		});
 		
@@ -133,7 +199,7 @@
 			$(this).parent().remove();
 		});
 		
-		$("button#follow").click(function(){
+		$(document).on("click","button#follow",function(){
 			if ($(this).hasClass("card_item_follow")){
 				$(this).removeClass("card_item_follow");
 				$(this).addClass("card_item_following");
@@ -145,8 +211,97 @@
 			}
 		});
 		
-
-	});
+		function community_list(order, type, style, rpage){
+			$.ajax({
+				url :"community_index_proc.do?order="+order+"&type="+type+"&style="+style+"&rpage="+rpage,
+				success:function(result){
+					var jdata = JSON.parse(result);
+					var output ="<div class='card_content'>";
+					for(var i in jdata.jlist){
+						output += "<div class='card_item_wrap'><div class='card_item'>";
+						output +="<article class='card_item'><div class='card_writer'>";
+						output +="<address class='card_writer_content'><div class='card_writer_header'><a href='#' class='card_writer_link'>";
+						if(jdata.jlist[i].w_member_simage == null) output +="<img class='card_writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
+						else output +="<img class='card_writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].w_member_simage+"'>";
+						output +="<span class='card_writer_name'>"+jdata.jlist[i].w_nickname+"</span>";
+						output +="</a><span class='seperator'>·</span><button id='follow' class='card_item_follow' type='button'>팔로우</button></div>";
+						if(jdata.jlist[i].intro == null){
+							output += "<p class='card_writer_intro'></p></address></div>";
+						}else{
+							output += "<p class='card_writer_intro'>"+jdata.jlist[i].intro+"</p></address></div>";
+						}
+						output +="<div class='card_item_content'><a href='community_page.do?pno="+jdata.jlist[i].pno+"' class='card_item_content_link'></a>";
+						if(jdata.jlist[i].pcontent == null){
+							output += "<div class='card_item_text'><div class='card_item_desciption'></div></div>";
+						}else{
+							output += "<div class='card_item_text'><div class='card_item_desciption'>"+jdata.jlist[i].pcontent+"</div></div>";
+						}
+						output +="<div class='card_item_image'><div class='card_item_image2'>";
+						var imgs = jdata.jlist[i].photo_simage;
+						const img = imgs.split(",");
+						output +="<img class='card_img' src='http://localhost:9000/myhouse/resources/upload/"+img[0]+"'>"
+						if(img.length>1){
+							output += "<span class='card_collection'><svg class='comm_icon' width='18' height='18' viewBox='0 0 18 18' preserveAspectRatio='xMidYMid meet'><g fill='none' fill-rule='evenodd'>";
+							output += "<path stroke='#000' stroke-opacity='.14' stroke-width='.75' d='M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z'></path>";
+							output += "<path fill='#FFF' fill-opacity='.74' d='M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z'></path></g></svg></span>";
+						}
+						output += "<span class='card_img_count'>조회수 "+jdata.jlist[i].phits+"</span></div></div>";
+						output +="<aside class='card_item_action'><button id='card_action1' class='card_action'>";
+						output += "<svg class='action_icon' aria-label='좋아요' width='24' height='24' fill='currentColor' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>";
+						output += "<path d='M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z'></path></svg>";
+						output += "<span class='count'>"+jdata.jlist[i].plike+"</span></button><button id='card_action2' class='card_action'>";
+						output += "<svg class='action_icon' aria-label='스크랩' width='24' height='24' fill='currentColor' stroke='currentColor' stroke-width='0.5' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>";
+						output += "<path d='M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z'></path></svg>";
+						output += "<span class='count'>"+jdata.jlist[i].scrap+"</span></button><a href='community_page.do?pno="+jdata.jlist[i].pno+"' class='card_action'>";
+						output += "<svg class='comm_icon' aria-label='댓글 달기' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>";
+						output += "<path fill='currentColor' fill-rule='nonzero' d='M13.665 18.434l.53-.066C19.69 17.679 23 14.348 23 10c0-4.942-4.235-8.5-11-8.5S1 5.058 1 10c0 4.348 3.31 7.68 8.804 8.368l.531.066L12 21.764l1.665-3.33zm-3.985.926C3.493 18.585 0 14.69 0 10 0 4.753 4.373.5 12 .5S24 4.753 24 10c0 4.69-3.493 8.585-9.68 9.36l-1.647 3.293c-.374.75-.974.744-1.346 0L9.68 19.36z'></path>";
+						output += "</svg><span class='count'>"+jdata.jlist[i].comments+"</span></a></aside></div>";
+						if(jdata.jlist[i].comments != 0){
+							output += "<div class='card_item_comment'><article class='card_item_comment' aria-label='댓글'><address class='comment_wirter'><a href='#' class='writer_link'><div class='writer_img'>";
+							if(jdata.jlist[i].c_member_simage != null){
+								output += "<img class='writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].c_member_simage+"'>";
+							}else{
+								output +="<img class='writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
+							}
+							output +="</div><span class='writer_name'>"+jdata.jlist[i].c_nickname+"</span><span class='writer_seperator'> :</span></address>";
+							output += "<a href='#' class='comment_link'><p class='comment_content'>"+jdata.jlist[i].c_content+"</p></a></article></div>"
+						}
+						output +="</article></div></div>"
+					}
+					output += '</div><div id="ampaginationsm"></div>';
+					$("div.card_content").remove();
+					$("div#ampaginationsm").remove();
+					$("div.sticky_container").after(output);
+					
+					page(jdata.dbcount, jdata.reqpage, jdata.pagesize); //페이지 출력 
+						
+				}//success
+			});//ajax
+		}
+		
+ 	
+	function page(dbcount, reqpage, pagesize){
+			//페이지 번호 및  링크
+		      var pager = jQuery("#ampaginationsm").pagination({
+		         maxSize : 9,
+		         totals:dbcount,
+		         page : reqpage,
+		         pageSize : pagesize,
+		         
+		         lastText : '&raquo;&raquo;',
+		         firstText : '&laquo;&laquo;',
+		         preTest : '&laquo;',
+		         nextTest : '&raquo;',
+		         
+		         btnSize : 'sm'
+		      });
+		      
+		      jQuery("#ampaginationsm").on('am.pagination.change',function(e){
+		         community_list(order,type,style,e.page);
+		      });
+		} 
+		
+	});//ready
 </script>
 <style>
 	*:focus{
@@ -221,7 +376,7 @@
 		line-height: 0;
 	}
 	
-	li.item>button{
+	button.sort{
 		touch-action: manipulation;
 		user-select: none;
 		display: inline-block;
@@ -238,6 +393,29 @@
 		background-color: #f5f5f5;
 		border-color: #f5f5f5;
 		color: #757575;
+		font-size: 15px;
+		line-height: 19px;
+		padding: 7px 8px 6px;
+		border-radius: 4px;
+	}
+	
+	button.sort_selected{
+		touch-action: manipulation;
+		user-select: none;
+		display: inline-block;
+		margin: 0;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		background: none;
+		font-family: inherit;
+		font-weight: 700;
+		text-decoration: none;
+		text-align: center;
+		transition: color .1s,background-color .1s,border-color .1s;
+		cursor: pointer;
+		background-color: #e8f4fb;
+		border-color: #e8f4fb;
+		color: #35c5f0;
 		font-size: 15px;
 		line-height: 19px;
 		padding: 7px 8px 6px;
@@ -965,6 +1143,10 @@
    .toast-message__body:last-child {
       margin-right: 20px;
    }
+   
+   div#ampaginationsm{
+   	margin-left:470px;
+   }
 </style>
 </head>
 <body>
@@ -980,7 +1162,7 @@
 						<div class="filter_bar_control">
 							<ul class="filter_bar">
 								<li class="item">
-									<button id="sort">정렬
+									<button id="sort" class="sort">정렬
 									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 										<path d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path>
 									</svg>
@@ -1011,13 +1193,13 @@
 																</div>
 															</button>
 														</li>
-														<li class="panel_entry_list_item_wrap">
+														<!-- <li class="panel_entry_list_item_wrap">
 														<button id="btn_list" class="panel_entry_list_item " type="button" value="팔로잉">
 															<div class="panel-entry-list__item__header">
 																<span class="panel_entry_list_item_title" id="팔로잉">팔로잉</span>
 															</div>
 														</button>
-														</li>
+														</li> -->
 													</ul>
 												</div>
 											</div>
@@ -1025,7 +1207,7 @@
 									</div> 
 								</li>
 								<li class="item">
-									<button id="sort">주거형태
+									<button id="sort" class="sort">주거형태
 									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 										<path d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path>
 									</svg>
@@ -1052,7 +1234,7 @@
 														<li class="panel_entry_list_item_wrap">
 															<button id="btn_list" class="panel_entry_list_item " type="button" value="빌라연립">
 																<div class="panel_entry_list_item_header">
-																	<span class="panel_entry_list_item_title"  id="빌라연립">빌라&연립</span>
+																	<span class="panel_entry_list_item_title" id="빌라연립">빌라&연립</span>
 																</div>
 															</button>
 														</li>
@@ -1090,8 +1272,8 @@
 										</div>
 									</div>
 								</li>
-								<li class="item">
-									<button id="sort">공간
+							<!-- 	<li class="item">
+									<button id="sort" class="sort">공간
 									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 										<path d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path>
 									</svg>
@@ -1211,18 +1393,18 @@
 											</div>
 										</div>
 									</div>
-								</li>
+								</li> -->
 								<li class="item">
-									<button id="sort">스타일
+									<button id="sort" class="sort">스타일
 									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 										<path d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path>
 									</svg>
 									</button>
 									<div>
-										<div class="popout" data-popout="true" style="position: absolute; z-index: 1000; left:360px; top:50px">
+										<div class="popout" data-popout="true" style="position: absolute; z-index: 1000; left:280px; top:50px">
 											<div class="popout_drop_down">
 												<div class="drop_down_panel" data-panel-title="스타일" data-panel-parents="">
-													<ul class="panel_entry_list4">
+													<ul class="panel_entry_list3">
 														<li class="panel_entry_list_item_wrap">
 															<button id="btn_list" class="panel_entry_list_item" type="button" value="모던">
 																<div class="panel_entry_list_item_header">
@@ -1292,9 +1474,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="card_content">
-		
-		<%for (int i=0; i<9; i++){ %>
+	<%-- <div class="card_content">
+		<c:forEach var="vo" items="${list}">
 			<div class="card_item_wrap">
 				<div class="card_item">
 					<article class="card_item">
@@ -1302,35 +1483,43 @@
 							<address class="card_writer_content">
 								<div class="card_writer_header">
 									<a href="#" class="card_writer_link">
-										<img class="card_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160345733976486088.jpeg?gif=1&w=36&h=36&c=c&webp=1">
-										<span class="card_writer_name">그래니롤라</span>
+											<c:if test="${vo.w_member_simage eq null}">
+												<img class="card_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1">
+											</c:if>
+											<c:if test="${vo.w_member_simage ne null}">
+												<img class="card_writer_img" src="http://localhost:9000/myhouse/resources/upload/${vo.w_member_simage}">
+											</c:if>
+										<span class="card_writer_name">${vo.w_nickname}</span>
 									</a>
 									<span class="seperator">·</span>
 									<button id="follow" class="card_item_follow" type="button">팔로우</button>
 								</div>
-								<p class="card_writer_intro">인테리어 정보는 인스타 댓글로 부탁드려요^^</p>
+								<p class="card_writer_intro">${vo.intro}</p>
 							</address>
 						</div>
 						<div class="card_item_content">
-							<a href="community_page.do" class="card_item_content_link"></a>
+							<a href="community_page.do?pno=${vo.pno}" class="card_item_content_link"></a>
 							<div class="card_item_text">
 								<div class="card_item_desciption">
-									예쁜 조화를 보니 
-									방안이 싱그러워 지는 느낌이예요 ㅋㅋ
+									${vo.pcontent}
 								</div>
 							</div>
 							<div class="card_item_image">
 								<div class="card_item_image2">
-									<img class="card_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161042051238175634.jpeg?gif=1&w=480&h=480&c=c&q=80">
-									<span class="card_collection">
-									<svg class="comm_icon" width="18" height="18" viewBox="0 0 18 18" preserveAspectRatio="xMidYMid meet">
-										<g fill="none" fill-rule="evenodd">
-										<path stroke="#000" stroke-opacity=".14" stroke-width=".75" d="M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z"></path>
-										<path fill="#FFF" fill-opacity=".74" d="M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z"></path>
-										</g>
-									</svg>
-									</span>
-									<span class="card_img_count">조회수 371</span>
+									<c:set var="pimg" value="${vo.photo_simage}"/>
+									<c:set var="img" value="${fn:split(pimg,',')}" />
+									<img class="card_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
+     									<c:if test="${fn:length(img)>1}">
+											<span class="card_collection">
+											<svg class="comm_icon" width="18" height="18" viewBox="0 0 18 18" preserveAspectRatio="xMidYMid meet">
+												<g fill="none" fill-rule="evenodd">
+												<path stroke="#000" stroke-opacity=".14" stroke-width=".75" d="M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z"></path>
+												<path fill="#FFF" fill-opacity=".74" d="M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z"></path>
+												</g>
+											</svg>
+											</span>
+										</c:if>
+									<span class="card_img_count">조회수 ${vo.phits}</span>
 								</div>
 							</div>
 							<aside class="card_item_action">
@@ -1338,44 +1527,53 @@
 									<svg class="action_icon" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 										<path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z"></path>
 									</svg>
-									<span class="count">29</span>
+									<span class="count">${vo.plike}</span>
 								</button>
 								<button id="card_action2" class="card_action">
 									<svg class="action_icon" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 									<path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
 									</svg>
-									<span class="count">27</span>
+									<span class="count">${vo.scrap}</span>
 								</button>
-								<a href="community_page.do" class="card_action">
+								<a href="community_page.do?pno=${vo.pno}" class="card_action">
 									<svg class="comm_icon" aria-label="댓글 달기" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 									<path fill="currentColor" fill-rule="nonzero" d="M13.665 18.434l.53-.066C19.69 17.679 23 14.348 23 10c0-4.942-4.235-8.5-11-8.5S1 5.058 1 10c0 4.348 3.31 7.68 8.804 8.368l.531.066L12 21.764l1.665-3.33zm-3.985.926C3.493 18.585 0 14.69 0 10 0 4.753 4.373.5 12 .5S24 4.753 24 10c0 4.69-3.493 8.585-9.68 9.36l-1.647 3.293c-.374.75-.974.744-1.346 0L9.68 19.36z"></path>
 									</svg>
-									<span class="count">2</span>
+									<span class="count">${vo.comments}</span>
 								</a>
 							</aside>
 						</div>
-						<div class="card_item_comment">
-							<article class="card_item_comment" aria-label="댓글">
-								<address class="comment_wirter">
-									<a href="#" class="writer_link">
-										<div class="writer_img">
-											<img class="writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1607992974_EAn.jpeg?gif=1&w=36&h=36&c=c">
-	 									</div>
-										<span class="writer_name">3색이</span>
-									</a>
-									<span class="writer_seperator"> :</span>
-								</address>
-								<a href="#" class="comment_link">
-									<p class="comment_content">요새 조화도 진짜처럼 ~ </p>
-								</a> 
-							</article>
-						</div>
+						
+						<c:if test="${vo.comments ne 0}">
+							<div class="card_item_comment">
+								<article class="card_item_comment" aria-label="댓글">
+									<address class="comment_wirter">
+										<a href="#" class="writer_link">
+											<div class="writer_img">
+												<c:if test="${vo.c_member_simage eq null}">
+													<img class="writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1">
+												</c:if>
+												<c:if test="${vo.c_member_simage ne null}">
+													<img class="writer_img" src="http://localhost:9000/myhouse/resources/upload/${vo.c_member_simage}">
+												</c:if>
+		 									</div>
+											<span class="writer_name">${vo.c_nickname}</span>
+										</a>
+										<span class="writer_seperator"> :</span>
+									</address>
+									<a href="#" class="comment_link">
+										<p class="comment_content">${vo.c_content}</p>
+									</a> 
+								</article>
+							</div>
+						</c:if>
 					</article>
 				</div>
 			</div>
-		<%} %>
+		</c:forEach> 
 		</div>
-	</div>
+		<div class="paging"><div id="ampaginationsm"></div></div>
+	</div> --%>
 	
 	<!-- footer -->
 	<jsp:include page="../footer.jsp"/>
