@@ -42,6 +42,9 @@
 		</beans:property>
 	</beans:bean>
 	
+	<beans:bean class="com.myhouse.dao.yh_InteriorDAO" id="interiorDAO"></beans:bean>
+	<beans:bean class="com.spring.service.InteriorServiceImpl" id="interiorService"></beans:bean>
+	
  	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
 	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
  	<beans:bean class="com.myhouse.dao.H_UploadPhotoDAO" id="uploadDAO"></beans:bean>

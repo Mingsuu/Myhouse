@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +110,6 @@
 	.production-selling {
 	    position: relative;
 	    min-height: 1px;
-	    border:1px solid red;
 	}
 	.container {
 	    margin-right: auto;
@@ -253,8 +254,6 @@
 	}
 	.production-selling-header__title__brand-wrap {
 	    margin: -3px 0 3px;
-	}
-	.production-selling-header__title__brand-wrap {
 	    display: block;
 	    font-size: 13px;
 	    font-weight: 400;
@@ -342,7 +341,7 @@
 	    display: inline-block;
 	    font-size: 0;
 	}
-	.production-selling-header__review__icon>svg {
+	.production-selling-header__review__icon>svg { 
 	    margin-right: 2px;
 	    width: 16px;
 	    height: 16px;
@@ -481,7 +480,8 @@
 	    padding: 0;
 	    transition: background-color .1s;
 	}
-	.production-select-button__production {
+	.production-select-button__production, .production-select-button__production-box,
+	.production-select-button__production-sub {
 	    display: flex;
 	    -webkit-box-align: center;
 	    align-items: center;
@@ -533,7 +533,8 @@
 	    font-weight: 700;
 	    color: #000;
 	}
-	.selling-option-form-content__price__number {
+	.selling-option-form-content__price__number, .selling-option-form-content__price__number-main,
+	.selling-option-form-content__price__number-sub {
 	    font-family: Tahoma,sans;
 	}
 	.production-selling-option-form__footer {
@@ -626,12 +627,15 @@
 		margin:0;
 		padding-left:0;
 	}
-	.production-select-list__item {
+	.production-select-list__item, .production-select-list__item-main-list,
+	.production-select-list__item-sub-list {
 	    display: block;
 	    background-color: #fff;
 	    border-bottom: 1px solid #dbdbdb;
 	}
-	.production-select-list__item .production-select-item {
+	.production-select-list__item .production-select-item,
+	.production-select-list__item-main-list .production-select-item,
+	.production-select-list__item-sub-list .production-select-item  {
 	    width: 100%;
 	    margin: 0;
 	    padding: 8px 20px 8px 0;
@@ -648,7 +652,7 @@
 	    flex: 1;
 	    text-align: left;
 	    background: none;
-	    border: none;
+	    border: none; 
 	    box-sizing: border-box;
 	    font-family: inherit;
 	}
@@ -749,7 +753,8 @@
 	    padding-right: 20px;
 	}
 	/* 상품 전체 선택 화면 */
-	.production-select-button__production.select-none, .selling-option-form-content__list.select-none {
+	.production-select-button__production.select-none, .selling-option-form-content__list.select-none,
+	.production-select-button__production-box.select-none, .production-select-button__production-sub.select-none {
 		display:none;
 	}
 	.order-list.order-none {
@@ -795,7 +800,8 @@
 	    line-height: 20px;
 	    color: #424242;
 	}
-	.selling-option-item__delete {
+	.selling-option-item__delete, .selling-option-item__delete-main,
+	.selling-option-item__delete-sub {
 	    position: absolute;
 	    display: inline-block;
 	    top: 0;
@@ -807,7 +813,8 @@
 	    transition: opacity .1s;
 	    color: #757575;
 	}
-	.selling-option-item__delete:hover {
+	.selling-option-item__delete:hover, .selling-option-item__delete-main:hover,
+	.selling-option-item__delete-sub:hover {
 		opacity: 0.4;
 	}
 	.selling-option-item__controls {
@@ -827,10 +834,11 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 0 auto;
 	}
-	.option-count-input.select-input>.form-control {
+	.option-count-input.select-input>.form-control, .option-count-input.select-input>.form-control-sub {
 	    padding-right: 30px;
 	}
-	.option-count-input.manual.form-control, .option-count-input.select-input>.form-control {
+	.option-count-input.manual.form-control, .option-count-input.select-input>.form-control,
+	.option-count-input.manual.form-control-sub, .option-count-input.select-input>.form-control-sub {
 	    height: 24px;
 	    padding: 0 10px;
 	    font-size: 13px;
@@ -839,23 +847,21 @@
 	    text-align: center;
 	    font-family: Tahoma,sans;
 	}
-	.select-input.input-group>.form-control {
+	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub {
 	    width: 100%;
 	}
 	
-	.select-input>.form-control {
+	.select-input>.form-control, .select-input>.form-control-sub {
 	    width: 100%;
 	    background-image: none;
 	}
-	.form-control {
+	.form-control, .form-control-sub {
 	    transition: .2s border-color, .2s box-shadow, .2s background-color;
 	    display: block;
 	    box-sizing: border-box;
 	    border: solid 1px #dbdbdb;
 	    background-color: #ffffff;
 	    color: #424242;
-	}
-	.form-control {
 	    -webkit-box-flex: 1;
 	    flex: 1 0 auto;
 	}
@@ -877,7 +883,7 @@
 	    margin: 0em;
 	    font: 400 13.3333px Arial;
 	}
-	.select-input>.form-control>option {
+	.select-input>.form-control>option, .select-input>.form-control-sub>option {
 	    color: #424242;
 	}
 	.option-count-input .select-input__icon {
@@ -1126,9 +1132,10 @@
 	    margin-right: 2px;
 	}
 	.production-review-feed__header-v2__stars__badge>.badge__pc {
-	    display: inline-block;
-	    font-size: 34px;
+	    display: block;
+	    font-size: 21px;
 	    margin-left: 12px;
+	    margin-top:10px;
 	    font-weight: 700;
 	}
 	.production-review-feed__header-v2__stars__avg {
@@ -1239,8 +1246,8 @@
 	    opacity: .6;
 	}
 	.production-review-item__container {
-	    padding-bottom: 40px;
-	    margin-bottom: 40px;
+	    padding-bottom: 10px;
+	    margin-bottom: 10px;
 	    border-bottom: 1px solid #ededed;
 	}
 	.production-review-item {
@@ -1318,7 +1325,6 @@
 	    margin-bottom: 4px;
 	}
 	.production-review-item__description {
-	    margin: 20px 0;
 	    font-size: 15px;
 	    line-height: 21px;
 	    letter-spacing: normal;
@@ -1393,7 +1399,8 @@
 	    margin-top: 0;
 	}
 	.production-question-feed__item {
-	    margin: 0 0 40px;
+	    margin: 0 0 20px;
+	    border-bottom:1px solid #ededed;
 	}
 	.production-question-feed__item__header {
 	    position: relative;
@@ -1590,7 +1597,8 @@
 	    padding: 0;
 	    transition: background-color .1s;
 	}
-	.production-select-button__production {
+	.production-select-button__production, .production-select-button__production-box,
+	.production-select-button__production-sub {
 	    display: flex;
 	    -webkit-box-align: center;
 	    align-items: center;
@@ -1644,7 +1652,8 @@
 	    font-weight: 700;
 	    color: #000;
 	}
-	.selling-option-form-content__price__number {
+	.selling-option-form-content__price__number, .selling-option-form-content__price__number-main,
+	.selling-option-form-content__price__number-sub {
 	    font-family: Tahoma,sans;
 	}
 	.production-selling-option-form__footer {
@@ -1952,18 +1961,18 @@
 	    margin-right: 8px;
 	    fill: #35c5f0;
 	}
-	.review-modal__form__review-input.form-control {
+	.review-modal__form__review-input.form-control, .review-modal__form__review-input.form-control-sub {
 	    padding-bottom: 25px;
 	    min-height: 110px;
 	    font-size: 15px;
 	}
-	textarea.form-control {
+	textarea.form-control, textarea.form-control-sub {
 	    resize: none;
 	    line-height: 20px;
 	    padding-top: 9px;
 	    padding-bottom: 9px;
 	}
-	.form-control {
+	.form-control, .form-control-sub{
 	    transition: .2s border-color, .2s box-shadow, .2s background-color;
 	    display: block;
 	    box-sizing: border-box;
@@ -2118,7 +2127,7 @@
 		display:none;
 	}
 	
-	.form-control.error {
+	.form-control.error .form-control-sub.error {
 	    border-color: #f77;
 	}
 	
@@ -2325,17 +2334,17 @@
 	    color: #424242;
 	    height:40px;
 	}
-	.select-input.input-group>.form-control {
+	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub {
 	    width: 100%;
 	}
 	.product-question .form-control {
 	    font-size: 15px;
 	}
-	.select-input>.form-control {
+	.select-input>.form-control, .select-input>.form-control-sub {
 	    padding-right: 30px;
 	    background-image: none;
 	}
-	.select-input>.form-control>option {
+	.select-input>.form-control>option, .select-input>.form-control-sub>option {
 	    color: #424242;
 	}
 	.select-input__icon {
@@ -2384,7 +2393,7 @@
 	.product-question__page .form-check-label {
 	    font-size: 15px;
 	}
-	textarea.form-control {
+	textarea.form-control, textarea.form-control-sub {
 	    resize: none;
 	    line-height: 20px;
 	    padding-top: 9px;
@@ -2524,9 +2533,37 @@
 	.btn-none {
 		display:none;
 	}
+	.production-question-feed__item__answer {
+	    padding-left: 22px;
+	    font-size: 15px;
+	    line-height: 22px;
+	    position: relative;
+	    margin: 0 0 10px;
+	    color: #424242;
+	}
+	.production-question-feed__item__answer__author {
+	    margin: 0 0 4px;
+	}
+	.production-question-feed__item__answer__author>.author {
+	    font-weight: 700;
+	    color: #424242;
+	}
+	.production-question-feed__item__answer__author>.date {
+	    font-size: 12px;
+	    color: #bdbdbd;
+	    line-height: 16px;
+	    vertical-align: 1px;
+	}
+	.production-question-feed__item__content {
+	    white-space: pre-line;
+	}
+	.production-question-feed__item__header>.answered {
+	    color: #35c5f0;
+	}
 </style>
 <script>
 	$(document).ready(function(){
+		
 		
 		/* swiper */
 	    var galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -2571,47 +2608,91 @@
 			//location.href('이동페이지');
 		}); */
 	    
+		/* 스크랩 유무에 따른 표시 여부 */
+		if(${scrap_exist}!=0) {
+			$("#main-scrap").addClass("production-selling-header__action__button--active");
+			
+			$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
+			$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+		} else {
+			$("#main-scrap").removeClass("production-selling-header__action__button--active");
+			
+			$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
+			$("#side-order").addClass("production-selling-sidebar-content__scrap");
+		} 
+		
+		
+		
 		/* 상품 스크랩 */
-		$("#main-scrap").click(function(){
-			if($(this).hasClass("production-selling-header__action__button--active")) {
-				$("#main-scrap").removeClass("production-selling-header__action__button--active");
-				$("#scrap-add").css("display","none");
-				$("#scrap-del").css("display","flex");
-				$("#scrap-del").fadeOut(3800);
-				
-				$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
-				$("#side-order").addClass("production-selling-sidebar-content__scrap");
+		$(".production-selling-header__action").click(function(){
+			if("${scrap_exist}"==0) {
+				$.ajax({
+					url:"interior_scrap_proc.do?email=${email}&ino=${ino}",
+					success: function(result) {
+						$("#main-scrap").addClass("production-selling-header__action__button--active");
+						$("#scrap-add").css("display","flex");
+						$("#scrap-del").css("display","none");
+						$("#scrap-add").fadeOut(3800);
+						
+						$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
+						$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+					} 
+				});	
 			} else {
-				$("#main-scrap").addClass("production-selling-header__action__button--active");
-				$("#scrap-add").css("display","flex");
-				$("#scrap-del").css("display","none");
-				$("#scrap-add").fadeOut(3800);
+				$.ajax({
+					url:"interior_scrap_del_proc.do?email=${email}&ino=${ino}",
+					success: function(result) {
+						$("#main-scrap").removeClass("production-selling-header__action__button--active");
+						$("#scrap-add").css("display","none");
+						$("#scrap-del").css("display","flex");
+						$("#scrap-del").fadeOut(3800);
+						
+						$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
+						$("#side-order").addClass("production-selling-sidebar-content__scrap");
+					}
+				});
 				
-				$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
-				$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+				
+			}
+			
+		});
+		
+		
+		
+		/* 사이드 주문 - 스크랩*/
+		$(".production-selling-option-form__footer div.scrap-box").click(function(){
+			if("${scrap_exist}"==0) {
+				$.ajax({
+					url:"interior_scrap_proc.do?email=${email}&ino=${ino}",
+					success: function(result) {
+						$("#main-scrap").addClass("production-selling-header__action__button--active");
+						$("#scrap-add").css("display","flex");
+						$("#scrap-del").css("display","none");
+						$("#scrap-add").fadeOut(3800);
+						
+						$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
+						$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+					} 
+				});	
+			} else {
+				$.ajax({
+					url:"interior_scrap_del_proc.do?email=${email}&ino=${ino}",
+					success: function(result) {
+						$("#main-scrap").removeClass("production-selling-header__action__button--active");
+						$("#scrap-add").css("display","none");
+						$("#scrap-del").css("display","flex");
+						$("#scrap-del").fadeOut(3800);
+						
+						$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
+						$("#side-order").addClass("production-selling-sidebar-content__scrap");
+					}
+				});
+				
+				
 			}
 		});
 		
-		/* 사이드 주문 - 스크랩*/
-		$("#side-order").click(function(){
-			if($(this).hasClass("production-selling-sidebar-content__scrap--active")) {
-				$("#main-scrap").removeClass("production-selling-header__action__button--active");
-				$("#scrap-add").css("display","none");
-				$("#scrap-del").css("display","flex");
-				$("#scrap-del").fadeOut(3800);
-				
-				$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
-				$("#side-order").addClass("production-selling-sidebar-content__scrap");
-			} else {
-				$("#main-scrap").addClass("production-selling-header__action__button--active");
-				$("#scrap-add").css("display","flex");
-				$("#scrap-del").css("display","none");
-				$("#scrap-add").fadeOut(3800);
-				
-				$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
-				$("#side-order").removeClass("production-selling-sidebar-content__scrap");
-			}
-		});
+		
 		
 		/* 싱품 스크랩 닫기버튼 */
 		$(".toast-message__footer__close").click(function(){
@@ -2637,161 +2718,422 @@
 	    });
 		
 	    /* 상품선택한 화면 */
-	   $("#select-item-1").click(function(){
+		var all_first = 0;
+	   $(".production-select-list__item-main-list").click(function(){
+		   var click_id = $(this).attr("id"); 
+		   click_id = click_id.split("-");
+		   
+		   /* 첫번째 상품 넣는 부분 */
+		   var chk_first = $("#select-item-"+click_id[2]+" .production-item-price__price").text();
+		   	   chk_first = chk_first.replace(/,/g, '');
+		   	   chk_first = parseInt(chk_first);
+		   /* 첫번째 상품 넣었는데 또 클릭하면, */
+		   if(!$("#pro-order-"+click_id[2] ).hasClass("order-none")) {
+			   chk_first = 0;
+		   } 
+	   	
 	    	select_list();
 	    	select_list_side();
-	    	$("#pro-select-1").removeClass("select-none");
+	    	
+	    	$("#pro-select-"+click_id[2] ).removeClass("select-none");
 	    	$("#pro-order-0").removeClass("select-none");
-	    	$("#pro-order-1").removeClass("order-none");
-	    	$("#pro-select-side-1").removeClass("select-none");
+	    	$("#pro-order-"+click_id[2] ).removeClass("order-none");
+	    	$("#pro-select-side-"+click_id[2] ).removeClass("select-none");
 	    	$("#pro-order-side-0").removeClass("select-none");
-	    	$("#pro-order-side-1").removeClass("order-none");
+	    	$("#pro-order-side-"+click_id[2] ).removeClass("order-none");
 	    		if($("#pro-select-list").hasClass("open")) {
 	    			$(".production-select-dropdown__list-container").removeClass("open");
 	    		}
 	    		if($("#side-order-list").hasClass("open")) {
+	    			
 	    			$("#side-order-list").removeClass("open");
-	    		}
-	    	//alert("상품체크");
+	    		} 
+	    	
+	    	/* 첫번째 상품들의 합 */
+	    	all_first = all_first + chk_first;
+	    	
+	    	/* 첫번째 상품들의 합 --> 화면 */
+	    	$(".selling-option-form-content__price__number-main").text(comma(all_first));	 
+	    	$(".selling-option-form-content__price__number-sub").text(comma(all_first));
+	    	
 	    });
-	    $("#select-item-2").click(function(){
-	    	select_list();
-	    	select_list_side();
-	    	$("#pro-select-2").removeClass("select-none");
-	    	$("#pro-order-0").removeClass("select-none");
-	    	$("#pro-order-2").removeClass("order-none");
-	    	$("#pro-select-side-2").removeClass("select-none");
-	    	$("#pro-order-side-0").removeClass("select-none");
-	    	$("#pro-order-side-2").removeClass("order-none");
-	    		if($("#pro-select-list").hasClass("open")) {
-	    			$(".production-select-dropdown__list-container").removeClass("open");
-	    		}
-	    		if($("#side-order-list").hasClass("open")) {
-	    			$("#side-order-list").removeClass("open");
-	    		}
-	    	//alert("상품체크2");
-	    });
-	    
+	   
+	  
 		function select_list() {
 			$("#pro-select-0").addClass("select-none");
-			$("#pro-select-1").addClass("select-none");
-			$("#pro-select-2").addClass("select-none");
+			$(".production-select-button__production-box").addClass("select-none");
 		}
 		
 		/* 사이드 주문 : 상품선택한 화면 */
-	    $("#select-side-item-1").click(function(){
+		var all_first_sub = 0;
+	    $(".production-select-list__item-sub-list").click(function(){
+	    	
+	    	 var click_id = $(this).attr("id"); 
+			   click_id = click_id.split("-");
+			   
+			   /* 첫번째 상품 넣는 부분 */
+			   var chk_first = $("#select-side-item-"+click_id[3]+" .production-item-price__price").text();
+			   	   chk_first = chk_first.replace(/,/g, '');
+			   	   chk_first = parseInt(chk_first);
+			   /* 첫번째 상품 넣었는데 또 클릭하면, */
+			   if(!$("#pro-order-side-"+click_id[3] ).hasClass("order-none")) {
+				   chk_first = 0;
+			   } 
+		   		 
 	    	select_list_side();
 	    	select_list();
-	    	$("#pro-select-side-1").removeClass("select-none");
+	    	
+	    	$("#pro-select-side-"+click_id[3]).removeClass("select-none");
 	    	$("#pro-order-side-0").removeClass("select-none");
-	    	$("#pro-order-side-1").removeClass("order-none");
-	    	$("#pro-select-1").removeClass("select-none");
+	    	$("#pro-order-side-"+click_id[3]).removeClass("order-none");
+	    	$("#pro-select-"+click_id[3]).removeClass("select-none");
 	    	$("#pro-order-0").removeClass("select-none");
-	    	$("#pro-order-1").removeClass("order-none");
+	    	$("#pro-order-"+click_id[3]).removeClass("order-none");
 	    		if($("#side-order-list").hasClass("open")) {
 	    			$("#side-order-list").removeClass("open");
 	    		}
 	    		if($("#pro-select-list").hasClass("open")) {
 	    			$(".production-select-dropdown__list-container").removeClass("open");
 	    		}
-	    	//alert("상품체크");
-	    });
-	    $("#select-side-item-2").click(function(){
-	    	select_list_side();
-	    	select_list();
-	    	$("#pro-select-side-2").removeClass("select-none");
-	    	$("#pro-order-side-0").removeClass("select-none");
-	    	$("#pro-order-side-2").removeClass("order-none");
-	    	$("#pro-select-2").removeClass("select-none");
-	    	$("#pro-order-0").removeClass("select-none");
-	    	$("#pro-order-2").removeClass("order-none");
-	    		if($("#side-order-list").hasClass("open")) {
-	    			$("#side-order-list").removeClass("open");
-	    		}
-	    		if($("#pro-select-list").hasClass("open")) {
-	    			$(".production-select-dropdown__list-container").removeClass("open");
-	    		}
-	    	//alert("상품체크2");
+	    		
+	    		
+	    		/* 첫번째 상품들의 합 */
+		    	all_first_sub = all_first_sub + chk_first;
+		    	
+		    	/* 첫번째 상품들의 합 --> 화면 */
+		    	$(".selling-option-form-content__price__number-main").text(comma_side(all_first_sub));	 
+		    	$(".selling-option-form-content__price__number-sub").text(comma_side(all_first_sub));
 	    });
 	    
 		function select_list_side() {
 			$("#pro-select-side-0").addClass("select-none");
-			$("#pro-select-side-1").addClass("select-none");
-			$("#pro-select-side-2").addClass("select-none");
+			$(".production-select-button__production-sub").addClass("select-none");
 		}
-		
+	    
+	    /* 주문상품 수량 및 가격 */
+		    $(".form-control").change(function part_sum(){
+		    	var id = $(this).attr("id");
+		    	var cnt = $("#"+id).val();
+		    		cnt = parseInt(cnt);
+		    	var price =  $("span#"+id).text();
+		    		price = price.replace(/,/g, '');
+		    		price = parseInt(price);
+		    	var group = 0;
+		    		group = group + cnt*price ;
+		    	
+		    		all_first = all_first + group - price;
+		    		
+		    		
+			    $(".selling-option-form-content__price__number-main").text(comma(all_first));
+			    $(".selling-option-form-content__price__number-sub").text(comma(all_first));
+			    if(cnt==2) {
+			    	select_false(id)				    
+			    	$("#sub-"+id).val("2").prop("selected", true);
+			    } 
+			    else if(cnt==3) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("3").prop("selected", true);
+			    } 
+			    else if(cnt==4) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("4").prop("selected", true);
+			    } 
+			    else if(cnt==5) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("5").prop("selected", true);
+			    } 
+			    else if(cnt==6) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("6").prop("selected", true);
+			    } 
+			    else if(cnt==7) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("7").prop("selected", true);
+			    } 
+			    else if(cnt==8) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("8").prop("selected", true);
+			    }
+			    else if(cnt==9) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("9").prop("selected", true);
+			    } 
+			    else if(cnt==10) {
+			    	select_false(id)
+			    	$("#sub-"+id).val("10").prop("selected", true);
+			    }
+			   
+		    });
+	    
+		    function select_false(id) {
+		    	for(var i=1; i<11; i++) {
+		    		$("#sub-"+id).val("i").prop("selected", false);
+		    	}
+		    }
+	    
+	    /* 주문상품 수량 및 가격 - 사이드 */
+		    $(".form-control-sub").change(function part_sum_side(){
+		    	var id_sub = $(this).attr("id");
+		    		id_sub = id_sub.split("-");
+		    	var cnt = $("#sub-"+id_sub[1]).val();
+		    		cnt = parseInt(cnt);
+		    	var price =  $("span#sub-"+id_sub[1]).text();
+		    		price = price.replace(/,/g, '');
+		    		price = parseInt(price);
+		    	var group = 0;
+		    		group = group + cnt*price ;
+		    	
+		    		all_first_sub = all_first_sub + group - price;
+		    		
+		    		
+			    $(".selling-option-form-content__price__number-main").text(comma_side(all_first_sub));
+			    $(".selling-option-form-content__price__number-sub").text(comma_side(all_first_sub));
+			    if(cnt==2) {
+			    	select_false_side(id_sub)				    
+			    	$("#"+id_sub[1]).val("2").prop("selected", true);
+			    } 
+			    else if(cnt==3) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("3").prop("selected", true);
+			    } 
+			    else if(cnt==4) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("4").prop("selected", true);
+			    } 
+			    else if(cnt==5) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("5").prop("selected", true);
+			    } 
+			    else if(cnt==6) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("6").prop("selected", true);
+			    } 
+			    else if(cnt==7) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("7").prop("selected", true);
+			    } 
+			    else if(cnt==8) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("8").prop("selected", true);
+			    }
+			    else if(cnt==9) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("9").prop("selected", true);
+			    } 
+			    else if(cnt==10) {
+			    	select_false_side(id_sub)
+			    	$("#"+id_sub[1]).val("10").prop("selected", true);
+			    }
+			   
+		    });
+	    
+		    function select_false_side(id_sub) {
+		    	for(var i=1; i<11; i++) {
+		    		$("#"+id_sub[1]).val("i").prop("selected", false);
+		    	}
+		    }
+	    	
+	    
 		/* 주문상품 삭제 */
-		$("#order-del-1").click(function(){
-			$("#pro-order-1").addClass("order-none");
-			$("#pro-order-side-1").addClass("order-none");
-			//alert("삭제1");
-		});
-		$("#order-del-2").click(function(){
-			$("#pro-order-2").addClass("order-none");
-			$("#pro-order-side-2").addClass("order-none");
-			//alert("삭제2");
+		$(".selling-option-item__delete-main").click(function(){
+			var click_id = $(this).attr("id");
+			click_id = click_id.split("-");
+			
+	    	var cnt = $("#"+click_id[2]).val();
+	    		cnt = parseInt(cnt);
+	    	var price =  $("span#"+click_id[2]).text();
+	    		price = price.replace(/,/g, '');
+	    		price = parseInt(price);
+	    	var group = 0;
+	    		group = group + cnt*price ;
+			
+			all_first = all_first - group;
+			select_false(click_id);
+			alert(all_first);
+			$("#pro-order-"+click_id[2]).addClass("order-none");
+			$("#pro-order-side-"+click_id[2]).addClass("order-none");
+			
+			$(".selling-option-form-content__price__number-main").text(comma(all_first));
+		    $(".selling-option-form-content__price__number-sub").text(comma(all_first));
 		});
 		
+		    function select_false(click_id) {
+		    	for(var i=1; i<11; i++) {
+		    		$("#sub-"+click_id[2]).val("i").prop("selected", false);
+		    		$("#"+click_id[2]).val("i").prop("selected", false);
+		    	}
+		    		$("#sub-"+click_id[2]).val("1").prop("selected", true);
+		    		$("#"+click_id[2]).val("1").prop("selected", true);
+		    }
+	    
+		    /* 계산한 값 콤마 포함해서 가져오기 */
+		    function comma(all_first) {
+				   all_first = String(all_first);
+			        return all_first.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+			    }		    
 
+		    
 		/* 사이드 주문상품 삭제 */
-		$("#order-del-side-1").click(function(){
-			$("#pro-order-side-1").addClass("order-none");
-			$("#pro-order-1").addClass("order-none");
-			//alert("삭제1");
+		$(".selling-option-item__delete-sub").click(function(){
+			var click_id = $(this).attr("id");
+			click_id = click_id.split("-");
+			
+			var cnt = $("#sub-"+click_id[3]).val();
+	    		cnt = parseInt(cnt);
+	    	var price =  $("span#sub-"+click_id[3]).text();
+	    		price = price.replace(/,/g, '');
+	    		price = parseInt(price);
+	    	var group = 0;
+	    		group = group + cnt*price ;
+			
+	    		all_first_sub = all_first_sub - group;
+				select_false_side(click_id);
+				alert(all_first_sub);
+				$("#pro-order-side-"+click_id[3]).addClass("order-none");
+				$("#pro-order-"+click_id[3]).addClass("order-none");
+				
+				$(".selling-option-form-content__price__number-main").text(comma_side(all_first_sub));
+			    $(".selling-option-form-content__price__number-sub").text(comma_side(all_first_sub));
 		});
-		$("#order-del-side-2").click(function(){
-			$("#pro-order-side-2").addClass("order-none");
-			$("#pro-order-2").addClass("order-none");
-			//alert("삭제2");
-		});
+		
+			function select_false_side(click_id) {
+		    	for(var i=1; i<11; i++) {
+		    		$("#sub-"+click_id[3]).val("i").prop("selected", false);
+		    		$("#"+click_id[3]).val("i").prop("selected", false);
+		    	}
+		    		$("#sub-"+click_id[3]).val("1").prop("selected", true);
+		    		$("#"+click_id[3]).val("1").prop("selected", true);
+		    }
+		
+		 /* 계산한 값 콤마 포함해서 가져오기 - 사이드 */
+	    function comma_side(all_first_sub) {
+	    	all_first_sub = String(all_first_sub);
+		        return all_first_sub.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		    }
 		
 		/* 리뷰 - 베스트순, 최신순, 사진리뷰 클릭시  */
+		function output(jdata) {
+			$(".production-review-feed__list").empty();
+			var output = "";
+			for(var i in jdata.interior_review) {
+				output += '<div class="production-review-item__container">';
+				output += '<article class="production-review-item">';
+				output += '<div class="production-review-item__writer">';
+				output += '<a href="http://localhost:9000/myhouse/mypage_profile1.do">';
+				output += '<img src="http://localhost:9000/myhouse/images/'+jdata.interior_review[i].member_spimage+'" class="production-review-item__writer__img" style="margin-top:18px;">';
+				output += '</a>';
+				output += '<div class="production-review-item__writer__info">';
+				output += '<p class="production-review-item__writer__info__name">'+jdata.interior_review[i].nickname+'</p>';
+				output += '<button class="production-review-item__writer__info__total-star-wrap" type="button">';
+				output += '<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">';
+				if(jdata.interior_review[i].star==1) {
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
+				
+				} else if(jdata.interior_review[i].star==2) {
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
+				
+				} else if(jdata.interior_review[i].star==3) {
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
+					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
+				
+				} else if(jdata.interior_review[i].star==4) {
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
+				
+				} else if(jdata.interior_review[i].star==5) {
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
+				} 
+				output += '</span>';
+				output += '<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>';
+				output += '<span class="production-review-item__writer__info__date">'+ jdata.interior_review[i].vdate +' ∙ 오늘의집 구매</span>';
+				output += '</div>';
+				output += '</div>';
+				output += '<div class="production-review-item__name">'+ jdata.interior_review[i].goods_name +'</div>';
+				if(jdata.interior_review[i].review_simage != null) {
+					output += '<button type="button" class="production-review-item__img__btn">';
+					output += '<img class="production-review-item__img" src="http://localhost:9000/myhouse/images/'+jdata.interior_review[i].review_simage +'">';
+					output += '</button>';
+				}
+				output += '<p class="production-review-item__description">'+jdata.interior_review[i].vcontent+'</p>';
+				output += '</article>';
+				output += '</div>';
+			}
+				$(".production-review-feed__list").append(output);
+		}
 		/* 베스트순 */
 		$("#review-best").click(function(){
-				$("#review-best").addClass("production-review-feed__filter__order--active");
-				$("#review-best").removeClass("production-review-feed__filter__order");
-				$("#review-recently").addClass("production-review-feed__filter__order"); 
-				$("#review-recently").removeClass("production-review-feed__filter__order--active"); 
+			$.ajax({
+				url:"interior_review.do?ino=${ino}",
+				success: function(result) {
+					var jdata = JSON.parse(result);
+						output(jdata);
+						
+						$("#review-best").addClass("production-review-feed__filter__order--active");
+						$("#review-best").removeClass("production-review-feed__filter__order");
+						$("#review-recently").addClass("production-review-feed__filter__order"); 
+						$("#review-recently").removeClass("production-review-feed__filter__order--active"); 
+						$("#review-photo").addClass("production-review-feed__filter__order");
+						$("#review-photo").removeClass("production-review-feed__filter__order--active");
+				}
+			});
 		});
 		
 		/* 최신순 */
 		$("#review-recently").click(function(){
-				$("#review-recently").addClass("production-review-feed__filter__order--active");
-				$("#review-recently").removeClass("production-review-feed__filter__order");
-				$("#review-best").removeClass("production-review-feed__filter__order--active"); 
-				$("#review-best").addClass("production-review-feed__filter__order");
+			$.ajax({
+				url:"interior_review_recently.do?ino=${ino}",
+				success: function(result) {
+					var jdata = JSON.parse(result);
+					output(jdata);
+					
+					$("#review-recently").addClass("production-review-feed__filter__order--active");
+					$("#review-recently").removeClass("production-review-feed__filter__order");
+					$("#review-best").removeClass("production-review-feed__filter__order--active"); 
+					$("#review-best").addClass("production-review-feed__filter__order"); 
+					$("#review-photo").addClass("production-review-feed__filter__order");
+					$("#review-photo").removeClass("production-review-feed__filter__order--active");
+				}
+			});	
+				
 		});
 		
 		/* 사진리뷰 */
 		$("#review-photo").click(function(){
-			if($(this).hasClass("production-review-feed__filter__order--active")) {
-				$("#review-photo").removeClass("production-review-feed__filter__order--active");
-				$("#review-photo").addClass("production-review-feed__filter__order");
-			} else {
-				$("#review-photo").addClass("production-review-feed__filter__order--active");
-				$("#review-photo").removeClass("production-review-feed__filter__order");
-			}
+			$.ajax({
+				url:"interior_review_photo.do?ino=${ino}",
+				success: function(result) {
+					var jdata = JSON.parse(result);
+					output(jdata);
+					
+					$("#review-photo").addClass("production-review-feed__filter__order--active");
+					$("#review-photo").removeClass("production-review-feed__filter__order");
+					$("#review-recently").addClass("production-review-feed__filter__order");
+					$("#review-recently").removeClass("production-review-feed__filter__order--active");
+					$("#review-best").removeClass("production-review-feed__filter__order--active"); 
+					$("#review-best").addClass("production-review-feed__filter__order"); 
+				}
+			});	
 		});
 		
-		/* 도움이 돼요 */
-		$("#help-1").click(function(){
-			if($(this).hasClass("help-none")) {
-				$("#help-1").removeClass("help-none");
-				$("#help-2").addClass("help-none");
-			} else {
-				$("#help-1").addClass("help-none");
-				$("#help-2").removeClass("help-none");
-			}
-		});
-		$("#help-2").click(function(){
-			if($(this).hasClass("help-none")) {
-				$("#help-2").removeClass("help-none");
-				$("#help-1").addClass("help-none");
-			} else {
-				$("#help-2").addClass("help-none");
-				$("#help-1").removeClass("help-none");
-			}
-		});
+	
 		
 		
 		
@@ -3158,6 +3500,8 @@
   </script>
 </head>
 <body>
+<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="production-selling">
 	<div class="production-selling-overview container">
 		<nav class="commerce-category-breadcrumb-wrap production-selling-overview__category">
@@ -3171,21 +3515,18 @@
 					<!-- Swiper -->
 					  <div class="swiper-container gallery-top">
 					    <div class="swiper-wrapper main">
-					      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img1.webp)"></div>
-					      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img2.webp)"></div>
-					      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img3.webp)"></div>
-					      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img4.webp)"></div>
-					      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img4.webp)"></div>
+					        <c:forEach var="vo" items="${interior_top }" >
+							      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage})"></div>
+					    	  </c:forEach>
 					    </div>
 					    <!-- Add Arrows -->
 					  </div>
 					  <div class="swiper-container gallery-thumbs">
 						  <ul class="swiper-wrapper thumb">
-						  	<li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img1.webp)"></li>
-						  	<li class="swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img2.webp)"></li>
-						  	<li class="swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img3.webp)"></li>
-						  	<li class="swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img4.webp)"></li>
-						  	<li class="swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/store-page-img4.webp)"></li>
+						 	 <c:forEach var="vo" items="${interior_top }" >
+							      <li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage})"></li>
+					    	  </c:forEach>
+						  	
 						  </ul>
 					  </div>
 				</div> <!-- production-selling-cover-image-container -->
@@ -3194,42 +3535,61 @@
 				<div class="production-selling-header">
 					<h1 class="production-selling-header__title">
 						<p class="production-selling-header__title__brand-wrap">
-							<a class="production-selling-header__title__brand" href="#">회사이름:아메리카나베드</a>
+							<a class="production-selling-header__title__brand" href="#">${vo.company}</a>
 						</p>
-						<span class="production-selling-header__title__name">상품제목:[주말특가] 알론 통서랍 수납 슈퍼싱글 침대 (3color)</span>
+						<span class="production-selling-header__title__name">${vo.ititle }</span>
 					</h1>
-					<div class="production-selling-header__content production-selling-header__content--deal">
+					<div class="production-selling-header__content production-selling-header__content--deal" id="${email }">
 						<div class="production-selling-header__action">
 							<button class="production-selling-header__action__button production-selling-header__action__button-scrap " type="button" id="main-scrap">
 								<!-- production-selling-header__action__button--active -->
 								<svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg>
-									<span class="count">55</span></button> <!-- 스크랩수 -->
-						</div> 
+									<span class="count">${vo.scrap_cnt }</span></button> <!-- 스크랩수 -->
+						</div>  
 						<P class="production-selling-header__review-wrap">
 							<a class="production-selling-header__review" href="#">
 								<span class="production-selling-header__review__icon" aria-label="별점 4.6점">
-									<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-										<clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs>
-										<use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
-									<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-										<clipPath id="star-clip-1.000">
-										<rect x="0" y="0" width="16" height="16"></rect></clipPath></defs>
-										<use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
-									<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-										<clipPath id="star-clip-1.000">
-										<rect x="0" y="0" width="16" height="16"></rect></clipPath></defs>
-										<use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
-									<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-409" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-										<clipPath id="star-clip-409">
-										<rect x="0" y="0" width="8.64" height="16"></rect></clipPath></defs>
-										<use xlink:href="#star-path-409" fill="#DBDBDB"></use><use clip-path="url(#star-clip-409)" xlink:href="#star-path-409"></use></svg>
-									<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-										<clipPath id="star-clip-544">
-										<rect x="0" y="0" width="0" height="16"></rect></clipPath></defs>
-										<use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+								<c:choose>
+									<c:when test="${vo.star_count eq 1}">
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+									</c:when>
+									<c:when test="${vo.star_count eq 2}">
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+									</c:when>
+									<c:when test="${vo.star_count eq 3}">
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+									</c:when>
+									<c:when test="${vo.star_count eq 4}">
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+									</c:when>
+									<c:when test="${vo.star_count eq 5}">
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+										<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+									</c:when>
+									
+								</c:choose>
 								</span>
 								<span class="production-selling-header__review__text">
-									<span class="number">28</span><span class="postfix">개 리뷰</span>
+									<span class="number">${vo.review_cnt }</span><span class="postfix">개 리뷰</span>
 								</span>
 							</a>
 						</P> <!-- production-selling-header__review-wrap -->
@@ -3239,7 +3599,7 @@
 									<span class="number">55</span><span class="percent">%</span>&nbsp;</span>
 								<span class="production-selling-header__price__price-wrap">
 									<span class="production-selling-header__price__price">
-										<span class="number">139,000</span><span class="won">원</span><span class="won"> 외</span><span class="production-selling-header__price__badge"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></span></span></span>
+										<span class="number">${vo.goods_price}</span><span class="won">원</span><span class="won"> 외</span><span class="production-selling-header__price__badge"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></span></span></span>
 							</span> <!-- production-selling-header__price__row -->
 						</p>
 					</div>
@@ -3256,115 +3616,66 @@
 										<div class="production-select-button__production__blank">상품을 선택하세요.</div>
 										<div class="production-select-button__production__icon"><svg width="1em" height="1em" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path></svg></div>
 									</div>
-									<div class="production-select-button__production select-none" id="pro-select-1">
-										<div class="production-select-button__production__index">1</div>
-										<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-button__production__text">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
+									<c:forEach var="vo" items="${interior_top }" >
+									<div class="production-select-button__production-box select-none" id="pro-select-${vo.gno }">
+										<div class="production-select-button__production__index">${vo.rno }</div>
+										<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+										<div class="production-select-button__production__text">${vo.goods_name }</div>
 										<div class="production-select-button__production__icon"><svg width="1em" height="1em" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path></svg></div>
 									</div>
-									<div class="production-select-button__production select-none" id="pro-select-2">
-										<div class="production-select-button__production__index">2</div>
-										<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-button__production__text">[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</div>
-										<div class="production-select-button__production__icon"><svg width="1em" height="1em" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path></svg></div>
-									</div>
+									</c:forEach>
 								</button>
 							</div>
 							<div class="production-select-dropdown__list-container" id="pro-select-list">
 								<ul class="production-select-list production-select-dropdown__list">
-									<li class="production-select-list__item" id="select-item-1">
-										<button class="production-select-item" type="button"><div class="production-select-item__index">1</div>
-										<div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</span>
+									<c:forEach var="vo" items="${interior_top }" >
+									<li class="production-select-list__item-main-list" id="select-item-${vo.gno }">
+										<button class="production-select-item" type="button"><div class="production-select-item__index">${vo.rno }</div>
+										<div class="production-select-item__image"><img class="image" alt="" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+										<div class="production-select-item__contents"><span class="production-select-item__contents__name">${vo.goods_name }</span>
 										<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">56<span class="percentage">% </span></span>
-										<span class="production-item-price__price">99,000</span></span>
+										<span class="production-item-price__price">${vo.goods_price }</span></span>
 										<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button>
 									</li>
-									<li class="production-select-list__item"  id="select-item-2">
-										<button class="production-select-item" type="button"><div class="production-select-item__index">2</div>
-										<div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043644716851412.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</span>
-										<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">57<span class="percentage">% </span></span>
-										<span class="production-item-price__price">169,000</span></span>
-										<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button>
-									</li>
-									<li class="production-select-list__item"  id="select-item-3">
-										<button class="production-select-item" type="button"><div class="production-select-item__index">3</div>
-										<div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043640256083182.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" ></div>
-										<div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 원목 침대(매트리스 제외) SS/Q 2colors</span>
-										<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">52<span class="percentage">% </span></span>
-										<span class="production-item-price__price">169,000</span></span>
-										<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button>
-									</li>
-									<li class="production-select-list__item"  id="select-item-4">
-										<button class="production-select-item" type="button"><div class="production-select-item__index">4</div>
-										<div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043642375790319.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 원목 침대(매트리스 포함) SS/Q 2colors</span>
-										<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">56<span class="percentage">% </span></span>
-										<span class="production-item-price__price">239,000</span></span>
-										<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button>
-									</li>
-									<li class="production-select-list__item"  id="select-item-5">
-										<button class="production-select-item" type="button"><div class="production-select-item__index">5</div>
-										<div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160334539595702064.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-										<div class="production-select-item__contents"><span class="production-select-item__contents__name">로슈 고무나무 원목 침대(매트리스 제외) SS/Q</span>
-										<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">53<span class="percentage">% </span></span>
-										<span class="production-item-price__price">259,000</span></span>
-										<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button>
-									</li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div> <!-- production-select-dropdown -->
 						<ul class="selling-option-form-content__list select-none" id="pro-order-0">
-							<li class="order-list order-none" id="pro-order-1" ><article class="selling-option-item">
-								<h1 class="selling-option-item__production">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</h1>
-								<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2>
-								<button class="selling-option-item__delete" type="button" aria-label="삭제" id="order-del-1"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
+							<c:forEach var="vo" items="${interior_top }" >
+							<li class="order-list order-none" id="pro-order-${vo.gno }" ><article class="selling-option-item">
+								<h1 class="selling-option-item__production">${vo.goods_name }</h1>
+							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> -->
+								<button class="selling-option-item__delete-main" type="button" aria-label="삭제" id="order-del-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 								<div class="selling-option-item__controls">
-									<div class="selling-option-item__quantity">
-										<div class="input-group select-input option-count-input"><select class="form-control">
-										<option value="0">1</option>
-										<option value="1">2</option>
-										<option value="2">3</option>
-										<option value="3">4</option>
-										<option value="4">5</option>
-										<option value="5">6</option>
-										<option value="6">7</option>
-										<option value="7">8</option>
-										<option value="8">9</option>
-										<option value="9">10+</option></select>
+									<div class="selling-option-item__quantity-main">
+										<div class="input-group select-input option-count-input">
+										<select class="form-control"  id="${vo.gno }">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
 										</div>
 									</div>
-									<p class="selling-option-item__price"><span class="selling-option-item__price__number">139,000</span>원</p></div>
+									<p class="selling-option-item__price">
+										<span class="selling-option-item__price__number" id="${vo.gno }">${vo.goods_price }</span>원
+									</p></div>
 									</article>
 								</li>
-							<li class="order-list order-none" id="pro-order-2"><article class="selling-option-item">
-								<h1 class="selling-option-item__production">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</h1>
-								<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2>
-								<button class="selling-option-item__delete" type="button" aria-label="삭제" id="order-del-2"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
-								<div class="selling-option-item__controls">
-									<div class="selling-option-item__quantity">
-										<div class="input-group select-input option-count-input"><select class="form-control">
-										<option value="0">1</option>
-										<option value="1">2</option>
-										<option value="2">3</option>
-										<option value="3">4</option>
-										<option value="4">5</option>
-										<option value="5">6</option>
-										<option value="6">7</option>
-										<option value="7">8</option>
-										<option value="8">9</option>
-										<option value="9">10+</option></select>
-										</div>
-									</div>
-									<p class="selling-option-item__price"><span class="selling-option-item__price__number">139,000</span>원</p></div>
-									</article>
-								</li>
+								</c:forEach>
 							</ul>
 						<p class="selling-option-form-content__price">
 							<span class="selling-option-form-content__price__left">주문금액</span>
 							<span class="selling-option-form-content__price__right">
-								<span class="selling-option-form-content__price__number">0</span>원</span>
+								<span class="selling-option-form-content__price__number-main">0</span>원
+							</span>
 						</p>
 					</div>
 					<div class="production-selling-option-form__footer">
@@ -3381,8 +3692,8 @@
 			<nav class="production-selling-navigation__content">
 				<ol class="production-selling-navigation__list">
 					<li><a class="production-selling-navigation__item production-selling-navigation__item--active" href="#production-selling-information" id="scroll-pro">상품정보</a></li>
-					<li><a class="production-selling-navigation__item" href="#production-selling-review" id="scroll-review">리뷰<span class="production-selling-navigation__item__count">260</span></a></li>
-					<li><a class="production-selling-navigation__item" href="#production-selling-question" id="scroll-q-a">문의<span class="production-selling-navigation__item__count">356</span></a></li>
+					<li><a class="production-selling-navigation__item" href="#production-selling-review" id="scroll-review">리뷰<span class="production-selling-navigation__item__count">${vo.review_cnt}</span></a></li>
+					<li><a class="production-selling-navigation__item" href="#production-selling-question" id="scroll-q-a">문의<span class="production-selling-navigation__item__count">${vo.qno_count }</span></a></li>
 					<li><a class="production-selling-navigation__item" href="#production-selling-delivery" id="scroll-delivery">배송/환불</a></li>
 				</ol></nav>
 		</div>
@@ -3397,16 +3708,18 @@
 							<ul class="production-selling-description__delivery-notice">
 								<li><b>배송까지 <span class="red">최대 15일</span> (주말과 공휴일 제외) 소요됩니다.</b></li>
 								<li>고객주문 &gt; 주문확인 &gt; 상품준비(3~7일) &gt; 안내전화 &gt; 배송</li>
-								<li>주문확인 이후에는 구매 취소와 배송지 변경이 불가합니다.</li></ul>
+								<li>주문확인 이후에는 구매 취소와 배송지 변경이 불가합니다.</li>
+								<%-- <li>${vo.icontent }</li> --%>	
+							</ul>
 							<div class="production-selling-description__content">
-								<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/descriptions/1_1610505202382_V.jpg?gif=1&amp;w=720&amp;webp=1">
-								<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/deals/descriptions/1_1610600222584_QmUw.jpg?gif=1&amp;w=720&amp;webp=1"></div>
+								<img src="http://localhost:9000/myhouse/images/${vo.interior_simage }">
+							</div>
 						</div> <!-- 상품정보::사진  -->
 					</section>
 					<a id="production-selling-review"></a>
 					<section class="production-selling-section">
 						<header class="production-selling-section__header">
-							<h1 class="production-selling-section__title">리뷰 <span class="count">260</span></h1>
+							<h1 class="production-selling-section__title">리뷰 <span class="count">${vo.review_cnt}</span></h1>
 							<div class="production-selling-section__right"><button type="button">리뷰쓰기</button></div>
 							
 						</header>
@@ -3416,22 +3729,45 @@
 									<div class="production-review-feed__header-v2__stars__badge">
 										<span class="badge__mobile">4.5</span> <!-- 별점값 받는 부분 :: 안보임 -->
 										<span class="icon" aria-label="별점 4.5점">
-											<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-115" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-												<clipPath id="star-clip-115"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-115" fill="#DBDBDB"></use>
-												<use clip-path="url(#star-clip-115)" xlink:href="#star-path-115"></use></svg>
-											<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-116" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-												<clipPath id="star-clip-116"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-116" fill="#DBDBDB"></use>
-												<use clip-path="url(#star-clip-116)" xlink:href="#star-path-116"></use></svg>
-											<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-117" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-												<clipPath id="star-clip-117"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-117" fill="#DBDBDB"></use>
-												<use clip-path="url(#star-clip-117)" xlink:href="#star-path-117"></use></svg>
-											<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-118" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-												<clipPath id="star-clip-118"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-118" fill="#DBDBDB"></use>
-												<use clip-path="url(#star-clip-118)" xlink:href="#star-path-118"></use></svg>
-											<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-119" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
-												<clipPath id="star-clip-119"><rect x="0" y="0" width="7.3230769230769255" height="16"></rect></clipPath></defs><use xlink:href="#star-path-119" fill="#DBDBDB"></use>
-												<use clip-path="url(#star-clip-119)" xlink:href="#star-path-119"></use></svg></span>
-											<span class="badge__pc">4.5</span>
+											<c:choose>
+												<c:when test="${vo.star_count eq 1}">
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+												</c:when>
+												<c:when test="${vo.star_count eq 2}">
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+												</c:when>
+												<c:when test="${vo.star_count eq 3}">
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+												</c:when>
+												<c:when test="${vo.star_count eq 4}">
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+												</c:when>
+												<c:when test="${vo.star_count eq 5}">
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+													<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+												</c:when>
+											</c:choose>
+										</span>
+										<span class="badge__pc">평균 ${vo.star_count } 점</span>
 									</div> <!-- 별점 -->
 									<div class="production-review-feed__header-v2__stars__avg">
 										<div class="production-review-feed__header-v2__stars__avg-warp">
@@ -3552,221 +3888,71 @@
 								</div> <!-- production-review-feed__filter-wrap -->
 							</div> <!-- filter -->
 							<div class="production-review-feed__list">
-								<div class="production-review-item__container">
+								<c:forEach var="rvo" items="${interior_review }" >
+								<div class="production-review-item__container"> 
 									<article class="production-review-item">
 										<div class="production-review-item__writer">
-											<a href="/users/10949403"><img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-160481141659932208.jpeg/80/80" class="production-review-item__writer__img" alt=""></a>
+											<a href="http://localhost:9000/myhouse/mypage_profile1.do">
+												<img src="http://localhost:9000/myhouse/images/${rvo.member_spimage }" class="production-review-item__writer__img" alt=""
+													 style="margin-top:18px;">
+											</a>
 											<div class="production-review-item__writer__info">
-												<p class="production-review-item__writer__info__name">yoon3707</p>
+												<p class="production-review-item__writer__info__name">${rvo.nickname }</p>
 												<button class="production-review-item__writer__info__total-star-wrap" type="button">
 												<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-5" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-5"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-5" fill="#DBDBDB"></use><use clip-path="url(#star-clip-5)" xlink:href="#star-path-5"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-6" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-6"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-6" fill="#DBDBDB"></use><use clip-path="url(#star-clip-6)" xlink:href="#star-path-6"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1149" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1149"><rect x="0" y="0" width="12" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1149" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1149)" xlink:href="#star-path-1149"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1150" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1150"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1150" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1150)" xlink:href="#star-path-1150"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1151" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1151"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1151" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1151)" xlink:href="#star-path-1151"></use></svg>
+													<c:choose>
+														<c:when test="${rvo.star eq 1}">
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+														</c:when>
+														<c:when test="${rvo.star eq 2}">
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+														</c:when>
+														<c:when test="${rvo.star eq 3}">
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+														</c:when>
+														<c:when test="${rvo.star eq 4}">
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 없음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>
+														</c:when>
+														<c:when test="${rvo.star eq 5}">
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+															<!-- 있음 --><svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>
+														</c:when>
+													</c:choose>
+													
 												</span>
 												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">2021.01.15 ∙ 오늘의집 구매</span>
+												<span class="production-review-item__writer__info__date">${rvo.vdate } ∙ 오늘의집 구매</span>
 											</div>
 										</div> <!-- production-review-item__writer -->
-										<div class="production-review-item__name"><p></p>프레임 블랙/선반 월넛</div>
+										<div class="production-review-item__name">${rvo.goods_name }</div>
+										<c:if test="${rvo.review_simage ne null}">
 										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/158874657958341877.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
+											<img class="production-review-item__img" src="http://localhost:9000/myhouse/images/${rvo.review_simage }">
 										</button>
-										<p class="production-review-item__description">
-												배송도 너무 늦고 업체측에서 실수로 인해 주문한 것과 
-												달리 누락된 제품도 있었는데 그게 다시 배송되는것만 해도 
-												또 시간이 너무 소요되어서 진짜 너무 오래 기다렸습니다.
-												그리고 업체측이랑 설치기사님이랑 소통도 잘 안되셨는지,
-												배송비 및 등에 관련된 내용에대해서 따로 빠지는 부분이 있었음에도 그런것도 전혀 서로 소통 안된채로 오셨었고 
-												이래저래 제품이 좋다해도 실망감이 너무 크네요 
-										</p>
-										<div class="production-review-item__help ">
-											<button type="button" class="production-review-item__help__btn" id="help-1"> 도움이 돼요</button>
-											<button type="button" class="production-review-item__help__btn--active help-none" id="help-2"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">69</span>명에게 도움이 되었습니다.</div>
-										</div> <!-- production-review-item__help -->
-										<!-- <!-- <div class="production-review-item__help help-none">
-											<button type="button" class="production-review-item__help__btn production-review-item__help__btn--active"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">70</span>명에게 도움이 되었습니다.</div>
-										</div> -->  <!-- production-review-item__help -->
+										</c:if>
+										<p class="production-review-item__description">${rvo.vcontent }</p>
 									</article>
 								</div> <!-- production-review-item__container -->
-								<div class="production-review-item__container">
-									<article class="production-review-item">
-										<div class="production-review-item__writer">
-											<a href="/users/10949403"><img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-160481141659932208.jpeg/80/80" class="production-review-item__writer__img" alt=""></a>
-											<div class="production-review-item__writer__info">
-												<p class="production-review-item__writer__info__name">yoon3707</p>
-												<button class="production-review-item__writer__info__total-star-wrap" type="button">
-												<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-5" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-5"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-5" fill="#DBDBDB"></use><use clip-path="url(#star-clip-5)" xlink:href="#star-path-5"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-6" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-6"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-6" fill="#DBDBDB"></use><use clip-path="url(#star-clip-6)" xlink:href="#star-path-6"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1149" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1149"><rect x="0" y="0" width="12" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1149" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1149)" xlink:href="#star-path-1149"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1150" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1150"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1150" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1150)" xlink:href="#star-path-1150"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1151" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1151"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1151" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1151)" xlink:href="#star-path-1151"></use></svg>
-												</span>
-												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">2021.01.15 ∙ 오늘의집 구매</span>
-											</div>
-										</div> <!-- production-review-item__writer -->
-										<div class="production-review-item__name"><p></p>프레임 블랙/선반 월넛</div>
-										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/158874657958341877.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
-										</button>
-										<p class="production-review-item__description">
-												배송도 너무 늦고 업체측에서 실수로 인해 주문한 것과 
-												달리 누락된 제품도 있었는데 그게 다시 배송되는것만 해도 
-												또 시간이 너무 소요되어서 진짜 너무 오래 기다렸습니다.
-												그리고 업체측이랑 설치기사님이랑 소통도 잘 안되셨는지,
-												배송비 및 등에 관련된 내용에대해서 따로 빠지는 부분이 있었음에도 그런것도 전혀 서로 소통 안된채로 오셨었고 
-												이래저래 제품이 좋다해도 실망감이 너무 크네요 
-										</p>
-										<div class="production-review-item__help ">
-											<button type="button" class="production-review-item__help__btn" id="help-1"> 도움이 돼요</button>
-											<button type="button" class="production-review-item__help__btn--active help-none" id="help-2"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">69</span>명에게 도움이 되었습니다.</div>
-										</div> <!-- production-review-item__help -->
-										<!-- <!-- <div class="production-review-item__help help-none">
-											<button type="button" class="production-review-item__help__btn production-review-item__help__btn--active"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">70</span>명에게 도움이 되었습니다.</div>
-										</div> -->  <!-- production-review-item__help -->
-									</article>
-								</div> <!-- production-review-item__container -->
-								<div class="production-review-item__container">
-									<article class="production-review-item">
-										<div class="production-review-item__writer">
-											<a href="/users/10949403"><img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-160481141659932208.jpeg/80/80" class="production-review-item__writer__img" alt=""></a>
-											<div class="production-review-item__writer__info">
-												<p class="production-review-item__writer__info__name">yoon3707</p>
-												<button class="production-review-item__writer__info__total-star-wrap" type="button">
-												<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-5" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-5"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-5" fill="#DBDBDB"></use><use clip-path="url(#star-clip-5)" xlink:href="#star-path-5"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-6" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-6"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-6" fill="#DBDBDB"></use><use clip-path="url(#star-clip-6)" xlink:href="#star-path-6"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1149" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1149"><rect x="0" y="0" width="12" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1149" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1149)" xlink:href="#star-path-1149"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1150" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1150"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1150" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1150)" xlink:href="#star-path-1150"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1151" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1151"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1151" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1151)" xlink:href="#star-path-1151"></use></svg>
-												</span>
-												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">2021.01.15 ∙ 오늘의집 구매</span>
-											</div>
-										</div> <!-- production-review-item__writer -->
-										<div class="production-review-item__name"><p></p>프레임 블랙/선반 월넛</div>
-										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/158874657958341877.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
-										</button>
-										<p class="production-review-item__description">
-												배송도 너무 늦고 업체측에서 실수로 인해 주문한 것과 
-												달리 누락된 제품도 있었는데 그게 다시 배송되는것만 해도 
-												또 시간이 너무 소요되어서 진짜 너무 오래 기다렸습니다.
-												그리고 업체측이랑 설치기사님이랑 소통도 잘 안되셨는지,
-												배송비 및 등에 관련된 내용에대해서 따로 빠지는 부분이 있었음에도 그런것도 전혀 서로 소통 안된채로 오셨었고 
-												이래저래 제품이 좋다해도 실망감이 너무 크네요 
-										</p>
-										<div class="production-review-item__help ">
-											<button type="button" class="production-review-item__help__btn" id="help-1"> 도움이 돼요</button>
-											<button type="button" class="production-review-item__help__btn--active help-none" id="help-2"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">69</span>명에게 도움이 되었습니다.</div>
-										</div> <!-- production-review-item__help -->
-										<!-- <!-- <div class="production-review-item__help help-none">
-											<button type="button" class="production-review-item__help__btn production-review-item__help__btn--active"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">70</span>명에게 도움이 되었습니다.</div>
-										</div> -->  <!-- production-review-item__help -->
-									</article>
-								</div> <!-- production-review-item__container -->
-								<div class="production-review-item__container">
-									<article class="production-review-item">
-										<div class="production-review-item__writer">
-											<a href="/users/10949403"><img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-160481141659932208.jpeg/80/80" class="production-review-item__writer__img" alt=""></a>
-											<div class="production-review-item__writer__info">
-												<p class="production-review-item__writer__info__name">yoon3707</p>
-												<button class="production-review-item__writer__info__total-star-wrap" type="button">
-												<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-5" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-5"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-5" fill="#DBDBDB"></use><use clip-path="url(#star-clip-5)" xlink:href="#star-path-5"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-6" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-6"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-6" fill="#DBDBDB"></use><use clip-path="url(#star-clip-6)" xlink:href="#star-path-6"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1149" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1149"><rect x="0" y="0" width="12" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1149" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1149)" xlink:href="#star-path-1149"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1150" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1150"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1150" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1150)" xlink:href="#star-path-1150"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1151" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1151"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1151" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1151)" xlink:href="#star-path-1151"></use></svg>
-												</span>
-												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">2021.01.15 ∙ 오늘의집 구매</span>
-											</div>
-										</div> <!-- production-review-item__writer -->
-										<div class="production-review-item__name"><p></p>프레임 블랙/선반 월넛</div>
-										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/158874657958341877.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
-										</button>
-										<p class="production-review-item__description">
-												배송도 너무 늦고 업체측에서 실수로 인해 주문한 것과 
-												달리 누락된 제품도 있었는데 그게 다시 배송되는것만 해도 
-												또 시간이 너무 소요되어서 진짜 너무 오래 기다렸습니다.
-												그리고 업체측이랑 설치기사님이랑 소통도 잘 안되셨는지,
-												배송비 및 등에 관련된 내용에대해서 따로 빠지는 부분이 있었음에도 그런것도 전혀 서로 소통 안된채로 오셨었고 
-												이래저래 제품이 좋다해도 실망감이 너무 크네요 
-										</p>
-										<div class="production-review-item__help ">
-											<button type="button" class="production-review-item__help__btn" id="help-1"> 도움이 돼요</button>
-											<button type="button" class="production-review-item__help__btn--active help-none" id="help-2"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">69</span>명에게 도움이 되었습니다.</div>
-										</div> <!-- production-review-item__help -->
-										<!-- <!-- <div class="production-review-item__help help-none">
-											<button type="button" class="production-review-item__help__btn production-review-item__help__btn--active"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">70</span>명에게 도움이 되었습니다.</div>
-										</div> -->  <!-- production-review-item__help -->
-									</article>
-								</div> <!-- production-review-item__container -->
-								<div class="production-review-item__container">
-									<article class="production-review-item">
-										<div class="production-review-item__writer">
-											<a href="/users/10949403"><img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-160481141659932208.jpeg/80/80" class="production-review-item__writer__img" alt=""></a>
-											<div class="production-review-item__writer__info">
-												<p class="production-review-item__writer__info__name">yoon3707</p>
-												<button class="production-review-item__writer__info__total-star-wrap" type="button">
-												<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-5" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-5"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-5" fill="#DBDBDB"></use><use clip-path="url(#star-clip-5)" xlink:href="#star-path-5"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-6" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-6"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-6" fill="#DBDBDB"></use><use clip-path="url(#star-clip-6)" xlink:href="#star-path-6"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1149" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1149"><rect x="0" y="0" width="12" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1149" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1149)" xlink:href="#star-path-1149"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1150" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1150"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1150" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1150)" xlink:href="#star-path-1150"></use></svg>
-													<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1151" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1151"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1151" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1151)" xlink:href="#star-path-1151"></use></svg>
-												</span>
-												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">2021.01.15 ∙ 오늘의집 구매</span>
-											</div>
-										</div> <!-- production-review-item__writer -->
-										<div class="production-review-item__name"><p></p>프레임 블랙/선반 월넛</div>
-										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/158874657958341877.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
-										</button>
-										<p class="production-review-item__description">
-												배송도 너무 늦고 업체측에서 실수로 인해 주문한 것과 
-												달리 누락된 제품도 있었는데 그게 다시 배송되는것만 해도 
-												또 시간이 너무 소요되어서 진짜 너무 오래 기다렸습니다.
-												그리고 업체측이랑 설치기사님이랑 소통도 잘 안되셨는지,
-												배송비 및 등에 관련된 내용에대해서 따로 빠지는 부분이 있었음에도 그런것도 전혀 서로 소통 안된채로 오셨었고 
-												이래저래 제품이 좋다해도 실망감이 너무 크네요 
-										</p>
-										<div class="production-review-item__help ">
-											<button type="button" class="production-review-item__help__btn" id="help-1"> 도움이 돼요</button>
-											<button type="button" class="production-review-item__help__btn--active help-none" id="help-2"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">69</span>명에게 도움이 되었습니다.</div>
-										</div> <!-- production-review-item__help -->
-										<!-- <!-- <div class="production-review-item__help help-none">
-											<button type="button" class="production-review-item__help__btn production-review-item__help__btn--active"><svg width="16" height="16" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="#FFF" d="M2.28 4.99l4.15 6.03 7.36-9.35 1.54 1.2-9 11.46L.67 6.1z" fill-rule="evenodd"></path></svg> 도움됨</button>
-											<div class="production-review-item__help__text">
-												<span class="production-review-item__help__text__number">70</span>명에게 도움이 되었습니다.</div>
-										</div> -->  <!-- production-review-item__help -->
-									</article>
-								</div> <!-- production-review-item__container -->
+								</c:forEach>
 							</div> <!-- production-review-feed__list -->
 							<!-- <div id="ampaginationsm"></div> -->
 						</div>
@@ -3774,76 +3960,42 @@
 					<a id="production-selling-question"></a>
 					<section class="production-selling-section">
 						<header class="production-selling-section__header">
-							<h1 class="production-selling-section__title">문의 <span class="count">3,346</span></h1>
+							<h1 class="production-selling-section__title">문의 <span class="count">${vo.qno_count }</span></h1>
 							<div class="production-selling-section__right-q"><button>문의하기</button></div>
 						</header>
 						<div class="production-question-feed">
 							<div class="production-question-feed__list">
+							<c:forEach var="qvo" items="${interior_question}">
 								<article class="production-question-feed__item" data-qna-id="2637633">
-									<header class="production-question-feed__item__header">비구매 | 상품 | <span class="unanswered">미답변</span></header>
-									<p class="production-question-feed__item__author">노쥬* | 2021년 01월 17일 00시 31분</p>
+									<header class="production-question-feed__item__header">
+										<c:choose>
+											<c:when test="${qvo.ostatus eq '0'}">비구매 | </c:when>
+											<c:when test="${qvo.ostatus eq null}">비구매 | </c:when>
+											<c:when test="${qvo.ostatus eq '1'}">구매 | </c:when>
+										</c:choose>
+										 ${qvo.qtype } | 
+										 <c:choose>
+										 	<c:when test="${qvo.qstatus eq 0}"><span class="unanswered">미답변</span></c:when>
+										 	<c:when test="${qvo.qstatus eq 1}"><span class="answered">답변완료</span></c:when>
+										 </c:choose>
+									 </header>
+									<p class="production-question-feed__item__author">${qvo.nickname } | ${qvo.qdate }</p>
 									<div class="production-question-feed__item__question">
 										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content">
-											<span class="production-question-feed__item__content__option-name">프레임 블랙/선반 화이트<br></span>일자로 넣으려고하는대요
-											가로사이즈가 3300이고 높이는2590
-											인대 5단선반장하나넣을곤대
-											어떻게 주문을해야하나요
-										</p>
+										<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>
+										${qvo.qcontent }</p>
 									</div>
-								</article>
-								<article class="production-question-feed__item" data-qna-id="2637633">
-									<header class="production-question-feed__item__header">비구매 | 상품 | <span class="unanswered">미답변</span></header>
-									<p class="production-question-feed__item__author">노쥬* | 2021년 01월 17일 00시 31분</p>
-									<div class="production-question-feed__item__question">
-										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content">
-											<span class="production-question-feed__item__content__option-name">프레임 블랙/선반 화이트<br></span>일자로 넣으려고하는대요
-											가로사이즈가 3300이고 높이는2590
-											인대 5단선반장하나넣을곤대
-											어떻게 주문을해야하나요
-										</p>
+									<c:if test="${qvo.ostatus eq 1}">
+									<div class="production-question-feed__item__answer">
+										<span class="production-question-feed__item__badge">A&nbsp;</span>
+										<p class="production-question-feed__item__answer__author">
+											<span class="author">${qvo.company }</span>&nbsp;<span class="date">${qvo.qdate_r }</span></p>
+											<p class="production-question-feed__item__content">${qvo.qreply }</p>
 									</div>
+									</c:if>
+									
 								</article>
-								<article class="production-question-feed__item" data-qna-id="2637633">
-									<header class="production-question-feed__item__header">비구매 | 상품 | <span class="unanswered">미답변</span></header>
-									<p class="production-question-feed__item__author">노쥬* | 2021년 01월 17일 00시 31분</p>
-									<div class="production-question-feed__item__question">
-										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content">
-											<span class="production-question-feed__item__content__option-name">프레임 블랙/선반 화이트<br></span>일자로 넣으려고하는대요
-											가로사이즈가 3300이고 높이는2590
-											인대 5단선반장하나넣을곤대
-											어떻게 주문을해야하나요
-										</p>
-									</div>
-								</article>
-								<article class="production-question-feed__item" data-qna-id="2637633">
-									<header class="production-question-feed__item__header">비구매 | 상품 | <span class="unanswered">미답변</span></header>
-									<p class="production-question-feed__item__author">노쥬* | 2021년 01월 17일 00시 31분</p>
-									<div class="production-question-feed__item__question">
-										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content">
-											<span class="production-question-feed__item__content__option-name">프레임 블랙/선반 화이트<br></span>일자로 넣으려고하는대요
-											가로사이즈가 3300이고 높이는2590
-											인대 5단선반장하나넣을곤대
-											어떻게 주문을해야하나요
-										</p>
-									</div>
-								</article>
-								<article class="production-question-feed__item" data-qna-id="2637633">
-									<header class="production-question-feed__item__header">비구매 | 상품 | <span class="unanswered">미답변</span></header>
-									<p class="production-question-feed__item__author">노쥬* | 2021년 01월 17일 00시 31분</p>
-									<div class="production-question-feed__item__question">
-										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content">
-											<span class="production-question-feed__item__content__option-name">프레임 블랙/선반 화이트<br></span>일자로 넣으려고하는대요
-											가로사이즈가 3300이고 높이는2590
-											인대 5단선반장하나넣을곤대
-											어떻게 주문을해야하나요
-										</p>
-									</div>
-								</article>
+							</c:forEach>
 							</div> <!-- production-question-feed__list -->
 							<!-- <div id="ampaginationsm"></div> -->
 						</div> <!-- production-question-feed -->
@@ -3901,78 +4053,78 @@
 											<button class="production-select-button" type="button">
 												<div class="production-select-button__production">
 													<div class="production-select-button__production__blank" id="pro-select-side-0">상품을 선택하세요.</div>
-													<div class="production-select-button__production select-none" id="pro-select-side-1">
-														<div class="production-select-button__production__index">1</div>
-														<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-														<div class="production-select-button__production__text">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
+													<c:forEach var="vo" items="${interior_top }" >
+													<div class="production-select-button__production-sub select-none" id="pro-select-side-${vo.gno }">
+														<div class="production-select-button__production__index">${vo.rno }</div>
+														<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+														<div class="production-select-button__production__text">${vo.goods_name }</div>
 													</div>
-													<div class="production-select-button__production select-none" id="pro-select-side-2"> 
-														<div class="production-select-button__production__index">2</div>
-														<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1"></div>
-														<div class="production-select-button__production__text">[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</div>
-													</div>
+													</c:forEach>
 													<div class="production-select-button__production__icon"><svg width="1em" height="1em" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path></svg></div>
 												</div></button>
 										</div> <!-- production-select-dropdown__button-side -->
 										<div class="production-select-dropdown__list-container deal-selling__sidebar-production-list" id="side-order-list">
 											<ul class="production-select-list production-select-dropdown__list">
-												<li class="production-select-list__item" id="select-side-item-1"><button class="production-select-item" type="button"><div class="production-select-item__index">1</div><div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043210673832728.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;q=0.8&amp;webp=1 3x"></div><div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</span><span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">56<span class="percentage">% </span></span><span class="production-item-price__price">99,000</span></span><div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button></li>
-												<li class="production-select-list__item" id="select-side-item-2"><button class="production-select-item" type="button"><div class="production-select-item__index">2</div><div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043644716851412.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043644716851412.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043644716851412.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043644716851412.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;q=0.8&amp;webp=1 3x"></div><div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</span><span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">57<span class="percentage">% </span></span><span class="production-item-price__price">169,000</span></span><div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button></li>
-												<li class="production-select-list__item"><button class="production-select-item" type="button"><div class="production-select-item__index">3</div><div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043640256083182.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043640256083182.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043640256083182.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043640256083182.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;q=0.8&amp;webp=1 3x"></div><div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 원목 침대(매트리스 제외) SS/Q 2colors</span><span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">52<span class="percentage">% </span></span><span class="production-item-price__price">169,000</span></span><div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button></li>
-												<li class="production-select-list__item"><button class="production-select-item" type="button"><div class="production-select-item__index">4</div><div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043642375790319.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043642375790319.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043642375790319.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/161043642375790319.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;q=0.8&amp;webp=1 3x"></div><div class="production-select-item__contents"><span class="production-select-item__contents__name">[단독] 고흐 원목 침대(매트리스 포함) SS/Q 2colors</span><span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">56<span class="percentage">% </span></span><span class="production-item-price__price">239,000</span></span><div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button></li>
-												<li class="production-select-list__item"><button class="production-select-item" type="button"><div class="production-select-item__index">5</div><div class="production-select-item__image"><img class="image" alt="" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160334539595702064.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;q=0.8&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160334539595702064.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160334539595702064.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160334539595702064.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;q=0.8&amp;webp=1 3x"></div><div class="production-select-item__contents"><span class="production-select-item__contents__name">로슈 고무나무 원목 침대(매트리스 제외) SS/Q</span><span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">53<span class="percentage">% </span></span><span class="production-item-price__price">259,000</span></span><div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div></div></button></li>
+												<c:forEach var="vo" items="${interior_top }" >
+												<li class="production-select-list__item-sub-list" id="select-side-item-${vo.gno }">
+													<button class="production-select-item" type="button">
+														<div class="production-select-item__index">${vo.rno }</div>
+														<div class="production-select-item__image"><img class="image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+														<div class="production-select-item__contents">
+															<span class="production-select-item__contents__name">${vo.goods_name }</span>
+															<span class="production-item-price production-select-item__contents__price">
+																<span class="production-item-price__rate">56<span class="percentage">% </span></span>
+																<span class="production-item-price__price">${vo.goods_price }</span>
+															</span>
+															<div class="production-select-item__contents__badges"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></div>
+														</div>
+													</button>
+												</li>
+												</c:forEach>
 											</ul>
 										</div>
 									</div> <!-- production-select-dropdown -->
 									<ul class="selling-option-form-content__list select-none" id="pro-order-side-0">
-										<li class="order-list order-none" id="pro-order-side-1"><article class="selling-option-item">
-												<h1 class="selling-option-item__production">1[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</h1>
-												<h2 class="selling-option-item__name">매트리스 옵션: 슈퍼싱글(DH 7존 독립매트) / 색상 옵션: 빈티지브라운</h2>
-												<button class="selling-option-item__delete" type="button" aria-label="삭제" id="order-del-side-1"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
+										<c:forEach var="vo" items="${interior_top }" >
+										<li class="order-list order-none" id="pro-order-side-${vo.gno }"><article class="selling-option-item">
+												<h1 class="selling-option-item__production">${vo.goods_name }</h1>
+												<!-- <h2 class="selling-option-item__name">매트리스 옵션: 슈퍼싱글(DH 7존 독립매트) / 색상 옵션: 빈티지브라운</h                                                                               2> -->
+												<button class="selling-option-item__delete-sub" type="button" aria-label="삭제" id="order-del-side-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 											<div class="selling-option-item__controls">
-												<div class="selling-option-item__quantity"><div class="input-group select-input option-count-input">
-													<select class="form-control">
-														<option value="0">1</option>
-														<option value="1">2</option>
-														<option value="2">3</option>
-														<option value="3">4</option>
-														<option value="4">5</option>
-														<option value="5">6</option>
-														<option value="6">7</option>
-														<option value="7">8</option>
-														<option value="8">9</option>
-														<option value="9">10+</option>
-													</select><span class="select-input__icon"><svg class="icon" width="10" height="10" preserveAspectRatio="xMidYMid meet" style="fill: currentcolor;"><path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path></svg></span></div></div>
-													<p class="selling-option-item__price"><span class="selling-option-item__price__number">189,000</span>원</p></div>
+												<div class="selling-option-item__quantity-sub">
+													<div class="input-group select-input option-count-input">
+													<select class="form-control-sub" id="sub-${vo.gno }">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+														<option value="6">6</option>
+														<option value="7">7</option>
+														<option value="8">8</option>
+														<option value="9">9</option>
+														<option value="10">10</option>
+													</select>
+													</div>
+												</div>
+													<p class="selling-option-item__price">
+														<span class="selling-option-item__price__number" id="sub-${vo.gno }">${vo.goods_price }</span>원
+													</p>
+											 </div>	
 										</article></li>
-										<li class="order-list order-none" id="pro-order-side-2"><article class="selling-option-item">
-												<h1 class="selling-option-item__production">2[단독] 고흐 무헤드 원목 침대(매트리스 포함) SS/Q 2colors</h1>
-												<h2 class="selling-option-item__name">매트리스 옵션: 슈퍼싱글(DH 7존 독립매트) / 색상 옵션: 빈티지브라운</h2>
-												<button class="selling-option-item__delete" type="button" aria-label="삭제"  id="order-del-side-2"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
-											<div class="selling-option-item__controls">
-												<div class="selling-option-item__quantity"><div class="input-group select-input option-count-input">
-													<select class="form-control">
-														<option value="0">1</option>
-														<option value="1">2</option>
-														<option value="2">3</option>
-														<option value="3">4</option>
-														<option value="4">5</option>
-														<option value="5">6</option>
-														<option value="6">7</option>
-														<option value="7">8</option>
-														<option value="8">9</option>
-														<option value="9">10+</option>
-													</select><span class="select-input__icon"><svg class="icon" width="10" height="10" preserveAspectRatio="xMidYMid meet" style="fill: currentcolor;"><path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path></svg></span></div></div>
-													<p class="selling-option-item__price"><span class="selling-option-item__price__number">189,000</span>원</p></div>
-										</article></li>
+										</c:forEach>
 									</ul>
 									<p class="selling-option-form-content__price">
 										<span class="selling-option-form-content__price__left">주문금액</span>
-										<span class="selling-option-form-content__price__right"><span class="selling-option-form-content__price__number">0</span>원</span>
+										<span class="selling-option-form-content__price__right">
+											<span class="selling-option-form-content__price__number-sub">0</span>원
+										</span>
 									</p>
 								</div> <!-- selling-option-form-content deal-selling-option-form-content production-selling-option-form__form :: 주문내용 -->
-								<div class="production-selling-option-form__footer">
-									<button class="button button--color-gray-14-inverted button--size-55 button--shape-4 production-selling-sidebar-content__scrap" type="button" id="side-order"><svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg></button>
+								<div class="production-selling-option-form__footer" id=${email }>
+									<div class="scrap-box">
+										<button class="button button--color-gray-14-inverted button--size-55 button--shape-4 production-selling-sidebar-content__scrap" type="button" id="side-order"><svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg></button>
+									</div>
 									<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="button">장바구니</button>
 									<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
 								</div>
@@ -3995,8 +4147,8 @@
 					<div class="review-modal__form__product">
 						<img class="review-modal__form__product__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159859281268373016.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
 						<div class="review-modal__form__product__contents">
-							<div class="review-modal__form__product__contents__brand">회사이름:한샘</div>
-							<div class="review-modal__form__product__contents__name">상품이름:한샘몰x홈앤하우스 브레드 접이식 원목 테이블 2종 택1</div>
+							<div class="review-modal__form__product__contents__brand">${vo.company }</div>
+							<div class="review-modal__form__product__contents__name">${vo.ititle }</div>
 							<div class="review-modal__form__product__contents__options"></div>
 						</div>
 					</div>
@@ -4097,12 +4249,12 @@
 							<option value="1">퀸(매트제외)</option>
 						</select>
 					</div>
-					<div class="form-check checkbox-input product-question__checkbox">
+					<!-- <div class="form-check checkbox-input product-question__checkbox">
 						<label class="form-check-label">
 							<input class="form-check" type="checkbox">
 								<span class="check-img"></span>선택 안함
 						</label>
-					</div>
+					</div> -->
 				</div>
 				<div class="product-question__wrap__sub-title" id="question-content">문의내용</div>
 				<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="q-content" name="q-content"
@@ -4135,7 +4287,8 @@
 			<div class="toast-message__body">스크랩북에서 삭제했습니다.</div>
 	</div>
 </div>
-
+<!-- footer -->
+	<jsp:include page="../footer.jsp"/>
 
 </body>
 </html>
