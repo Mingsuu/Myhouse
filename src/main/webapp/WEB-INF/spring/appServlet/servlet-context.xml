@@ -42,7 +42,7 @@
  	<beans:bean class="com.myhouse.dao.H_UploadPhotoDAO" id="uploadDAO"></beans:bean>
 	<beans:bean class="com.spring.service.UploadPhotoServiceImpl" id="uploadService"></beans:bean>
 	
-	<beans:bean class="com.spring.service1.CommunityServcieImpl" id="communityService"></beans:bean>
+	<beans:bean class="com.spring.service.CommunityServcieImpl" id="communityService"></beans:bean>
 	<beans:bean class="com.myhouse.dao.CommunityDAO" id="communityDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_PhotoDAO" id="photoDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>

@@ -1,4 +1,4 @@
-package com.spring.service1;
+package com.spring.service;
 
 import java.util.ArrayList;
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.service1.CommunityService;
+import com.spring.service.CommunityService;
 
 @Controller
 public class CommunityController {

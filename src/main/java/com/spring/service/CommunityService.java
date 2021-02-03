@@ -1,4 +1,4 @@
-package com.spring.service1;
+package com.spring.service;
 
 import org.springframework.web.servlet.ModelAndView;
 
