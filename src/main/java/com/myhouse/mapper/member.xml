@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	
+	<!-- id : getinfo -->
+	<select id="getinfo" parameterType="java.lang.String" resultType="java.lang.String">
+	select pass,nickname from h_member where email=#{email}
+	</select>
+	
+	<!-- id : insert -->
+	<insert id="insert" parameterType="com.myhouse.vo.MemberVO">
+	insert into h_member values(#{email},#{pass},#{nickname},'','',
+		'','','','','','','','',sysdate,'','','','','')
+	</insert>
+	
+	<!-- id : idcheck -->
+	<select id="idcheck" parameterType="java.lang.String" resultType="int">
+		select count(*) from h_member where email=#{email}
+	</select>
+	
+	<!-- id : login -->
+	 <select id="login" parameterType="com.myhouse.vo.MemberVO" resultType="com.myhouse.vo.SessionVO"> 
+		select count(*) result, nickname from h_member where email=#{email} and pass=#{pass} group by nickname
+	</select>
+</mapper>

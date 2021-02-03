@@ -2,6 +2,7 @@
 
 # ignore properties file
 pom.properties
+*.properties
 
 ### Java###
 # Compiled class file
