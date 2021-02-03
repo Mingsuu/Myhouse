@@ -63,6 +63,7 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
     -ms-filter: alpha(opacity=95);
     filter: alpha(opacity=95);
 }
+
 </style>
 </head>
 <body>
@@ -94,7 +95,7 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 			
 			<div class="sign-in-form__action">
 				<a class="sign-in-form__action__entry" href="http://localhost:9000/myhouse/pass_update.do">비밀번호
-					재설정</a> <a class="sign-in-form__action__entry" href="http://localhost:9000/myhouse/join.do">회원가입</a>
+					찾기</a> <a class="sign-in-form__action__entry" href="http://localhost:9000/myhouse/join.do">회원가입</a>
 			</div>
 			
 			<section class="sign-in-form__sns">

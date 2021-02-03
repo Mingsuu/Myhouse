@@ -145,8 +145,8 @@
 									href="/partner/applications/new">판매자 신청</a></li>
 								</li>
 								<li class="layout-navigation-bar-user-menu__item-wrap">
-								<li class="layout-navigation-bar-user-menu__item-wrap"><button
-										class="layout-navigation-bar-user-menu__item" type="button">로그아웃</button></li>
+								<li class="layout-navigation-bar-user-menu__item-wrap"><a href="logout.do"><button
+										class="layout-navigation-bar-user-menu__item" type="button">로그아웃</button></a></li>
 								</li>
 							</ul>
 						</div>
