@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.myhouse.vo.SessionVO;
 import com.spring.service.CommunityService;
 
 @Controller
@@ -15,7 +18,11 @@ public class CommunityController {
 	private CommunityService communityService;
 	
 	@RequestMapping(value="/community_index.do", method=RequestMethod.GET)
-	public ModelAndView community_index(String rpage) {
+	public ModelAndView community_index(String rpage, HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		if(svo != null) {
+		}else {
+		}
 		return communityService.getList(rpage);
 	}
 	
@@ -37,7 +44,6 @@ public class CommunityController {
 	@RequestMapping(value="/comment_reply_write_proc.do", method=RequestMethod.GET,
 	produces="text/plain;charset=UTF-8")
 	public String comment_reply_write_proc(String pno, String tag, String content, String cgroup) {
-		System.out.println("content="+content);
 		return communityService.getReplyWrite(pno, tag, content, cgroup);
 	}
 	
