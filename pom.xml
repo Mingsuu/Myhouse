@@ -115,7 +115,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-
 		</dependency>        
 		
 		<!-- FileUpload - MultipartHttpServletRequset -->
@@ -158,8 +157,8 @@
 		    <version>1.2.4</version>
 		</dependency>
 		
+		
 	</dependencies>
-	
     <build>
         <plugins>
             <plugin>

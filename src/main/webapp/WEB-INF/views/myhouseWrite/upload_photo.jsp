@@ -16,14 +16,63 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!--이미지 미리보기-->
-<script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script> -->
     <script type="text/javascript">
-        
-        var sel_file;
- 
-        $(document).ready(function() {
+    
+    $(document).ready(function() {
+    	  if (window.File && window.FileList && window.FileReader) {
+    	    $("#imageSelector").on("change", function(e) {
+    	      var files = e.target.files,
+    	        filesLength = files.length;
+    	      for (var i = 0; i < filesLength; i++) {
+    	        var f = files[i]
+    	        var fileReader = new FileReader();
+    	        fileReader.onload = (function(e) {
+    	          var file = e.target;
+    	          $("<span class=\"pip\">" +
+    	            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+    	            "<br/><span class=\"remove\">사진 삭제</span>" +
+    	            "</span>").insertAfter("#imageSelector");
+    	          $(".remove").click(function(){
+    	            $(this).parent(".pip").remove();
+    	          });
+    	          
+    	        });
+    	        fileReader.readAsDataURL(f);
+    	      }
+    	    });
+    	  } else {
+    	    alert("브라우저를 업데이트 해주세요");
+    	  }
+    	  
+    	  
+    	  $("#btnUploadPhoto").click(function(){
+          	if($("#ptype").val() == "주거형태"){
+  				alert("ptype없음");
+  				$("#ptype").focus();
+  				return false;
+  			}else{
+				uploadPhotoForm.submit();		
+  			}
+			});
+    	  
+    	  
+    	});    
+    
+     /*    $(document).ready(function() {
             $("#imageSelector").on("change", handleImgFileSelect);
-        }); 
+            
+            $("#btnUploadPhoto").click(function(){
+            	if($("#ptype").val() == "주거형태"){
+    				alert("ptype없음");
+    				$("#ptype").focus();
+    				return false;
+    			}else{
+				uploadPhotoForm.submit();		
+    			}
+			});
+		
+        });  */
  
         function handleImgFileSelect(e) {
             var files = e.target.files;
@@ -31,7 +80,7 @@
  
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    
                     return;
                 }
  
@@ -52,13 +101,38 @@
  
     </script>
 	
-	<style>
-	div#w_picture img#img{
-	width:450px;
-	height:500px;
-	}
-	
-	</style>
+	<style>		
+		input[type="file"] {
+			display: block;
+		}
+		
+		.imageThumb {
+			max-height: 450px;
+			max-width: 450px;
+			border: 2px solid;
+			padding: 1px;
+			cursor: pointer;
+		}
+		
+		.pip {
+			display: inline-block;
+			margin: 10px 10px 0 0;
+		}
+		
+		.remove {
+			display: block;
+			background: #35c5f0;
+			border: 1px solid black;
+			color: white;
+			text-align: center;
+			cursor: pointer;
+		}
+		
+		.remove:hover {
+			background: white;
+			color: black;
+		}
+</style>
 </head>
 
 <body>
@@ -70,15 +144,15 @@
 			<div class="card-collection-form__metadata__left">
 				<div
 					class="input-group select-input card-collection-form__metadata__entry">
-					<select class="form-control empty" id="ptype"><option selected=""
-							value="" disabled="">주거형태</option>
-						<option value="0">원룸&amp;오피스텔</option>
-						<option value="1">아파트</option>
-						<option value="2">빌라&amp;연립</option>
-						<option value="3">단독주택</option>
-						<option value="4">사무공간</option>
-						<option value="5">상업공간</option>
-						<option value="6">기타</option>
+					<select class="form-control empty" id="ptype" name="ptype">
+						<option selected="" value="" disabled="">주거형태
+						<option value="원룸&오피스텔">원룸&amp;오피스텔
+						<option value="아파트">아파트
+						<option value="빌라&연립">빌라&amp;연립
+						<option value="단독주택">단독주택
+						<option value="사무공간">사무공간
+						<option value="상업공간">상업공간
+						<option value="기타">기타
 						</select>
 						<span class="select-input__icon"><svg
 							class="icon" width="10" height="10" style="fill: currentColor"
@@ -87,16 +161,16 @@
 				</div>
 				<div
 					class="input-group select-input card-collection-form__metadata__entry">
-					<select class="form-control empty"  id="pstyle"><option selected=""
-							value="" disabled="">스타일</option>
-						<option value="0">모던</option>
-						<option value="1">북유럽</option>
-						<option value="2">빈티지</option>
-						<option value="3">내추럴</option>
-						<option value="4">프로방스&amp;로맨틱</option>
-						<option value="5">클래식&amp;앤틱</option>
-						<option value="6">한국&amp;아시아</option>
-						<option value="7">유니크</option>
+					<select class="form-control empty"  id="pstyle" name="pstyle">
+						<option selected="" value="" disabled="">스타일
+						<option value="모던">모던
+						<option value="북유럽">북유럽
+						<option value="빈티지">빈티지
+						<option value="내추럴">내추럴
+						<option value="프로방스&로맨틱">프로방스&amp;로맨틱
+						<option value="클래식&앤틱">클래식&amp;앤틱
+						<option value="한국&아시아">한국&amp;아시아
+						<option value="유니크">유니크
 						</select>
 						<span class="select-input__icon"><svg
 							class="icon" width="10" height="10" style="fill: currentColor"
@@ -131,15 +205,21 @@
 									accept="image/jpeg, image/jpg, image/png" multiple />	
 									
 								<!--미리보기 출력-->
-								<div class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture">
-									<img id="img" onclick="test()"/>
+								<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+								<div class="field" align="left">
+								  <h3></h3>
+								  <!-- <input type="file" id="files" name="files[]" multiple /> -->
 								</div>
+								
+								<!-- <div class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture">
+									<img id="img" onclick="test()"/>
+								</div> -->
 							</div>
 							
 							<div class="card-collection-form__card-item__content">
 								<div class="card-collection-form__card-item__content__row">
 									<textarea placeholder="사진에 대해서 설명해주세요."
-										class="form-control text-area-input" style="height: 40px;"></textarea>
+										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 300px;"></textarea>
 								</div>
 								<div class="card-collection-form__card-item__content__row">
 									<div class="keyword-input">
@@ -161,8 +241,7 @@
 				style="position: fixed; left: 0px; right: 0px; bottom: 0px;">
 				<div class="card-collection-form__footer__left"></div>
 				<div class="card-collection-form__footer__right">
-					<button type="button"
-						class="button button--color-blue button--size-50 button--shape-4 card-collection-form__footer__submit"
+					<button type="button" class="button button--color-blue button--size-50 button--shape-4 card-collection-form__footer__submit"
 						id="btnUploadPhoto">올리기</button>
 				</div>
 			</div>
