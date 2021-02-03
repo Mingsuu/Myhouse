@@ -19,7 +19,7 @@
 
 	<jsp:include page="../header_login.jsp" />
 
-<div id="body" class="users followee" data-s_id="ef0f70f1c260ef62c8b95bcba9d0f392" style="padding-bottom: 0px;">
+<div id="body" class="users follower" data-s_id="df7d44686e01a9ed062dc28c9a59fc97" style="padding-bottom: 0px;">
     
 <div id="user-share-data" data-user-nickname="기림팀장만믿어요" data-user-cover-img-url="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-default_images-default_user_cover3.jpg/850/850" data-follower-count="3" data-user-id="11910848" data-user-profile="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/160/160"></div>
 
@@ -28,7 +28,7 @@
   <img class="user-header__profile" src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/320/320" srcset="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/320/320 1.5x, https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/425/425 3x">
   <div class="user-header__info">
     <p class="user-header__name">
-      <a href="/users/F-3JTT08DjY">
+      <a href="http://localhost:9000/myhouse/follow_list.do">
         기림팀장만믿어요
 </a>    </p>
     <p class="user-header__follow">
@@ -41,7 +41,7 @@
           3
         </span>
 </a>    </p>
-      <button class="btn user-header__btn user-header__btn--follow active" data-user="11910848">팔로잉</button>
+      <button class="btn user-header__btn user-header__btn--follow" data-user="11910848">팔로우</button>
   </div>
   <div id="btn-share-user-wrap">
     <button id="btn-share-user">

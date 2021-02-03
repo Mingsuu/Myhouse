@@ -3,6 +3,8 @@
 <html>
 <head>
 	<title>Home</title>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/yj_js.js"></script>
 <style>
 .form-select:after {
 	content: "";
@@ -6622,6 +6624,32 @@ main {
 	-moz-justify-content: center;
 	justify-content: center
 }
+
+#flash_messages {
+    position: fixed;
+    left: 50%;
+    top : 50px;
+    transform: translateX(-50%);
+    z-index: 200000;
+    font-size: 14px;
+}
+#flash_messages>.flash_message {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10px;
+    white-space: pre-line;
+}
+#flash_messages>#flash_alert {
+	display:none;
+	background-color: #b1d8b1;
+    border-color: #8fc78f;
+    color: #376d37;
+    opacity: 0.95;
+    -ms-filter: alpha(opacity=95);
+    filter: alpha(opacity=95);
+}	
+
 </style>
 </head>
 <body>
@@ -6631,18 +6659,22 @@ main {
 				class="icon-page-login__a-1" aria-label="오늘의집"></span>
 			</a>
 		</h1>
-		<form class="sign-in-form__form" id="new_user"
+		<form name="passUpdateForm"class="sign-in-form__form" id="new_user"
 			action="http://localhost:9000/myhouse/pass_update_proc.do" accept-charset="UTF-8" method="post">
 			<input name="utf8" type="hidden" value="✓"><input
 				type="hidden" name="authenticity_token"
 				value="0MkHPkRtW+TRg4wcRb7Ov7fPSL1jPqg2dJuAdRYFZal8UA5GkiQ6gn7E5nu2b6nntFBa+TgjR/HbevCdiZCGqw==">
 			<input placeholder="이메일" autofocus="autofocus"
 				class="sign-in-form__form__input form-control" type="text"
-				name="user[email]" id="user_email"> <input type="submit"
-				name="commit" value="이메일로 비밀번호 찾기"
+				 id="email"name="email"> 
+				<button id="user_email" type="button"
+				name="commit" 
 				class="sign-in-form__form__submit btn btn-priority"
-				data-disable-with="이메일로 비밀번호 찾기">
+				>이메일로 비밀번호 찾기</button>
 		</form>
+	</div>
+	<div id="flash_messages">	
+		<div id="flash_alert" class="flash_message"></div>
 	</div>
 </body>
 </html>

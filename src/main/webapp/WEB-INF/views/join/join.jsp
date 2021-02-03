@@ -6186,6 +6186,30 @@ body.show-modal {
 		margin: 10px 0 10px 10px;
 	}
 }
+#flash_messages {
+    position: fixed;
+    left: 50%;
+    top : 50px;
+    transform: translateX(-50%);
+    z-index: 200000;
+    font-size: 14px;
+}
+#flash_messages>.flash_message {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10px;
+    white-space: pre-line;
+}
+#flash_messages>#flash_alert {
+	display:none;
+    background-color: #ff7d7d;
+    border-color: #ff4a4a;
+    color: #970000;
+    opacity: 0.95;
+    -ms-filter: alpha(opacity=95);
+    filter: alpha(opacity=95);
+}
 </style>
 <script>
  $(document).ready(function(){
@@ -6355,5 +6379,8 @@ body.show-modal {
 			</p>
 		</div>
 	</section>
+		<div id="flash_messages">	
+		<div id="flash_alert" class="flash_message"></div>
+	</div>
 </body>
 </html>

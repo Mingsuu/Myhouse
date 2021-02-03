@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.uploadphoto">
+
+    <!--id:insert -->
+	<insert id="insert" parameterType="com.myhouse.vo.PhotoVO">
+	<!--test로 jdbcType=VARCHAR를 이용해 그냥 넣어버림-->
+		insert into h_photo
+		values('p_'||sequ_h_photo.nextval,'',#{pcontent,jdbcType=VARCHAR},#{pstyle,jdbcType=VARCHAR},#{ptype,jdbcType=VARCHAR},#{photo_image},#{photo_simage},sysdate,0)
+
+	</insert>
+</mapper>
