@@ -15,39 +15,32 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 <jsp:include page="../header_login.jsp" />
 
-	<main role="main" id="root">
+<main role="main" id="root">
 
 		<div data-react-class="ContactUs"
 			data-react-props="{&quot;prerender&quot;:false}">
 			<div id="contact-us">
 				<div class="container--my-page">
-					<div class="container--my-page__noti">
-						코로나19로 인해 고객센터를 잠정적으로 축소하여 운영중입니다.<br>전화 및 1:1문의하기 상담이 지연되고
-						있는 점 너른 양해 부탁드립니다.<br>순차적으로 최대한 빠르게 안내해 드리도록 노력하겠습니다.<br>
-						<button
-							class="btn btn-md btn-priority customer-center__contact__btn-inquiry"
-							type="button">1:1 문의하기</button>
-					</div>
 					<article id="customer-center" class="customer-center">
 						<h1 class="customer-center__title">고객센터</h1>
 						<div class="row">
 							<section class="col-12 col-md-6 customer-center__contact">
 								<address>
 									운영시간 : 평일 09:00 ~ 18:00 (주말 &amp; 공휴일 제외)<br>이메일 :&nbsp;<a
-										href="/contacts/new" style="text-decoration: underline;">cs@bucketplace.net</a>
+										href="/contacts/new" style="text-decoration: underline;">이메일
+										문의하기</a>
 									<button class="customer-center__contact__btn-copy-email"
-										type="button">주소 복사</button>
+										type="button">이메일 주소 복사</button>
 									<br>전화 :&nbsp;<a href="tel:1670-0876"
 										style="text-decoration: underline;">1670-0876</a>
 								</address>
 								<button
 									class="btn btn-md btn-priority customer-center__contact__btn-inquiry"
-									type="button">1:1 문의하기</button>
+									type="button">1:1 채팅 상담하기</button>
 							</section>
 							<section class="col-12 col-md-6 customer-center__faq">
 								<ul class="customer-center__faq__list">
@@ -69,7 +62,7 @@
 							평일 09:00 ~ 18:00 (주말 &amp; 공휴일 제외)</p>
 						<button
 							class="btn btn-xs btn-normal customer-center__contact--mobile__button"
-							type="button">1:1문의하기</button>
+							type="button">1:1 채팅 상담하기</button>
 						<a
 							class="btn btn-xs btn-normal customer-center__contact--mobile__button"
 							href="/contacts/new">이메일 문의하기</a><a href="tel:1670-0876"
@@ -79,7 +72,7 @@
 				</div>
 				<div class="container--my-page">
 					<article id="faq" class="faq">
-						<nav class="faq__nav">
+					<!-- 	<nav class="faq__nav">
 							<ul class="faq__nav__list">
 								<li class="faq__nav__item faq__nav__item--active"><a
 									href="#전체">전체</a></li>
@@ -91,25 +84,9 @@
 								<li class="faq__nav__item"><a href="#회원정보변경">회원정보변경</a></li>
 								<li class="faq__nav__item"><a href="#서비스+기타">서비스/기타</a></li>
 							</ul>
-						</nav>
+						</nav> -->
 						<article class="faq__contents">
 							<section class="faq__contents__group">
-								<section id="주문+결제__[긴급]+고객센터+전화+상담과+1:1문의하기+상담이+가능한가요"
-									class="faq__contents__item">
-									<div class="faq__contents__item__question">
-										[긴급] 고객센터 전화 상담과 1:1문의하기 상담이 가능한가요?<span
-											class="icon--page-mypage"
-											style="position: absolute; right: 0px; top: 50%; transition: transform 0.2s ease 0s; transform: translateY(-50%); background-position: -120px -160px; width: 12px; height: 12px;"></span>
-									</div>
-									<div class="faq__contents__item__answer"
-										style="max-height: 0px; opacity: 0; padding-top: 0px;">
-										<p>현재 코로나19 로 인해 고객센터 운영이 일부 축소되어 전화 및 1:1문의하기 답변에 평소보다 많은
-											시간이 소요되고 있습니다.</p>
-										<p>응대 지연으로 불편함을 드려 대단히 죄송합니다.</p>
-										<p>궁금하신 사항은 1:1문의하기로 남겨주시면 순차적으로 최대한 빠르게 안내해 드리겠습니다.</p>
-										<p></p>
-									</div>
-								</section>
 								<section id="주문+결제__주문+내역은+어떻게+확인할+수+있나요"
 									class="faq__contents__item">
 									<div class="faq__contents__item__question">
@@ -200,8 +177,8 @@
 									</div>
 									<div class="faq__contents__item__answer"
 										style="max-height: 0px; opacity: 0; padding-top: 0px;">
-										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 문의하기]를 통해
-											문의 부탁드립니다.</p>
+										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 채팅 상담하기]를
+											통해 문의 부탁드립니다.</p>
 									</div>
 								</section>
 								<section id="주문+결제__신용카드+안전결제(ISP)는+무엇인가요"
@@ -229,7 +206,7 @@
 										<p>입금 후 24시간 이내에 확인됩니다.</p>
 										<p>24시간 이후에도 입금확인이 되지 않는 경우 결제 금액과 입금한 금액이 같은지, 올바른 계좌로
 											입금하였는지 확인 후</p>
-										<p>[나의쇼핑 &gt; 고객센터 &gt; 1:1 문의하기]를 통해 문의 부탁드립니다.</p>
+										<p>[나의쇼핑 &gt; 고객센터 &gt; 1:1 채팅 상담하기]를 통해 문의 부탁드립니다.</p>
 									</div>
 								</section>
 								<section id="주문+결제__가상계좌+입금인을+다르게+적은경우+어떻게+해야하나요"
@@ -388,8 +365,8 @@
 											가능하며,배송상태에 따른 취소 가능 여부는 아래와 같습니다.</p>
 										<p>- 입금대기 및 결제완료 단계: 우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 주문배송내역
 											조회]에서 즉시취소가능합니다.</p>
-										<p>- 배송준비중: 우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt;
-											1:1문의하기]로 취소 가능 여부 문의 부탁드립니다.</p>
+										<p>- 배송준비중: 우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 채팅
+											상담하기]로 취소 가능 여부 문의 부탁드립니다.</p>
 										<p>- 배송중 : 주문 취소가 불가능합니다. 수령후 반품 처리 부탁드립니다.</p>
 										<p></p>
 										<p>※ 단, 가상계좌로 입금 전이라면 부분 취소처리가 불가능하므로 재주문 부탁드립니다.</p>
@@ -470,8 +447,8 @@
 									</div>
 									<div class="faq__contents__item__answer"
 										style="max-height: 0px; opacity: 0; padding-top: 0px;">
-										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1문의하기]를 통해 문의
-											주시면 확인 도움드리겠습니다.</p>
+										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 채팅 상담하기]를
+											통해 문의 주시면 확인 도움드리겠습니다.</p>
 									</div>
 								</section>
 							</section>
@@ -588,22 +565,6 @@
 								</section>
 							</section>
 							<section class="faq__contents__group">
-								<section id="서비스+기타__[긴급]+고객센터+전화+상담과+1:1문의하기+상담이+가능한가요"
-									class="faq__contents__item">
-									<div class="faq__contents__item__question">
-										[긴급] 고객센터 전화 상담과 1:1문의하기 상담이 가능한가요?<span
-											class="icon--page-mypage"
-											style="position: absolute; right: 0px; top: 50%; transition: transform 0.2s ease 0s; transform: translateY(-50%); background-position: -120px -160px; width: 12px; height: 12px;"></span>
-									</div>
-									<div class="faq__contents__item__answer"
-										style="max-height: 0px; opacity: 0; padding-top: 0px;">
-										<p>현재 코로나19 로 인해 고객센터 운영이 일부 축소되어 전화 및 1:1문의하기 답변에 평소보다 많은
-											시간이 소요되고 있습니다.</p>
-										<p>응대 지연으로 불편함을 드려 대단히 죄송합니다.</p>
-										<p>궁금하신 사항은 1:1문의하기로 남겨주시면 순차적으로 최대한 빠르게 안내해 드리겠습니다.</p>
-										<p></p>
-									</div>
-								</section>
 								<section
 									id="서비스+기타__&quot;좋아요&quot;를+누른+콘텐츠(사진/집들이/노하우/등)들은+어디서+볼+수+있나요"
 									class="faq__contents__item">
@@ -797,7 +758,7 @@
 										style="max-height: 0px; opacity: 0; padding-top: 0px;">
 										<p>상담 시간은 평일 09:00 ~ 18:00 (주말 &amp; 공휴일 제외)이며, 전화번호는
 											1670-0876 입니다.</p>
-										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 문의하기] 를
+										<p>우측 상단 프로필 사진을 클릭 후 [나의쇼핑 &gt; 고객센터 &gt; 1:1 채팅 상담하기] 를
 											이용하시면 상담원과 채팅으로 더욱 빠르고 편리하게 문의 가능합니다.</p>
 									</div>
 								</section>

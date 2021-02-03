@@ -1,11 +1,39 @@
 package com.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.myhouse.vo.PhotoVO;
+import com.spring.service.UploadPhotoService;
+
+
 @Controller
 public class MyhouseWriteController {
+	
+	@Autowired
+	private UploadPhotoService uploadService;
+	
+	
+	/**
+	 * 게시판 글쓰기 처리
+	 * 
+	 */
+	@RequestMapping(value="/upload_photo_proc.do",method=RequestMethod.POST)
+	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request) {
+		
+		//서버의 저장경로
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		//vo에 저장경로 추가
+		vo.setSavepath(root_path+attach_path);
+		
+		return uploadService.getResultWrite(vo);
+	}
+	
 	/**
 	 * 글쓰기 사진올리기
 	 * @return
