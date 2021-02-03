@@ -62,11 +62,11 @@
 
 <!-- 상세페이지 : 상단부분 -->
 <select id="interior-top" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select distinct rno, ino, company, ititle, interior_simage, icontent, category, gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, 
+	select distinct rno, ino, company, ititle, interior_simage, category, gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, 
 		gno_cnt, star_count, star_float, qno, qno_count
-	from (select distinct rno, list.ino, company, ititle, interior_simage, icontent, category, list.gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, gno_cnt, star_count,
+	from (select distinct rno, list.ino, company, ititle, interior_simage, category, list.gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, gno_cnt, star_count,
 		star_float, qno, qno_count, row_number() over(partition by list.gno order by sno asc) as RowIdx
-		from (select rownum rno, i.ino, company, ititle, interior_simage, icontent, category, g.gno, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price,
+		from (select rownum rno, i.ino, company, ititle, interior_simage, category, g.gno, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price,
 		count(gno)over(partition by i.ino) as gno_cnt
 		from h_interior i, h_goods g where i.ino = g.ino and i.ino = #{ino} order by i.ino asc) list, 
 		(select sno, ino, count(sno)over(partition by ino) as scrap_cnt  from h_scrap) scrap, 

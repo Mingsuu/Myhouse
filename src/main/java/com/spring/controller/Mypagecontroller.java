@@ -1,12 +1,25 @@
 package com.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.myhouse.vo.MemberVO;
+import com.spring.service1.MypageService;
 
 @Controller
 public class Mypagecontroller {
 
+	
+	@Autowired
+	private MypageService mypageService;
+	
+	
+	
 	
 	@RequestMapping(value="/mypage_profile.do", method=RequestMethod.GET)
 	public String profile() {
@@ -29,8 +42,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_like.do", method=RequestMethod.GET)
-	public String like() {
-		return "/mypage/like";
+	public ModelAndView like() {
+		return mypageService.getlike();
 	}
 	
 	@RequestMapping(value="/mypage_activity.do", method=RequestMethod.GET)
@@ -39,8 +52,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_orderlist.do", method=RequestMethod.GET)
-	public String orderlist() {
-		return "/mypage/orderlist";
+	public ModelAndView orderlist() {
+		return mypageService.getorder();
 	}
 	
 	@RequestMapping(value="/mypage_reception.do", method=RequestMethod.GET)
@@ -70,14 +83,28 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_review2.do", method=RequestMethod.GET)
-	public String rivew2() {
-		return "/mypage/review2";
+	public ModelAndView rivew2() {
+		return mypageService.getreview();
 	}
 	
 	@RequestMapping(value="/mypage_option.do", method=RequestMethod.GET)
-	public String option() {
-		return "/mypage/option";
+	public ModelAndView option() {
+		return mypageService.getoption();
 	}
+	
+	@RequestMapping(value="/option_update_proc.do", method=RequestMethod.POST)
+	public ModelAndView option_update_proc(MemberVO vo, HttpServletRequest request) {
+		//서버의 저장경로
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		System.out.println(root_path+attach_path);
+		//vo에 저장경로 추가
+		vo.setSavepath(root_path+attach_path);
+		return mypageService.getResultUpdate(vo);
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/mypage_password.do", method=RequestMethod.GET)
 	public String password() {
@@ -90,8 +117,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_picture.do", method=RequestMethod.GET)
-	public String picture() {
-		return "/mypage/picture";
+	public ModelAndView picture() {
+		return mypageService.getpicture();
 	}
 	
 	@RequestMapping(value="/mypage_noticecontent.do", method=RequestMethod.GET)
@@ -100,8 +127,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_profile1.do", method=RequestMethod.GET)
-	public String profile1() {
-		return "/mypage/profile1";
+	public ModelAndView profile1() {
+		return mypageService.getphotolist();
 	}
 	
 	@RequestMapping(value="/mypage_scrap1.do", method=RequestMethod.GET)

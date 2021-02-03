@@ -3019,7 +3019,7 @@
 				output += '<div class="production-review-item__container">';
 				output += '<article class="production-review-item">';
 				output += '<div class="production-review-item__writer">';
-				output += '<a href="#">';
+				output += '<a href="http://localhost:9000/myhouse/mypage_profile1.do">';
 				output += '<img src="http://localhost:9000/myhouse/images/'+jdata.interior_review[i].member_spimage+'" class="production-review-item__writer__img" style="margin-top:18px;">';
 				output += '</a>';
 				output += '<div class="production-review-item__writer__info">';
@@ -3709,7 +3709,7 @@
 								<li><b>배송까지 <span class="red">최대 15일</span> (주말과 공휴일 제외) 소요됩니다.</b></li>
 								<li>고객주문 &gt; 주문확인 &gt; 상품준비(3~7일) &gt; 안내전화 &gt; 배송</li>
 								<li>주문확인 이후에는 구매 취소와 배송지 변경이 불가합니다.</li>
-								<li>${vo.icontent }</li>	
+								<%-- <li>${vo.icontent }</li> --%>	
 							</ul>
 							<div class="production-selling-description__content">
 								<img src="http://localhost:9000/myhouse/images/${vo.interior_simage }">
@@ -3892,7 +3892,7 @@
 								<div class="production-review-item__container"> 
 									<article class="production-review-item">
 										<div class="production-review-item__writer">
-											<a href="#">
+											<a href="http://localhost:9000/myhouse/mypage_profile1.do">
 												<img src="http://localhost:9000/myhouse/images/${rvo.member_spimage }" class="production-review-item__writer__img" alt=""
 													 style="margin-top:18px;">
 											</a>

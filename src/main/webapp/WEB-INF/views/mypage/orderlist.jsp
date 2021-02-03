@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,9 @@
 	margin:auto;
 	width:100%
 }
+.nav1{
+	height:60px;
+}
 .nav1,
 .nav2 {
 	list-style:none;
@@ -38,6 +42,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -45,16 +50,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -67,13 +74,6 @@
 	margin-top:20px;
 }
 
-.icon {
-	width:20px;
-	height:40px;
-	opacity:0.5;
-	display:inline-block;
-	margin-bottom:5px;
-}
 .orderstatus {
 	height:200px;
 }
@@ -100,6 +100,14 @@
 	color:#757575;
 	font-weight:bold;
 	float:left;
+}
+.profile h2 {
+	font-weight:bold;
+	margin-top:40px;
+	margin-bottom:30px;
+}
+.besong{
+	margin-bottom:50px;
 }
 /*  */
 
@@ -434,11 +442,12 @@
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -456,24 +465,25 @@
 <h2>배송내역</h2>
 	<div class="besongnull"><span>현재 구입한 상품이 존재하지 않습니다.</span></div>
 <div class="besong">
+	<c:forEach var="vo" items="${list}">
 	 <div class="order-list__item__title">
-		<div class="order-list__item__title__order">45684156 | 2021.01.21</div>
+		<div class="order-list__item__title__order">${vo.ino} | ${vo.idate}</div>
 		<a class="order-list__item__title__link" href="#">상세보기</a>
 	</div>
 	<div class="order-list__item__production">
 	<div class="order-list__item__production__wrap">
 		<div class="order-list__item__production__item">
 			<div class="order-list__item__production__item__wrap">
-				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/pic1.jpg">
+				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage }">
 				<div class="order-list__item__production__item__info">
 					<div class="order-list__item__production__item__info__wrap">
-						<a class="order-list__item__production__item__info__brand" href="#">듀커소파</a>
-						<a class="order-list__item__production__item__info__name" href="#">[쿠폰할인]DK053 3인용 풀커버 그레이 발수 패브릭 소파 (스툴 기본포함)</a>
+						<a class="order-list__item__production__item__info__brand" href="#">${vo.company }</a>
+						<a class="order-list__item__production__item__info__name" href="#">${vo.ititle}</a>
 					</div>
 					<div class="order-list__item__production__item__info__wrap">
-						<div class="order-list__item__production__item__info__option">사이즈 선택: 176cm / 색상 선택: 베이지</div>
-						<div class="order-list__item__production__item__info__price">261,000원 | 1개</div>
-						<div class="order-list__item__production__item__info__status">입금대기 | 업체직접배달</div>
+						<div class="order-list__item__production__item__info__option">${vo.season } / ${vo.color }</div>
+						<div class="order-list__item__production__item__info__price">${vo.price }원 | 1개</div>
+						<div class="order-list__item__production__item__info__status">입금완료 | 업체직접배달</div>
 					</div>
 				</div>
 			</div>
@@ -482,44 +492,17 @@
 		<div class="order-list__item__production__item__seller">
 			<div class="order-list__item__production__item__seller__delivery-pay">착불 배송비는 상품 상세정보 참고</div>
 			<div class="order-list__item__production__item__seller__brand">
-				듀커소파<a href="tel:031-761-6003" class="order-list__item__production__item__seller__brand__phone">031-761-6003</a>
+				${vo.ititle}<a href="tel:031-761-6003" class="order-list__item__production__item__seller__brand__phone">${vo.company}</a>
 			</div>
 		</div>
 	</div>
 	</div>
+	</c:forEach>
 	
-	<div class="order-list__item__title">
-		<div class="order-list__item__title__order">45684156 | 2021.01.21</div>
-		<a class="order-list__item__title__link" href="#">상세보기</a>
-	</div>
-	<div class="order-list__item__production">
-	<div class="order-list__item__production__wrap">
-		<div class="order-list__item__production__item">
-			<div class="order-list__item__production__item__wrap">
-				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/pic2.jpg">
-				<div class="order-list__item__production__item__info">
-					<div class="order-list__item__production__item__info__wrap">
-						<a class="order-list__item__production__item__info__brand" href="#">듀커소파</a>
-						<a class="order-list__item__production__item__info__name" href="#">[쿠폰할인]DK053 3인용 풀커버 그레이 발수 패브릭 소파 (스툴 기본포함)</a>
-					</div>
-					<div class="order-list__item__production__item__info__wrap">
-						<div class="order-list__item__production__item__info__option">사이즈 선택: 176cm / 색상 선택: 베이지</div>
-						<div class="order-list__item__production__item__info__price">261,000원 | 1개</div>
-						<div class="order-list__item__production__item__info__status">입금대기 | 업체직접배달</div>
-					</div>
-				</div>
-			</div>
-			<div class="order-list__item__production__item__delivery"></div>
-		</div>
-		<div class="order-list__item__production__item__seller">
-			<div class="order-list__item__production__item__seller__delivery-pay">착불 배송비는 상품 상세정보 참고</div>
-			<div class="order-list__item__production__item__seller__brand">
-				듀커소파<a href="tel:031-761-6003" class="order-list__item__production__item__seller__brand__phone">031-761-6003</a>
-			</div>
-		</div>
-	</div>
-	</div>
+	
 	
 </div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

@@ -18,6 +18,11 @@
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/images/**" location="/resources/images/" />
 	
+
+	<!-- DAO Object생성 -->
+	<beans:bean class="com.myhouse.dao.MypagePhotoDAO" id="mypagephotDAO"></beans:bean>
+	<beans:bean class="com.spring.service1.MypageServiceImpl" id="mypageService"></beans:bean>
+	
 	<!--  메일전송을 위한 bean  -->
 	<!-- Gmail -->
 	<beans:bean id="mailSender"

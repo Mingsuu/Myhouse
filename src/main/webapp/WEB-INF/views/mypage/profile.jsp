@@ -306,7 +306,7 @@
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="mypage_profile.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
+			<a href="mypage_profile1.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2">좋아요</li></a>
@@ -352,9 +352,6 @@
 		<h5>사진 <p>0</p></h5>
 		<a href="#" class="pic">
 		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
-		<h5>집들이 <p>0</p></h5>
-		<a href="#" class="pic1">
-		<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 집들이를 올려보세요</a>
 	</div>
 
 

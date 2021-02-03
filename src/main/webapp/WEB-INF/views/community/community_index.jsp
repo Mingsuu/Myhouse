@@ -220,7 +220,7 @@
 					for(var i in jdata.jlist){
 						output += "<div class='card_item_wrap'><div class='card_item'>";
 						output +="<article class='card_item'><div class='card_writer'>";
-						output +="<address class='card_writer_content'><div class='card_writer_header'><a href='#' class='card_writer_link'>";
+						output +="<address class='card_writer_content'><div class='card_writer_header'><a href='http://localhost:9000/myhouse/mypage_picture.do' class='card_writer_link'>";
 						if(jdata.jlist[i].w_member_simage == null) output +="<img class='card_writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
 						else output +="<img class='card_writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].w_member_simage+"'>";
 						output +="<span class='card_writer_name'>"+jdata.jlist[i].w_nickname+"</span>";
@@ -264,7 +264,7 @@
 								output +="<img class='writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
 							}
 							output +="</div><span class='writer_name'>"+jdata.jlist[i].c_nickname+"</span><span class='writer_seperator'> :</span></address>";
-							output += "<a href='#' class='comment_link'><p class='comment_content'>"+jdata.jlist[i].c_content+"</p></a></article></div>"
+							output += "<a href='http://localhost:9000/myhouse/mypage_picture.do' class='comment_link'><p class='comment_content'>"+jdata.jlist[i].c_content+"</p></a></article></div>"
 						}
 						output +="</article></div></div>"
 					}
