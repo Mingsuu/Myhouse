@@ -10,15 +10,40 @@
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 		$(document).ready(function(){
-			$('#p_picture').change(function (e) {
-				var file = (e.target || window.event.srcElement).files[0];
-		
-				var reader = new FileReader();
-				reader.onload = function() {
-					$('#profile_image').css("background-image", "url('"+reader.result+"')");			
+			
+			
+			$("#passchange").click(function(){
+				if($(".passwordbox").val() == "" && $(".passwordbox1").val() == ""){
+					alert("비밀번호를 입력해주세요");
+					$(".passwordbox").focus();
+					return false;
 				}
-				reader.readAsDataURL(file);
 			});
+			
+			
+			
+			$(".passwordbox1").focusout(function(){
+				if($(".passwordbox").val() != "" && $(".passwordbox1").val() != ""){
+					
+					if($(".passwordbox").val() == $(".passwordbox1").val()){
+						$("#passcheck").text("패스워드가 동일합니다.").css("color","blue");
+					}else{
+						$("#passcheck").text("패스워드가 다릅니다 다시입력해주세요.").css("color","red");
+						$(".passwordbox1").val("");
+						$(".passwordbox").val("");
+						$(".passwordbox").focus();
+						return false;
+					
+					}
+				}
+			
+				
+			});
+			
+			
+			
+			
+			});//ready
 		
 
 </script>
@@ -35,6 +60,9 @@
 .navigation {
 	margin:auto;
 	width:100%
+}
+.nav1{
+	height:60px;
 }
 .nav1,
 .nav2 {
@@ -54,6 +82,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -61,16 +90,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -121,10 +152,17 @@
 .pass2 {
 	font-size:15px;
 }
+.pass2 {
+	display:inline-block;
+	float:left;
+	margin-left:-65px;
+	margin-top:5px;
+}
 .pass1 {
 	font-weight:bold;
 }
-.passwordbox {
+.passwordbox,
+.passwordbox1 {
 	border:1px solid lightgray;
 	border-radius:7px;
 	float:left;
@@ -135,7 +173,8 @@
 	margin-bottom:20px;
 	padding-left:10px;
 }
-.passwordbox {
+.passwordbox,
+.passwordbox1 {
 	margin-top:-23px;
 }
 .gender {
@@ -164,14 +203,24 @@
 .change:hover {
 	background:rgb(16,175,222);
 }
+.passcheck {
+	font-size:15px;
+	color:tomato;
+	display:inline-block;
+	float:left;
+	margin-left:52px;
+	margin-top:-10px;
+	margin-bottom:10px;
+}
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1" style="color:#35c5f0;">설정</li></a>
@@ -192,19 +241,23 @@
 			<div class="passtitle"><span>비밀번호 변경</span></div>
 			<div class="password1">
 				<span class="pass1">새비밀번호</span><br>
-				<span class="pass2">8자 이상 입력해주세요.</span>
+				<p class="pass2">8자 이상 입력해주세요.</p>
 			</div>
-				<input type="text" class="passwordbox">
+				<input type="password" class="passwordbox">
+				
 			<div class="password1">
 				<span class="pass1">새비밀번호</span><br>
 			</div>
-				<input type="text" class="passwordbox" >
+				<input type="password" class="passwordbox1" >
+				<div id="passcheck" class="passcheck"></div>
 			<div class="password1">
-				<button type="button" class="change">비밀번호 변경</button>
+				<button type="button" class="change" id="passchange">비밀번호 변경</button>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

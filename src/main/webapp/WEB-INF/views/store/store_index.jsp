@@ -2116,7 +2116,7 @@ $(document).ready(function(){
 								</button>
 								<div class="production-item-image__dark-overlay"></div>
 							</div>
-							<div class="production-item__content">
+							<div class="production-item__content">c
 								<h1 class="production-item__header">
 									<span class="production-item__header__brand">${vo.company }</span>
 									<span class="production-item__header__name">${vo.ititle }</span>
