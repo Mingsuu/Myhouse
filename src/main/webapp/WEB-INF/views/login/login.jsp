@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<title>Home</title>
@@ -109,7 +110,7 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 						data-type="kakao" href="http://localhost:9000/myhouse/login.do"> <span
 						class="icon-page-login__c-3" aria-label="카카오계정으로 로그인"></span>
 					</a> <a class="sign-in-form__sns__entry" data-type="naver"
-						href="http://localhost:9000/myhouse/login.do"> <span class="icon-page-login__e-3"
+						href="${url}"> <span class="icon-page-login__e-3"
 						aria-label="네이버 아이디로 로그인"></span>
 					</a>
 				</div>

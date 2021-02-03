@@ -23,6 +23,8 @@
 	<beans:bean class="com.myhouse.dao.MypagePhotoDAO" id="mypagephotDAO"></beans:bean>
 	<beans:bean class="com.spring.service1.MypageServiceImpl" id="mypageService"></beans:bean>
 	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLoginBO" class="com.test.sts.NaverLoginBO" />
 	<!--  메일전송을 위한 bean  -->
 	<!-- Gmail -->
 	<beans:bean id="mailSender"
