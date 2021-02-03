@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mapper.photo">
+	<select id="content" parameterType="java.lang.String" resultType="com.myhouse.vo.PhotoVO">
+		select pno,email,pcontent,pstyle, ptype, photo_image, photo_simage, 
+			to_char(pdate,'yyyy.mm.dd')pdate, phits from h_photo where pno=#{pno}
+	</select>
+	
+	<update id="updatehits" parameterType="java.lang.String">
+		update h_photo set phits = phits+1 where pno=#{pno}
+	</update>
+	
+	<select id="getwriter" parameterType="java.lang.String" resultType="com.myhouse.vo.MemberVO">
+		select nickname, member_spimage, intro from h_member, h_photo 
+		where h_member.email=h_photo.email and pno=#{pno}
+	</select>
+	
+	<select id="getphotos" parameterType="java.lang.String" resultType="com.myhouse.vo.PhotoVO">
+		select rownum rno , photo_simage
+		from(select rownum rno, photo_simage from h_photo where email in 
+				(select h_member.email from h_member,h_photo where h_member.email=h_photo.email and pno=#{pno})
+			order by pdate)
+		where rownum between 1 and 4
+	</select>
+ 	
+</mapper>

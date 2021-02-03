@@ -20,7 +20,14 @@
 	
 	<!-- DAO Object생성 -->
 	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.CommunityDAO" id="communityDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_PhotoDAO" id="photoDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
+	
 	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
+	<beans:bean class="com.spring.service1.CommunityServcieImpl" id="communityService"></beans:bean>
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 
 	
