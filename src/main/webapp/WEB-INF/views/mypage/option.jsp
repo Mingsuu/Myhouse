@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,26 +13,50 @@
 <script>
 		$(document).ready(function(){
 			
-			alert("이미지");
-			$('#p_picture').on('change',function () {
-				alert("이미지");
-				if(input.files && input.files[0]) {
-			        var reader = new FileReader();
-			        reader.onload = function (e) {
-			        	alert(e.target.result);
-			            $("#profile_image").attr("url",e.target.result);
-			        }
-			        reader.readAsDataURL(input.files[0]);
-			    }
-			}
-		
+			 function readInputFile(input) {
+				    if(input.files && input.files[0]) {
+				        var reader = new FileReader();
+				        reader.onload = function (e) {
+				            $('.p_image').html("<img src="+ e.target.result +">");
+				        }
+				        reader.readAsDataURL(input.files[0]);
+				    }
+				} 
+
+				$("#p_picture").on('change', function(){
+				     readInputFile(this);
+				});
 		
 			
-			
+				
+				
+				$("#emailbox").focusout(function(){
+					if($("#emailbox").val() != ""){
+						$(".emailbox2-1").css("display","none");
+						$(".emailbox2").css("display","block");
+					}else{
+						$(".emailbox2").css("display","none");
+						$(".emailbox2-1").css("display","block");
+						$("#emailbox").focus();
+					}
+				});
+				
+				$("#emailbox1").focusout(function(){
+					if($("#emailbox1").val() != "선택하세요"){
+						$(".emailbox2-1").css("display","none");
+						$(".emailbox2").css("display","block");
+					}else{
+						$(".emailbox2").css("display","none");
+						$(".emailbox2-1").css("display","block");
+						$("#emailbox1").focus();
+					}
+				});
+				
+				
+				
 			
 			});//ready
 		
-
 </script>
 
 <style>
@@ -45,6 +71,9 @@
 .navigation {
 	margin:auto;
 	width:100%
+}
+.nav1{
+	height:60px;
 }
 .nav1,
 .nav2 {
@@ -64,6 +93,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -71,16 +101,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -101,10 +133,9 @@
 	display:inline-block;
 	border:1px solid lightgray;
 	width:1000px;
-	height:auto;
+	height:1010px;
 	margin-left:50px;
 	box-shadow: 0 1px 4px 0 rgba(14, 14, 14, 0.1);
-	margin-bottom:50px;
 }
 .option1 {
 	display:inline-block;
@@ -126,11 +157,22 @@
 	float:left;
 }
 .op1 {
+	display:inline-block;
 	font-size:15px;
 }
 .op2 {
 	font-size:13px;
 	color:#757575;
+	display:inline-block;
+	margin-top:10px;
+	margin-left:-30px;
+}
+.op2-1{
+	font-size:13px;
+	color:#757575;
+	display:inline-block;
+	margin-top:10px;
+	margin-left:-40px;
 }
 .op3 {
 	font-size:15px;
@@ -144,7 +186,7 @@
 	width:190px;
 	height:40px;
 	margin-top:-23px;
-	margin-left:50px;
+	margin-left:48px;
 	padding-left:10px;
 }
 .select {
@@ -159,8 +201,8 @@
 	display:inline-block;
 	padding-left:10px;
 	border-radius:7px;
-	width:100%;
-	height:100%;
+	width:190px;
+	height:42px;
 	-webkit-appearance: none;
     -moz-appearance: none;
 }
@@ -168,17 +210,27 @@
 	display:inline-block;
 	float:left;
 	margin:0px;
+	font-size:18px;
 	margin-top:-15px;
-	margin-left:3px;
-	margin-right:3px;
+	margin-left:10px;
+	margin-right:10px;
 	color:lightgray;
+	border:1px solid white;
 }
 .emailbox2 {
 	font-size:13px;
 	font-weight:bold;
 	color:#9e9e9e;
 	margin-top:27px;
-	padding-right:370px;
+	padding-right:390px;
+}
+.emailbox2-1 {
+	font-size:13px;
+	font-weight:bold;
+	color:tomato;
+	margin-top:27px;
+	margin-left:20px;
+	width:300px;
 }
 .emailbox-op3,
 .emailbox-op2 {
@@ -204,7 +256,7 @@
 	float:left;
 	margin-left:80px;
 }
-.click {
+.memberupdate {
 	width:290px;
 	height:40px;
 	font-size:18px;
@@ -216,7 +268,7 @@
 	float:left;
 	margin-left:110px;
 }
-.click:hover {
+.memberupdate:hover {
 	background:rgb(16,175,222);
 }
 .p_image {
@@ -224,6 +276,7 @@
 	height:198px;
 	float:left;
 	margin-left:20px;
+	background-size : 100%
 }
 input[type="file"] {
     top: 0;
@@ -239,14 +292,32 @@ input[type="file"] {
 ::-webkit-file-upload-button {
     cursor: pointer;
 }
+.p_image>img{
+	width:198px;
+	height:198px;
+}
+.emailbox2-1{
+	display:none;
+}
+#p_picture {
+	z-index: 10;
+}
+#p_img {
+	position:absolute;
+}
+.been{
+	margin-bottom:100px;
+}
 </style>
 </head>
 <body>
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1" style="color:#35c5f0;">설정</li></a>
@@ -265,57 +336,65 @@ input[type="file"] {
 	<div class="review">
 		<div class="option">
 			<div class="option1"><span>회원정보수정</span></div>
-			<div class="option2">
-				<span class="op1">이메일</span><br>
-				<span class="op2">* 필수항목</span>
-				<input type="text" class="emailbox">
-				<p class="email1">@</p>
-				<div class="select">
-					<select name="email" class="email" id="emailbox1">
-						<option valuse="선택하세요">선택하세요</option>
-						<option valuse="naver.com">naver.com</option>
-						<option valuse="daum.net">daum.net</option>
-						<option valuse="gmail.com">gmail.com</option>
-					</select>
+			<form name="optionUpdateForm" action="option_update_proc.do" method="post" enctype="multipart/form-data">
+				<div class="option2">
+					<span class="op1">이메일</span><br>
+					<span class="op2-1">* 필수항목</span>
+					<input type="text" class="emailbox" id="emailbox" value=${str2[0]}>
+					<p class="email1">@</p>
+					<div class="select">
+						<select name="email" class="email" id="emailbox1">
+							<option valuse="${str2[1]}">${str2[1]}</option>
+							<option valuse="naver.com">naver.com</option>
+							<option valuse="daum.net">daum.net</option>
+							<option valuse="gmail.com">gmail.com</option>
+						</select>
+					</div>
+					<div class="emailbox2">이메일을 변경하시려면 운영자에게 이메일을 보내주세요.</div>
+					<div class="emailbox2-1">이메일을 입력해주세요</div>
 				</div>
-				<div class="emailbox2">이메일을 변경하시려면 운영자에게 이메일을 보내주세요.</div>
-			</div>
-			<div class="option2">
-				<span class="op1">별명</span><br>
-				<span class="op2">* 필수항목</span>
-				<input type="text" class="emailbox-op2" value="귤먹고갈래">
-			</div>
-			<div class="option2">
-				<span class="op3">홈페이지</span>
-				<input type="text" class="emailbox-op3" placeholder="https:ohou.se">
-			</div>
-			<div class="option2">
-				<span class="op3">성별</span>
-				<div class="genderbox">
-					<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"><p class="gender" >남성</p>
-					<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"><p class="gender" >여성</p>
+				<div class="option2">
+					<span class="op1">별명</span><br>
+					<span class="op2">* 필수항목</span>
+					<input type="text" class="emailbox-op2" placeholder="별명을 적어주세요" value="${ovo.nickname}">
 				</div>
-			</div>
-			<div class="option2">
-				<span class="op3">생년월일</span>
-				<input type="text" class="emailbox-op3" placeholder="생년월일을 적어주세요">
-			</div>
-			<div class="option2">
-				<span class="op3">프로필 이미지</span>
-				<div class="p_image" style="background-image: url(http://localhost:9000/myhouse/images/mypage/pro.png)" id="profile_image">
-					<input type="file" id="p_picture" name="profile_img" style="width:198px;height:198px;border:1px;">
+				<div class="option2">
+					<span class="op3">홈페이지</span>
+					<input type="text" class="emailbox-op3" placeholder="https:ohou.se">
 				</div>
-			</div>
-			<div class="option2">
-				<span class="op3">한줄 소개</span>
-				<input type="text" class="emailbox-op3">
-			</div>
-			<div class="option2">
-				<button type="button" class="click">회원 정보 수정</button>
-			</div>
+				<div class="option2">
+					<span class="op3">성별</span>
+					<div class="genderbox">
+						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"><p class="gender" >남성</p>
+						<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"><p class="gender" >여성</p>
+					</div>
+				</div>
+				<div class="option2">
+					<span class="op3">생년월일</span>
+					<input type="text" class="emailbox-op3" placeholder="생년월일을 적어주세요" value='${ovo.birth }'>
+				</div>
+				<div class="option2">
+					<span class="op3">프로필 이미지</span>
+					<div class="p_image" <%-- style="background-image: url(http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage})" --%> id="profile_image">
+						<img src="http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage }" id="p_img">
+						<div id="p_img">${ovo.member_image}</div>
+						<input type="file" id="p_picture" name="file1" style="width:198px;height:198px;border:1px;">
+					</div>
+				</div>
+				<div class="option2">
+					<span class="op3">한줄 소개</span>
+					<input type="text" class="emailbox-op3">
+				</div>
+				<div class="option2">
+					<button type="submit" class="memberupdate">회원 정보 수정</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
 </div>
+	<div class="been"></div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

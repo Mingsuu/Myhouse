@@ -20,6 +20,9 @@
 	margin:auto;
 	width:100%
 }
+.nav1{
+	height:60px;
+}
 .nav1,
 .nav2 {
 	list-style:none;
@@ -38,6 +41,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -45,16 +49,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -77,10 +83,11 @@
 	padding-right:600px;
 	font-size:24px;
 	margin-bottom:0px;
+	font-weight:bold;
 }
 .notlist {
 	height:66px;
-	margin-top:20px;
+	margin-top:30px;
 }
 .notlist:hover {
 	opacity:0.5;
@@ -89,9 +96,11 @@
 	opacity:0.5;
 }
 .notlist span {
-	margin-right:450px;
+	margin-right:455px;
 	font-size:15px;
 	color:black;
+	display:inline-block;
+	margin-bottom:10px;
 }
 .notlist p {
 	margin-right:610px;
@@ -99,6 +108,8 @@
 	font-size:14px;
 	font-weight:bold;
 	color:rgb(130, 140, 148);
+	display:inline-block;
+	margin-bottom:24px;
 }
 .noticebar {
 	width:750px;
@@ -113,11 +124,12 @@
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1"  style="color:#35c5f0;">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -154,5 +166,7 @@
 		
 </div>
 </div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

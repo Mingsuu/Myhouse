@@ -10,16 +10,26 @@
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 		$(document).ready(function(){
-			$('#p_picture').change(function (e) {
-				var file = (e.target || window.event.srcElement).files[0];
-		
-				var reader = new FileReader();
-				reader.onload = function() {
-					$('#profile_image').css("background-image", "url('"+reader.result+"')");			
+			
+			$("#memdel").click(function(){
+				if($("input[name='gender']:checked").length == 0){
+					alert("필수체크가 되지않았습니다 위 약관을 읽고 체크해주세요.");
+					$("#gen").focus();
+					return false;
+				}else if($("input[name='choice']:checked").length == 0){
+					alert("필수체크가 되지않았습니다 위 약관을 읽고 체크해주세요.");
+					$("#chk").focus();
+					
 				}
-				reader.readAsDataURL(file);
+				
 			});
-		
+			
+			
+			
+			
+			
+			
+			});//ready
 
 </script>
 
@@ -35,6 +45,9 @@
 .navigation {
 	margin:auto;
 	width:100%
+}
+.nav1{
+	height:60px;
 }
 .nav1,
 .nav2 {
@@ -54,6 +67,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -61,16 +75,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -134,6 +150,7 @@
 	font-weight:bold;
 	float:left;
 	color:#424242;
+	margin-bottom:10px;
 }
 .mem {
 	display:inline-block;
@@ -146,6 +163,7 @@
 	font-size:15px;
 	font-weight:bold;
 	color:#424242;
+	margin-bottom:10px;
 }
 .mem1 {
 	margin-left:10px;
@@ -153,6 +171,7 @@
 .mem1 li {
 	float:left;
 	font-size:13px;
+	margin-left:20px;
 }
 .none {
 	list-style:none;
@@ -193,6 +212,7 @@
 .member3 p {
 	font-size:18px;
 	color:#424242;
+	margin-left:5px;
 }
 .member3 span{
 	font-size:18px;
@@ -214,6 +234,9 @@
 	font-size:18px;
 	float:left;
 }
+.mem4-1 {
+	margin-right:5px;
+}
 .member4 {
 	border:1px solid lightgray;
 	width:900px;
@@ -224,7 +247,7 @@
 .member4 div {
 	display:inline-block;
 	margin-right:20px;
-	margin-top:20px;
+	margin-top:30px;
 	width:230px;
 }
 .member4 input,
@@ -234,6 +257,7 @@
 .member4 span {
 	font-size:15px;
 	color:#424242;
+	margin-left:4px;
 }
 .mem5 {
 	width:890px;
@@ -284,6 +308,7 @@
 	margin-left:20px;
 	font-size:15px;
 	color:#3f474d;
+	margin-bottom:6px;
 }
 .member7 {
 	display:inline-block;
@@ -309,14 +334,18 @@
 .mem8 {
 	background-color:#35c5f0;
 }
+.back {
+	margin-bottom:100px;
+}
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1" style="color:#35c5f0;">설정</li></a>
@@ -358,17 +387,17 @@
 				</div>
 			</div>
 			<div class="member3">
-				<input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border-radius:100%;"><p>위 내용을 모두 확인하였습니다. <span>필수</span></p>
+				<input type="checkbox" id="gen" name="gender" value="필수" style="width:20px;height:20px;border-radius:100%;"><p>위 내용을 모두 확인하였습니다. <span>필수</span></p>
 				<p class="mem4">1670-0876<p class="mem4-1">고객센터</p></p>
 			</div>
 			<div class="member1"><span>오늘의집 회원에서 탈퇴하려는 이유가 무엇인가요? (복수선택 가능) </span><p class="red">필수</p></div>
 			<div class="member4">
-				<div><input type="checkbox" name="gender" id="chk" value="필수" style="width:20px;height:20px;border:1px;"><span>이용빈도 낮음</span></div>
-				<div><input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border:1px;"><span>재가입</span></div>
-				<div><input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border:1px;"><span>콘텐츠/제품정보/상품 부족</span></div><br>
-				<div><input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border:1px;"><span>개인정보보호</span></div>
-				<div><input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border:1px;"><span>회원특혜/쇼핑혜택 부족</span></div>
-				<div><input type="checkbox" name="gender" value="필수" style="width:20px;height:20px;border:1px;"><span>기타</span></div>
+				<div><input type="checkbox" name="choice" id="chk" value="필수" style="width:20px;height:20px;border:1px;"><span>이용빈도 낮음</span></div>
+				<div><input type="checkbox" name="choice" value="필수" style="width:20px;height:20px;border:1px;"><span>재가입</span></div>
+				<div><input type="checkbox" name="choice" value="필수" style="width:20px;height:20px;border:1px;"><span>콘텐츠/제품정보/상품 부족</span></div><br>
+				<div><input type="checkbox" name="choice" value="필수" style="width:20px;height:20px;border:1px;"><span>개인정보보호</span></div>
+				<div><input type="checkbox" name="choice" value="필수" style="width:20px;height:20px;border:1px;"><span>회원특혜/쇼핑혜택 부족</span></div>
+				<div><input type="checkbox" name="choice" value="필수" style="width:20px;height:20px;border:1px;"><span>기타</span></div>
 			</div>
 			<div class="member1"><span>오늘의집 서비스 이용 중 어떤 부분이 불편하셨나요?</span><p class="gray">선택</p></div>
 			<div class="member1-1"><span>오늘의집에 떠나는 이유를 자세히 알려주시겠어요? 여러분의 소중한 의견을 반영해 더 좋은 서비스로 꼭 찾아뵙겠습니다.</span></div>
@@ -387,12 +416,15 @@
   				</div>
   			</div>
 			<div class="member7">
-				<button type="button" class="mem7">탈퇴신청</button>
+				<button type="button" class="mem7" id="memdel">탈퇴신청</button>
 				<button type="button" class="mem8">취소하기</button>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
+	<div class="back"></div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>
