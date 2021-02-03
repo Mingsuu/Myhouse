@@ -1839,13 +1839,13 @@
 										<c:set var="pimg" value="${p.photo_simage}"/>
 										<c:set var="img" value="${fn:split(pimg,',')}" />
 											<li class="card_detail_card_list_item">
-												<a href="http://localhost:9000/myhouse/mypage_picture.do" class="card_detail_card_list_item_link">
+												<a href="http://localhost:9000/myhouse/community_page.do?pno=${p.pno}" class="card_detail_card_list_item_link">
 													<img class="card_detail_card_list_item_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
 												</a>
 											</li>
 										</c:forEach>
 										</ul>
-										<a class="card_detail_card_list_more">더보기</a>
+										<a href="http://localhost:9000/myhouse/mypage_picture.do" class="card_detail_card_list_more">더보기</a>
 									</div> 
 								</div>
 							</div>
