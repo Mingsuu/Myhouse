@@ -37,6 +37,7 @@
 						$("#id").focus();
 					}else{
 						$(".idcheck").css("display","none");
+						$("#email_label").css("color","#292929");
 						$("#idcheck_result").text("사용 가능한 이메일입니다.")
 						.css("color","#0067a3");
 					}

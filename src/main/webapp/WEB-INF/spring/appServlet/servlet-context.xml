@@ -43,6 +43,15 @@
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 
 	
+		<!-- Interceptor Object -->
+	<beans:bean id="authInterceptor" class="com.myhouse.interceptor.AuthHandlerInterceptor">
+	</beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin123*"/> <!-- 체크할 url 주소 -->
+			<beans:ref bean="authInterceptor"/> <!-- 체크를 진행할 객체 -->
+		</interceptor>
+	</interceptors>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
