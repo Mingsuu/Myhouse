@@ -28,7 +28,7 @@
   <img class="user-header__profile" src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/320/320" srcset="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/320/320 1.5x, https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-1610431937_facebook_2501568490139803.jpg/425/425 3x">
   <div class="user-header__info">
     <p class="user-header__name">
-      <a href="/users/F-3JTT08DjY">
+      <a href="http://localhost:9000/myhouse/follow_list.do">
         기림팀장만믿어요
 </a>    </p>
     <p class="user-header__follow">
