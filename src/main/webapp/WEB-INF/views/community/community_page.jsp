@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +12,9 @@
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
+		$("form.comment_feed_item_reply_no_comment").hide();
 		$("form.comment_feed_item_reply").hide();
+		$("form.comment_feed_item_comment_reply").hide();
 		
 		$("button#card_scrap").click(function(){
 			if ($(this).hasClass("card_scrap")){
@@ -21,11 +26,11 @@
 				output +="<div class='toast-message__body'>스크랩했습니다</div>"
 				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
 				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
 				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				$('div.toast-message').fadeOut(3800);
 			}else{
 				$(this).removeClass("card_scrap_active");
 				$(this).addClass("card_scrap");
@@ -33,15 +38,16 @@
 				output+="<div class='toast-message__footer__close'><svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 				output+="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
 				output+="<div class='toast-message__body'>스크랩북에서 삭제했습니다.</div></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
 				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				$('div.toast-message').fadeOut(3800);
 			} 
 		});
 		
 		$('button.tag').mouseover(function(){
+			
 			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
 			output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
 			output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
@@ -51,64 +57,121 @@
 			output += "<div class='_2WAbO'>34,900원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
 			output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 			output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
-			
-			$(this).parent().append(output);
+			if($(this).parent().children('.pop').length < 1){
+				$(this).parent().append(output);
+			}
 		});
 		
-		$("button.tag").mouseleave(function(){
-			$(this).parent().children('.pop').remove();
+		$(document).on("mouseleave","div.pop",function(){
+			$('div.pop').remove();
 		});
 		
 		$("button#likes_icon_btn").click(function(){
+			var count = parseInt($(this).parent().children('span.comment_feed_item_footer_likes_count').text());
+			
 			if ($(this).children("svg").hasClass("badge")){
 				$(this).children("svg").removeClass("badge");
 				$(this).children("svg").addClass("badge_liked");
 				$(this).parent().parent().children("button#likes_btn").removeClass("comment_feed_item_footer_likes_btn");
 				$(this).parent().parent().children("button#likes_btn").addClass("comment_feed_item_footer_likes_btn_active");
 				$(this).parent().parent().children("button#likes_btn").html("좋아요취소");
+				if(count==0){
+					$(this).parent().removeClass('comment_feed_item_footer_likes_zero');
+					$(this).parent().addClass('comment_feed_item_footer_likes');
+				}
+				$(this).parent().children('span.comment_feed_item_footer_likes_count').text(count+1);
 			}else{
 				$(this).children("svg").removeClass("badge_liked");
 				$(this).children("svg").addClass("badge");
 				$(this).parent().parent().children("button#likes_btn").removeClass("comment_feed_item_footer_likes_btn_active");
 				$(this).parent().parent().children("button#likes_btn").addClass("comment_feed_item_footer_likes_btn");
 				$(this).parent().parent().children("button#likes_btn").html("좋아요");
+				if(count==1){
+					$(this).parent().removeClass('comment_feed_item_footer_likes');
+					$(this).parent().addClass('comment_feed_item_footer_likes_zero');
+				}
+				$(this).parent().children('span.comment_feed_item_footer_likes_count').text(count-1);
 			}
 		});
+		
 		$("button#likes_btn").click(function(){
+			var count = parseInt($(this).parent().children().children('span.comment_feed_item_footer_likes_count').text());
 			if ($(this).parent().children().children().children().hasClass("badge")){
 				$(this).parent().children().children().children().removeClass("badge");
 				$(this).parent().children().children().children().addClass("badge_liked");
 				$(this).removeClass("comment_feed_item_footer_likes_btn");
 				$(this).addClass("comment_feed_item_footer_likes_btn_active");
 				$(this).html("좋아요취소");
+				if(count==0){
+					$(this).parent().children('span').removeClass('comment_feed_item_footer_likes_zero');
+					$(this).parent().children('span').addClass('comment_feed_item_footer_likes');
+				}
+				$(this).parent().children().children('span.comment_feed_item_footer_likes_count').text(count+1);
 			}else{
 				$(this).parent().children().children().children().removeClass("badge_liked");
 				$(this).parent().children().children().children().addClass("badge");
 				$(this).removeClass("comment_feed_item_footer_likes_btn_active");
 				$(this).addClass("comment_feed_item_footer_likes_btn");
 				$(this).html("좋아요");
+				if(count==1){
+					$(this).parent().children('span').addClass('comment_feed_item_footer_likes_zero');
+					$(this).parent().children('span').removeClass('comment_feed_item_footer_likes');
+				}
+				$(this).parent().children().children('span.comment_feed_item_footer_likes_count').text(count-1);
 			} 
 		});
+		
+		$("button#reply").click(function(){
+			if($(this).parent().parent().children('.comment_feed_reply_list').length == 0){
+				if($(this).parent().parent().children('form.comment_feed_item_reply_no_comment').css("display") == "none"){
+					$('form.comment_feed_item_reply').css("display","none");
+					$('form.comment_feed_item_reply_no_comment').css("display","none");
+					$('form.comment_feed_item_comment_reply').css("display","none");
+					$(this).parent().parent().children('form.comment_feed_item_reply_no_comment').show();
+					$(".comment_content_input_text_mention").text($(this).parent().parent().children().children().children().attr('alt'));
+				} else {
+					$(this).parent().parent().children('form.comment_feed_item_reply_no_comment').css("display","none");
+				}
+			}else{
+				if($(this).parent().parent().children('form.comment_feed_item_reply').css("display") == "none"){
+					$('form.comment_feed_item_reply').css("display","none");
+					$('form.comment_feed_item_reply_no_comment').css("display","none");
+					$('form.comment_feed_item_comment_reply').css("display","none");
+					$(this).parent().parent().children('form.comment_feed_item_reply').show();
+					$(".comment_content_input_text_mention").text($(this).parent().parent().children().children().children().attr('alt'));
+				} else {
+					$(this).parent().parent().children('form.comment_feed_item_reply').css("display","none");
+				}
+			}
+		});
+		
 		$("button#reply_btn").click(function(){
-			var form_name = $(this).parent().parent().parent().parent().parent().parent().children().last().attr("class");
-			if($("."+form_name).css("display") == "none"){
-				$("."+form_name).show();
+			$('form.comment_feed_item_reply').css("display","none");
+			$('form.comment_feed_item_reply_no_comment').css("display","none");
+			$('form.comment_feed_item_comment_reply').css("display","none");
+			if($(this).parent().parent().parent().parent().parent().parent().children('form.comment_feed_item_comment_reply').css("display") == "none"){
+				$(this).parent().parent().parent().parent().parent().parent().children('form.comment_feed_item_comment_reply').show();
+				$(".comment_content_input_text_mention").text($(this).parent().parent().children().children().children().attr('alt'));
 			} else {
-				$("."+form_name).hide();
+				$(this).parent().parent().parent().parent().parent().parent().children('form.comment_feed_item_comment_reply').hide();
 			}
 		});
 		
 		$("button#btn_like").click(function(){
+			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
 				$(this).removeClass("btn_action");
 				$(this).addClass("btn_action_active");
+				$(this).children('span.count').text(count+1);
 			}else{
 				$(this).removeClass("btn_action_active");
 				$(this).addClass("btn_action");
+				$(this).children('span.count').text(count-1);
 			} 
 		});
 		
 		$("button#btn_scrap").click(function(){
+			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
 				$(this).removeClass("btn_action");
 				$(this).addClass("btn_action_active");
@@ -118,9 +181,10 @@
 				output +="<div class='toast-message__body'>스크랩했습니다</div>"
 				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
 				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
+				$(this).children('span.count').text(count+1);
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
 			}else{
@@ -130,9 +194,10 @@
 				output+="<div class='toast-message__footer__close'><svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 				output+="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
 				output+="<div class='toast-message__body'>스크랩북에서 삭제했습니다.</div></div>"
-				if($('div.toast-message').length == 2){
+				if($('div.toast-message').length == 1){
 					$('div.toast-message').first().remove();
 				}
+				$(this).children('span.count').text(count-1);
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
 			} 
@@ -154,6 +219,56 @@
 				$(this).html("팔로우");
 			} 
 		});
+		
+		$('.comment_content_input').focusin(function(){
+			$(this).children().focus()
+		});
+		$('.comment_content_input_text').keydown(function(){
+			if($(this).text()!=""){
+				$("button.feed_form_submit").removeAttr("disabled");
+				$("button.feed_form_submit").addClass("visible");
+			}else{
+				$("button.feed_form_submit").attr("disabled");
+				$("button.feed_form_submit").removeClass("visible");
+			}
+		});
+		
+		
+		$(".comment_btn").click(function(){
+			var pno = "${pvo.pno}";
+			var content =  $('.comment_content_input_text').html();
+			$.ajax({
+				url :"comment_write_proc.do?pno="+pno+"&content="+encodeURI(content),
+				success:function(result){
+					if(result!=0){
+						alert("댓글이 정상적으로 등록되었습니다.")
+						location.href="http://localhost:9000/myhouse/community_page.do?pno="+pno;
+					}
+				}
+					
+			});
+		});
+		$(".comment_reply_btn").click(function(){
+			var pno = "${pvo.pno}";
+			var tag= $('.comment_content_input_text_mention').html();
+			var html = $(this).parent().parent().children().children().children().html();
+			const content = html.split("&nbsp;");
+			alert(content.length);
+			var cgroup =$(this).parent().parent().parent().parent().children('footer').children('.cno').val();
+			
+			$.ajax({
+				url :"comment_reply_write_proc.do?pno="+pno+"&tag="+tag+"&content="+encodeURI(content[1])+"&cgroup="+cgroup,
+				success:function(result){
+					if(result!=0){
+						alert("댓글이 정상적으로 등록되었습니다.")
+						location.href="http://localhost:9000/myhouse/community_page.do?pno="+pno;
+					}
+				}
+					
+			});
+		});
+			
+	
 		
 	});
 </script>
@@ -489,7 +604,8 @@
 		margin: 0 -7.5px;
 		font-size: 0;
 	}
-	button.comment_feed_form_submit{
+	
+	button.feed_form_submit{
 		touch-action: manipulation;
 		margin: 0 7.5px;
 		padding: 0;
@@ -502,10 +618,34 @@
 		color: #a3e4f8;
 	}
 	
+	button.feed_form_submit.visible{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		margin: 0 7.5px;
+		padding: 0;
+		border: none;
+		background: none;
+		transition: opacity .2s;
+		color: #35c5f0;
+		font-size: 15px;
+		font-weight: 700;
+	}
 	ul.comment_feed_list,li.comment_feed_list_item{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
 		margin: 0;
 		padding: 0;
 		list-style: none;
+		margin-top: 20px;
 	}
 	
 	article.comment_feed_item{
@@ -514,6 +654,13 @@
 	}
 	
 	p.comment_feed_item_content{
+		color: #424242;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
 		padding: 0;
 		position: relative;
 		margin: -4px 0 4px;
@@ -563,11 +710,31 @@
 		font-size: 15px;
 	}
 	
-	span.comment_feed_content,
-	span.comment_feed_item_content_content{
+	span.comment_feed_content{
+		color: #424242;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
 		overflow-wrap: break-word;
 		font-size: 15px;
 		line-height: 1.67;
+		-webkit-tap-highlight-color: transparent;
+		white-space: pre-line;
+	}
+	
+	span.comment_feed_item_content_content{
+		color: #424242;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		overflow-wrap: break-word;
+		font-size: 15px;
+		line-height: 1.67;
+		-webkit-tap-highlight-color: transparent;
 		white-space: pre-line;
 	}
 	
@@ -583,15 +750,15 @@
 		font-size: 13px;
 		font-weight: 700;
 	}
-	
-	footer.comment_feed_item_footer>::after {
+	footer.comment_feed_item_footer> ::after {
 	    display: inline-block;
-	    color: #bdbdbd;
-	    content: "·";
-	    margin: 0 5px;
-	    font-size: 13px;
-	    font-weight: 400;
+    	color: rgb(189, 189, 189);
+    	content: "·";
+    	font-size: 13px;
+    	font-weight: 400;
+    	margin: 0px 2px;
 	}
+	
 	footer.comment_feed_item_footer>.comment_feed_item_footer_likes_zero::after{
 		display:none;
 	}
@@ -657,7 +824,6 @@
 	span.comment_feed_item_footer_likes_zero>span.comment_feed_item_footer_likes_count{
 		display: none;
 	}
-	
 	button.comment_feed_item_footer_likes_btn,
 	button.comment_feed_item_footer_reply_btn{
 		cursor: pointer;
@@ -667,7 +833,7 @@
 		color: inherit;
 		padding: 0;
 		font-size: 13px;
-		font-weight: inherit;
+		font-weight: 900;
 		font-family: inherit;
 	}
 	
@@ -696,12 +862,34 @@
 	}
 	
 	article.comment_feed__item{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
 		margin-bottom: 10px;
 		padding: 20px 20px 20px 61px;
 		border-radius: 8px;
 		background-color: #f7f8fa;
 	}
 	a.comment_tag{
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		overflow-wrap: break-word;
+		font-size: 15px;
+		line-height: 1.67;
+		white-space: pre-line;
+		-webkit-tap-highlight-color: transparent;
+		text-decoration: none;
+		cursor: pointer;
+		touch-action: manipulation;
 		color: #35c5f0;
 	}
 	
@@ -994,12 +1182,23 @@
 		background-color: rgba(0,0,0,.8);
 	}
 	
-	form.comment_feed_item_reply{
+	form.comment_feed_item_reply,
+	form.comment_feed_item_comment_reply{
 		margin: 0;
 		display: flex;
 		position: relative;
 		padding: 10px 0 0 18px;
 		margin-left: 40px;
+		border: none;
+		margin-bottom: 30px;
+	}
+	
+	form.comment_feed_item_reply_no_comment{
+		margin: 0;
+		display: flex;
+		position: relative;
+		padding: 10px 0 0 18px;
+		margin-left:0px;
 		border: none;
 		margin-bottom: 30px;
 	}
@@ -1265,9 +1464,6 @@
 		color: #757575;
    }
    
-   div.tag-item-content__icon{
-   		
-   }
    
    svg.tag_icon{
    		color: #757575;
@@ -1276,8 +1472,36 @@
 		-webkit-tap-highlight-color: transparent;
 		border: none;
    }
-   svg.tag_icon>path{
-   		
+   
+   div.hr{
+   		padding:30px;
+   }
+   
+   div.comment-feed__reply-list__more{
+   		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		margin-top: 15px;
+		margin-bottom: 9px;
+   }
+   
+   button.comment-feed__reply-list__more__btn{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		padding: 5px 0;
+		font-size: 13px;
+		line-height: 20px;
+		border: none;
+		color: #35c5f0;
+		background: none;
+		font-weight: 700;
    }
 </style>
 </head>
@@ -1292,22 +1516,26 @@
 				<div class="card_detail_content">
 					<header class="card_detail_header">
 						<div class="card_detail_list">
-							<span class="header_prop">모던 스타일 &nbsp;</span>
-							<span class="header_prop">아파트 </span>
+							<span class="header_prop">${pvo.pstyle} &nbsp;</span>
+							<span class="header_prop">${pvo.ptype} </span>
 						</div>
-						<time class="header_date">이틀 전</time>
+						<time class="header_date">${pvo.pdate}</time>
+
 					</header>
 					<article class="card_detail_card">
+						<c:set var="pimg" value="${pvo.photo_simage}"/>
+						<c:set var="img" value="${fn:split(pimg,',')}" />
+						<c:forEach var="img" items="${img}">      							
 						<div class="card_detail_img_wrap">
 							<div class="card_detail_img">
 								<div class="card_img_content">
-									<img class="card_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161041249591864651.jpeg?gif=1&w=640&webp=1">
-									<button id="card_scrap" class="card_scrap" type="button">
+									<img class="card_img" src="http://localhost:9000/myhouse/resources/upload/${img}">
+									<%-- <button id="card_scrap" class="card_scrap" type="button">
 									<svg class="comm_icon" width="36" height="36" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet">
 									<circle cx="18" cy="18" r="18" fill="#FFF" fill-opacity=".5"></circle>
 									<path fill="currentColor" d="M27.15 26.79a.88.88 0 00.1-.41V10.21c0-.73-.59-1.32-1.31-1.32H11.06c-.72 0-1.3.6-1.3 1.32v16.16a.88.88 0 001.28.77l7.05-3.77a.88.88 0 01.82 0l7.05 3.77a.88.88 0 001.19-.36z"></path>
 									</svg>
-									</button>
+									</button> --%>
 								</div>
 								<div class="card_img_tag">
 									<button class=tag type="button" style="top:35.2657%;left:33.6957%">
@@ -1319,21 +1547,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="hr"></div>
+						</c:forEach>
 							<p class="card_detail_description">
-							예쁜 조화를 보니
-							방안이 싱그러워 지는 느낌이예요~🌈
-							블랭킷도 포근해보이게 배치해봤어요^^
-							오늘부터 날씨가 누그러진다니
-							좀 나아지겠죠?^^
-							오늘하루도 화이팅하세요🤩</p>
+								${pvo.pcontent}
+							</p>
 					</article>
 					<footer class="card_detail_footer">
 						<p class="footer_metadata">
 							<span class="footer_prop">
-							조회 <!-- -->1,838<!-- -->&nbsp;
+							조회 ${pvo.phits} &nbsp;
 							</span>
 							<span class="footer_prop">
-							댓글 <!-- -->5<!-- -->&nbsp;
+							댓글 ${c_count}&nbsp;
 							</span>
 						</p>
 					</footer>
@@ -1342,7 +1568,7 @@
 						<section class="comment_feed">
 							<h1 class="comment_feed_header">
 								댓글 <!--  -->&nbsp;
-								<span class="comment_feed_count">5</span>
+								<span class="comment_feed_count">${c_count}</span>
 							</h1>
 							<form class="comment_feed_form">
 								<div class="comment_feed_form_user">
@@ -1351,63 +1577,150 @@
 								<div class="comment_feed_form_input">
 									<div class="comment_feed_form_content">
 										<div class="comment_content_input">
-											<div class="comment_content_input_text" data-ph="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" contenteditable="true"></div>
+											<div class="comment_content_input_text"  data-ph="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" contenteditable="true"></div>
 										</div>
 									</div>
 									<div class="comment_feed_form_actions">
-										<button class="comment_feed_form_submit">등록</button>
+										<button type="button" class="comment_btn feed_form_submit" disabled>등록</button>
 									</div>
 								</div>
 							</form>
+							
+							<c:set var="i" value="0"/>
+							<c:if test="${c_count ne 0}">
+							<c:set var="cvo" value="${comment}"/>
+							<c:forEach var="j" begin="${i}" end="${c_count-re_count-1}" step="1">
 							<ul class="comment_feed_list">
 								<li class="comment_feed_list_item">
 									<article class="comment_feed_item">
+										<!-- 댓글 -->
 										<p class="comment_feed_item_content">
 											<a href="#" class="comment_feed_author">
-												<img class="comment_feed_author_img" alt="3색이" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
-												<span class="comment_feed_author_name">3색이</span>
+												<c:if test="${cvo[i].member_simage ne null}">
+													<img class="comment_feed_author_img" alt="${cvo[i].nickname}" src="http://localhost:9000/myhouse/resources/upload/${cvo[i].member_simage}">
+												</c:if>
+												<c:if test="${cvo[i].member_simage eq null}">
+													<img class="comment_feed_author_img" alt="${cvo[i].nickname}" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
+												</c:if>
+												<span class="comment_feed_author_name">${cvo[i].nickname}</span>
 											</a>
-											<span class="comment_feed_content">요새 조화도 진짜처럼 잘 나오는거 같아요</span>
+											<span class="comment_feed_content">${cvo[i].c_content}</span>
 										</p>
 										<footer class="comment_feed_item_footer">
 											<time class="comment_feed_item_footer_time">
-												21시간 전
+											<jsp:useBean id="now" class="java.util.Date"/>
+											<fmt:formatDate var="nowTime" value="${now}" pattern="yyyy-MM-dd" />
+											<fmt:parseDate var="codate" value="${cvo[i].cdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+											<fmt:formatDate var="cdateTime" value="${codate}" pattern="yyyy-MM-dd" />
+											<fmt:parseNumber var="startDate" value="${now.time / (1000*60*60*24)}" integerOnly="true" />
+											<fmt:parseNumber var="endDate" value="${codate.time / (1000*60*60*24)}" integerOnly="true" /> 
+											<c:if test="${nowTime >= cdateTime}">
+												<c:choose>
+													<c:when test="${nowTime == cdateTime}">
+														오늘
+													</c:when>
+													<c:when test="${startDate-endDate <7}">
+														${startDate-endDate}일 전
+													</c:when>
+													<c:otherwise>
+														<fmt:parseNumber var="week" value="${(startDate-endDate) div 7}" integerOnly="true"/>
+														${week}주 전
+													</c:otherwise>	
+												</c:choose>
+											</c:if>
 											</time>
-											<span class="comment_feed_item_footer_likes">
-												<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
-													<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
-														<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
-													</svg>
-												</button>
-												<span class="comment_feed_item_footer_likes_count">1</span>
-												</span>
+											<c:set var="like" value="${cvo[i].c_like}"/>
+											<c:set var="likes" value="${fn:split(like,',')}" />
+											<c:choose>
+												<c:when test="${cvo[i].c_like eq null}">
+													<span class="comment_feed_item_footer_likes_zero">
+													<button id="likes_icon_btn" class="comment_feed_item_footer_likes_icon" type="button">
+														<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+															<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+														</svg>
+													</button>
+													<span class="comment_feed_item_footer_likes_count">0</span>
+													</span>
+												</c:when>
+												<c:otherwise>
+													<span class="comment_feed_item_footer_likes">
+													<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
+														<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+															<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+														</svg>
+													</button>
+														<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+													</span>
+												</c:otherwise>
+											</c:choose>
+													<input type="hidden" class="cno" value="${cvo[i].cno}">
 												<button id="likes_btn" class="comment_feed_item_footer_likes_btn" type="button">좋아요</button>
-												<button class="comment_feed_item_footer_reply_btn" type="button">답글달기</button>
+												<button id="reply" class="comment_feed_item_footer_reply_btn" type="button">답글달기</button>
 											</footer>
+											
+											<c:if test="${cvo[i].rcount != 0}">
+											<c:forEach var="k" begin="${i+1}" end="${i+cvo[i].rcount}" step="1" >
+											<!-- 답글 -->
 											<div class="comment_feed_reply_list">
 												<ul class="comment_feed_reply_list">
 													<li class="comment_feed_list_item">
 														<article class="comment_feed__item">
 															<p class="comment_feed_item_content">
 																<a href="#" class="comment_feed_author">
-																	<img class="comment_feed_author_img" alt="3색이" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
-																	<span class="comment_feed_author_name">3색이</span></a>
-																<span class="comment_feed_item_content_content">
-																	<a class="comment_tag" href="#" target="_blank" rel="noopener noreferrer">@3색이 </a>네~ 너무 잘 나오는 것 같아요^^
-																</span>
+																<c:if test="${re[k].member_simage ne null}">
+																	<img class="comment_feed_author_img" alt="${cvo[k].nickname}" src="http://localhost:9000/myhouse/resources/upload/${cvo[k].member_simage}">
+																</c:if>
+																<c:if test="${re[k].member_simage eq null}">
+																	<img class="comment_feed_author_img" alt="${cvo[k].nickname}" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
+																</c:if>
+																	<span class="comment_feed_author_name">${cvo[k].nickname}</span></a><span class="comment_feed_item_content_content"><a class="comment_tag" href="#" target="_blank" rel="noopener noreferrer">@${cvo[k].c_tag}  </a>${cvo[k].c_content}</span>
 															</p>
 															<footer class="comment_feed_item_footer">
 																<time class="comment_feed_item_footer_time">
-																	21시간 전
+																	<fmt:formatDate var="nowTime" value="${now}" pattern="yyyy-MM-dd" />
+																	<fmt:parseDate var="codate" value="${cvo[k].cdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+																	<fmt:formatDate var="cdateTime" value="${codate}" pattern="yyyy-MM-dd" />
+																	<fmt:parseNumber var="startDate" value="${now.time / (1000*60*60*24)}" integerOnly="true" />
+																	<fmt:parseNumber var="endDate" value="${codate.time / (1000*60*60*24)}" integerOnly="true" /> 
+																	<c:if test="${nowTime >= cdateTime}">
+																		<c:choose>
+																			<c:when test="${nowTime == cdateTime}">
+																				오늘
+																			</c:when>
+																			<c:when test="${startDate-endDate <7}">
+																				${startDate-endDate}일 전
+																			</c:when>
+																			<c:otherwise>
+																				<fmt:parseNumber var="week" value="${(startDate-endDate) div 7}" integerOnly="true"/>
+																				${week}주 전
+																			</c:otherwise>	
+																		</c:choose>
+																	</c:if>
 																</time>
-																<span class="comment_feed_item_footer_likes_zero">
-																	<button id="likes_icon_btn" class="comment_feed_item_footer_likes_icon" type="button">
-																		<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
-																			<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
-																		</svg>
-																	</button>
-																	<span class="comment_feed_item_footer_likes_count">0</span>
-																</span>
+																<c:set var="like" value="${cvo[k].c_like}"/>
+																<c:set var="likes" value="${fn:split(like,',')}" />
+																<c:choose>
+																	<c:when test="${cvo[k].c_like eq null}">
+																		<span class="comment_feed_item_footer_likes_zero">
+																		<button id="likes_icon_btn" class="comment_feed_item_footer_likes_icon" type="button">
+																			<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+																				<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+																			</svg>
+																		</button>
+																		<span class="comment_feed_item_footer_likes_count">0</span>
+																		</span>
+																	</c:when>
+																	<c:otherwise>
+																		<span class="comment_feed_item_footer_likes">
+																		<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
+																			<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+																				<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+																			</svg>
+																		</button>
+																			<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+																		</span>
+																	</c:otherwise>
+																</c:choose>
 																<button id="likes_btn" class="comment_feed_item_footer_likes_btn" type="button">좋아요</button>
 																<button id="reply_btn" class="comment_feed_item_footer_reply_btn" type="button">답글달기</button>
 															</footer>
@@ -1415,6 +1728,29 @@
 													</li>
 												</ul>
 											</div>
+											</c:forEach>
+											<c:set var="i" value="${i+cvo[i].rcount}"/>
+											</c:if>
+											
+											<!-- 답글 달기 누르면 나오는 폼(답글x) -->
+											<form class="comment_feed_item_reply_no_comment">
+												<div class="comment_feed_form_user">
+													<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610498514_naver_66cccd579686a4eeed50c3739b9de4b4ffef8b3e4909359b9f11317ba1c2da96.jpg?gif=1&w=36&webp=1">
+												</div>
+												<div class="comment_feed_form_input">
+													<div class="comment_feed_form_content">
+														<div class="comment_content_input">
+															<div class="comment_content_input_text" data-ph="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" contenteditable="true">
+																<a href="" class="comment_content_input_text_mention"></a>&nbsp;
+															</div>
+														</div>
+													</div>
+												<div class="comment_feed_form_actions">
+													<button type="button" class="comment_reply_btn feed_form_submit">등록</button>
+												</div>
+												</div>
+										   </form>
+											<!-- 답글 달기 누르면 나오는 폼(답글ㅇ) -->
 											<form class="comment_feed_item_reply">
 												<div class="comment_feed_form_user">
 													<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610498514_naver_66cccd579686a4eeed50c3739b9de4b4ffef8b3e4909359b9f11317ba1c2da96.jpg?gif=1&w=36&webp=1">
@@ -1423,18 +1759,42 @@
 													<div class="comment_feed_form_content">
 														<div class="comment_content_input">
 															<div class="comment_content_input_text" data-ph="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" contenteditable="true">
-																<a href="" class="comment_content_input_text_mention">@3색이</a>&nbsp;
+																<a href="" class="comment_content_input_text_mention"></a>&nbsp;
 															</div>
 														</div>
 													</div>
 												<div class="comment_feed_form_actions">
-													<button class="comment_feed_form_submit">등록</button>
+													<button type="button" class="comment_reply_btn feed_form_submit">등록</button>
 												</div>
 												</div>
 										   </form>
+										   
+											<!-- 답글 달기 누르면 나오는 폼(댓글) -->
+											<form class="comment_feed_item_comment_reply">
+												<div class="comment_feed_form_user">
+													<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610498514_naver_66cccd579686a4eeed50c3739b9de4b4ffef8b3e4909359b9f11317ba1c2da96.jpg?gif=1&w=36&webp=1">
+												</div>
+												<div class="comment_feed_form_input">
+													<div class="comment_feed_form_content">
+														<div class="comment_content_input">
+															<div class="comment_content_input_text" data-ph="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" contenteditable="true">
+																<a href="" class="comment_content_input_text_mention"></a>&nbsp;
+															</div>
+														</div>
+													</div>
+												<div class="comment_feed_form_actions">
+													<button type="button" class="comment_reply_btn feed_form_submit">등록</button>
+												</div>
+												</div>
+										   </form>
+										   
 									</article>
 								</li>
 							</ul>
+							<c:set var="i" value="${i+1}"/>
+							</c:forEach>
+							</c:if>
+							<ul class="list_paginator"></ul>
 						</section>
 					</div>
 				</div>
@@ -1447,13 +1807,13 @@
 										<svg class="actionIcon" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 											<path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z"></path>
 										</svg>
-										<span class="count">57</span>
+										<span class="count">${clike}</span>
 									</button>
 									<button id="btn_scrap" class="btn_action">
 										<svg class="actionIcon" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 											<path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
 										</svg>
-										<span class="count">53</span>
+										<span class="count">${scrap}</span>
 									</button>
 								</div>
 												
@@ -1461,35 +1821,29 @@
 									<div class="card_detail_write">
 										<div class="card_detail_writer_user">
 											<a class="card_detail_writer_link">
-												<img class="card_detail_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160345733976486088.jpeg?gif=1&w=72&h=72&c=c">
-													<span class="card_detail_writer_name">그래니놀라</span>
+											<c:if test="${member.member_spimage eq null}">
+												<img class="card_detail_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
+											</c:if>
+											<c:if test="${member.member_spimage ne null}">
+												<img class="card_detail_writer_img" src="http://localhost:9000/myhouse/resources/upload/${member.member_spimage}">
+											</c:if>
+													<span class="card_detail_writer_name">${member.nickname}</span>
 											</a>
-											<p class="card_detail_writer_intro">인테리어 정보는 인스타 댓글로 부탁드려요^^</p>
+											<p class="card_detail_writer_intro">${member.intro}</p>
 										</div>
 										<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
 									</div>
 									<div class="card_detail_card_list">
 										<ul class="card_detail_card_list">
+										<c:forEach var="p" items="${photo}">
+										<c:set var="pimg" value="${p.photo_simage}"/>
+										<c:set var="img" value="${fn:split(pimg,',')}" />
 											<li class="card_detail_card_list_item">
 												<a href="#" class="card_detail_card_list_item_link">
-													<img class="card_detail_card_list_item_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160749189248821539.jpeg?gif=1&w=160&h=160&c=c&webp=1">
+													<img class="card_detail_card_list_item_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
 												</a>
 											</li>
-											<li class="card_detail_card_list_item">
-												<a href="#" class="card_detail_card_list_item_link">
-													<img class="card_detail_card_list_item_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160764318034526130.jpeg?gif=1&w=320&h=320&c=c&webp=1">
-												</a>
-											</li>
-											<li class="card_detail_card_list_item">
-												<a href="#" class="card_detail_card_list_item_link">
-													<img class="card_detail_card_list_item_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160773541598130646.jpg?gif=1&w=160&h=160&c=c&webp=1">
-												</a>
-											</li>
-											<li class="card_detail_card_list_item">
-												<a href="#" class="card_detail_card_list_item_link">
-													<img class="card_detail_card_list_item_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160790505690871314.jpeg?gif=1&w=160&h=160&c=c&webp=1">
-												</a>
-											</li>
+										</c:forEach>
 										</ul>
 										<a class="card_detail_card_list_more">더보기</a>
 									</div> 

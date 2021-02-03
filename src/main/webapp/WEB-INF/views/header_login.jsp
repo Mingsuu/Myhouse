@@ -145,8 +145,8 @@
 									href="/partner/applications/new">판매자 신청</a></li>
 								</li>
 								<li class="layout-navigation-bar-user-menu__item-wrap">
-								<li class="layout-navigation-bar-user-menu__item-wrap"><button
-										class="layout-navigation-bar-user-menu__item" type="button">로그아웃</button></li>
+								<li class="layout-navigation-bar-user-menu__item-wrap"><a href="logout.do"><button
+										class="layout-navigation-bar-user-menu__item" type="button">로그아웃</button></a></li>
 								</li>
 							</ul>
 						</div>
@@ -190,7 +190,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">우리집
 								사진을 공유해보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/product_review.do"><div
+						href="http://localhost:9000/myhouse/mypage_review.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">

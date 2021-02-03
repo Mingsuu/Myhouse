@@ -18,14 +18,54 @@
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/images/**" location="/resources/images/" />
 	
+
 	<!-- DAO Object생성 -->
-	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.MypagePhotoDAO" id="mypagephotDAO"></beans:bean>
-	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
 	<beans:bean class="com.spring.service1.MypageServiceImpl" id="mypageService"></beans:bean>
+	
+	<!--  메일전송을 위한 bean  -->
+	<!-- Gmail -->
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" /><!-- 465 or 25 -->
+		<beans:property name="username" value="lyj6054@gmail.com" />
+		<beans:property name="password" value="dudwofkrh1@" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+ 	<beans:bean class="com.myhouse.dao.MemberDAO" id="memberDAO"></beans:bean>
+	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
+ 	<beans:bean class="com.myhouse.dao.H_UploadPhotoDAO" id="uploadDAO"></beans:bean>
+	<beans:bean class="com.spring.service.UploadPhotoServiceImpl" id="uploadService"></beans:bean>
+	
+	<beans:bean class="com.spring.service.CommunityServcieImpl" id="communityService"></beans:bean>
+	<beans:bean class="com.myhouse.dao.CommunityDAO" id="communityDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_PhotoDAO" id="photoDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
+	
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 
 	
+		<!-- Interceptor Object -->
+	<beans:bean id="authInterceptor" class="com.myhouse.interceptor.AuthHandlerInterceptor">
+	</beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin123*"/> <!-- 체크할 url 주소 -->
+			<beans:ref bean="authInterceptor"/> <!-- 체크를 진행할 객체 -->
+		</interceptor>
+	</interceptors>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

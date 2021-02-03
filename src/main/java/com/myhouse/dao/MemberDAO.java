@@ -1,11 +1,10 @@
 package com.myhouse.dao;
 
-import java.sql.ResultSet;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.myhouse.vo.MemberVO;
+import com.myhouse.vo.SessionVO;
 
 public class MemberDAO extends DBConn{
 	
@@ -13,49 +12,39 @@ public class MemberDAO extends DBConn{
 	private SqlSessionTemplate sqlSession;
 	
 	private static String namespace="mapper.member";
+	
+	
 	/**
-	 * Select 로그인
+	 *  select : 이메일 입력 시 회원 정보 가져옴 
 	 */
-	/*
-	 * public SessionVO getLogin(CgvMemberVO vo) { SessionVO svo= new SessionVO();
-	 * try { String
-	 * sql="select count(*), name from cgvmember where id=? and pass=? group by name"
-	 * ; getPreparedStatement(sql); pstmt.setString(1, vo.getId());
-	 * pstmt.setString(2, vo.getPass());
-	 * 
-	 * ResultSet rs=pstmt.executeQuery(); if(rs.next()) {
-	 * svo.setResult(rs.getInt(1)); svo.setName(rs.getString(2)); }
-	 * 
-	 * }catch(Exception e) { e.printStackTrace(); }
-	 * 
-	 * return svo; }
-	 */
+	public String getPass(String email) {
+		return sqlSession.selectOne(namespace+".getinfo", email);
+	}
+	
 	/**
 	 *   회원가입 - 아이디 중복체크l
 	 */
 	public int getIdCheck(String email) {
 		return sqlSession.selectOne(namespace+".idcheck", email);
 	}
+		
 	/**
 	 * Select 로그인
 	 */
-	
-	 public int getLogin(MemberVO vo) { int result =0; try { String
-	  sql="select count(*) from cgvmember where id=? and pass=?";
-	  getPreparedStatement(sql); pstmt.setString(1, vo.getEmail()); pstmt.setString(2,
-	  vo.getPass());
-	  
-	  ResultSet rs=pstmt.executeQuery(); if(rs.next())result=rs.getInt(1);
-	  
-	  }catch(Exception e) { e.printStackTrace(); }
-	  
-	 return result; }
+	public SessionVO getLogin(MemberVO vo) {
+		 return sqlSession.selectOne(namespace +".login",vo);
+	}
 	 
 	
 	/**
 	 * Insert : 회원가입 
 	 */
 	public boolean getInsert(MemberVO vo) {
+		boolean result=false;
+		int value= sqlSession.insert(namespace+".insert", vo);
+		if(value!=0) result=true;
+		return result;
+		/*
 		boolean result=false;
 		
 		try {
@@ -74,6 +63,7 @@ public class MemberDAO extends DBConn{
 			e.printStackTrace();
 		}
 		return result;
+		*/
 	}
 	
 	

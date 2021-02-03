@@ -1,5 +1,25 @@
 	$(document).ready(function(){
+	/**
+	*  비밀번호 찾기 버튼 클릭 시 서버전송
+	**/
+	$("#user_email").click(function(){
+		if(ruleCheck($("#email"))){
 		
+			//ajax를 활용한 서버연동
+			$.ajax({
+				url:"idCheck.do?email="+$("#email").val(),
+				success:function(result){
+					if(result==1){
+						$("#flash_alert").css("background-color","#b1d8b1").show().text("이메일 확인 부탁드립니다.").delay(2000).fadeOut(2000);
+						passUpdateForm.submit();
+					}else{
+						$("#flash_alert").css("background-color","#ff7d7d").show().text("존재하지않는 이메일입니다. 다시 입력해주세요.").delay(2000).fadeOut(2000);
+					}
+				}
+			});
+			
+		}
+	});
 	/** 
 	*  아이디 중복 확인 체크
 	**/
@@ -17,6 +37,7 @@
 						$("#id").focus();
 					}else{
 						$(".idcheck").css("display","none");
+						$("#email_label").css("color","#292929");
 						$("#idcheck_result").text("사용 가능한 이메일입니다.")
 						.css("color","#0067a3");
 					}
@@ -32,12 +53,25 @@
 		if(!ruleCheck2($("#email"))){
 			return false;
 		}else if($("#pass").val() == ""){
+			$("#pass").css("border-color","#f77");
 			$("#flash_alert").show().text("패스워드를 입력해주세요").delay(2000).fadeOut(2000);
-			$("$pass").focus();
+			$("#pass").focus();
 			return false;
 		}else{
 			//서버 전송:폼이름.submit();
-			loginForm.submit();
+			//loginForm.submit();
+			//ajax를 활용한 서버연동
+			$.ajax({
+				url:"loginCheck.do?email="+$("#email").val()+"&pass="+$("#pass").val(),
+				success:function(result){
+					if(result!=0){
+						location.replace('http://localhost:9000/myhouse/index.do');
+					}else{
+						$("#flash_alert").show().text("이메일 주소 또는 비밀번호가 틀립니다.").delay(2000).fadeOut(2000);
+						$("#id").focus();
+					}
+				}
+			});
 		}		
 	});
 	
@@ -138,14 +172,17 @@
 		if(obj.val() == ""){
 			$("#email_label").css("color","#f77");
 			$("#email").css("border-color","#f77");
+			$("#flash_alert").css("background-color","#ff7d7d").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 			obj.focus();
 			return false;
 		}else{
 			if(regExp.test(obj.val())){
+				$("#email").css("border-color","#bdbdbd");
 				return true;	//이메일 형식에 맞는 경우
 			}else{
 				$("#email_label").css("color","#f77");
 				$("#email").css("border-color","#f77");
+				$("#flash_alert").css("background-color","#ff7d7d").show().text("이메일 형식으로 입력해 주세요").delay(2000).fadeOut(2000);
 				obj.focus();
 				return false;
 			}

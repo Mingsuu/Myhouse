@@ -15,7 +15,7 @@ public class MypagePhotoDAO extends DBConn{
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private static String namespace="mapper.photo";
+	private static String namespace="mapper.photo2";
 
 	
 	/**
