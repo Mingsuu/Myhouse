@@ -35,9 +35,69 @@
 				alert("검색할 상품을 입력해주세요.");
 				$("#search").focus();
 			}
-			
-			
 		});
+		
+		
+		
+		
+		$("#delbtn").click(function(){
+			$("#del").css("display","none");
+			$("#card").css("display","block");
+		});
+		
+
+		 function readInputFile(input) {
+		    if(input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+		            $('#previewbox').html("<img src="+ e.target.result +">");
+
+		        }
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		    
+		} 
+
+		$("#file_upload").on('change', function(){
+		    $("#card").css("display","none");
+		    $("#del").css("display","block");
+		     readInputFile(this);
+		});
+		
+		
+		
+		
+		$(function(){
+			$('textarea.text-area-input').keyup(function(){
+			bytesHandler(this);
+			});
+			});
+
+			function getTextLength(str) {
+			var len = 0;
+
+			for (var i = 0; i < str.length; i++) {
+			if (escape(str.charAt(i)).length == 6) {
+			len++;
+			}
+			len++;
+			}
+			return len;
+			}
+
+			function bytesHandler(obj){
+			var text = $(obj).val();
+			$('#numcheck').text(getTextLength(text));
+			
+			}
+		
+			$('textarea.text-area-input').focusout(function(){
+			if($('#numcheck').text() < 20){
+				alert("최소 20자는 작성해주세요");
+				 }
+			
+			});
+		
 		
 		
 	
@@ -57,6 +117,9 @@
 	margin:auto;
 	width:100%
 }
+.nav11{
+	height:60px;
+}
 .nav11,
 .nav2 {
 	list-style:none;
@@ -75,6 +138,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -82,16 +146,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -227,10 +293,13 @@
 	height: 50px;
 	line-height: 50px;
 	font-size: 18px;
-	background-color: #fafafa;
 	border-color: #bdbdbd;
 }
-.form-control:focus,
+.review-my-home__search__form__input:hover,
+.review-my-home__search__form__input:focus{
+	background-color: #fafafa;
+}
+.form-control1:focus,
 .focus-visible:focus {
 	outline:none;
 	box-shadow:0 0 0 3px rgba(130,224,250,0.5);
@@ -354,7 +423,6 @@
 	-webkit-tap-highlight-color: transparent;
 	margin: 0;
 	position: relative;
-	width: 680px;
 	border-radius: 4px;
 	background-color: #fff;
 	color: #292929;
@@ -395,6 +463,7 @@
 	border: 0;
 	cursor: pointer;
 	background-color: #fff;
+	float:right;
 }
 .review-modal__close__icon{
 	-webkit-font-smoothing: antialiased;
@@ -714,6 +783,9 @@ path[Attributes Style] {
 	max-height: 234px;
 	overflow-y: scroll;
 }
+/* .scroll::-webkit-scrollbar{width: 4px;}
+.scroll::-webkit-scrollbar-thumb {background-color:gray;} */
+	
 .select-my-card__content{
 	line-height: 1;
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -1157,8 +1229,9 @@ path[Attributes Style] {
 	-webkit-box-flex: 1;
 	flex: 1 1 auto;
 	font-size: 15px;
+	
 }
-.form-check-label{
+/* .form-check-label{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	letter-spacing: -0.4px;
@@ -1173,59 +1246,38 @@ path[Attributes Style] {
 	line-height: 22px;
 	position: relative;
 	margin-bottom: 0;
-}
+} */
 .form-check {
 	-webkit-font-smoothing: antialiased;
 	-webkit-box-direction: normal;
 	-webkit-tap-highlight-color: transparent;
-	margin: 0;
-	padding: 0;
+	margin-right:5px;
+	margin-left:0px;
+	padding:0;
 	font-family: inherit;
 	font-weight: inherit;
 	-webkit-box-flex: 1;
 	flex: 1 1 auto;
 	font-size: 15px;
-	left: -1000px;
 }
 .form-check:not(:disabled):checked+.check-img:after{
 	opacity: 1;
 }
-.check-img {
-	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	letter-spacing: -0.4px;
-	-webkit-box-direction: normal;
-	color: #292929;
-	font-size: 15px;
-	cursor: pointer;
-	line-height: 22px;
-	-webkit-tap-highlight-color: transparent;
+  .check-img {
 	box-sizing: border-box;
-	height: 22px;
-	width: 22px;
-	border-radius: 4px;
-	border: solid 1px #dbdbdb;
-	display: block;
-	transition: .2s ease;
-	position: absolute;
-	left: 0;
-	top: 0;
-	background-color: #35c5f0;
-	border-color: #35c5f0;
-} 
-.check-img:after {
-    background-image: url(/assets/icon_map/v3/ic-checkbox@2x.png);
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    box-sizing: border-box;
+    height: 22px;
+    width: 22px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
     display: block;
-    width: 14px;
-    height: 14px;
-    background-size: 14px;
- }
+    transition: .2s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top:12px;
+	
+} 
 .review-modal__form__agree{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -1236,6 +1288,11 @@ path[Attributes Style] {
 	line-height: 22px;
 	-webkit-tap-highlight-color: transparent;
 	color: #424242;
+	display:inline-block;
+	float:left;
+	margin-top:12px;
+	margin-bottom:30px;
+	margin-left:10px;
 }
 .review-modal__form__agree__policy-button{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -1285,7 +1342,6 @@ path[Attributes Style] {
 	letter-spacing: -0.4px;
 	-webkit-box-direction: normal;
 	-webkit-tap-highlight-color: transparent;
-	width: 100%;
 	margin: 0 -40px;
 	padding: 20px 40px;
 	border-radius: 4px;
@@ -1294,6 +1350,7 @@ path[Attributes Style] {
 	line-height: 1.46;
 	color: #424242;
 	font-size: 13px;
+	margin-top:20px;
 }
 .review-modal__explain>ul{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -1324,14 +1381,133 @@ list-style-position: inside;
 color: #f06060;
 font-weight: 700;
 }
+.select-picture{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	color: #292929;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+	height: 226px;
+	background-color: #eaebef;
+	border-radius: 4px;
+	overflow: hidden;
+	display:none;
+}
+.select-picture__contents{
+	line-height: 1;
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	font-size: 15px;
+	-webkit-box-direction: normal;
+	color: #292929;
+	-webkit-tap-highlight-color: transparent;
+	border: 0;
+	height: 100%;
+	width:401px;
+	height:226px;
+	margin-left:140px;
+}
+.select-picture__contents>img {
+	width:100%;
+	height:100%;
+}
+.select-picture__delete{
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-direction: normal;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-appearance: none;
+	touch-action: manipulation;
+	user-select: none;
+	margin: 0;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	background: none;
+	font-family: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	text-align: center;
+	transition: color .1s,background-color .1s,border-color .1s;
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: #35c5f0;
+	border-color: #35c5f0;
+	color: #fff;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 70px;
+	height: 32px;
+	box-shadow: 0 0 6px 0 rgba(47,52,56,.2);
+	font-size: 15px;
+	padding: 0;
+	line-height: 1;
+}
+.select-picture__delete:hover {
+	background-color:rgb(16,175,222);
+}
+.select-picture__delete>svg {
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-direction: normal;
+	user-select: none;
+	font-family: inherit;
+	font-weight: 700;
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+	font-size: 15px;
+	line-height: 1;
+	-webkit-tap-highlight-color: transparent;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+}
+.img_preview{
+	border:1px solid red;
+}
+#file_upload{
+	border:1px solid red;
+	margin-top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height:45px;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+    position:absolute;
+}
+#file_upload:hover{
+	background-color:rgb(170,232,255);
+}
+.bean {
+	margin-bottom:500px;
+}
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav11">
-			<a href="mypage_profile.do"><li class="nav1-1">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1" style="color:#35c5f0;">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -1340,7 +1516,7 @@ font-weight: 700;
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_review.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰쓰기</li></a>
-			<a href="mypage_review1.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
+			<a href="mypage_review2.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
 		</ul>
 	</div>
 </div>
@@ -1350,7 +1526,7 @@ font-weight: 700;
 			<div class="review-my-home__search__title">내가 사용하는 상품 리뷰쓰기</div>
 			<form class="review-my-home__search__form">
 				<div class="review-my-home__search__form__wrap">
-					<input placeholder="브랜드명 혹은 상품명을 입력하세요." class="form-control review-my-home__search__form__input" value="" id="search">
+					<input placeholder="브랜드명 혹은 상품명을 입력하세요." class="form-control1 review-my-home__search__form__input" value="" id="search">
 					<button class="review-my-home__search__form__button" type="button" id="gum">검색</button>
 				</div>
 				<span id="count"></span>
@@ -1447,7 +1623,7 @@ font-weight: 700;
 					<div class="review-modal__section__title">사진 첨부 (선택) 
 					</div>
 					<div class="review-modal__section__explain">오늘의집에 올렸던 사진에서 고르거나 새로운 사진을 첨부해주세요. (최대 1장)</div>
-					<div class="select-my-card">
+					<div class="select-my-card" id="card">
 						<div class="select-my-card__content">
 						<img class="select-my-card__content__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=180&amp;h=180&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161106369884900212.jpeg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 3x">
 							<div class="round-checkbox-input round-checkbox-input--blue">
@@ -1475,8 +1651,40 @@ font-weight: 700;
 								</label>
 							</div>
 						</div>
+					</div> 
+					
+					
+					<div class="select-picture" id="del">
+						<div id="previewbox" class="select-picture__contents"></div>
+						<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button" id="delbtn">
+							<svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
+								<defs>
+									<filter id="delete-a" width="134.3%" height="175%" x="-17.1%" y="-37.5%" filterUnits="objectBoundingBox">
+										<feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+										<feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="3"></feGaussianBlur>
+										<feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.182857143 0 0 0 0 0.205714286 0 0 0 0 0.22 0 0 0 0.2 0"></feColorMatrix>
+										<feMerge>
+											<feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+											<feMergeNode in="SourceGraphic"></feMergeNode>
+										</feMerge>
+									</filter>
+									<path id="delete-b" d="M11 3.83v10c0 .92-.75 1.67-1.67 1.67H2.67c-.92 0-1.67-.75-1.67-1.67v-10h10zM8.08.5l.84.83h2.91V3H.17V1.33h2.91L3.92.5h4.16z"></path>
+								</defs>
+								<g fill="none" fill-rule="evenodd" filter="url(#delete-a)" transform="translate(4 2)">
+									<mask id="delete-c" fill="#fff">
+										<use xlink:href="#delete-b"></use>
+									</mask>
+									<g fill="#FFF" mask="url(#delete-c)">
+										<path d="M-4-2h20v20H-4z"></path>
+									</g>
+								</g>
+							</svg>삭제
+						</button>
 					</div>
+					
+					
 					<button class="button button--color-blue-inverted button--size-50 button--shape-4 upload-button" type="button">
+						<input type="file" name="fileup" id="file_upload">
 						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 							<path d="M21.1 4c.5 0 .9.4.9.9v14.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V4.9c0-.5.4-.9.9-.9h18.2zm-.91 1.8H3.8v10.85l5.54-6.27c.12-.17.38-.17.52 0l3.1 3.54c.06.06.08.14.06.2l-.4 1.84c-.02.14.15.23.23.12l3.16-3.43a.27.27 0 01.38 0l3.79 4.12V5.8zm-3.37 4.8a1.47 1.47 0 01-1.47-1.45c0-.81.66-1.46 1.47-1.46s1.48.65 1.48 1.46c0 .8-.66 1.45-1.48 1.45z"></path>
 						</svg> 사진 첨부하기
@@ -1484,9 +1692,9 @@ font-weight: 700;
 				</div>
 				<div class="review-modal__section">
 					<div class="review-modal__section__title">리뷰 작성</div>
-					<textarea placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (최소 20자 이상)" class="form-control text-area-input review-modal__form__review-input" style="height: 56px;"></textarea>
+					<textarea  placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (최소 20자 이상)" class="form-control text-area-input review-modal__form__review-input" style="height: 56px;" minlength="20"></textarea>
 					<div class="review-modal__form__review-input__length">
-						<span class="review-modal__form__review-input__length__value">0</span>
+						<span class="review-modal__form__review-input__length__value" id="numcheck">0</span>
 					</div>
 				</div>
 				<div class="review-modal__section">
@@ -1518,13 +1726,14 @@ font-weight: 700;
 		</div>
 	</div>
 </div>
+<div class="bean"></div>
 
 
 
 
 
-
-
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 
 </body>
 </html>

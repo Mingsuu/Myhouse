@@ -47,9 +47,9 @@
 			</div>
 			<nav class="layout-navigation-primary__menu">
 				<a class="layout-navigation-primary__menu__item" id="marginpadding"
-					href="http://localhost:9000/myhouse/index.do">커뮤니티</a> <a
+					href="http://localhost:9000/myhouse/community_index.do">커뮤니티</a> <a
 					class="layout-navigation-primary__menu__item"
-					href="http://localhost:9000/myhouse/index.do">스토어</a>
+					href="http://localhost:9000/myhouse/store_index.do?category=0">스토어</a>
 			</nav>
 			<div class="layout-navigation-primary__right">
 				<div class="layout-navigation-bar-search">
@@ -77,7 +77,7 @@
 				</div>
 				<%if(svo ==null){ %>
 				<a class="layout-navigation-bar-icon" title="장바구니" aria-label="장바구니"
-					href="http://localhost:9000/myhouse/index.do"><svg class="icon"
+					href="http://localhost:9000/myhouse/shoppingBasket_list.do"><svg class="icon"
 						width="24" height="24" viewBox="0 0 24 24" stroke="currentColor"
 						fill="none" stroke-linejoin="round" stroke-width="2"
 						preserveAspectRatio="xMidYMid meet">
@@ -105,7 +105,7 @@
 			<div class="animated-popout drop-down__content open open-active">
 				<div class="_2TAbe navigation-upload-dropdown-content">
 					<a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/upload_photo.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -128,7 +128,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">우리집
 								사진을 공유해보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/mypage_review.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -160,7 +160,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">상품
 								리뷰를 작성하고 포인트도 받아보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/index.do"><div
+						href="http://localhost:9000/myhouse/service_center.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -260,28 +260,17 @@
 								<li class="layout-navigation-bar-user-menu__item-wrap">
 								<li class="layout-navigation-bar-user-menu__item-wrap"><a
 									class="layout-navigation-bar-user-menu__item"
-									href="/users/11945345">마이페이지</a></li>
+									href="http://localhost:9000/myhouse/mypage_profile1.do">마이페이지</a></li>
 								</li>
 								<li class="layout-navigation-bar-user-menu__item-wrap">
 								<li class="layout-navigation-bar-user-menu__item-wrap"><a
 									class="layout-navigation-bar-user-menu__item"
-									href="/user_shopping_pages/order_list">나의 쇼핑</a></li>
+									href="http://localhost:9000/myhouse/mypage_orderlist.do">나의 쇼핑</a></li>
 								</li>
 								<li class="layout-navigation-bar-user-menu__item-wrap">
 								<li class="layout-navigation-bar-user-menu__item-wrap"><a
 									class="layout-navigation-bar-user-menu__item"
-									href="/competitions/feed">이벤트</a></li>
-								</li>
-								<li class="layout-navigation-bar-user-menu__item-wrap">
-								<li class="layout-navigation-bar-user-menu__item-wrap"><a
-									class="layout-navigation-bar-user-menu__item"
-									href="https://pro.ohou.se/?utm_source=ohouse&amp;utm_medium=web&amp;utm_campaign=prosignup&amp;utm_content=myhome">전문가
-										신청</a></li>
-								</li>
-								<li class="layout-navigation-bar-user-menu__item-wrap">
-								<li class="layout-navigation-bar-user-menu__item-wrap"><a
-									class="layout-navigation-bar-user-menu__item"
-									href="/partner/applications/new">판매자 신청</a></li>
+									href="http://localhost:9000/myhouse/salesApplication.do">판매자 신청</a></li>
 								</li>
 								<li class="layout-navigation-bar-user-menu__item-wrap">
 								<li class="layout-navigation-bar-user-menu__item-wrap"><a href="logout.do"><button
@@ -329,7 +318,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">우리집
 								사진을 공유해보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/product_review.do"><div
+						href="http://localhost:9000/myhouse/mypage_review.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">

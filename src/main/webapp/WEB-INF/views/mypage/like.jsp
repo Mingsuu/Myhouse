@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +41,9 @@
 	margin:auto;
 	width:100%
 }
+.nav1{
+	height:60px;
+}
 .nav1,
 .nav2 {
 	list-style:none;
@@ -57,6 +62,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	color:black;
+	margin-top:20px;
 }
 .nav1-1:hover,
 .nav2-2:hover {
@@ -64,16 +70,18 @@
 }
 .nav2-1 {
 	margin:0px;
+	height:55px;
 }
 .nav2-2{
 	display:inline-block;
 	font-size:15px;
 	font-weight:bold;
 	margin-left:20px;
+	margin-top:6px;
 	margin-right:20px;
 	padding-left:5px;
 	padding-right:5px;
-	padding-bottom:15px;
+	padding-bottom:17px;
 	padding-top:15px;
 	color:black;
 }
@@ -92,6 +100,7 @@
 	margin-top:60px;
 	margin-left:60px;
 	box-shadow: 0 1px 4px 0 rgba(17, 17, 17, 0.1);
+	z-index:5;
 }
 .share {
 	float:right;
@@ -104,6 +113,7 @@
 .pro {
 	width:120px;
 	height:120px;
+	z-index:2;
 	border-radius:100%;
 	margin-left:75px;
 	margin-bottom:15px;
@@ -111,15 +121,23 @@
 }
 .leftbox {
 	display:inline-block;
-	width:150px;
+	width:160px;
 	height:99px;
 	margin-left:63px;
 	text-align:center;
 }
+.leftbox>div {
+	margin-top:5px;
+	float:left;
+}
 .leftbox span {
+	display:inline-block;
+	width:120px;
 	font-size:26px;
 	font-weight:bold;
-	margin-left:3px;
+	margin-left:20px;
+	margin-bottom:10px;
+	float:left;
 }
 .leftbox div {
 	width:1px;
@@ -131,18 +149,21 @@
 	font-size:13px;
 	padding-left:11px;
 	padding-right:11px;
+	float:left;
 }
 .mybtn {
 	display:inline-block;
-	width:45px;
-	height:27px;
+	width:70px;
+	height:37px;
 	border:1px solid lightgray;
 	border-radius:6px;
 	color:black;
 	font-size:13px;
-	padding-top:7px;
-	margin-top:5px;
+	padding-top:10px;
+	margin-top:10px;
+	margin-left:43px;
 	text-decoration:none;
+	float:left;
 }
 .mybtn:hover {
 	background-color:lightgray;
@@ -150,6 +171,7 @@
 .mybtn1 {
 	color:black;
 	text-decoration:none;
+	margin-left:1px;
 }
 .mybtn1:hover {
 	opacity:0.7;
@@ -162,6 +184,7 @@
 }
 .leftbox1 img {
 	margin-left:20px;
+	margin-bottom:10px;
 }
 .leftbox1 span {
 	font-size:13px;
@@ -170,12 +193,17 @@
 }
 .left1 {
 	margin-left:12px;
+	display:inline-block;
+	margin-bottom:7px;
 }
 .left2 {
 	margin-left:18px;
+	display:inline-block;
+	margin-bottom:7px;
 }
 .left3 {
 	margin-left:32px;
+	margin-top:8px;
 }
 .left4 {
 	margin-left:32px;
@@ -196,12 +224,11 @@
 	margin-top:20px;
 	margin-bottom:20px;
 }
-.right {
+.right1 {
 	display:inline-block;
 	width:750px;
 	height:auto;
 	margin-top:20px;
-	float:right;
 }
 .sh {
 	display:inline-block;
@@ -279,7 +306,7 @@
 	-webkit-box-direction: normal;
 	-webkit-tap-highlight-color: transparent;
 	margin: 0;
-	padding: 20px 0;
+	padding: 20px 0px;
 }
 .row{
 	color: #424242;
@@ -339,11 +366,13 @@
 </style>
 </head>
 <body>
+	<!-- header -->
+	<jsp:include page="../header1.jsp" />
 
 <div class="navigation">
 	<div class="nav">
 		<ul class="nav1">
-			<a href="mypage_profile.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
+			<a href="mypage_profile1.do"><li class="nav1-1" style="color:#35c5f0;">프로필</li></a>
 			<a href="mypage_orderlist.do"><li class="nav1-1">나의 쇼핑</li></a>
 			<a href="mypage_review.do"><li class="nav1-1">나의 리뷰</li></a>
 			<a href="mypage_option.do"><li class="nav1-1">설정</li></a>
@@ -351,7 +380,7 @@
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="mypage_profile.do"><li class="nav2-2">모두보기</li></a>
+			<a href="mypage_profile1.do"><li class="nav2-2">모두보기</li></a>
 			<a href="mypage_picture.do"><li class="nav2-2">사진</li></a>
 			<a href="mypage_scrap.do"><li class="nav2-2">스크랩북</li></a>
 			<a href="mypage_like.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">좋아요</li></a>
@@ -373,10 +402,10 @@
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/myprofile.jpg" class="pro">
+		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
 		<div class="leftbox">
-			<span>귤먹고갈래</span>
-			<a href="#" class="mybtn1">팔로워 2</a><div></div><a href="#" class="mybtn1">팔로잉 1</a>
+			<span>${prof.nickname}</span>
+			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
 			<a href="mypage_option.do" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
@@ -393,35 +422,20 @@
 			</div></a>
 		</div>
 	</div>
-	<div class="right">
+	<div class="right1">
 	<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
 			마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
 		<div class="col-12 offset-lg-1 col-lg-8 wrap--contents">
 			<div class="praise-feed">
 				<div class="row" style="width:800px;">
-				<div class="praise-feed__item-wrap col-6 col-lg-4">
-					<a class="praise-feed__item" href="#">
-						<img class="praise-feed__item__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots1587811625_230920.jpeg?gif=1&amp;w=256&amp;h=256&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots1587811625_230920.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots1587811625_230920.jpeg?gif=1&amp;w=512&amp;h=512&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots1587811625_230920.jpeg?gif=1&amp;w=850&amp;h=850&amp;c=c&amp;webp=1 3x">
-						<span class="praise-feed__item__type">사진</span>
-					</a>
-				</div>
-				<div class="praise-feed__item-wrap col-6 col-lg-4"><a class="praise-feed__item" href="#">
-					<img class="praise-feed__item__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160872939200137478.jpeg?gif=1&amp;w=256&amp;h=256&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160872939200137478.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160872939200137478.jpeg?gif=1&amp;w=512&amp;h=512&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/160872939200137478.jpeg?gif=1&amp;w=850&amp;h=850&amp;c=c&amp;webp=1 3x">
-					<span class="praise-feed__item__type">사진</span>
-					</a>
-				</div>
-				<div class="praise-feed__item-wrap col-6 col-lg-4">
-					<a class="praise-feed__item" href="#">
-						<img class="praise-feed__item__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161063231797359339.jpeg?gif=1&amp;w=256&amp;h=256&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161063231797359339.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161063231797359339.jpeg?gif=1&amp;w=512&amp;h=512&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161063231797359339.jpeg?gif=1&amp;w=850&amp;h=850&amp;c=c&amp;webp=1 3x">
-						<span class="praise-feed__item__type">사진</span>
-					</a>
-				</div>
-				<div class="praise-feed__item-wrap col-6 col-lg-4">
-					<a class="praise-feed__item" href="#">
-						<img class="praise-feed__item__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/1610495541_g.jpeg?gif=1&amp;w=256&amp;h=256&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/1610495541_g.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/1610495541_g.jpeg?gif=1&amp;w=512&amp;h=512&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/1610495541_g.jpeg?gif=1&amp;w=850&amp;h=850&amp;c=c&amp;webp=1 3x">
-						<span class="praise-feed__item__type">사진</span>
-					</a>
-				</div>
+				<c:forEach var="vo" items="${list}">
+					<div class="praise-feed__item-wrap col-6 col-lg-4">
+						<a class="praise-feed__item" href="#">
+							<img class="praise-feed__item__image" src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}">
+							<span class="praise-feed__item__type">사진</span>
+						</a>
+					</div>
+				</c:forEach>
 				</div>
 			</div>
 		</div> 
@@ -436,5 +450,7 @@
 
 
 </div>
+	<!-- footer -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>
