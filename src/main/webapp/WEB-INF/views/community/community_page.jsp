@@ -1595,7 +1595,7 @@
 									<article class="comment_feed_item">
 										<!-- 댓글 -->
 										<p class="comment_feed_item_content">
-											<a href="#" class="comment_feed_author">
+											<a href="http://localhost:9000/myhouse/mypage_profile1.do" class="comment_feed_author">
 												<c:if test="${cvo[i].member_simage ne null}">
 													<img class="comment_feed_author_img" alt="${cvo[i].nickname}" src="http://localhost:9000/myhouse/resources/upload/${cvo[i].member_simage}">
 												</c:if>
@@ -1666,7 +1666,7 @@
 													<li class="comment_feed_list_item">
 														<article class="comment_feed__item">
 															<p class="comment_feed_item_content">
-																<a href="#" class="comment_feed_author">
+																<a href="http://localhost:9000/myhouse/mypage_profile1.do" class="comment_feed_author">
 																<c:if test="${re[k].member_simage ne null}">
 																	<img class="comment_feed_author_img" alt="${cvo[k].nickname}" src="http://localhost:9000/myhouse/resources/upload/${cvo[k].member_simage}">
 																</c:if>
@@ -1820,7 +1820,7 @@
 								<div class="card_detail_sidebar_content">
 									<div class="card_detail_write">
 										<div class="card_detail_writer_user">
-											<a class="card_detail_writer_link">
+											<a class="card_detail_writer_link" href='http://localhost:9000/myhouse/mypage_profile1.do'>
 											<c:if test="${member.member_spimage eq null}">
 												<img class="card_detail_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610546181_bFlu6cwJ5C.jpeg?gif=1&w=72">
 											</c:if>
@@ -1839,7 +1839,7 @@
 										<c:set var="pimg" value="${p.photo_simage}"/>
 										<c:set var="img" value="${fn:split(pimg,',')}" />
 											<li class="card_detail_card_list_item">
-												<a href="#" class="card_detail_card_list_item_link">
+												<a href="http://localhost:9000/myhouse/mypage_picture.do" class="card_detail_card_list_item_link">
 													<img class="card_detail_card_list_item_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
 												</a>
 											</li>
