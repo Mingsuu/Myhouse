@@ -64,7 +64,10 @@
 	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
-	
+	<!-- search에 쓰이는 beans -->
+	<beans:bean class="com.myhouse.dao.yj_InteriorDAO" id="interiorDAO2"></beans:bean>
+	<beans:bean class="com.spring.service1.SearchServiceImpl" id="searchService"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yj_communityDAO" id="communityDAO2"></beans:bean>
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 
 	
@@ -86,7 +89,6 @@
 	
 	<context:component-scan base-package="com.spring.myhouse" />
 	<context:component-scan base-package="com.spring.controller" />
-	
 	
 	
 </beans:beans>
