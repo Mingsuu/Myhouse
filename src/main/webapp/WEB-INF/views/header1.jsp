@@ -5,6 +5,7 @@
 <%
 	//로그인 성공 시 저장한 세션객체 가져오기
 	SessionVO svo = (SessionVO)session.getAttribute("svo");
+	String sessionId  = (String)session.getAttribute("sessionId");
 %>
 <!DOCTYPE html>
 <html>
@@ -55,15 +56,15 @@
 				<div class="layout-navigation-bar-search">
 					<div class="layout-navigation-search" id="id-1">
 						<div class="layout-navigation-search__header">
-							<div id="id-1-combobox"
+							<div id="search_btn"
 								class="layout-navigation-search__combobox" role="combobox"
 								aria-haspopup="listbox" aria-expanded="false">
 								<div class="layout-navigation-search__input">
 									<input type="text"
 										class="layout-navigation-search__input__text" value=""
-										autocomplete="off" size="1" id="id-1-input"
-										aria-autocomplete="list" placeholder="오늘의집 통합검색"
-										aria-label="오늘의집 통합검색">
+										autocomplete="off" size="1" id="search"
+										aria-autocomplete="list" placeholder="스위트홈 통합검색"
+										aria-label="스위트홈 통합검색">
 									<svg class="layout-navigation-search__input__icon" width="24"
 										height="24" viewBox="0 0 24 24" fill="none"
 										stroke="currentColor" stroke-width="2"
@@ -75,7 +76,7 @@
 						</div>
 					</div>
 				</div>
-				<%if(svo ==null){ %>
+				<%if(svo ==null && sessionId==null){ %>
 				<a class="layout-navigation-bar-icon" title="장바구니" aria-label="장바구니"
 					href="http://localhost:9000/myhouse/shoppingBasket_list.do"><svg class="icon"
 						width="24" height="24" viewBox="0 0 24 24" stroke="currentColor"
@@ -86,7 +87,7 @@
 							<path d="M1 2h3v3"></path></svg></a>
 				<div class="layout-navigation-bar-login">
 					<a class="layout-navigation-bar-login__item"
-						href="http://localhost:9000/myhouse/login.do">로그인</a><a
+						href="http://localhost:9000/myhouse/login">로그인</a><a
 						class="layout-navigation-bar-login__item"
 						href="http://localhost:9000/myhouse/join.do">회원가입</a>
 				</div>
@@ -421,6 +422,17 @@
 				$("#user_box").show();
 			}
 		});
+		
+
+		
+		 $("#search").keydown(function(key) {
+			 var value=$(this).val();
+             if (value!=null && key.keyCode == 13) {
+            	 $(location).attr('href','http://localhost:9000/myhouse/search.do?value='+value);
+             }
+         });
+
+
 		
 	});
 	
