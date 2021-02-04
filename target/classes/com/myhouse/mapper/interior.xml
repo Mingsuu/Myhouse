@@ -19,9 +19,22 @@
 </select>
 
 <!-- 리뷰작성하기 -->
-<!-- <insert id="interior-review-insert" parameterType="com.myhouse.vo.StoreIndexVO">
-	insert into h_review values('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},#{review_image},#{review_simage},sysdate)
-</insert> -->
+<insert id="interior-review-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	insert into h_review values
+	<choose>
+		<when test="review_image != null">
+			('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},#{review_image},#{review_simage},sysdate)
+		</when>
+		<otherwise>
+			('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},'','',sysdate)
+		</otherwise>
+	</choose>
+</insert>
+
+<!-- 리뷰 - 상품리스트 선택 -->
+<select id="interior-review-goods-list" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select company, ititle, goods_simage, goods_name from h_interior i, h_goods g where i.ino = g.ino and gno=#{gno}
+</select>
 
 <!-- 리뷰 포토 -->
 <select id="interior-review-photo" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">

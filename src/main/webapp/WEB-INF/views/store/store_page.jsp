@@ -834,11 +834,13 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 0 auto;
 	}
-	.option-count-input.select-input>.form-control, .option-count-input.select-input>.form-control-sub {
+	.option-count-input.select-input>.form-control, .option-count-input.select-input>.form-control-sub,
+	.option-count-input.select-input>.form-control-review {
 	    padding-right: 30px;
 	}
 	.option-count-input.manual.form-control, .option-count-input.select-input>.form-control,
-	.option-count-input.manual.form-control-sub, .option-count-input.select-input>.form-control-sub {
+	.option-count-input.manual.form-control-sub, .option-count-input.select-input>.form-control-sub,
+	.option-count-input.manual.form-control-review, .option-count-input.select-input>.form-control-review {
 	    height: 24px;
 	    padding: 0 10px;
 	    font-size: 13px;
@@ -847,15 +849,18 @@
 	    text-align: center;
 	    font-family: Tahoma,sans;
 	}
-	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub {
+	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub, .select-input.input-group>.form-control-review {
 	    width: 100%;
 	}
+	.select-input.input-group>.form-control-review {
+		
+	}
 	
-	.select-input>.form-control, .select-input>.form-control-sub {
+	.select-input>.form-control, .select-input>.form-control-sub, .select-input>.form-control-review {
 	    width: 100%;
 	    background-image: none;
 	}
-	.form-control, .form-control-sub {
+	.form-control, .form-control-sub, .form-control-review {
 	    transition: .2s border-color, .2s box-shadow, .2s background-color;
 	    display: block;
 	    box-sizing: border-box;
@@ -883,7 +888,8 @@
 	    margin: 0em;
 	    font: 400 13.3333px Arial;
 	}
-	.select-input>.form-control>option, .select-input>.form-control-sub>option {
+	.select-input>.form-control>option, .select-input>.form-control-sub>option,
+	.select-input>.form-control-review>option  {
 	    color: #424242;
 	}
 	.option-count-input .select-input__icon {
@@ -1405,10 +1411,11 @@
 	.production-question-feed__item__header {
 	    position: relative;
 	    display: block;
-	    margin: 0 0 8px;
+	    margin: 10px 0;
 	    font-size: 12px;
 	    line-height: 16px;
 	    color: #424242;
+	    border:none;
 	}
 	.production-question-feed__item__author {
 	    margin: 0 0 9px;
@@ -1792,11 +1799,11 @@
 	}
 	.review-modal {
 	    position: relative;
-	    width: 680px;
 	    border-radius: 4px;
 	    background-color: #fff;
 	    color: #292929;
-	    padding: 40px 40px 0;
+	    padding: 40px 40px;
+	    margin:0 auto;
 	}
 	.review-modal__title {
 	    line-height: 1.35;
@@ -1839,6 +1846,7 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 0 0px;
 	    margin-left: 12px;
+	    display:inline-block;
 	}
 	.review-modal__form__product__contents__brand {
 	    font-size: 13px;
@@ -1861,7 +1869,8 @@
 	    margin-top:20px;
 	}
 	.review-modal__section__title, .review-modal__section__title-star,
-	.review-modal__section__title-photo, .review-modal__section__title-question, .review-modal__section__title-text{
+	.review-modal__section__title-photo, .review-modal__section__title-question, .review-modal__section__title-text,
+	.review-modal__section__title-goods-list{
 	    display: flex;
 	    -webkit-box-align: center;
 	    align-items: center;
@@ -1878,9 +1887,10 @@
 	}
 	.review-modal__form__star__label {
 	    font-size: 15px;
-	    line-height: 65px;
+	    line-height: 40px;
 	    width: 55px;
 	    text-align:center;
+	    padding-right:10px;
 	}
 	.rating-input>li {
 	    display: inline-block;
@@ -1961,7 +1971,8 @@
 	    margin-right: 8px;
 	    fill: #35c5f0;
 	}
-	.review-modal__form__review-input.form-control, .review-modal__form__review-input.form-control-sub {
+	.review-modal__form__review-input.form-control, .review-modal__form__review-input.form-control-sub
+	,.review-modal__form__review-input.form-control-review {
 	    padding-bottom: 25px;
 	    min-height: 110px;
 	    font-size: 15px;
@@ -1972,7 +1983,7 @@
 	    padding-top: 9px;
 	    padding-bottom: 9px;
 	}
-	.form-control, .form-control-sub{
+	.form-control, .form-control-sub, .form-control-review{
 	    transition: .2s border-color, .2s box-shadow, .2s background-color;
 	    display: block;
 	    box-sizing: border-box;
@@ -2017,10 +2028,10 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 1 auto;
 	}
-	.checkbox-input>.form-check-label {
+	.checkbox-input>.form-check-label, .checkbox-input>.form-check-label-chk {
 	    margin-bottom: 0;
 	}
-	.form-check .form-check-label {
+	.form-check .form-check-label, .form-check .form-check-label-chk {
 	    cursor: pointer;
 	    display: block;
 	    padding-left: 32px;
@@ -2028,12 +2039,12 @@
 	    line-height: 22px;
 	    position: relative;
 	}
-	.form-check .form-check-label .form-check {
+	.form-check .form-check-label .form-check, .form-check .form-check-label-chk .form-check {
 	    left: -1000px;
 	    position: absolute;
 	    opacity: 0;
 	}
-	 .form-check .form-check-label .check-img {
+	 .form-check .form-check-label .check-img,  .form-check .form-check-label-chk .check-img {
 	    box-sizing: border-box;
 	    height: 22px;
 	    width: 22px;
@@ -2046,7 +2057,7 @@
 	    left: 0;
 	    top: 0;
 	}
-	.form-check .form-check-label .check-img:after {
+	.form-check .form-check-label .check-img:after, .form-check .form-check-label-chk .check-img:after {
 	    content: "";
 	    position: absolute;
 	    left: 50%;
@@ -2057,7 +2068,7 @@
 	    width: 14px;
 	    height: 14px;
 	    background-size: 14px;
-	    background-image: url(http://localhost:9000/myhouse/images/ic-checkbox.png);
+	    background-image: url('http://localhost:9000/myhouse/images/ic-checkbox2.png');
 	    opacity: 0;
 	}
 	.review-modal__form__agree {
@@ -2085,7 +2096,6 @@
 	}
 	.review-modal__explain {
 	    width: 100%;
-	    margin: 0 -40px;
 	    padding: 20px 40px;
 	    border-radius: 4px;
 	    background-color: #f7f8fa;
@@ -2116,7 +2126,7 @@
 	    color: #f06060;
 	}
 	.review-modal__section__title__error-message, .review-modal__section__title__error-message-star,
-	.review-modal__section__title__error-message-text, .review-modal__section__title__error-message-question {
+	.review-modal__section__title__error-message-text, .review-modal__section__title__error-message-question, .review-modal__section__title__error-message-goods-list {
 	    font-size: 11px;
 	    margin-left: 8px;
 	    color: #f06060;
@@ -2132,17 +2142,21 @@
 	}
 	
 	/* 리뷰 - 동의체크 */
-	.checkbox-input.errored>.form-check-label>.check-img {
+	.checkbox-input.errored>.form-check-label>.check-img, .checkbox-input.errored>.form-check-label-chk>.check-img {
 	    border-color: #f77;
 	}
-	.form-check .form-check-label .form-check:not(:disabled):checked+.check-img {
+	.form-check .form-check-label .form-check:not(:disabled):checked+.check-img,
+	.form-check .form-check-label-chk .form-check:not(:disabled):checked+.check-img {
 	    background-color: #35c5f0;
 	    border-color: #35c5f0;
 	}
-	.form-radio>.form-radio-label .form-check:not(:disabled):checked+.check-img:after, .form-radio .form-check-label .form-check:not(:disabled):checked+.check-img:after, .form-check>.form-radio-label .form-check:not(:disabled):checked+.check-img:after, .form-check .form-check-label .form-check:not(:disabled):checked+.check-img:after {
+	.form-radio>.form-radio-label .form-check:not(:disabled):checked+.check-img:after, .form-radio .form-check-label .form-check:not(:disabled):checked+.check-img:after, 
+	.form-check>.form-radio-label .form-check:not(:disabled):checked+.check-img:after, .form-check .form-check-label .form-check:not(:disabled):checked+.check-img:after,
+	.form-radio .form-check-label-chk .form-check:not(:disabled):checked+.check-img:after, .form-check .form-check-label-chk .form-check:not(:disabled):checked+.check-img:after {
 	    opacity: 1;
 	}
-	.form-radio>.form-radio-label .check-img:after, .form-radio .form-check-label .check-img:after, .form-check>.form-radio-label .check-img:after, .form-check .form-check-label .check-img:after {
+	.form-radio>.form-radio-label .check-img:after, .form-radio .form-check-label .check-img:after, .form-check>.form-radio-label .check-img:after, 
+	.form-check .form-check-label .check-img:after, .form-radio .form-check-label-chk .check-img:after, .form-check .form-check-label-chk .check-img:after {
 	    content: "";
 	    position: absolute;
 	    left: 50%;
@@ -2156,7 +2170,7 @@
 	    background-image: url(http://localhost:9000/myhouse/images/ic-checkbox.png);
 	    opacity: 0;
 	}
-	.form-check .form-check-label .form-check:focus+.check-img {
+	.form-check .form-check-label .form-check:focus+.check-img, .form-check .form-check-label-chk .form-check:focus+.check-img {
 	    box-shadow: 0 0 0 3px rgba(130,224,250,0.5);
 	}
 	.review-modal__form__policy {
@@ -2320,7 +2334,10 @@
 	.product-question__wrap__option-select {
 	    margin-bottom: 30px;
 	}
-	.product-question__wrap__option-select__input {
+	.product-review__wrap__option-select {
+		margin-top: 30px;
+	}
+	.product-question__wrap__option-select__input, .product-review__wrap__option-select__input  {
 	    margin-top: 10px;
 	}
 	.select-input {
@@ -2330,21 +2347,24 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 0 auto;
 	}
-	.product-question__wrap__option-select__input.select-input>.form-control.empty, .product-question__wrap__option-select__input.select-input>.form-control>option:disabled {
+	.product-question__wrap__option-select__input.select-input>.form-control.empty, .product-question__wrap__option-select__input.select-input>.form-control>option:disabled, 
+	.product-review__wrap__option-select__input.select-input>.form-control.empty, .product-review__wrap__option-select__input.select-input>.form-control>option:disabled {
 	    color: #424242;
 	    height:40px;
 	}
-	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub {
+	.select-input.input-group>.form-control, .select-input.input-group>.form-control-sub,
+	.select-input.input-group>.form-control-review {
 	    width: 100%;
 	}
 	.product-question .form-control {
 	    font-size: 15px;
 	}
-	.select-input>.form-control, .select-input>.form-control-sub {
-	    padding-right: 30px;
+	.select-input>.form-control, .select-input>.form-control-sub,  .select-input>.form-control-review {
+	    padding: 10px 30px 10px 10px; 
 	    background-image: none;
+	    margin:10px 0;
 	}
-	.select-input>.form-control>option, .select-input>.form-control-sub>option {
+	.select-input>.form-control>option, .select-input>.form-control-sub>option, .select-input>.form-control-review>option {
 	    color: #424242;
 	}
 	.select-input__icon {
@@ -2365,13 +2385,13 @@
 	    -webkit-box-flex: 1;
 	    flex: 1 1 auto;
 	}
-	.checkbox-input>.form-check-label {
+	.checkbox-input>.form-check-label, .checkbox-input>.form-check-label-chk {
 	    margin-bottom: 0;
 	}
-	.product-question .form-check-label {
+	.product-question .form-check-label, .product-question .form-check-label-chk {
 	    font-size: 15px;
 	}
-	.form-check .form-check-label {
+	.form-check .form-check-label, .form-check .form-check-label-chk  {
 	    cursor: pointer;
 	    display: block;
 	    padding-left: 32px;
@@ -2379,7 +2399,7 @@
 	    line-height: 22px;
 	    position: relative;
 	}
-	.form-check .form-check-label .form-check {
+	.form-check .form-check-label .form-check, .form-check .form-check-label-chk .form-check {
 	    left: -1000px;
 	    position: absolute;
 	    opacity: 0;
@@ -2390,7 +2410,7 @@
 	    color: #292929;
 	    margin-bottom: 16px;
 	}
-	.product-question__page .form-check-label {
+	.product-question__page .form-check-label, .product-question__page .form-check-label-chk {
 	    font-size: 15px;
 	}
 	textarea.form-control, textarea.form-control-sub {
@@ -3020,7 +3040,7 @@
 				output += '<article class="production-review-item">';
 				output += '<div class="production-review-item__writer">';
 				output += '<a href="http://localhost:9000/myhouse/mypage_profile1.do">';
-				output += '<img src="http://localhost:9000/myhouse/images/'+jdata.interior_review[i].member_spimage+'" class="production-review-item__writer__img" style="margin-top:18px;">';
+				output += '<img src="http://localhost:9000/myhouse/images/'+jdata.interior_review[i].member_spimage+'" class="production-review-item__writer__img">';
 				output += '</a>';
 				output += '<div class="production-review-item__writer__info">';
 				output += '<p class="production-review-item__writer__info__name">'+jdata.interior_review[i].nickname+'</p>';
@@ -3194,7 +3214,68 @@
 				$("#react-modal").removeClass("react-modal");
 			}
 		});
-	
+		
+		/* 리뷰쓰기 - 상품선택리스트 ajax */
+		$(".form-control-review").change(function(){
+			var goods_list = $(this).val();
+			var goods_img = $(".review-list-goods-wrap").attr("id");
+			
+			$.ajax({
+				url:"interior_review_goods_list.do?gno="+goods_list,
+				success:function(result) {
+					var jdata = JSON.parse(result);
+					var output = "";
+					
+					$(".review-list-goods").empty();
+					for(var i in jdata.interior_review_goods_list) {
+								output += '<div class="review-list-goods-wrap" id="'+jdata.gno+'">';
+								output += '<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/images/'+jdata.interior_review_goods_list[i].goods_simage+'">';
+								output += '<div class="review-modal__form__product__contents">';
+								output += '<div class="review-modal__form__product__contents__brand">'+jdata.interior_review_goods_list[i].company+'</div>';
+								output += '<div class="review-modal__form__product__contents__brand">'+jdata.interior_review_goods_list[i].ititle+'</div>';
+								output += '<div class="review-modal__form__product__contents__name">'+jdata.interior_review_goods_list[i].goods_name+'</div>';
+								output += '<div class="review-modal__form__product__contents__options"></div>';
+								output += '</div>';
+								output += '</div>';
+					}
+					$(".review-list-goods").append(output);
+					
+				}
+			});
+			
+		});
+		
+		 var domEleArray = [$('#select-picture').clone()];
+		 $("#review-image-input").hide();
+		 var file_img = "";
+		   function readURL(input) {    
+				   if (input.files && input.files[0]) {
+			            var reader = new FileReader(); 
+			            reader.onload = function (e) {
+			          	$('.select-picture img').attr('src', e.target.result);
+			            $("#review-image-input").show();
+			            alert("file");
+			           }                   
+			            reader.readAsDataURL(input.files[0]);
+			        }
+		    }
+			
+		   /* 리뷰쓰기 - 사진첨부 */
+		     $(document).on("change","#select-picture",function(event){
+		    	 //alert("change");
+			        readURL(this);
+	          });
+
+		    /* 리뷰쓰기 - 사진첨부 : 삭제*/
+		    $(document).on("click",".select-picture__delete",function(event){
+	            //alert($(this).text());
+	            domEleArray[1] = domEleArray[0].clone(true); 
+		        $('#select-picture').replaceWith(domEleArray[1]);
+		        $('.select-picture img').attr('src', '');
+		        $("#review-image-input").hide();
+	          });
+
+		
 		/* 리뷰쓰기 - 별점 마우스 오버/아웃 */
 		$("#review-star-1").mouseover(function(){
 			$("#review-star-1").addClass("suggested");
@@ -3287,18 +3368,18 @@
 		});
 		
 		/* textarea 글자수 제한 및 경고창*/
-		$("#review-text").keyup(function(e){
+		$("#vcontent").keyup(function(e){
 			var inputlength = $(this).val().length;
 			$("#review-text-count").html(inputlength);
 			if (inputlength <20) {
 				$(".review-modal__section__title__error-message").css("display","block");
-				$("#review-text").addClass("error");
+				$("#vcontent").addClass("error");
 				$(".review-modal__section__title-text").addClass("review-modal__section__title--error");
 				$("#text-required-item").addClass("review-modal__section__title__error-message-text-none");
 				$("#text-required-item").removeClass("review-modal__section__title__error-message-text");
 			} else {	
 				$(".review-modal__section__title__error-message").css("display","none");
-				$("#review-text").removeClass("error");
+				$("#vcontent").removeClass("error");
 				$(".review-modal__section__title-text").removeClass("review-modal__section__title--error");
 				$("#text-required-item").addClass("review-modal__section__title__error-message-text-none");
 				$("#text-required-item").removeClass("review-modal__section__title__error-message-text");
@@ -3307,6 +3388,14 @@
 		
 		/* 리뷰 완료 버튼 클릭시 alert */
 		$(".review-modal__form__submit").click(function(){
+			if($(".review-list-goods").children().attr("class") == "review-list-goods-wrap") {
+				$(".review-modal__section__title-goods-list").removeClass("review-modal__section__title--error");
+				$(".review-modal__section__title__error-message-goods-list").css("display","none");
+			} else {
+				$(".review-modal__section__title-goods-list").addClass("review-modal__section__title--error");
+				$(".review-modal__section__title__error-message-goods-list").css("display","block");
+			}
+			
 			if($("#review-star-1").hasClass("selected")) {
 				$(".review-modal__section__title-star").removeClass("review-modal__section__title--error");
 				$(".review-modal__section__title__error-message-star").css("display","none");
@@ -3331,32 +3420,22 @@
 				$(".review-modal__section__title-text").removeClass("review-modal__section__title--error");
 			}
 		
-			if($("input#form-check-label").is(":checked")) {
+			if($("input[type=checkbox]").is(":checked")) {
 				$(".review-modal__section__title-question").removeClass("review-modal__section__title--error");
 				$(".checkbox-input").removeClass("errored"); 
+				alert("aaaa");
 			} else {
 				$(".review-modal__section__title-question").addClass("review-modal__section__title--error");
 				$(".checkbox-input").addClass("errored"); 
 			}
 			
-			if($("#review-star-1").hasClass("selected") && $(".review-modal__form__review-input__length__value").text() != 0 && $(".review-modal__form__review-input__length__value").text() >=20 && $("input#form-check-label").is(":checked")){
-				reviewForm.submit();
+			if($("#review-star-1").hasClass("selected") && $(".review-modal__form__review-input__length__value").text() != 0 && $(".review-modal__form__review-input__length__value").text() >=20 && $("input[type=checkbox]").is(":checked")){
+				reviewWriteForm.submit();
 			}
 			
 		});
 		
-		 /* 사진등록 -> div 추가 및 삭제 */
-		$(".select-picture__delete").click(function(){
-			if($("#select-picture").hasClass("select-picture")) {
-				$("#select-picture").removeClass("select-picture");
-				$("#select-picture").addClass("select-picture-none");
-				$('.select-picture__contents').attr("src", "");
-			} else {
-				$("#select-picture").removeClass("select-picture-none");
-				$("#select-picture").addClass("select-picture");
-			}
-			
-		});
+		
 		
 		/* 오늘의 리뷰 정책 */
 		$(".review-modal__form__agree__policy-button").click(function(){
@@ -3373,14 +3452,38 @@
 		$(".review-modal__close").click(function(){
 			var review_close = confirm("작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?");
 			if(review_close == true) {
+				 $("#gno option:eq(0)").prop("selected", true);
+				 $(".review-list-goods").empty();
+				 $(".review-modal__section__title-goods-list").removeClass("review-modal__section__title--error");
+				 $(".review-modal__section__title__error-message-goods-list").css("display","none");
+				 for(var i=1; i<6; i++) {
+					 $("#review-star-"+i).removeClass("selected"); 
+				 }
+				$(".review-modal__section__title-star").removeClass("review-modal__section__title--error");
+				$(".review-modal__section__title__error-message-star").css("display","none");
+				$('.select-picture img').attr('src', '');
+			    $("#review-image-input").hide();
+			    $("textarea").val("");
+			    $("#review-text-count").html(0);
+			    $(".review-modal__section__title__error-message").css("display","none");
+				$("#vcontent").removeClass("error");
+				$(".review-modal__section__title-text").removeClass("review-modal__section__title--error");
+				$("#text-required-item").addClass("review-modal__section__title__error-message-text-none");
+				$("#text-required-item").removeClass("review-modal__section__title__error-message-text");
 				$("#react-modal").removeClass("react-modal");
 				$("#react-modal").addClass("react-modal-none");
+				$(".review-modal__section__title-question").removeClass("review-modal__section__title--error");
+				$(".checkbox-input").removeClass("errored"); 
+				$("input[type=checkbox]").prop("checked",false);
+				
 			} else if(review_close == false) {
 				$("#react-modal").removeClass("react-modal-none");
 				$("#react-modal").addClass("react-modal");
 			}
 		
 		});
+		
+		
 		
 		/* 문의하기 클릭 */
 		$(".production-selling-section__right-q").click(function(){
@@ -3893,8 +3996,7 @@
 									<article class="production-review-item">
 										<div class="production-review-item__writer">
 											<a href="http://localhost:9000/myhouse/mypage_profile1.do">
-												<img src="http://localhost:9000/myhouse/images/${rvo.member_spimage }" class="production-review-item__writer__img" alt=""
-													 style="margin-top:18px;">
+												<img src="http://localhost:9000/myhouse/images/${rvo.member_spimage }" class="production-review-item__writer__img" >
 											</a>
 											<div class="production-review-item__writer__info">
 												<p class="production-review-item__writer__info__name">${rvo.nickname }</p>
@@ -3940,7 +4042,7 @@
 													
 												</span>
 												<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>
-												<span class="production-review-item__writer__info__date">${rvo.vdate } ∙ 오늘의집 구매</span>
+												<span class="production-review-item__writer__info__date">${rvo.vdate } ∙ 스위트홈 구매</span>
 											</div>
 										</div> <!-- production-review-item__writer -->
 										<div class="production-review-item__name">${rvo.goods_name }</div>
@@ -4143,28 +4245,51 @@
 		<div class="react-modal__content review-modal__modal">
 			<div class="review-modal">
 				<div class="review-modal__title">리뷰 쓰기<button type="button" class="review-modal__close"><svg class="review-modal__close__icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M11.6 10l7.1 7.1-1.6 1.6-7.1-7.1-7.1 7.1-1.6-1.6L8.4 10 1.3 2.9l1.6-1.6L10 8.4l7.1-7.1 1.6 1.6z"></path></svg></button></div>
-				<form class="review-modal__form" name="reviewForm" action="#"  method="post" id="frm-review">
-					<div class="review-modal__form__product">
-						<img class="review-modal__form__product__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/159859281268373016.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1">
-						<div class="review-modal__form__product__contents">
-							<div class="review-modal__form__product__contents__brand">${vo.company }</div>
-							<div class="review-modal__form__product__contents__name">${vo.ititle }</div>
-							<div class="review-modal__form__product__contents__options"></div>
+				<form class="review-modal__form" name="reviewWriteForm" action="interior_review_insert.do"  method="post" id="frm-review"  enctype="multipart/form-data">
+					<input type="hidden" id="ino" name="ino" value="${vo.ino }">
+					<div class="review-modal__section__title-goods-list" style="margin-top:20px; margin-bottom:-10px;">구매 상품
+							<div class="review-modal__section__title__error-message-goods-list" style="display:none;" >필수 선택 항목입니다.</div></div>
+					<div>
+						<div class="product-review__wrap__option-select" style="width:100%;"> 
+							<div class="input-group select-input product-review__wrap__option-select__input" >
+								<select class="form-control-review empty" id="${vo.gno }" name="gno">
+									<option value="" >선택해주세요</option>
+									<c:forEach var="vo" items="${interior_top }">
+										<option value="${vo.gno }">${vo.goods_name }</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div class="review-modal__form__product">
+							<div class="review-list-goods" >
+								<%-- <c:forEach var="vo" items="${interior_top }">
+								<div class="review-list-goods-wrap" id="${vo.gno }">
+									<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage }">
+									<div class="review-modal__form__product__contents">
+										<div class="review-modal__form__product__contents__brand">${vo.company }</div>
+										<div class="review-modal__form__product__contents__brand">${vo.ititle }</div>
+										<div class="review-modal__form__product__contents__name">${vo.goods_name }</div>
+										<div class="review-modal__form__product__contents__options"></div>
+									</div>
+								</div>
+								</c:forEach>  --%>
+							</div>
 						</div>
 					</div>
+					
 					<div class="review-modal__section">
-						<div class="review-modal__section__title-star">별점 평가
+						<div class="review-modal__section__title-star" style="margin-top:-20px">별점 평가
 							<div class="review-modal__section__title__error-message-star" style="display:none;" >필수 입력 항목입니다.</div></div>
 						<div class="review-modal__form__star__wrap">
 							<div class="review-modal__form__star">
 								<div class="review-modal__form__star__label">만족도</div>
 									<div class="review-modal__form__star__value">
 										<ul class="rating-input">
-											<li ><label class="rating-input__star" aria-label="별점 1점" id="review-star-1"><input type="radio" value="1"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
-											<li ><label class="rating-input__star" aria-label="별점 2점" id="review-star-2"><input type="radio" value="2"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
-											<li ><label class="rating-input__star" aria-label="별점 3점" id="review-star-3"><input type="radio" value="3"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
-											<li ><label class="rating-input__star" aria-label="별점 4점" id="review-star-4"><input type="radio" value="4"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
-											<li ><label class="rating-input__star" aria-label="별점 5점" id="review-star-5"><input type="radio" value="5"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
+											<li ><label class="rating-input__star" aria-label="별점 1점" id="review-star-1"><input type="radio" value="1" name="star"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
+											<li ><label class="rating-input__star" aria-label="별점 2점" id="review-star-2"><input type="radio" value="2" name="star"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
+											<li ><label class="rating-input__star" aria-label="별점 3점" id="review-star-3"><input type="radio" value="3" name="star"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
+											<li ><label class="rating-input__star" aria-label="별점 4점" id="review-star-4"><input type="radio" value="4" name="star"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
+											<li ><label class="rating-input__star" aria-label="별점 5점" id="review-star-5"><input type="radio" value="5" name="star"><svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path></svg></label></li>
 										</ul>
 									</div>
 							</div>
@@ -4173,19 +4298,22 @@
 					<div class="review-modal__section">
 						<div class="review-modal__section__title-photo">사진 첨부 (선택)</div>
 						<div class="review-modal__section__explain">사진을 첨부해주세요. (최대 1장)</div>
-						<div class="select-picture" id="select-picture">
-							<img class="select-picture__contents" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/161143912971973539.jfif?gif=1&amp;w=240&amp;webp=1">
+						<div class="select-picture" id="review-image-input">
+							<img class="select-picture__contents" src="" >
 								<button class="button button--color-blue button--size-50 button--shape-4 select-picture__delete" type="button"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet"><defs><filter id="delete-a" width="134.3%" height="175%" x="-17.1%" y="-37.5%" filterUnits="objectBoundingBox"><feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="3"></feGaussianBlur><feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.182857143 0 0 0 0 0.205714286 0 0 0 0 0.22 0 0 0 0.2 0"></feColorMatrix><feMerge><feMergeNode in="shadowMatrixOuter1"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><path id="delete-b" d="M11 3.83v10c0 .92-.75 1.67-1.67 1.67H2.67c-.92 0-1.67-.75-1.67-1.67v-10h10zM8.08.5l.84.83h2.91V3H.17V1.33h2.91L3.92.5h4.16z"></path></defs><g fill="none" fill-rule="evenodd" filter="url(#delete-a)" transform="translate(4 2)"><mask id="delete-c" fill="#fff"><use xlink:href="#delete-b"></use></mask><g fill="#FFF" mask="url(#delete-c)"><path d="M-4-2h20v20H-4z"></path></g></g></svg>
-								삭제</button>
+								삭제</button> 
 						</div>
-							<label class="button button--color-blue-inverted button--size-50 button--shape-4 upload-button" type="button"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M21.1 4c.5 0 .9.4.9.9v14.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V4.9c0-.5.4-.9.9-.9h18.2zm-.91 1.8H3.8v10.85l5.54-6.27c.12-.17.38-.17.52 0l3.1 3.54c.06.06.08.14.06.2l-.4 1.84c-.02.14.15.23.23.12l3.16-3.43a.27.27 0 01.38 0l3.79 4.12V5.8zm-3.37 4.8a1.47 1.47 0 01-1.47-1.45c0-.81.66-1.46 1.47-1.46s1.48.65 1.48 1.46c0 .8-.66 1.45-1.48 1.45z"></path></svg> 
-								사진 첨부하기<input type="file" ></label> 
+							<label class="button button--color-blue-inverted button--size-50 button--shape-4 upload-button" type="button" id="image-add">
+								<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M21.1 4c.5 0 .9.4.9.9v14.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V4.9c0-.5.4-.9.9-.9h18.2zm-.91 1.8H3.8v10.85l5.54-6.27c.12-.17.38-.17.52 0l3.1 3.54c.06.06.08.14.06.2l-.4 1.84c-.02.14.15.23.23.12l3.16-3.43a.27.27 0 01.38 0l3.79 4.12V5.8zm-3.37 4.8a1.47 1.47 0 01-1.47-1.45c0-.81.66-1.46 1.47-1.46s1.48.65 1.48 1.46c0 .8-.66 1.45-1.48 1.45z"></path></svg> 
+								사진 첨부하기<input id="select-picture" type="file" name="file1">
+							</label> 
+							
 					</div>
 					<div class="review-modal__section">
 						<div class="review-modal__section__title-text">리뷰 작성 
 						<div class="review-modal__section__title__error-message" style="display:none;">20자 이상 입력해주세요.</div> 
 						<div class="review-modal__section__title__error-message-text-none" id="text-required-item" >필수 입력 항목입니다.</div></div>
-						<textarea placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (최소 20자 이상)" class="form-control text-area-input review-modal__form__review-input" id="review-text" style="height: 56px;"></textarea>
+						<textarea placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (최소 20자 이상)" class="form-control text-area-input review-modal__form__review-input" id="vcontent" name="vcontent" style="height: 56px;"></textarea>
 						<div class="review-modal__form__review-input__length">
 							<span class="review-modal__form__review-input__length__value" id="review-text-count">0</span>
 						</div>
@@ -4194,7 +4322,7 @@
 						<div class="review-modal__section__title-question">상품을 직접 사용하고 작성한 리뷰인가요?
 							<div class="review-modal__section__title__error-message-question" style="display:none;" >필수 입력 항목입니다.</div></div>
 						<div class="form-check checkbox-input">
-							<label class="form-check-label" for="form-check-label">
+							<label class="form-check-label-chk" for="form-check-label">
 								<input class="form-check" type="checkbox" id="form-check-label">
 								<span class="check-img" id="check-img"></span>
 								<span class="review-modal__form__agree">네. 상품을 직접 사용 후 작성한 리뷰이며,&nbsp;<span class="review-modal__form__agree__policy-button">오늘의집 리뷰 정책</span>에 동의합니다.</span>

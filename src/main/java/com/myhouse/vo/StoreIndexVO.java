@@ -1,19 +1,39 @@
 package com.myhouse.vo;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class StoreIndexVO {
 
 	String email, nickname, member_spimage,
 		   ino, company, ititle, interior_simage, category, tone, color, icontent,
 		   gno, goods_simage, goods_name, goods_price,
-		   vno, vcontent, review_simage, vdate,
+		   vno, vcontent, review_image, review_simage, vdate, savepath,
 		   sno,
 		   qno, qtype, qcontent, qreply, qdate,qdate_r,
 		   ono, ostatus;
 	double star_avg, star_float;
 	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count;
-	
+	CommonsMultipartFile file1;
 
 	
+	public String getReview_image() {
+		return review_image;
+	}
+	public void setReview_image(String review_image) {
+		this.review_image = review_image;
+	}
+	public String getSavepath() {
+		return savepath;
+	}
+	public void setSavepath(String savepath) {
+		this.savepath = savepath;
+	}
+	public CommonsMultipartFile getFile1() {
+		return file1;
+	}
+	public void setFile1(CommonsMultipartFile file1) {
+		this.file1 = file1;
+	}
 	public String getQdate_r() {
 		return qdate_r;
 	}

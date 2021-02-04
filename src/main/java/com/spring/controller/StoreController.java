@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.myhouse.vo.StoreIndexVO;
 import com.spring.service.InteriorServiceImpl;
 
 @Controller
@@ -52,11 +55,35 @@ public class StoreController {
 		}
 	
 	/*
+	 * store_page :: review - write
+	 */
+	@RequestMapping(value="/interior_review_insert.do", method=RequestMethod.POST)
+	public String interior_review_insert(StoreIndexVO vo, HttpServletRequest request) {
+		
+		String path1 = request.getSession().getServletContext().getRealPath("/");
+		String path2 = "\\resources\\upload\\";
+		vo.setEmail("test0@naver.com");
+		vo.setSavepath(path1+path2);
+		
+		return interiorService.getInteriorReviewInsert(vo);
+	}
+	
+	/*
+	 * store_page :: review - 상품리스트 선택
+	 */
+	@ResponseBody
+	@RequestMapping(value="/interior_review_goods_list.do", method=RequestMethod.GET,
+					produces="text/plain;charset=UTF-8")
+	public String interior_review_goods_list(String gno) {
+		return interiorService.getInteriorReviewGoodsList(gno);
+	}
+	
+	/*
 	 * store_page :: review - 포토리뷰만
 	 */
 	@ResponseBody
 	@RequestMapping(value="/interior_review_photo.do", method=RequestMethod.GET,
-	produces="text/plain;charset=UTF-8") 
+					produces="text/plain;charset=UTF-8") 
 	public String interior_review_photo(String ino) {
 		return interiorService.getInteriorReviewPhoto(ino);
 	}

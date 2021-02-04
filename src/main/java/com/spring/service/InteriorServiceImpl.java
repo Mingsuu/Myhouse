@@ -1,6 +1,8 @@
 package com.spring.service;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,58 @@ public class InteriorServiceImpl implements InteriorService{
 	private yh_InteriorDAO interiorDAO;
 	
 	// 리뷰 작성하기
-	/*
-	 * public ModelAndView getInteriorReviewInsert(StoreIndexVO vo) { ModelAndView
-	 * mv = new ModelAndView(); boolean result = false; result =
-	 * interiorDAO.getInteriorReviewInsert(vo);
-	 * 
-	 * mv.addObject("result", result);
-	 * 
-	 * if(result) { mv.setViewName("redirect:/store_page.do"); }
-	 * 
-	 * return mv; }
-	 */
+	public String getInteriorReviewInsert(StoreIndexVO vo) {
+		String result="";
+		String ino = vo.getIno();
+		
+		if(vo.getFile1().getSize()!=0) {
+			UUID uuid = UUID.randomUUID();
+			vo.setReview_image(vo.getFile1().getOriginalFilename());
+			vo.setReview_simage(uuid+"_"+vo.getFile1().getOriginalFilename());
+		}
+		
+		boolean dao_result = interiorDAO.getInteriorReviewInsert(vo);
+		
+		if(dao_result) {
+			System.out.println("savepath===>"+vo.getSavepath());
+			File file = new File(vo.getSavepath()+vo.getReview_simage());
+			
+			try {
+				vo.getFile1().transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			result = "redirect:/store_page.do?ino="+ino;
+		} else {
+			System.out.println("error");
+		}
+		
+		return result;
+	}
+	
+	// 리뷰 - 상품 리스트 선택
+	public String getInteriorReviewGoodsList(String gno) {
+		ArrayList<StoreIndexVO> interior_review_goods_list = interiorDAO.getInteriorReviewGoodsList(gno);
+		
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : interior_review_goods_list) {
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("company", vo.getCompany());
+			jobj.addProperty("ititle", vo.getItitle());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			
+			jarry.add(jobj);
+		}
+		jdata.add("interior_review_goods_list", jarry);
+		jdata.addProperty("gno", gno);
+		
+		return gson.toJson(jdata);
+		
+	}
 	
 	// 리뷰 페이지 - 최신순
 	public String getInteriorReviewPhoto(String ino) {

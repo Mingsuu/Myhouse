@@ -24,11 +24,21 @@ public class yh_InteriorDAO {
 	}
 	
 	// 리뷰 작성하기
-	/*
-	 * public boolean getInteriorReviewInsert(StoreIndexVO vo) { boolean result =
-	 * false; int value = sqlSession.insert(namespace+".interior-review-insert",
-	 * vo); if(value != 0) result = true; return result; }
-	 */
+	public boolean getInteriorReviewInsert(StoreIndexVO vo) {
+		boolean result = false;
+		int value = sqlSession.insert(namespace+".interior-review-insert", vo);
+		
+		if(value != 0) result = true;
+			System.out.print("insert");
+		return result;	
+		
+	}
+	
+	// 리뷰 - 상품리스트 선택
+	public ArrayList<StoreIndexVO> getInteriorReviewGoodsList(String gno) {
+		List<StoreIndexVO> interior_review_goods_list = sqlSession.selectList(namespace+".interior-review-goods-list", gno);
+		return (ArrayList<StoreIndexVO>)interior_review_goods_list;
+	}
 	
 	// 리뷰 페이지 - 포토
 	public ArrayList<StoreIndexVO> getInteriorReviewPhoto(String ino) {
