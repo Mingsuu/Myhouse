@@ -2,7 +2,7 @@ package com.myhouse.vo;
 
 public class SessionVO {
 	int result;
-	String name,nickname;
+	String name,nickname,email;
 	
 	
 	public String getNickname() {

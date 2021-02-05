@@ -130,7 +130,7 @@ margin:0 -15px}@media (min-width:375px){.scroller-wrap.scroller-wrap--remove-mar
 						</div>
 						<div class="search-card-item__user">
 							<img class="search-card-item__user__img"
-								src="http://localhost:9000/myhouse/resources/upload/${community_list.get(i).getC_member_simage()}"
+								src="http://localhost:9000/myhouse/resources/upload/${community_list.get(i).getW_member_simage()}"
 								srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/158251211606306906.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/158251211606306906.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/158251211606306906.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;webp=1 3x"><span
 								class="search-card-item__user__nickname">${community_list.get(i).getW_nickname()}</span>
 						</div>
