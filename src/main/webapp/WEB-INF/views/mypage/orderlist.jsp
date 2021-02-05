@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage.css"> -->
-<!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <style>
 
 * {
@@ -457,7 +457,7 @@
 		<ul class="nav2-1">
 			<a href="mypage_orderlist.do"><li class="nav2-2"   style="color:#35c5f0; border-bottom:5px solid #35c5f0;">주문배송내역</li></a>
 			<a href="mypage_notice.do"><li class="nav2-2">공지사항</li></a>
-			<a href="mypage_clientcenter.do"><li class="nav2-2">고객센터</li></a>
+			<a href="service_center.do"><li class="nav2-2">고객센터</li></a>
 		</ul>
 	</div>
 </div>

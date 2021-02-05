@@ -6195,8 +6195,8 @@ body.show-modal {
 
 [class*=icon-page-login__] {
 	background-image:
-		url("https://ohou.se/assets/icon_map/v4/page-login.png");
-	background-size: 320px auto
+		url("http://localhost:9000/myhouse/images/logo.png");
+	background-size: 200px 80px
 }
 
 @media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 2dppx) , (
@@ -6214,8 +6214,8 @@ body.show-modal {
 }
 
 .icon-page-login__a-1 {
-	width: 146px;
-	height: 50px;
+	width: 200px;
+	height: 80px;
 	background-position: left 0px top 0px
 }
 
@@ -6273,6 +6273,7 @@ body.show-modal {
 .sign-in-form__header {
 	display: block;
 	margin: 0 0 30px
+	
 }
 
 .sign-in-form__header__link {
