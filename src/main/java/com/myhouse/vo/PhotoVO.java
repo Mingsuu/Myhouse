@@ -4,14 +4,22 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PhotoVO {
 	String pno,email,pcontent,pstyle,ptype,photo_image,
-	photo_simage,pdate,savepath;
+	photo_simage,pdate,savepath,pitem;
 	
+
 	int phits;
 
 	CommonsMultipartFile file1, file2, file3, file4;
 
 	
 	
+	public String getPitem() {
+		return pitem;
+	}
+	
+	public void setPitem(String pitem) {
+		this.pitem = pitem;
+	}
 	public String getPno() {
 		return pno;
 	}

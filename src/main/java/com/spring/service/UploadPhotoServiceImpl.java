@@ -46,7 +46,7 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			}
 			
 			
-			result = "redirect://index.do";	//¹Ù²ã¾ßÇÔ!!!!!
+			result = "redirect://index.do";	
 		}else{
 			result = "errorPage";
 		}

@@ -19,27 +19,33 @@
 <!-- <script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script> -->
     <script type="text/javascript">
     
+    /*파일 미리보기및 삭제*/
     $(document).ready(function() {
+    	
     	  if (window.File && window.FileList && window.FileReader) {
     	    $("#imageSelector").on("change", function(e) {
-    	      var files = e.target.files,
-    	        filesLength = files.length;
+    	      var files = e.target.files,filesLength = files.length;
+    	      
     	      for (var i = 0; i < filesLength; i++) {
-    	        var f = files[i]
-    	        var fileReader = new FileReader();
-    	        fileReader.onload = (function(e) {
-    	          var file = e.target;
-    	          $("<span class=\"pip\">" +
-    	            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-    	            "<br/><span class=\"remove\">사진 삭제</span>" +
-    	            "</span>").insertAfter("#imageSelector");
-    	          $(".remove").click(function(){
-    	            $(this).parent(".pip").remove();
-    	          });
-    	          
-    	        });
-    	        fileReader.readAsDataURL(f);
+	    	        var f = files[i]
+	    	        var fileReader = new FileReader();
+	    	        fileReader.onload = (function(e) {
+	    	          var file = e.target;
+	    	          
+	    	          $("<span class=\"pip\">" +
+	    	            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+	    	            "<br/><span class=\"remove\">미리보기 끄기</span>" +
+	    	            "</span>").insertAfter("#imageSelector");
+	    	          
+	    	          
+	    	          $(".remove").click(function(){
+	    	            $(this).parent(".pip").remove();
+	    	          });
+	    	          
+	    	        });
+	    	        fileReader.readAsDataURL(f);
     	      }
+    	      
     	    });
     	  } else {
     	    alert("브라우저를 업데이트 해주세요");
@@ -57,7 +63,7 @@
 			});
     	  
     	  
-    	});    
+    	});     
     
      /*    $(document).ready(function() {
             $("#imageSelector").on("change", handleImgFileSelect);
@@ -107,8 +113,10 @@
 		}
 		
 		.imageThumb {
-			max-height: 450px;
-			max-width: 450px;
+			/* max-height: 450px;
+			max-width: 450px; */
+			height:380px;
+			width:450px;
 			border: 2px solid;
 			padding: 1px;
 			cursor: pointer;
@@ -116,7 +124,8 @@
 		
 		.pip {
 			display: inline-block;
-			margin: 10px 10px 0 0;
+			margin: 10px 10px 0 0; 
+			/* margin: left; */
 		}
 		
 		.remove {
@@ -131,6 +140,13 @@
 		.remove:hover {
 			background: white;
 			color: black;
+		}
+		.input-file-button{
+		    padding: 6px 25px;
+		    background-color:#35c5f0;
+		    border-radius: 4px;
+		    color: white;
+		    cursor: pointer;
 		}
 </style>
 </head>
@@ -195,37 +211,29 @@
 			</div>
 			<div class="card-collection-form__card-section__content">
 				<ol class="card-collection-form__card-section__list">
-					<li class="card-collection-form__card-section__list__item"><div
-							class="card-collection-form__card-item">
-							
-							<div class="card-collection-form__card-item__image-wrap"
-								draggable="true">
-								<!--이미지파일만 선택,우선은 다중선택가능-->
-								<input type="file" class="hidden_input" id="imageSelector" name="file1" 
-									accept="image/jpeg, image/jpg, image/png" multiple />	
-									
-								<!--미리보기 출력-->
-								<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-								<div class="field" align="left">
-								  <h3></h3>
-								  <!-- <input type="file" id="files" name="files[]" multiple /> -->
-								</div>
-								
-								<!-- <div class="card-collection-form__card-image-upload card-collection-form__card-item__image" id="w_picture">
-									<img id="img" onclick="test()"/>
-								</div> -->
+					<li class="card-collection-form__card-section__list__item"><div class="card-collection-form__card-item">
+							<div class="card-collection-form__card-item__image-wrap" draggable="true">							
+								<!--이미지파일만 선택,다중선택-->
+								<label class="input-file-button" for="imageSelector">
+									  업로드
+								</label>
+							 	<input type="file" class="hidden_input" id="imageSelector" name="file1" 
+									accept="image/jpeg, image/jpg, image/png" multiple=multiple style="display:none;">
 							</div>
-							
+
+
 							<div class="card-collection-form__card-item__content">
 								<div class="card-collection-form__card-item__content__row">
-									<textarea placeholder="사진에 대해서 설명해주세요."
+									<div class="input-group select-input">
+										<textarea placeholder="사진에 대해서 설명해주세요."
 										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 300px;"></textarea>
-								</div>
-								<div class="card-collection-form__card-item__content__row">
-									<div class="keyword-input">
-										
 									</div>
 								</div>
+								<div class="card-collection-form__card-item__content__row">
+									<textarea placeholder="사용된 인테리어제품을 입력해주세요."
+										class="form-control text-area-input" id="pitem" name="pitem" style="height: 100px;"></textarea>
+								</div>
+								
 							</div>
 						</div></li>
 				</ol>

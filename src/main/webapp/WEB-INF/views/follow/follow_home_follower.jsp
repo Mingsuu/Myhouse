@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<jsp:include page="../header_login.jsp" />
+<jsp:include page="../header1.jsp" />
 
 <div id="body" class="users follower" data-s_id="df7d44686e01a9ed062dc28c9a59fc97" style="padding-bottom: 0px;">
     

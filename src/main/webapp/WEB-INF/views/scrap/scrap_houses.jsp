@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<jsp:include page="../header_login.jsp" />
+<jsp:include page="../header1.jsp" />
 
 	<div class="container collection-feed">
 		<main>
@@ -56,7 +56,7 @@
 								href="http://localhost:9000/myhouse/scrap_product.do"
 								target="_self">상품 (35)</a></li>
 							<li class="page-navigation__item"><a class="active"
-								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">집들이
+								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">사진
 									(2)</a></li>
 						</ul>
 					</nav>

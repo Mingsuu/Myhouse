@@ -18,7 +18,7 @@
 <body>
 	<!-- <h1>알람 내소식</h1> -->
 
-	<jsp:include page="../header_login.jsp" />
+	<jsp:include page="../header1.jsp" />
 
 	<div id="body" class="notifications feed"
 		data-s_id="0aaebb5c39d5910695ef81b9755e6790"
