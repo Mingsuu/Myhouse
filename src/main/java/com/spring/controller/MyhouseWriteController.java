@@ -25,7 +25,12 @@ public class MyhouseWriteController {
 	 * 
 	 */
 	@RequestMapping(value="/upload_photo_proc.do",method=RequestMethod.POST)
-	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request) {
+	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request,HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		System.out.println("svo이메일값:"+svo.getEmail());
+		String email = svo.getEmail();
+		vo.setEmail(email);
+		System.out.println("vo이메일값:"+vo.getEmail());
 		//서버의 저장경로
 		String root_path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "\\resources\\upload\\";

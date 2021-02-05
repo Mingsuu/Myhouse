@@ -23,6 +23,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%if(svo!=null){ %>
+<h1><%=svo.getEmail() %></h1>
+<%} %>
 	<!-- header -->
 	<jsp:include page="header1.jsp" />
 	<!-- index content -->
