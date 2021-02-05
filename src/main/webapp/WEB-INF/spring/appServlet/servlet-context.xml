@@ -59,12 +59,15 @@
 	<beans:bean class="com.spring.service.UploadPhotoServiceImpl" id="uploadService"></beans:bean>
 	
 	<beans:bean class="com.spring.service.CommunityServcieImpl" id="communityService"></beans:bean>
+	<beans:bean class="com.spring.service.SalesApplicationServiceImpl" id="salesService"></beans:bean>
 	<beans:bean class="com.myhouse.dao.CommunityDAO" id="communityDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_PhotoDAO" id="photoDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_MemberDAO" id="ykmemberDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_interiorDAO" id="ykinteriorDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_goodsDAO" id="ykgoodsDAO"></beans:bean>
 	
 	<!-- search에 쓰이는 beans -->
 	<beans:bean class="com.myhouse.dao.yj_InteriorDAO" id="interiorDAO2"></beans:bean>

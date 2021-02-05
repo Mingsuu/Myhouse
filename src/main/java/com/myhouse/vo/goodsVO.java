@@ -6,7 +6,7 @@ public class goodsVO {
 
 	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath;
 	
-	CommonsMultipartFile file1;
+	CommonsMultipartFile gfile1, gfile2, gfile3, gfile4, gfile5;
 
 	
 	
@@ -66,11 +66,48 @@ public class goodsVO {
 		this.savepath = savepath;
 	}
 
-	public CommonsMultipartFile getFile1() {
-		return file1;
+	public CommonsMultipartFile getGfile1() {
+		return gfile1;
 	}
 
 	public void setFile1(CommonsMultipartFile file1) {
-		this.file1 = file1;
+		this.gfile1 = file1;
 	}
+
+	public CommonsMultipartFile getGfile2() {
+		return gfile2;
+	}
+
+	public void setGfile2(CommonsMultipartFile gfile2) {
+		this.gfile2 = gfile2;
+	}
+
+	public CommonsMultipartFile getGfile3() {
+		return gfile3;
+	}
+
+	public void setGfile3(CommonsMultipartFile gfile3) {
+		this.gfile3 = gfile3;
+	}
+
+	public CommonsMultipartFile getGfile4() {
+		return gfile4;
+	}
+
+	public void setGfile4(CommonsMultipartFile gfile4) {
+		this.gfile4 = gfile4;
+	}
+
+	public CommonsMultipartFile getGfile5() {
+		return gfile5;
+	}
+
+	public void setGfile5(CommonsMultipartFile gfile5) {
+		this.gfile5 = gfile5;
+	}
+
+	public void setGfile1(CommonsMultipartFile gfile1) {
+		this.gfile1 = gfile1;
+	}
+	
 }

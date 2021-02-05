@@ -382,22 +382,27 @@
 		
 		
 		$(".production_tag_scoller_item").mouseover(function(){
+			$('.pop').remove();
 			$(this).addClass('tag_active');
 			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
 				output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
 				output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
-				output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c&amp;webp=1'>"
-				output += "<img class='_2TSZD' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c'>"
+				output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
+				output += "<img class='_2TSZD' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
 				output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>레인보우하우스</div><div class='_2WPGa'>원프레드화이트 쇼파커버 (거실러그, 블랭킷, 다용도 패브릭)</div>"
 				output += "<div class='_2WAbO'>34,900원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
 				output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 				output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
-			$(".swiper-container").after(output);
+			$(".tag_detail").append(output);
 		});
 		
 		$(".production_tag_scoller_item").mouseleave(function(){
 			$(this).removeClass('tag_active');
-			$('.pop').remove();
+			$('.pop').fadeOut(1800);
+		});
+		
+		$('.pop').mouseover(function(){
+			$(this).show();
 		});
 		
 		var swiper = new Swiper('.swiper-container', {
@@ -1535,11 +1540,10 @@
 		letter-spacing: -0.4px;
 		font-size: 15px;
 		-webkit-tap-highlight-color: transparent;
-	/* 	margin: 0;
-		padding: 0; */
 		position: absolute;
 		z-index: 100000;
-		margin-left:10px;
+		margin-top:10px;
+		margin-left:360px;
 		transform: translateX(-50%);
    }
    
@@ -1587,7 +1591,7 @@
 		border: none;
 		display: flex;
 		align-items: center;
-		width: 280px;
+		width: 710px;
 		padding: 10px;
 		box-sizing: border-box;
 		position: relative;
@@ -1605,12 +1609,14 @@
 		border-radius: 2px;
 		overflow: hidden;
    }
+   
    picture{
    		pointer-events: auto;
 		visibility: visible;
 		color: inherit;
 		cursor: pointer;
    }
+   
    div._3bqx7{
    		margin: 0;
 		padding: 0;
@@ -1722,7 +1728,7 @@
 		list-style: none;
 		-webkit-tap-highlight-color: transparent;
 		margin: 0;
-		padding: 0;
+		padding:0;
    }
    div.tag_active div.production_tag_scoller_item_content{
    		line-height: 1;
@@ -1923,6 +1929,11 @@
 	    background: white; 
 	    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 	}
+	
+/* 	div.tag_detail{
+		height:100px;
+	} */
+
 
 </style>
 </head>
@@ -2030,12 +2041,12 @@
 					    <div class="swiper-button-next"></div>
 					    <div class="swiper-button-prev"></div>
   					</div>
-  					<div class="tag_detail">
+  					<div class="tag_detail"></div>
   					
-  					</div>
-						<p class="card_detail_description">
-							${pvo.pcontent}
-						</p>
+					<p class="card_detail_description">
+						${pvo.pcontent}
+					</p>
+					
 					</article>
 					<footer class="card_detail_footer">
 						<p class="footer_metadata">
