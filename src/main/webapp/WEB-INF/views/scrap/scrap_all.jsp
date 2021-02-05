@@ -16,7 +16,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../header1.jsp" />
+<jsp:include page="../header_login.jsp" />
 
 	<div class="container collection-feed">
 		<main>
@@ -28,7 +28,7 @@
 							class="profile-image"
 							src="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1"
 							srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x"><span
-							class="collection-book-owner__name">마이페이지</span></a>
+							class="collection-book-owner__name">기림6</span></a>
 					</p>
 				</div>
 				<div class="collection-book-actions">
@@ -55,7 +55,7 @@
 								href="http://localhost:9000/myhouse/scrap_product.do"
 								target="_self">상품 (12)</a></li>
 							<li class="page-navigation__item"><a class=""
-								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">사진
+								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">집들이
 									(2)</a></li>
 						</ul>
 					</nav>

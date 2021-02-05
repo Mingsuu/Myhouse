@@ -13,7 +13,6 @@ public class H_UploadPhotoDAO extends DBConn{
 	
 	private static String namespace="mapper.uploadphoto";	
 	
-	
 	/**
 	 * Insert : ±Û¾²±â 
 	 */

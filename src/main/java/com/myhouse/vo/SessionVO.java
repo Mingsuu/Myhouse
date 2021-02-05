@@ -4,6 +4,7 @@ public class SessionVO {
 	int result;
 	String name,nickname,email;
 	
+	
 	public String getEmail() {
 		return email;
 	}

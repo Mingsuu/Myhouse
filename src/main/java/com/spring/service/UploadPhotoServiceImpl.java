@@ -37,7 +37,6 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			// String root_path = request.getSession().getServletContext().getRealPath("/");
 			 //String attach_path = "\\resources\\upload\\";
 			System.out.println("통과");
-			
 			File file = new File(pvo.getSavepath()+pvo.getPhoto_simage());
 			
 			try {
@@ -47,7 +46,7 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			}
 			
 			
-			result = "redirect://index.do";	
+			result = "redirect://index.do";	//바꿔야함!!!!!
 		}else{
 			result = "errorPage";
 		}
