@@ -149,19 +149,34 @@
 		});
 		
 		$(document).on("click","button#card_action1",function(){
+			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
 				$(this).removeClass("card_action");
 				$(this).addClass("card_action_active");
 				$(this).children('span.count').text(count+1);
+				
+			$.ajax({
+					url :"like_proc.do?pno="+pno,
+					success:function(result){
+					}
+				});
+			
 			}else{
 				$(this).removeClass("card_action_active");
 				$(this).addClass("card_action");
 				$(this).children('span.count').text(count-1);
+				
+				$.ajax({
+					url :"like_cancel_proc.do?pno="+pno,
+					success:function(result){
+					}
+				});
 			}
 		});
 		
 		$(document).on("click","button#card_action2",function(){
+			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
 				$(this).removeClass("card_action");
@@ -179,6 +194,12 @@
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(3800);
 				
+				$.ajax({
+					url :"scrap_proc.do?pno="+pno,
+					success:function(result){
+					}
+				});
+				
 			}else{
 				$(this).removeClass("card_action_active");
 				$(this).addClass("card_action");
@@ -192,6 +213,12 @@
 				$(this).children('span.count').text(count-1);
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(3800);
+				
+				$.ajax({
+					url :"scrap_cancel_proc.do?pno="+pno,
+					success:function(result){
+					}
+				});
 			}
 		});
 		
@@ -199,15 +226,29 @@
 			$(this).parent().remove();
 		});
 		
+		
 		$(document).on("click","button#follow",function(){
+			var email = $(this).parent().parent().parent().parent().parent().children('.email').val();
 			if ($(this).hasClass("card_item_follow")){
 				$(this).removeClass("card_item_follow");
 				$(this).addClass("card_item_following");
 				$(this).html('팔로잉');
+				
+				$.ajax({
+					url :"follow_proc.do?w_email="+email,
+					success:function(result){
+					}
+				});
 			}else{
 				$(this).removeClass("card_item_following");
 				$(this).addClass("card_item_follow");
 				$(this).html('팔로우');
+			
+				$.ajax({
+					url :"follow_cancel_proc.do?w_email="+email,
+					success:function(result){
+					}
+				});
 			}
 		});
 		
@@ -219,12 +260,19 @@
 					var output ="<div class='card_content'>";
 					for(var i in jdata.jlist){
 						output += "<div class='card_item_wrap'><div class='card_item'>";
+						output += "<input type='hidden' class='pno' value='"+jdata.jlist[i].pno+"'>";
+						output += "<input type='hidden' class='email' value='"+jdata.jlist[i].w_email+"'>";
 						output +="<article class='card_item'><div class='card_writer'>";
 						output +="<address class='card_writer_content'><div class='card_writer_header'><a href='http://localhost:9000/myhouse/mypage_picture.do' class='card_writer_link'>";
 						if(jdata.jlist[i].w_member_simage == null) output +="<img class='card_writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
 						else output +="<img class='card_writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].w_member_simage+"'>";
 						output +="<span class='card_writer_name'>"+jdata.jlist[i].w_nickname+"</span>";
-						output +="</a><span class='seperator'>·</span><button id='follow' class='card_item_follow' type='button'>팔로우</button></div>";
+						output +="</a><span class='seperator'>·</span>"
+						if(jdata.jlist[i].isfollow == null || jdata.jlist[i].isfollow == 0){
+							output +="<button id='follow' class='card_item_follow' type='button'>팔로우</button></div>";
+						}else{
+							output +="<button id='follow' class='card_item_following' type='button'>팔로잉</button></div>";
+						}
 						if(jdata.jlist[i].intro == null){
 							output += "<p class='card_writer_intro'></p></address></div>";
 						}else{
@@ -237,19 +285,28 @@
 							output += "<div class='card_item_text'><div class='card_item_desciption'>"+jdata.jlist[i].pcontent+"</div></div>";
 						}
 						output +="<div class='card_item_image'><div class='card_item_image2'>";
-						var imgs = jdata.jlist[i].photo_simage;
-						const img = imgs.split(",");
-						output +="<img class='card_img' src='http://localhost:9000/myhouse/resources/upload/"+img[0]+"'>"
-						if(img.length>1){
+						/* var imgs = jdata.jlist[i].photo_simage;
+						const img = imgs.split(","); */
+						output +="<img class='card_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].photo_simage+"'>"
+						/* if(img.length>1){
 							output += "<span class='card_collection'><svg class='comm_icon' width='18' height='18' viewBox='0 0 18 18' preserveAspectRatio='xMidYMid meet'><g fill='none' fill-rule='evenodd'>";
 							output += "<path stroke='#000' stroke-opacity='.14' stroke-width='.75' d='M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z'></path>";
 							output += "<path fill='#FFF' fill-opacity='.74' d='M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z'></path></g></svg></span>";
+						} */
+						output += "<span class='card_img_count'>조회수 "+jdata.jlist[i].phits+"</span></div></div><aside class='card_item_action'>";
+						if(jdata.jlist[i].islike == 1){
+							output +="<button id='card_action1' class='card_action_active'>";
+						}else{
+							output +="<button id='card_action1' class='card_action'>";
 						}
-						output += "<span class='card_img_count'>조회수 "+jdata.jlist[i].phits+"</span></div></div>";
-						output +="<aside class='card_item_action'><button id='card_action1' class='card_action'>";
 						output += "<svg class='action_icon' aria-label='좋아요' width='24' height='24' fill='currentColor' stroke='currentColor' stroke-width='2' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>";
 						output += "<path d='M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z'></path></svg>";
-						output += "<span class='count'>"+jdata.jlist[i].plike+"</span></button><button id='card_action2' class='card_action'>";
+						output += "<span class='count'>"+jdata.jlist[i].plike+"</span></button>"
+						if(jdata.jlist[i].isscrap == 1){
+							output +="<button id='card_action2' class='card_action_active'>";
+						}else{
+							output +="<button id='card_action2' class='card_action'>";
+						}
 						output += "<svg class='action_icon' aria-label='스크랩' width='24' height='24' fill='currentColor' stroke='currentColor' stroke-width='0.5' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>";
 						output += "<path d='M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z'></path></svg>";
 						output += "<span class='count'>"+jdata.jlist[i].scrap+"</span></button><a href='community_page.do?pno="+jdata.jlist[i].pno+"' class='card_action'>";
@@ -1147,6 +1204,7 @@
    div#ampaginationsm{
    	margin-left:470px;
    }
+   
 </style>
 </head>
 <body>
@@ -1193,13 +1251,6 @@
 																</div>
 															</button>
 														</li>
-														<!-- <li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="팔로잉">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="팔로잉">팔로잉</span>
-															</div>
-														</button>
-														</li> -->
 													</ul>
 												</div>
 											</div>
@@ -1272,128 +1323,6 @@
 										</div>
 									</div>
 								</li>
-							<!-- 	<li class="item">
-									<button id="sort" class="sort">공간
-									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
-										<path d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path>
-									</svg>
-									</button>
-									<div>
-									<div class="popout" data-popout="true" style="position: absolute; z-index: 1000; left:280px; top:50px">
-											<div class="popout_drop_down">
-												<div class="drop_down_panel" data-panel-title="공간" data-panel-parents="">
-													<ul class="panel_entry_list3">
-														<li class="panel_entry_list_item_wrap">
-															<button id="btn_list" class="panel_entry_list_item" type="button" value="원룸">
-																<div class="panel_entry_list_item_header">
-																	<span class="panel_entry_list_item_title" id="원룸">원룸</span>
-																</div>
-															</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-															<button id="btn_list" class="panel_entry_list_item" type="button" value="거실">
-																<div class="panel_entry_list_item_header">
-																	<span class="panel_entry_list_item_title" id="거실">거실</span>
-																</div>
-															</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-															<button id="btn_list" class="panel_entry_list_item " type="button" value="침실">
-																<div class="panel_entry_list_item_header">
-																	<span class="panel_entry_list_item_title" id="침실">침실</span>
-																</div>
-															</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="주방">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="주방">주방</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="욕실">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="욕실">욕실</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="아이방">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="아이방">아이방</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="드레스룸">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="드레스룸">드레스룸</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="서재작업실">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="서재작업실">서재&작업실</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="베란다">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="베란다">베란다</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="사무공간">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="사무공간">사무공간</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="상업공간">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="상업공간">상업공간</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="가구소품">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="가구소품">가구&소품</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="현관">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="현관">현관</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="외관기타">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="외관기타">외관&기타</span>
-															</div>
-														</button>
-														</li>
-														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="제품리뷰">
-															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="제품리뷰">제품리뷰</span>
-															</div>
-														</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li> -->
 								<li class="item">
 									<button id="sort" class="sort">스타일
 									<svg class="comm_icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet">
@@ -1474,107 +1403,7 @@
 				</div>
 			</div>
 		</div>
-	<%-- <div class="card_content">
-		<c:forEach var="vo" items="${list}">
-			<div class="card_item_wrap">
-				<div class="card_item">
-					<article class="card_item">
-						<div class="card_writer">
-							<address class="card_writer_content">
-								<div class="card_writer_header">
-									<a href="#" class="card_writer_link">
-											<c:if test="${vo.w_member_simage eq null}">
-												<img class="card_writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1">
-											</c:if>
-											<c:if test="${vo.w_member_simage ne null}">
-												<img class="card_writer_img" src="http://localhost:9000/myhouse/resources/upload/${vo.w_member_simage}">
-											</c:if>
-										<span class="card_writer_name">${vo.w_nickname}</span>
-									</a>
-									<span class="seperator">·</span>
-									<button id="follow" class="card_item_follow" type="button">팔로우</button>
-								</div>
-								<p class="card_writer_intro">${vo.intro}</p>
-							</address>
-						</div>
-						<div class="card_item_content">
-							<a href="community_page.do?pno=${vo.pno}" class="card_item_content_link"></a>
-							<div class="card_item_text">
-								<div class="card_item_desciption">
-									${vo.pcontent}
-								</div>
-							</div>
-							<div class="card_item_image">
-								<div class="card_item_image2">
-									<c:set var="pimg" value="${vo.photo_simage}"/>
-									<c:set var="img" value="${fn:split(pimg,',')}" />
-									<img class="card_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
-     									<c:if test="${fn:length(img)>1}">
-											<span class="card_collection">
-											<svg class="comm_icon" width="18" height="18" viewBox="0 0 18 18" preserveAspectRatio="xMidYMid meet">
-												<g fill="none" fill-rule="evenodd">
-												<path stroke="#000" stroke-opacity=".14" stroke-width=".75" d="M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z"></path>
-												<path fill="#FFF" fill-opacity=".74" d="M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z"></path>
-												</g>
-											</svg>
-											</span>
-										</c:if>
-									<span class="card_img_count">조회수 ${vo.phits}</span>
-								</div>
-							</div>
-							<aside class="card_item_action">
-								<button id="card_action1" class="card_action">
-									<svg class="action_icon" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-										<path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z"></path>
-									</svg>
-									<span class="count">${vo.plike}</span>
-								</button>
-								<button id="card_action2" class="card_action">
-									<svg class="action_icon" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-									<path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
-									</svg>
-									<span class="count">${vo.scrap}</span>
-								</button>
-								<a href="community_page.do?pno=${vo.pno}" class="card_action">
-									<svg class="comm_icon" aria-label="댓글 달기" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-									<path fill="currentColor" fill-rule="nonzero" d="M13.665 18.434l.53-.066C19.69 17.679 23 14.348 23 10c0-4.942-4.235-8.5-11-8.5S1 5.058 1 10c0 4.348 3.31 7.68 8.804 8.368l.531.066L12 21.764l1.665-3.33zm-3.985.926C3.493 18.585 0 14.69 0 10 0 4.753 4.373.5 12 .5S24 4.753 24 10c0 4.69-3.493 8.585-9.68 9.36l-1.647 3.293c-.374.75-.974.744-1.346 0L9.68 19.36z"></path>
-									</svg>
-									<span class="count">${vo.comments}</span>
-								</a>
-							</aside>
-						</div>
-						
-						<c:if test="${vo.comments ne 0}">
-							<div class="card_item_comment">
-								<article class="card_item_comment" aria-label="댓글">
-									<address class="comment_wirter">
-										<a href="#" class="writer_link">
-											<div class="writer_img">
-												<c:if test="${vo.c_member_simage eq null}">
-													<img class="writer_img" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1">
-												</c:if>
-												<c:if test="${vo.c_member_simage ne null}">
-													<img class="writer_img" src="http://localhost:9000/myhouse/resources/upload/${vo.c_member_simage}">
-												</c:if>
-		 									</div>
-											<span class="writer_name">${vo.c_nickname}</span>
-										</a>
-										<span class="writer_seperator"> :</span>
-									</address>
-									<a href="#" class="comment_link">
-										<p class="comment_content">${vo.c_content}</p>
-									</a> 
-								</article>
-							</div>
-						</c:if>
-					</article>
-				</div>
-			</div>
-		</c:forEach> 
-		</div>
-		<div class="paging"><div id="ampaginationsm"></div></div>
-	</div> --%>
-	
+	</div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp"/>
 	

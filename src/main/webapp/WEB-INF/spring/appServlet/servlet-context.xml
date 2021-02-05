@@ -56,6 +56,7 @@
 	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_MemberDAO" id="ykmemberDAO"></beans:bean>
 	
 	<!-- multipartResolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean> 

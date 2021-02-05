@@ -30,12 +30,23 @@ public class CommunityDAO  extends DBConn{
 	}
 	
 	/**
+	 * 전체사진 리스트 (최신인기순) -로그인O
+	 */
+	public ArrayList<CommunityVO> getListMember(int start, int end, String email){
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("start", String.valueOf(start));
+		param.put("end", String.valueOf(end));
+		param.put("email", email);
+		List<CommunityVO> list = sqlSession.selectList(namespace+".list", param);
+		return (ArrayList<CommunityVO>) list;
+	}
+	
+	/**
 	 * 전체 리스트 카운트
 	 */
 	public int getListCount() {
 		return sqlSession.selectOne(namespace + ".listcount");
 	}
-	
 	
 	/**
 	 *  리스트 카운트
@@ -58,5 +69,18 @@ public class CommunityDAO  extends DBConn{
 		List<CommunityVO> list = sqlSession.selectList(namespace+".sortlist", param);
 		return (ArrayList<CommunityVO>) list;
 	}
+	
+	public ArrayList<CommunityVO> getSortListMember(String order, String type, String style, int start, int end, String email){
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("order", order);
+		param.put("type", type);
+		param.put("style", style);
+		param.put("start", String.valueOf(start));
+		param.put("end", String.valueOf(end));
+		param.put("email", email);
+		List<CommunityVO> list = sqlSession.selectList(namespace+".sortlist_member", param);
+		return (ArrayList<CommunityVO>) list;
+	}
+	
 	
 }
