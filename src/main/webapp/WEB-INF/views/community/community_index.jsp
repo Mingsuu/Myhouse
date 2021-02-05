@@ -316,7 +316,7 @@
 						if(jdata.jlist[i].comments != 0){
 							output += "<div class='card_item_comment'><article class='card_item_comment' aria-label='댓글'><address class='comment_wirter'><a href='#' class='writer_link'><div class='writer_img'>";
 							if(jdata.jlist[i].c_member_simage != null){
-								output += "<img class='writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].c_member_simage+"'>";
+								output += "<img class='writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].w_member_simage+"'>";
 							}else{
 								output +="<img class='writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
 							}

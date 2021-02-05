@@ -28,12 +28,6 @@ public class SalesApplicationController {
 	 @RequestMapping(value="/sales_form_write_proc.do", method=RequestMethod.POST)
 	 public String board_write_proc(interiorVO ivo, goodsVO gvo, HttpServletRequest request,HttpSession session) {
 		 SessionVO svo=(SessionVO)session.getAttribute("svo");
-		 System.out.println(gvo.getGoods_name());
-		 System.out.println(gvo.getGoods_price());
-		 System.out.println("인테리어"+ivo.getInterior_file());
-		 System.out.println("상품1"+gvo.getGfile1());
-		 System.out.println("상품2"+gvo.getGfile2());
-		 System.out.println("상품3"+gvo.getGfile3());
 		 //서버의 저장경로
 		  String path1 = request.getSession().getServletContext().getRealPath("/");
 		  String path2 = "\\resources\\upload\\";
