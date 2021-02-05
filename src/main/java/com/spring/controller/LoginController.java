@@ -47,8 +47,9 @@ public class LoginController {
 	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		String sessionId=(String)session.getAttribute("sessionId");
 		String result="";
-		if(svo != null ) {
+		if(svo != null || sessionId!=null) {
 			session.invalidate();
 			result ="index";
 		}else {
