@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.SessionVO;
 import com.spring.service.UploadPhotoService;
 
 
@@ -23,8 +25,10 @@ public class MyhouseWriteController {
 	 * 
 	 */
 	@RequestMapping(value="/upload_photo_proc.do",method=RequestMethod.POST)
-	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request) {
-		
+	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request,HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		String email = svo.getEmail();
+		vo.setEmail(email);
 		//서버의 저장경로
 		String root_path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "\\resources\\upload\\";
