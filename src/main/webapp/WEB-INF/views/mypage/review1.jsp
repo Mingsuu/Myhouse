@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,6 +164,7 @@
 }
 .review2 {
 	margin-bottom:30px;
+	display:inline-block;
 }
 .review1 span {
 	float:left;
@@ -177,7 +179,7 @@
 .simsa2,
 .simsatext {
 	display:inline-block;
-	width:900px;
+	width:800px;
 }
 .simsa span {
 	float:left;
@@ -1560,6 +1562,17 @@ font-weight: 700;
 input[id="check1"]:checked + label {
 	background-color:#35c5f0;
 }
+.back1 {
+	margin-bottom:100px;
+}
+.sangpum{
+	width:150px;
+	height:150px;
+	display:inline-block;
+	float:left;
+	margin-left:10px;
+	border-radius:6px;
+}
 </style>
 </head>
 <body>
@@ -1589,24 +1602,15 @@ input[id="check1"]:checked + label {
 			<a href="mypage_review2.do"><span>베스트순</span></a>
 			<span style="color:#35c5f0;">최신순</span>
 		</div>
+		<c:forEach var="vo" items="${list}">
 		<div class="review2">
+			<img src ="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage}" class="sangpum">
 			<div class="simsa"><span>리뷰 후기</span><a href="#" id="sujung">수정</a></div>
-			<div class="simsa1"><a href="#">[시디즈] T20 TAB+ TNA200HF 메쉬의자 2types</a></div>
-			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>귤먹고갈래 | 2021.01.15 | 다른 쇼핑몰 리뷰</span></div>
-			<div class="simsatext"><span>그냥 한번 사봤는데 너무 좋더라구요</span></div>
+			<div class="simsa1"><a href="#">[${vo.company }] ${vo.ino}  + ${vo.ititle}</a></div>
+			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>${vo.nickname } | ${vo.vdate} | 스위트홈 쇼핑몰 리뷰</span></div>
+			<div class="simsatext"><span>${vo.vcontent}</span></div>
 		</div>
-		<div class="review2">
-			<div class="simsa"><span>리뷰 후기</span><a href="#">수정</a></div>
-			<div class="simsa1"><a href="#">[시디즈] T20 TAB+ TNA200HF 메쉬의자 2types</a></div>
-			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>귤먹고갈래 | 2021.01.15 | 다른 쇼핑몰 리뷰</span></div>
-			<div class="simsatext"><span>그냥 한번 사봤는데 너무 좋더라구요</span></div>
-		</div>
-		<div class="review2">
-			<div class="simsa"><span>리뷰 후기</span><a href="#">수정</a></div>
-			<div class="simsa1"><a href="#">[시디즈] T20 TAB+ TNA200HF 메쉬의자 2types</a></div>
-			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>귤먹고갈래 | 2021.01.15 | 다른 쇼핑몰 리뷰</span></div>
-			<div class="simsatext"><span>그냥 한번 사봤는데 너무 좋더라구요</span></div>
-		</div>
+		</c:forEach>
 	</div>
 </div>
 
@@ -1794,6 +1798,7 @@ input[id="check1"]:checked + label {
 
 
 </div>
+	<div class="back1"></div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp" />
 </body>

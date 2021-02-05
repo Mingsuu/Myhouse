@@ -54,6 +54,9 @@
 				
 				
 				
+				
+				
+				
 			
 			});//ready
 		
@@ -340,10 +343,10 @@ input[type="file"] {
 				<div class="option2">
 					<span class="op1">이메일</span><br>
 					<span class="op2-1">* 필수항목</span>
-					<input type="text" class="emailbox" id="emailbox" value=${str2[0]}>
+					<input type="text" class="emailbox" id="emailbox" value=${str2[0]} name="email1"  disabled>
 					<p class="email1">@</p>
 					<div class="select">
-						<select name="email" class="email" id="emailbox1">
+						<select  class="email" id="emailbox1" name="email2"  disabled>
 							<option valuse="${str2[1]}">${str2[1]}</option>
 							<option valuse="naver.com">naver.com</option>
 							<option valuse="daum.net">daum.net</option>
@@ -356,34 +359,40 @@ input[type="file"] {
 				<div class="option2">
 					<span class="op1">별명</span><br>
 					<span class="op2">* 필수항목</span>
-					<input type="text" class="emailbox-op2" placeholder="별명을 적어주세요" value="${ovo.nickname}">
+					<input type="text" class="emailbox-op2" placeholder="별명을 적어주세요" value="${ovo.nickname}" name="nickname">
 				</div>
 				<div class="option2">
 					<span class="op3">홈페이지</span>
-					<input type="text" class="emailbox-op3" placeholder="https:ohou.se">
+					<input type="text" class="emailbox-op3" placeholder="https:ohou.se" value="${ovo.homepage}" name="homepage">
 				</div>
 				<div class="option2">
 					<span class="op3">성별</span>
 					<div class="genderbox">
-						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"><p class="gender" >남성</p>
+					<c:if test="${ovo.gender =='남성'}">
+						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;" checked><p class="gender" >남성</p>
 						<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"><p class="gender" >여성</p>
+					</c:if>
+					<c:if test="${ovo.gender =='여성'}">
+						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"><p class="gender" >남성</p>
+						<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"checked><p class="gender" >여성</p>
+					</c:if>
 					</div>
 				</div>
 				<div class="option2">
 					<span class="op3">생년월일</span>
-					<input type="text" class="emailbox-op3" placeholder="생년월일을 적어주세요" value='${ovo.birth }'>
+					<input type="text" class="emailbox-op3" placeholder="생년월일을 적어주세요" value='${ovo.birth }' name="birth">
 				</div>
 				<div class="option2">
 					<span class="op3">프로필 이미지</span>
-					<div class="p_image" <%-- style="background-image: url(http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage})" --%> id="profile_image">
-						<img src="http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage }" id="p_img">
-						<div id="p_img">${ovo.member_image}</div>
+					<div class="p_image" style="background-image: url(http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage})" id="profile_image">
+						<img src="http://localhost:9000/myhouse/resources/upload/${ovo.member_spimage }" id="p_img">
+						<div id="p_img"></div>
 						<input type="file" id="p_picture" name="file1" style="width:198px;height:198px;border:1px;">
 					</div>
 				</div>
 				<div class="option2">
 					<span class="op3">한줄 소개</span>
-					<input type="text" class="emailbox-op3">
+					<input type="text" class="emailbox-op3" placeholder="자기를 소개해주세요." name="intro" value="${ovo.intro }">
 				</div>
 				<div class="option2">
 					<button type="submit" class="memberupdate">회원 정보 수정</button>

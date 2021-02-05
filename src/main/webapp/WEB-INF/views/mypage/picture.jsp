@@ -15,16 +15,20 @@ $(document).ready(function(){
 	
 
 	$("button#card_action1").click(function(){
+		var count = parseInt($(this).children('span.count').text());
 		if ($(this).hasClass("card_action")){
 			$(this).removeClass("card_action");
 			$(this).addClass("card_action_active");
+			$(this).children('span.count').text(count+1);
 		}else{
 			$(this).removeClass("card_action_active");
 			$(this).addClass("card_action");
+			$(this).children('span.count').text(count-1);
 		}
 	});
 	
 	$("button#card_action2").click(function(){
+		var count = parseInt($(this).children('span.count').text());
 		if ($(this).hasClass("card_action")){
 			$(this).removeClass("card_action");
 			$(this).addClass("card_action_active");
@@ -37,6 +41,7 @@ $(document).ready(function(){
 			if($('div.toast-message').length == 2){
 				$('div.toast-message').first().remove();
 			}
+			$(this).children('span.count').text(count+1);
 			$("div.toast-message-root").append(output);
 			$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
 			
@@ -50,6 +55,7 @@ $(document).ready(function(){
 			if($('div.toast-message').length == 2){
 				$('div.toast-message').first().remove();
 			}
+			$(this).children('span.count').text(count-1);
 			$("div.toast-message-root").append(output);
 			$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
 		}
@@ -686,15 +692,15 @@ div.card_item_content{
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
-			<a href="#"><div class="scrap">
+			<a href="scrap_all.do"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
 				<span class="left3">0</span>
 			</div></a>
-			<a href="#"><div class="like">
+			<a href="mypage_like.do"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
 				<span class="left2">좋아요</span><br>
-				<span class="left4">0</span>
+				<span class="left4">${lcount}</span>
 			</div></a>
 		</div>
 	</div>

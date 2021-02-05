@@ -456,6 +456,7 @@
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_orderlist.do"><li class="nav2-2"   style="color:#35c5f0; border-bottom:5px solid #35c5f0;">주문배송내역</li></a>
+			<a href="mypage_question.do"><li class="nav2-2">나의문의</li></a>
 			<a href="mypage_notice.do"><li class="nav2-2">공지사항</li></a>
 			<a href="service_center.do"><li class="nav2-2">고객센터</li></a>
 		</ul>

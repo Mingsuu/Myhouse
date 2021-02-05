@@ -12,6 +12,7 @@ import com.myhouse.dao.MypagePhotoDAO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
 import com.myhouse.vo.interiorVO;
+import com.myhouse.vo.questionVO;
 import com.myhouse.vo.reviewVO;
 
 @Service ("mypageService")
@@ -19,6 +20,65 @@ public class MypageServiceImpl implements MypageService{
 
 	@Autowired
 	private MypagePhotoDAO mypagephotoDAO;
+	
+	
+	
+	@Override
+	public ModelAndView getqna() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<questionVO> list = mypagephotoDAO.getqna();
+		
+		mv.addObject("list", list);
+		mv.setViewName("mypage/activity3");
+		return mv;
+	}
+	
+	
+	
+	@Override
+	public ModelAndView getquestlist() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<questionVO> list = mypagephotoDAO.getquestlist();
+		
+		mv.addObject("list", list);
+		mv.setViewName("mypage/question");
+		return mv;
+	}
+	
+	
+	
+	@Override
+	public ModelAndView getpasschange(Object vo) {
+		ModelAndView mv = new ModelAndView();
+		boolean result =false;
+		MemberVO passvo = (MemberVO)vo;
+		result = mypagephotoDAO.getpasschange(passvo);
+		
+		if(result) {
+			mv.setViewName("redirect:/mypage_profile1.do");
+		}else {
+			mv.setViewName("redirect:/mypage_profile1.do");
+			System.out.println("비밀번호변경실패");
+		}
+	
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public ModelAndView getreview1() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<reviewVO> list = mypagephotoDAO.getreview1();
+		
+		mv.addObject("list", list);
+		mv.setViewName("/mypage/review1");
+		
+		return mv;
+	}
 	
 	
 	
@@ -66,7 +126,7 @@ public class MypageServiceImpl implements MypageService{
 			
 			mv.setViewName("redirect:/mypage_profile1.do");
 		}else {
-			mv.setViewName("redirect:/mypage_profile1.do");
+			System.out.println("선택파일이 없습니다.");
 		}
 		
 		return mv;
@@ -104,8 +164,10 @@ public class MypageServiceImpl implements MypageService{
 		ModelAndView mv = new ModelAndView();
 		ArrayList<PhotoVO> list = mypagephotoDAO.getphotolist();
 		int count = mypagephotoDAO.getphotocount();
+		int lcount = mypagephotoDAO.getlikecount();
 		MemberVO prof = mypagephotoDAO.getprofile();
 		
+		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
 		mv.addObject("list", list);
 		mv.addObject("count",count);
@@ -120,6 +182,9 @@ public class MypageServiceImpl implements MypageService{
 		ModelAndView mv = new ModelAndView();
 		ArrayList<PhotoVO> list = mypagephotoDAO.getpicture();
 		MemberVO prof = mypagephotoDAO.getprofile();
+		int lcount = mypagephotoDAO.getlikecount();
+		
+		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
 		mv.addObject("list", list);
 		mv.setViewName("/mypage/picture");
@@ -132,6 +197,9 @@ public class MypageServiceImpl implements MypageService{
 		ModelAndView mv = new ModelAndView();
 		ArrayList<PhotoVO> list = mypagephotoDAO.getlike();
 		MemberVO prof = mypagephotoDAO.getprofile();
+		int lcount = mypagephotoDAO.getlikecount();
+		
+		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
 		mv.addObject("list", list);
 		mv.setViewName("/mypage/like");

@@ -424,15 +424,15 @@
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
-			<a href="#"><div class="scrap">
+			<a href="scrap_all.do"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
 				<span class="left3">0</span>
 			</div></a>
-			<a href="#"><div class="like">
+			<a href="mypage_like.do"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
 				<span class="left2">좋아요</span><br>
-				<span class="left4">0</span>
+				<span class="left4">${lcount}</span>
 			</div></a>
 		</div>
 	</div>

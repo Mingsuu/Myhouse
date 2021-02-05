@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,56 +71,93 @@
 	height:596px;
 	text-align:center;
 }
-.notice {
+.question {
 	display:inline-block;
 	width:900px;
-	height:350px;
+	height:auto;
 	margin-top:40px;
+	padding-bottom:30px;
+	border:1px solid lightgray;
+	box-shadow: 1px 5px 5px 2px rgb(17 17 17 / 10%);
 }
-.notice a {
+.question a {
 	text-decoration:none;
+	display:inline-block;
 }
-.notice h1 {
-	padding-right:600px;
-	font-size:24px;
-	margin-bottom:0px;
+.q-title {
+	font-size:21px;
 	font-weight:bold;
+	margin-top:40px;
+	width:900px;
+	display:inline-block;
 }
-.notlist {
+.q-title span{
+	float:left;
+}
+.q-list {
 	height:66px;
-	margin-top:30px;
+	margin-top:20px;
 }
-.notlist:hover {
+.q-list:hover {
 	opacity:0.5;
 }
-.notlist:active {
+.q-list:active {
 	opacity:0.5;
 }
-.notlist span {
-	margin-right:455px;
-	font-size:15px;
+.q-span {
+	font-size:16px;
+	font-weight:bold;
 	color:black;
 	display:inline-block;
 	margin-bottom:10px;
+	float:left;
 }
-.notlist p {
-	margin-right:610px;
+.q-list p {
 	margin-top:5px;
 	font-size:14px;
-	font-weight:bold;
 	color:rgb(130, 140, 148);
 	display:inline-block;
 	margin-bottom:24px;
+	float:left;
+	margin-left:30px;
 }
-.noticebar {
+.q-box {
+	display:inline-block;
+	width:800px;
+}
+.q-box1{
+	display:inline-block;
 	width:750px;
+}
+.q-box2{
+	display:inline-block;
+	width:800px;
+	margin-top:10px;
+}
+.questbar {
+	width:810px;
 	opacity:0.5;
 	margin:0px;
-	margin-left:107px;
+	margin-left:50px;
 	border:1px solid lightgray;
+	display:inline-block;
+	margin-bottom:10px;
 }
-.no2 {
-	margin-left:30px;
+.q-icon {
+	font-size:20px;
+	font-weight:bold;
+	color:#35c5f0;
+}
+.whitebox{
+	margin-bottom:100px;
+}
+.enter{
+	display:inline-block;
+	float:left;
+	width:28px;
+	height:28px;
+	margin-top:-10px;
+	margin-right:3px;
 }
 </style>
 </head>
@@ -138,35 +176,29 @@
 	<div class="nav2">
 		<ul class="nav2-1">
 			<a href="mypage_orderlist.do"><li class="nav2-2">주문배송내역</li></a>
-			<a href="mypage_question.do"><li class="nav2-2">나의문의</li></a>
-			<a href="mypage_notice.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">공지사항</li></a>
+			<a href="mypage_question.do"><li class="nav2-2" style="color:#35c5f0; border-bottom:5px solid #35c5f0;">나의문의</li></a>
+			<a href="mypage_notice.do"><li class="nav2-2" >공지사항</li></a>
 			<a href="service_center.do"><li class="nav2-2">고객센터</li></a>
 		</ul>
 	</div>
 </div>
 <div class="profile">
 <div class="mid">
-	<div class="notice">
-		<h1>공지사항</h1>
-		<a href="mypage_noticecontent.do"><div class="notlist">
-			<span>오늘의집 개인정보처리방침 변경 안내</span>
-			<p>2020.12.31</p>
-		<hr class="noticebar">
+	<div class="q-title"><span>나의문의내역</span></div>
+	<div class="question">
+		<c:forEach var="vo" items="${list}">
+		<a href="#"><div class="q-list">
+			<div class="q-box2"><span class="q-span"><span class="q-icon">Q&nbsp;&nbsp;</span>상품번호 - ${vo.gno} </span></div>
+			<div class="q-box1"><img src="http://localhost:9000/myhouse/images/mypage/enter.png" class="enter"><span class="q-span">${vo.qcontent }</span></div>
+			<div class="q-box"><p>${vo.qdate}</p></div>
+		<hr class="questbar">
 		</div></a>
-		<a href="#"><div class="notlist">
-			<span class="no2">오늘의집 VIP 등급 정책 변경사항 사전안내</span>
-			<p>2020.12.03</p>
-		<hr class="noticebar">
-		</div></a>
-		<a href="#"><div class="notlist">
-			<span>오늘의집 개인정보처리방침 변경 안내</span>
-			<p>2020.10.28</p>
-		<hr class="noticebar">
-		</div></a>
+		</c:forEach>
 	</div>
 		
 </div>
 </div>
+	<div class="whitebox"></div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp" />
 </body>

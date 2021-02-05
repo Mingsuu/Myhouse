@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
 import com.myhouse.vo.interiorVO;
+import com.myhouse.vo.questionVO;
 import com.myhouse.vo.reviewVO;
 
 public class MypagePhotoDAO extends DBConn{
@@ -18,8 +19,51 @@ public class MypagePhotoDAO extends DBConn{
 	private static String namespace="mapper.photo2";
 
 	
+	
 	/**
-	 * 리뷰 리스트 가져오기
+	 * 문의답변(나의활동)
+	 */
+	public ArrayList<questionVO> getqna(){
+		List<questionVO> list = sqlSession.selectList(namespace+".qna");
+		
+		return (ArrayList<questionVO>)list;
+		
+	}
+	
+	
+	/**
+	 * 나의문의 리스트
+	 */
+	public ArrayList<questionVO> getquestlist(){
+		List<questionVO> list = sqlSession.selectList(namespace+".questlist");
+		
+		return (ArrayList<questionVO>)list;
+	}
+	
+	
+	/**
+	 * 비밀번호 변경하기
+	 */
+	public boolean getpasschange(MemberVO vo) {
+		boolean result = false;
+		int value = sqlSession.update(namespace+".passchange",vo);
+		if(value != 0) result = true;
+		return result;
+	}
+	
+	
+	
+	/**
+	 * 리뷰 리스트 가져오기 (최신순)
+	 */
+	public ArrayList<reviewVO> getreview1(){
+		List<reviewVO> list = sqlSession.selectList(namespace+".review1");
+		return (ArrayList<reviewVO>)list;
+	}
+	
+	
+	/**
+	 * 리뷰 리스트 가져오기(베스트순)
 	 */
 	public ArrayList<reviewVO> getreview(){
 		List<reviewVO> list = sqlSession.selectList(namespace+".review");
@@ -32,6 +76,11 @@ public class MypagePhotoDAO extends DBConn{
 	 */
 	public boolean getOptionUpdate(MemberVO vo) {
 		boolean result = false;
+		System.out.println(vo.getNickname());
+		System.out.println(vo.getGender());
+		System.out.println(vo.getHomepage());
+		System.out.println(vo.getIntro());
+		System.out.println(vo.getBirth());
 		int value = sqlSession.update(namespace+".update",vo);
 		if(value != 0) result = true;
 		return result;
@@ -89,6 +138,14 @@ public class MypagePhotoDAO extends DBConn{
 	public int getphotocount() {
 		return sqlSession.selectOne(namespace+".photocount");
 	}
+	
+	/**
+	 * 좋아요 갯수 가져요기 (모두보기)
+	 */
+	public int getlikecount() {
+		return sqlSession.selectOne(namespace+".likecount");
+	}
+	
 	
 	
 	/**

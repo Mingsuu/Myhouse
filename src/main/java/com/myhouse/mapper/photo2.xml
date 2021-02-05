@@ -7,15 +7,52 @@
 
 
 <mapper namespace="mapper.photo2">
+	
+	<!-- id=QA -->
+	<select id="qna" resultType="com.myhouse.vo.questionVO">
+		SELECT * FROM(SELECT DISTINCT QNO,IOR.INO,ODS.GNO,QTYPE,QCONTENT,QREPLY,GOODS_SIMAGE,QSTATUS,QDATE,QDATE_R 
+		FROM H_QUESTION TION, H_MEMBER MEM, H_INTERIOR IOR,H_GOODS ODS WHERE IOR.INO=ODS.INO AND ODS.GNO=TION.GNO 
+		AND IOR.EMAIL='alstndkrl@naver.com')
+		WHERE QSTATUS='1' ORDER BY QDATE DESC
+	
+	</select>
 
 
 
-	<!-- id=review -->
-	<select id="review" resultType="com.myhouse.vo.reviewVO">
-		SELECT INO,GNO,EMAIL,COMPANY,ITITLE,VDATE,VCONTENT FROM
-		(SELECT IOR.INO,ODS.GNO,VIE.EMAIL,COMPANY,ITITLE,TO_CHAR(VDATE,'YY.MM.DD') VDATE,
-		VCONTENT FROM H_REVIEW VIE, H_GOODS ODS, H_INTERIOR IOR WHERE ODS.GNO=VIE.GNO AND IOR.INO=ODS.INO)
+	<!-- id=questlist -->
+	<select id="questlist" resultType="com.myhouse.vo.questionVO">
+		SELECT QNO,EMAIL,GNO,QTYPE,QCONTENT,QSTATUS,QDATE FROM 
+		(SELECT QNO,MEM.EMAIL,TION.GNO,QTYPE,QCONTENT,QSTATUS,QDATE FROM H_QUESTION TION,
+		 H_MEMBER MEM, H_GOODS ODS WHERE ODS.GNO=TION.GNO AND MEM.EMAIL='alstndkrl@naver.com')
+		 WHERE QSTATUS='1' ORDER BY QDATE DESC	
+	</select>
+
+
+	<!-- id=passchange  -->
+	<update id="passchange" parameterType="com.myhouse.vo.MemberVO">
+		UPDATE H_MEMBER SET PASS=#{pass} WHERE EMAIL='alstndkrl@naver.com'
+	</update>
+	
+	
+	<!-- id=review(최신순) -->
+	<select id="review1" resultType="com.myhouse.vo.reviewVO">
+		SELECT INO,GNO,EMAIL,STAR,COMPANY,ITITLE,INTERIOR_SIMAGE,VDATE,VCONTENT 
+		FROM(SELECT IOR.INO,ODS.GNO,VIE.EMAIL,STAR,COMPANY,IOR.INTERIOR_SIMAGE,ITITLE,
+		TO_CHAR(VDATE,'YY.MM.DD') VDATE,VCONTENT FROM H_REVIEW VIE, H_GOODS ODS, H_INTERIOR 
+		IOR WHERE ODS.GNO=VIE.GNO AND IOR.INO=ODS.INO)
 		WHERE EMAIL='alstndkrl@naver.com' ORDER BY VDATE DESC
+		
+	</select>
+
+
+
+	<!-- id=review(베스트순) -->
+	<select id="review" resultType="com.myhouse.vo.reviewVO">
+		SELECT INO,GNO,EMAIL,STAR,COMPANY,ITITLE,INTERIOR_SIMAGE,VDATE,VCONTENT 
+		FROM(SELECT IOR.INO,ODS.GNO,VIE.EMAIL,STAR,COMPANY,IOR.INTERIOR_SIMAGE,
+		ITITLE,TO_CHAR(VDATE,'YY.MM.DD') VDATE,VCONTENT FROM H_REVIEW VIE, H_GOODS ODS, 
+		H_INTERIOR IOR WHERE ODS.GNO=VIE.GNO AND IOR.INO=ODS.INO)
+		WHERE EMAIL='alstndkrl@naver.com' ORDER BY STAR DESC
 	</select>
 
 
@@ -25,10 +62,10 @@
 	<!-- id=update  -->
 	<update id="update" parameterType="com.myhouse.vo.MemberVO">
 		UPDATE H_MEMBER SET 
-		EAMIL=#{email} ,NICKNAME=#{nickname} ,HOMEPAGE=#{homepage} 
+		NICKNAME=#{nickname} ,HOMEPAGE=#{homepage} 
 		,GENDER=#{gender} , BIRTH=#{birth} , INTRO=#{intro} 
 			<if test="member_image != null">
-				MEMBER_IMAGE=#{member_image}, MEMBER_SPIMAGE=#{member_spimage}
+				,MEMBER_IMAGE=#{member_image}, MEMBER_SPIMAGE=#{member_spimage}
 			</if>
 		WHERE EMAIL='alstndkrl@naver.com'
 	</update>
@@ -36,7 +73,7 @@
 
 	<!-- id=option -->
 	<select id="option" resultType="com.myhouse.vo.MemberVO">
-		SELECT EMAIL,NICKNAME,BIRTH,MEMBER_SPIMAGE FROM H_MEMBER WHERE EMAIL='alstndkrl@naver.com'
+		SELECT EMAIL,NICKNAME,HOMEPAGE,GENDER,BIRTH,MEMBER_SPIMAGE,INTRO FROM H_MEMBER WHERE EMAIL='alstndkrl@naver.com'
 	</select>
 
 
@@ -78,7 +115,16 @@
 		SELECT COUNT(*) FROM H_PHOTO WHERE EMAIL='alstndkrl@naver.com'
 	</select>
 
-
+	
+	<!-- id=likecount  -->
+	<select id="likecount" resultType="int">
+		SELECT COUNT(*) FROM 
+		(SELECT DISTINCT LIK.EMAIL,PHO.PNO,PHOTO_SIMAGE,PHOTO_LIKE FROM H_PHOTO PHO,
+		 H_MEMBER MEM, H_LIKE LIK WHERE PHOTO_LIKE='1' AND PHO.PNO=LIK.PNO 
+		 AND LIK.EMAIL='alstndkrl@naver.com' ORDER BY PNO DESC)
+	
+	
+	</select>
 
 
 	<!-- id=photolist -->

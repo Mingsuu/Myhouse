@@ -98,7 +98,7 @@
 <body>
 	<div class="profile">
 		<div class="active">
-			<div class="act-title"><a href="mypage_activity.do"><p class="ab" style="color:#35c5f0;">나의 활동</p></a><a href="mypage_activity2.do"><p>판매 활동</p></a><a href="mypage_activity3.do"><p>문의 답변</p></a></div>
+			<div class="act-title"><a href="mypage_activity.do"><p>나의 활동</p></a><a href="mypage_activity2.do"><p class="ab" style="color:#35c5f0;">판매 활동</p></a><a href="mypage_activity3.do"><p>문의 답변</p></a></div>
 			<div class="month">2021년 01월</div>
 			<a href="#"><div class="textbox">
 				<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/pic1.jpg"></div>

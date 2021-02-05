@@ -184,6 +184,7 @@
 }
 .review2 {
 	margin-bottom:30px;
+	display:inline-block;
 }
 .review1 span {
 	float:left;
@@ -198,7 +199,7 @@
 .simsa2,
 .simsatext {
 	display:inline-block;
-	width:900px;
+	width:800px;
 }
 .simsa span {
 	float:left;
@@ -1590,6 +1591,17 @@ input[id="check1"]:checked + label {
 	margin-top:0px;
 	padding-top:0px;
 }
+.back1 {
+	margin-bottom:100px;
+}
+.sangpum{
+	width:150px;
+	height:150px;
+	display:inline-block;
+	float:left;
+	margin-left:10px;
+	border-radius:6px;
+}
 </style>
 </head>
 <body>
@@ -1621,6 +1633,7 @@ input[id="check1"]:checked + label {
 		</div>
 		<c:forEach var="vo" items="${list}">
 		<div class="review2">
+			<img src ="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage}" class="sangpum">
 			<div class="simsa"><span>리뷰 후기</span><a href="#" id="sujung">수정</a></div>
 			<div class="simsa1"><a href="#">[${vo.company }] ${vo.ino}  + ${vo.ititle}</a></div>
 			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>${vo.nickname } | ${vo.vdate} | 스위트홈 쇼핑몰 리뷰</span></div>
@@ -1825,6 +1838,7 @@ input[id="check1"]:checked + label {
 
 
 </div>
+	<div class="back1"></div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp" />
 </body>

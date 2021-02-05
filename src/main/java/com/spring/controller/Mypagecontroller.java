@@ -51,6 +51,16 @@ public class Mypagecontroller {
 		return "/mypage/activity";
 	}
 	
+	@RequestMapping(value="/mypage_activity2.do", method=RequestMethod.GET)
+	public String activity2() {
+		return "/mypage/activity2";
+	}
+	
+	@RequestMapping(value="/mypage_activity3.do", method=RequestMethod.GET)
+	public ModelAndView activity3() {
+		return mypageService.getqna();
+	}
+	
 	@RequestMapping(value="/mypage_orderlist.do", method=RequestMethod.GET)
 	public ModelAndView orderlist() {
 		return mypageService.getorder();
@@ -78,8 +88,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_review1.do", method=RequestMethod.GET)
-	public String rivew1() {
-		return "/mypage/review1";
+	public ModelAndView review1() {
+		return mypageService.getreview1();
 	}
 	
 	@RequestMapping(value="/mypage_review2.do", method=RequestMethod.GET)
@@ -109,6 +119,11 @@ public class Mypagecontroller {
 	@RequestMapping(value="/mypage_password.do", method=RequestMethod.GET)
 	public String password() {
 		return "/mypage/password";
+	}
+	
+	@RequestMapping(value="/pass_word_change_proc.do", method=RequestMethod.POST)
+	public ModelAndView password(MemberVO vo) {
+		return mypageService.getpasschange(vo);
 	}
 	
 	@RequestMapping(value="/mypage_memberdelete.do", method=RequestMethod.GET)
@@ -141,4 +156,8 @@ public class Mypagecontroller {
 		return "/mypage/scrap2";
 	}
 	
+	@RequestMapping(value="/mypage_question.do", method=RequestMethod.GET)
+	public ModelAndView question() {
+		return mypageService.getquestlist();
+	}
 }
