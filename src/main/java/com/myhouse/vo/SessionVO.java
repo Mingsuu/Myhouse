@@ -4,7 +4,6 @@ public class SessionVO {
 	int result;
 	String name,nickname;
 	
-	
 	public String getNickname() {
 		return nickname;
 	}

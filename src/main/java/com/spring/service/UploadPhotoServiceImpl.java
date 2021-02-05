@@ -37,6 +37,7 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			// String root_path = request.getSession().getServletContext().getRealPath("/");
 			 //String attach_path = "\\resources\\upload\\";
 			System.out.println("Åë°ú");
+			
 			File file = new File(pvo.getSavepath()+pvo.getPhoto_simage());
 			
 			try {
