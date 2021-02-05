@@ -106,7 +106,7 @@
 			<div class="animated-popout drop-down__content open open-active">
 				<div class="_2TAbe navigation-upload-dropdown-content">
 					<a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/upload_photo.do"><div
+						href="http://localhost:9000/myhouse/login.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -129,7 +129,7 @@
 							<div class="navigation-upload-dropdown-content-item__subtitle">우리집
 								사진을 공유해보세요.</div>
 						</div></a><a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/mypage_review.do"><div
+						href="http://localhost:9000/myhouse/login.do"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
