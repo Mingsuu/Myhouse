@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<jsp:include page="../header1.jsp" />
+	<jsp:include page="../header_login.jsp" />
 
 <div id="body" class="notifications feed" data-s_id="62fa79465efb5b46ce9926d0364cc09b" style="padding-bottom: 0px;">
     
