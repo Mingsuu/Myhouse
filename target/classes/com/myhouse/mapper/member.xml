@@ -24,6 +24,6 @@
 	
 	<!-- id : login -->
 	 <select id="login" parameterType="com.myhouse.vo.MemberVO" resultType="com.myhouse.vo.SessionVO"> 
-		select count(*) result, nickname from h_member where email=#{email} and pass=#{pass} group by nickname
+		select count(*) result, nickname,email from h_member where email=#{email} and pass=#{pass} group by nickname,email
 	</select>
 </mapper>

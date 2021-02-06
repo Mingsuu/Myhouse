@@ -2,9 +2,15 @@ package com.myhouse.vo;
 
 public class SessionVO {
 	int result;
-	String name,nickname;
+	String name,nickname,email;
 	
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getNickname() {
 		return nickname;
 	}
