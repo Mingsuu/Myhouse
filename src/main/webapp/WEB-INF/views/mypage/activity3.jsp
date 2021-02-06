@@ -77,6 +77,9 @@
 	float:left;
 	margin-left:10px;
 }
+.QAbox{
+	margin-top:10px;
+}
 .QAbox2{
 	display:inline-block;
 	font-size:16px;
@@ -84,6 +87,7 @@
 	height:20px;
 	float:left;
 	margin-left:10px;
+	margin-top:15px;
 }
 .QAbox2 span{
 	float:left;

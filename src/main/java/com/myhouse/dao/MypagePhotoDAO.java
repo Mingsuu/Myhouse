@@ -1,13 +1,16 @@
 package com.myhouse.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.interiorVO;
 import com.myhouse.vo.questionVO;
 import com.myhouse.vo.reviewVO;
@@ -19,9 +22,38 @@ public class MypagePhotoDAO extends DBConn{
 	private static String namespace="mapper.photo2";
 
 	
+	/**
+	 * LIKE 좋아요
+	 */
+	public int getlikeinsert(String pno, String email) {
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("email", email);
+		param.put("pno", pno);
+		return  sqlSession.insert(namespace+".plike",param);
+	}
+	
 	
 	/**
-	 * 문의답변(나의활동)
+	 * 닉네임 바꾸기
+	 */
+	public String getnickname(String nickname) {
+		return sqlSession.selectOne(namespace+".nickname",nickname);
+	}
+	
+	
+	
+	/**
+	 * 리뷰작성 페이지(내가 구매한 상품 리스트)
+	 */
+	public ArrayList<goodsVO> getreviewpage(){
+		List<goodsVO> list = sqlSession.selectList(namespace+".reviewpage");
+		
+		return (ArrayList<goodsVO>)list;
+	}
+	
+	
+	/**
+	 * 문의답변(나의활동 내물품에 문의한거 답변리스트)
 	 */
 	public ArrayList<questionVO> getqna(){
 		List<questionVO> list = sqlSession.selectList(namespace+".qna");
@@ -32,7 +64,7 @@ public class MypagePhotoDAO extends DBConn{
 	
 	
 	/**
-	 * 나의문의 리스트
+	 * 나의문의 리스트(아무 상품이나 내가 문의한 리스트)
 	 */
 	public ArrayList<questionVO> getquestlist(){
 		List<questionVO> list = sqlSession.selectList(namespace+".questlist");

@@ -8,7 +8,33 @@
 
 <mapper namespace="mapper.photo2">
 	
-	<!-- id=QA -->
+	<!-- id=plike -->
+	<insert id="plike" parameterType="map">
+		INSERT INTO H_LIKE VALUES('L_'||H_LIKE_SEQUENCE.nextval,#{email},#{pno},'1')
+	
+	</insert>
+	
+	
+	<!-- id=nickname -->
+	<select	id="nickname" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT EMAIL FROM H_MEMBER WHERE NICKNAME=#{NICKNAME}
+	
+	</select>
+	
+	
+	<!-- id=reviewpage -->
+	<select id="reviewpage" resultType="com.myhouse.vo.goodsVO">
+		SELECT ODS.GNO,IOR.INO,DER.EMAIL,COMPANY,ITITLE,GOODS_SIMAGE,GOODS_PRICE,OSTATUS 
+		FROM H_GOODS ODS, H_INTERIOR IOR, H_ORDER DER 
+		WHERE DER.EMAIL='alstndkrl@naver.com' AND IOR.INO=ODS.INO AND ODS.GNO=DER.GNO AND OSTATUS='1'
+	
+	
+	</select>
+	
+	
+	
+	
+	<!-- id=qna -->
 	<select id="qna" resultType="com.myhouse.vo.questionVO">
 		SELECT * FROM(SELECT DISTINCT QNO,IOR.INO,ODS.GNO,QTYPE,QCONTENT,QREPLY,GOODS_SIMAGE,QSTATUS,QDATE,QDATE_R 
 		FROM H_QUESTION TION, H_MEMBER MEM, H_INTERIOR IOR,H_GOODS ODS WHERE IOR.INO=ODS.INO AND ODS.GNO=TION.GNO 

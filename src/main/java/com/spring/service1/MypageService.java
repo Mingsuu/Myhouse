@@ -13,6 +13,9 @@ public interface MypageService {
 	ModelAndView getreview(); // 리뷰 리스트 불러오기(베스트순)
 	ModelAndView getreview1(); // 리뷰 리스트 불러오기 (최신순)
 	ModelAndView getpasschange(Object vo); // 페스워드변경
-	ModelAndView getquestlist();
-	ModelAndView getqna();
+	ModelAndView getquestlist();//나의문의
+	ModelAndView getqna();//문의답변
+	ModelAndView getreviewpage();//리뷰작성
+	String getpictureproc(String pno, String nickname);
+	
 }

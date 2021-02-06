@@ -1,14 +1,17 @@
 package com.spring.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.vo.MemberVO;
+import com.myhouse.vo.SessionVO;
 import com.spring.service1.MypageService;
 
 @Controller
@@ -83,12 +86,12 @@ public class Mypagecontroller {
 	
 	
 	@RequestMapping(value="/mypage_review.do", method=RequestMethod.GET)
-	public String rivew() {
-		return "/mypage/review";
+	public ModelAndView rivew() {
+		return mypageService.getreviewpage();
 	}
 	
 	@RequestMapping(value="/mypage_review1.do", method=RequestMethod.GET)
-	public ModelAndView review1() {
+	public ModelAndView review1() {;
 		return mypageService.getreview1();
 	}
 	
@@ -135,6 +138,14 @@ public class Mypagecontroller {
 	public ModelAndView picture() {
 		return mypageService.getpicture();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage_picture_proc.do", method=RequestMethod.GET)
+	public String picture_proc(String pno, HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getpictureproc(pno,svo.getNickname());
+	}
+	
 	
 	@RequestMapping(value="/mypage_noticecontent.do", method=RequestMethod.GET)
 	public String noticecontent() {

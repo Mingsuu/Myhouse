@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,11 +31,7 @@
 			});
 		
 		$("#gum").click(function(){
-			if($("#search").val().length == 0){
 				$("#modal").css("display","block");
-				alert("검색할 상품을 입력해주세요.");
-				$("#search").focus();
-			}
 		});
 		
 		
@@ -99,6 +96,62 @@
 			});
 		
 		
+			$("#review-star-1").mouseover(function(){
+				$("#review-star-1").addClass("suggested");
+			});
+			$("#review-star-2").mouseover(function(){
+				$("#review-star-1").addClass("suggested");
+				$("#review-star-2").addClass("suggested");
+			});
+			$("#review-star-3").mouseover(function(){
+				$("#review-star-1").addClass("suggested");
+				$("#review-star-2").addClass("suggested");
+				$("#review-star-3").addClass("suggested");
+			});
+			$("#review-star-4").mouseover(function(){
+				$("#review-star-1").addClass("suggested");
+				$("#review-star-2").addClass("suggested");
+				$("#review-star-3").addClass("suggested");
+				$("#review-star-4").addClass("suggested");
+			});
+			$("#review-star-5").mouseover(function(){
+				$("#review-star-1").addClass("suggested");
+				$("#review-star-2").addClass("suggested");
+				$("#review-star-3").addClass("suggested");
+				$("#review-star-4").addClass("suggested");
+				$("#review-star-5").addClass("suggested");
+			});
+			
+			$("#review-star-1").mouseout(function(){
+				$("#review-star-1").removeClass("suggested");
+			});
+			$("#review-star-2").mouseout(function(){
+				$("#review-star-1").removeClass("suggested");
+				$("#review-star-2").removeClass("suggested");
+			});
+			$("#review-star-3").mouseout(function(){
+				$("#review-star-1").removeClass("suggested");
+				$("#review-star-2").removeClass("suggested");
+				$("#review-star-3").removeClass("suggested");
+			});
+			$("#review-star-4").mouseout(function(){
+				$("#review-star-1").removeClass("suggested");
+				$("#review-star-2").removeClass("suggested");
+				$("#review-star-3").removeClass("suggested");
+				$("#review-star-4").removeClass("suggested");
+			});
+			$("#review-star-5").mouseout(function(){
+				$("#review-star-1").removeClass("suggested");
+				$("#review-star-2").removeClass("suggested");
+				$("#review-star-3").removeClass("suggested");
+				$("#review-star-4").removeClass("suggested");
+				$("#review-star-5").removeClass("suggested");
+			});
+			
+			
+			
+			
+			
 		
 	
 	});//ready
@@ -109,9 +162,9 @@
 * {
 	font-family: "Noto Sans KR";
 }
-.profile {
+.profile1 {
 	margin:auto;
-	width:1200px;
+	width:1000px;
 }
 .navigation {
 	margin:auto;
@@ -645,6 +698,7 @@ path[Attributes Style] {
 	margin: 30px 60px 0 0;
 	margin-top: 0;
 }
+
 .review-modal__form__star__label{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -670,6 +724,7 @@ path[Attributes Style] {
 	margin: 0;
 	padding: 0;
 }
+
 .rating-input{
 	line-height: 1;
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -697,6 +752,21 @@ path[Attributes Style] {
 	padding: 0;
 	display: inline-block;
 }
+.star{
+	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	letter-spacing: -0.4px;
+	-webkit-box-direction: normal;
+	list-style: none;
+	color: #dbdbdb;
+	line-height: 0;
+	cursor: pointer;
+	font-size: 36px;
+	fill: currentcolor;
+	width: 1em;
+	height: 1em;
+	-webkit-tap-highlight-color: transparent;
+}
 .rating-input__star{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -710,6 +780,9 @@ path[Attributes Style] {
 	transition: color .1s;
 	font-size: 36px;
 	padding-right: 4px;
+}
+.rating-input__star suggested .star {
+	color: #35c5f0;
 }
 .rating-input__star>input{
 	-webkit-font-smoothing: antialiased;
@@ -740,21 +813,7 @@ path[Attributes Style] {
 	height: 1em;
 	-webkit-tap-highlight-color: transparent;
 } */
-.star{
-	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	letter-spacing: -0.4px;
-	-webkit-box-direction: normal;
-	list-style: none;
-	color: #dbdbdb;
-	line-height: 0;
-	cursor: pointer;
-	font-size: 36px;
-	fill: currentcolor;
-	width: 1em;
-	height: 1em;
-	-webkit-tap-highlight-color: transparent;
-}
+
 .review-modal__section__explain{
 	line-height: 1;
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -1451,8 +1510,8 @@ font-weight: 700;
 	position: absolute;
 	top: 12px;
 	right: 12px;
-	width: 70px;
-	height: 32px;
+	width: 90px;
+	height: 45px;
 	box-shadow: 0 0 6px 0 rgba(47,52,56,.2);
 	font-size: 15px;
 	padding: 0;
@@ -1499,6 +1558,90 @@ font-weight: 700;
 .bean {
 	margin-bottom:500px;
 }
+.retitle{
+	margin-top:50px;
+	margin-left:30px;
+	width:900px;
+}
+.retitle span {
+	font-size:21px;
+	font-weight:bold;
+}
+.rewrite{
+	margin-top:50px;
+	margin-left:30px;
+	width:900px;
+	height:160px;
+}
+.reimg {
+	width:150px;
+	height:150px;
+	border-radius:7px;
+	float:left;
+	margin-left:10px;
+}
+.rebox,
+.rebox1,
+.rebox1-1{
+	display:inline-block;
+	width:700px;
+	margin-left:20px;
+}
+.rebox{
+	margin-top:20px;
+}
+.rebox2 {
+	display:inline-block;
+	width:100px;
+	margin-left:10px;
+	float:right;
+}
+.rebox,
+.rebox1,
+.rebox1-1{
+	margin-bottom:8px;
+}
+.rebox span{
+	float:left;
+	font-size:15px;
+	font-weight:bold;
+}
+.rebox1 span,
+.rebox1-1 span{
+	float:left;
+	font-size:18px;
+}
+.rebox1-1 span{
+	
+}
+.rebox2 {
+	font-size:15px;
+}
+.rebox2 span{
+	float:right;
+	font-weight:bold;
+	color:#35c5f0;
+}
+.renum {
+	background-color:#35c5f0;
+	border-radius:2px;
+	color:white;
+	width:74px;
+	height:20px;
+	padding-left:8px;
+	padding-top:1px;
+}
+
+.renum1,
+.renum2{
+	font-weight:bold;
+}
+.renum1{
+	margin-left:16px;
+}
+.renum2{
+	margin-left:32px;
+}
 </style>
 </head>
 <body>
@@ -1515,28 +1658,23 @@ font-weight: 700;
 	</div>
 	<div class="nav2">
 		<ul class="nav2-1">
-			<a href="mypage_review.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰쓰기</li></a>
+			<a href="mypage_review.do"><li class="nav2-2"  style="color:#35c5f0; border-bottom:5px solid #35c5f0;">리뷰작성</li></a>
 			<a href="mypage_review2.do"><li class="nav2-2">내가 작성한 리뷰</li></a>
 		</ul>
 	</div>
 </div>
-<div class="profile">
-
-		<div class="review-my-home__search">
-			<div class="review-my-home__search__title">내가 사용하는 상품 리뷰쓰기</div>
-			<form class="review-my-home__search__form">
-				<div class="review-my-home__search__form__wrap">
-					<input placeholder="브랜드명 혹은 상품명을 입력하세요." class="form-control1 review-my-home__search__form__input" value="" id="search">
-					<button class="review-my-home__search__form__button" type="button" id="gum">검색</button>
-				</div>
-				<span id="count"></span>
-				<div class="review-my-home__search__product-list" id="searchresult">
-					<div class="review-my-home__search__product-list__no-product">검색 결과가 없습니다.</div>
-				</div>
-			</form>
-		</div>
-		<div class="virtualized-list review-my-home__review-list" style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);"></div>
-
+<div class="profile1">
+<div class="retitle"><span>내가 구입한 상품</span></div>
+	<c:forEach var="vo" items="${list}">
+	<div class="rewrite">
+		<img src="http://localhost:9000/myhouse/images/mypage/${vo.goods_simage }" class="reimg">
+		<div class="rebox"><span class="renum">상품 번호&nbsp;</span>  <span>&nbsp;&nbsp;${vo.gno}</span> <div class="rebox2"><span id="gum"><a href="#">리뷰 작성</a></span></div> </div>
+		<div class="rebox1"><span class="renum1">회사명&nbsp;</span><span>:&nbsp;${vo.company }</span></div>
+		<div class="rebox1"><span class="renum1">상품명&nbsp;</span><span>:&nbsp;${vo.ititle }</span></div>
+		<div class="rebox1-1"><span class="renum2">가격&nbsp;</span><span>:&nbsp;${vo.goods_price} 원</span></div>
+	</div>
+	</c:forEach>
+	<!-- <button class="review-my-home__search__form__button" type="button" id="gum">검색</button> -->
 </div>
 
 
@@ -1550,13 +1688,6 @@ font-weight: 700;
 							<path fill-rule="nonzero" d="M11.6 10l7.1 7.1-1.6 1.6-7.1-7.1-7.1 7.1-1.6-1.6L8.4 10 1.3 2.9l1.6-1.6L10 8.4l7.1-7.1 1.6 1.6z"></path>
 						</svg>
 					</button>
-				</div>
-				<div class="review-modal__point-explain">
-					<svg class="review-modal__point-explain__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-						<path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zm1 5H9.897l-.194.01C8.746 5.11 8 5.934 8 6.938v10.569l.01.198c.097.977.905 1.74 1.887 1.74 1.047 0 1.896-.868 1.896-1.938v-2.29H13l.248.006c2.479-.01 4.752-2.186 4.752-5.115C18 7.375 15.683 5 13 5zm0 3.875l.135.011c.543.087 1.072.672 1.072 1.222 0 .755-.558 1.265-1.108 1.236l-1.306-.003V8.875H13z"></path>
-					</svg>&nbsp;
-					<span class="review-modal__point-explain__value"></span>&nbsp; 일반리뷰&nbsp;
-					<span class="review-modal__point-explain__value review-modal__point-explain__value--none"></span>
 				</div>
 				<form class="review-modal__form">
 				<div class="review-modal__form__product">
@@ -1575,7 +1706,7 @@ font-weight: 700;
 							<div class="review-modal__form__star__value">
 								<ul class="rating-input">
 									<li>
-										<label class="rating-input__star" aria-label="별점 1점">
+										<label class="rating-input__star" aria-label="별점 1점" id="review-star-1">
 											<input type="radio" value="1">
 											<svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
 												<path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path>
@@ -1583,7 +1714,7 @@ font-weight: 700;
 										</label>
 									</li>
 									<li>
-										<label class="rating-input__star" aria-label="별점 2점">
+										<label class="rating-input__star" aria-label="별점 2점" id="review-star-2">
 											<input type="radio" value="2">
 											<svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
 												<path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path>
@@ -1591,7 +1722,7 @@ font-weight: 700;
 										</label>
 									</li>
 									<li>
-										<label class="rating-input__star" aria-label="별점 3점">
+										<label class="rating-input__star" aria-label="별점 3점" id="review-star-3">
 											<input type="radio" value="3">
 											<svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
 												<path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path>
@@ -1599,7 +1730,7 @@ font-weight: 700;
 										</label>
 									</li>
 									<li>
-										<label class="rating-input__star" aria-label="별점 4점">
+										<label class="rating-input__star" aria-label="별점 4점" id="review-star-4">
 											<input type="radio" value="4">
 											<svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
 												<path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path>
@@ -1607,7 +1738,7 @@ font-weight: 700;
 										</label>
 									</li>
 									<li>
-										<label class="rating-input__star" aria-label="별점 5점">
+										<label class="rating-input__star" aria-label="별점 5점" id="review-star-5">
 											<input type="radio" value="5">
 											<svg class="star" fill="currentColor" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36">
 												<path fill-rule="evenodd" d="M18 30.7l-9 3.8c-1.5.7-2.6-.2-2.5-1.8l.8-9.7L1 15.6c-1-1.3-.6-2.6 1-3l9.5-2.2 5-8.3c1-1.5 2.3-1.5 3.1 0l5 8.3 9.6 2.2c1.6.4 2 1.7 1 3L28.7 23l.8 9.7c.1 1.6-1 2.5-2.5 1.8l-9-3.8z"></path>

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.myhouse.dao.MypagePhotoDAO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.SessionVO;
+import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.interiorVO;
 import com.myhouse.vo.questionVO;
 import com.myhouse.vo.reviewVO;
@@ -20,6 +22,29 @@ public class MypageServiceImpl implements MypageService{
 
 	@Autowired
 	private MypagePhotoDAO mypagephotoDAO;
+	
+	
+	
+	@Override
+	public String getpictureproc(String pno,String nickname) {
+		String email = mypagephotoDAO.getnickname(nickname);
+		return String.valueOf(mypagephotoDAO.getlikeinsert(pno,email));
+	}
+	
+	
+	
+	
+	@Override
+	public ModelAndView getreviewpage() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<goodsVO> list = mypagephotoDAO.getreviewpage();
+		
+		mv.addObject("list", list);
+		mv.setViewName("mypage/review");
+		
+		return mv;
+	}
+	
 	
 	
 	

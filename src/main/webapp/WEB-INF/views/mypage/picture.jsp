@@ -75,6 +75,25 @@ $(document).ready(function(){
 	});
 	
 	
+	function like (){
+		var pno = $(this).parent().children("#liking").val();
+		System.out.println(pno);
+		$.ajax({
+			System.out.println(pno);
+			url:"mypage_picture_proc.do?pno="+pno
+			success:function(result){
+			}//success
+			
+		});//ajax
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 });//ready
 
@@ -716,7 +735,7 @@ div.card_item_content{
 				<div class="card-item-writer">
 					<address class="card-item-writer__content">
 						<div class="card-item-writer__header">
-							<a class="card-item-writer__link" href="/users/11910615">
+							<a class="card-item-writer__link" href="community_page.do?pno=${vo.pno}">
 								<img class="card-item-writer__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x" alt=""><span class="card-item-writer__name">귤먹고갈래</span>
 							</a>
 						</div>
@@ -724,7 +743,7 @@ div.card_item_content{
 					</address>
 				</div>
 				<div id="card-item-7734689" class="card-item__content">
-					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="#"></a>
+					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="community_page.do?pno=${vo.pno}"></a>
 					<div class="expandable-text card-item-description card-item__description">
 						<div class="card-item-description__content">${vo.pcontent}</div>
 					</div>
@@ -735,6 +754,7 @@ div.card_item_content{
 						</div>
 					</div>
 					<aside class="card-item-action-list">
+					<input type="hidden" name="like" value="${vo.pno}" id="liking">
 							<button class="card_action" type="button" id="card_action1">
 								<svg class="icon icon--stroke" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z">
 								</path>

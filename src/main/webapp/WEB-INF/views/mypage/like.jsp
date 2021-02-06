@@ -423,14 +423,14 @@
 		</div>
 	</div>
 	<div class="right1">
-	<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
-			마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
+		<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
+				마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
 		<div class="col-12 offset-lg-1 col-lg-8 wrap--contents">
 			<div class="praise-feed">
 				<div class="row" style="width:800px;">
 				<c:forEach var="vo" items="${list}">
 					<div class="praise-feed__item-wrap col-6 col-lg-4">
-						<a class="praise-feed__item" href="#">
+						<a class="praise-feed__item" href="community_page.do?pno=${vo.pno}">
 							<img class="praise-feed__item__image" src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}">
 							<span class="praise-feed__item__type">사진</span>
 						</a>
