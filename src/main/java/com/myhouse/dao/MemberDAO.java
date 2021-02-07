@@ -13,8 +13,24 @@ public class MemberDAO extends DBConn{
 	
 	private static String namespace="mapper.member";
 	
+	
 	/**
-	 *  select : 이메일 입력 시 회원 정보 가져옴 
+	 * Insert : 네이버 첫 로그인 시 정보 저장 
+	 */
+	public boolean getInsert2(MemberVO vo) {
+		boolean result=false;
+		int value= sqlSession.insert(namespace+".naverinsert", vo);
+		if(value!=0) result=true;
+		return result;
+	}
+	/**
+	 *  select : naverId 입력 시 회원정보 가져옴 
+	 */
+	public SessionVO getInfo(String naverId) {
+		return sqlSession.selectOne(namespace+".getinfo2", naverId);
+	}
+	/**
+	 *  select : 이메일 입력 시 회원사진정보 가져옴 
 	 */
 	public String getProfile(String email) {
 		return sqlSession.selectOne(namespace+".getprofile", email);
@@ -50,26 +66,6 @@ public class MemberDAO extends DBConn{
 		int value= sqlSession.insert(namespace+".insert", vo);
 		if(value!=0) result=true;
 		return result;
-		/*
-		boolean result=false;
-		
-		try {
-			String sql="insert into h_member values(?,?,?,'','','','','','','','','','',sysdate,'','','','','')";
-			
-			getPreparedStatement(sql);
-			pstmt.setString(1, vo.getEmail());
-			pstmt.setString(2, vo.getPass());
-			pstmt.setString(3, vo.getNickname());
-			
-			int val = pstmt.executeUpdate();
-			if(val!=0) {result=true;}
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-		*/
 	}
 	
 	

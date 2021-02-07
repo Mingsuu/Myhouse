@@ -6,6 +6,17 @@
 
 <mapper namespace="mapper.member">
 	
+	<!-- id : naverinsert -->
+	<insert id="naverinsert" parameterType="com.myhouse.vo.MemberVO">
+	insert into h_member values(#{email},#{pass},#{nickname},'','',
+		'','','','','','','','',sysdate,'','','','','')
+	</insert>
+	
+	<!-- id : getinfo -->
+	<select id="getinfo2" parameterType="java.lang.String" resultType="com.myhouse.vo.SessionVO">
+	select nickname,email,member_spimage from h_member where email=#{naverId}
+	</select>
+	
 	<!-- id : getprofile -->
 	<select id="getprofile" parameterType="java.lang.String" resultType="java.lang.String">
 	select member_spimage from h_member where email=#{email}

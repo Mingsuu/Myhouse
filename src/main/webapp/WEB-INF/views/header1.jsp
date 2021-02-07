@@ -213,23 +213,22 @@
 		</div>
 				</div>
 				<%}else if(svo.getNickname().equals("관리자")){ %>
-				<div class="space1">
-				</div>
-				<div class="layout-navigation-bar-login">
-					<a class="layout-navigation-bar-login__item"
-						href="logout.do">로그아웃</a>
-				</div>
-				<div class="drop-down layout-navigation-bar-upload-button">
-					<a href="http://localhost:9000/myhouse/notice_list_admin.do">
-						<button class="layout-navigation-bar-upload-button__button"
-							type="button" id="depth_my_page" >
-							관리자Page
-									<path fill="currentColor" fill-rule="evenodd"
-									d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path>
-						</button>
-					</a>
-				</div>
-				
+					<div class="space1">
+					</div>
+					<div class="layout-navigation-bar-login">
+						<a class="layout-navigation-bar-login__item"
+							href="logout.do">로그아웃</a>
+					</div>
+					<div class="drop-down layout-navigation-bar-upload-button">
+						<a href="http://localhost:9000/myhouse/notice_list_admin.do">
+							<button class="layout-navigation-bar-upload-button__button"
+								type="button" id="depth_my_page" >
+								관리자Page
+										<path fill="currentColor" fill-rule="evenodd"
+										d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path>
+							</button>
+						</a>
+					</div>
 				<%}else{ %>
 				<a
 					class="layout-navigation-bar-icon layout-navigation-bar-icon--hide-mobile"
@@ -268,9 +267,15 @@
 					<button class="layout-navigation-bar-user-button" type="button"
 						aria-label="유저-아이디" id="depth_my_page_user">
 						<div class="layout-navigation-bar-user-button__image">
+							<%if(svo.getMember_spimage()!=null){ %>
 							<img class="image"
 								src="http://localhost:9000/myhouse/resources/upload/<%=svo.getMember_spimage()%>"
 								srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c 3x">
+							<%}else{ %>
+							<img class="image"
+								src="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&w=36&h=36&c=c"
+								srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c 3x">
+							<%} %>
 						</div>
 						<svg class="layout-navigation-bar-user-button__caret" width="8"
 							height="8" viewBox="0 0 8 8" fill="currentColor"
