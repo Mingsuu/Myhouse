@@ -28,12 +28,13 @@ public class SalesApplicationController {
 	 @RequestMapping(value="/sales_form_write_proc.do", method=RequestMethod.POST)
 	 public String board_write_proc(interiorVO ivo, goodsVO gvo, HttpServletRequest request,HttpSession session) {
 		 SessionVO svo=(SessionVO)session.getAttribute("svo");
+		 ivo.setEmail(svo.getEmail());
 		 //서버의 저장경로
 		  String path1 = request.getSession().getServletContext().getRealPath("/");
 		  String path2 = "\\resources\\upload\\";
 		 //vo에 저장경로를 추가
 		 ivo.setSavepath(path1+path2);
 		 gvo.setSavepath(path1+path2);
-	     return salesService.getResultWrite(ivo, gvo, svo.getNickname());
+	     return salesService.getResultWrite(ivo, gvo);
 	  }
 }

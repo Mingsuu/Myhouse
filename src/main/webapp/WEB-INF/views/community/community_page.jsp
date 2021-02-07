@@ -48,22 +48,6 @@
 			} 
 		});
 		
-		$('button.tag').mouseover(function(){
-			
-			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
-			output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
-			output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
-			output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c&amp;webp=1'>"
-			output += "<img class='_2TSZD' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c'>"
-			output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>레인보우하우스</div><div class='_2WPGa'>원프레드화이트 쇼파커버 (거실러그, 블랭킷, 다용도 패브릭)</div>"
-			output += "<div class='_2WAbO'>34,900원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
-			output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-			output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
-			if($(this).parent().children('.pop').length < 1){
-				$(this).parent().append(output);
-			}
-		});
-		
 		$(document).on("mouseleave","div.pop",function(){
 			$('div.pop').remove();
 		});
@@ -382,15 +366,19 @@
 		
 		
 		$(".production_tag_scoller_item").mouseover(function(){
+			var gname = $(this).children().children().children("img").attr("alt");
+			var gimg = $(this).children().children().children("img").attr("src");
+			var company = $(this).children().children().children(".company").val();
+			var gprice = $(this).children().children().children(".price").val();
 			$('.pop').remove();
 			$(this).addClass('tag_active');
 			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
 				output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
 				output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
 				output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
-				output += "<img class='_2TSZD' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
-				output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>레인보우하우스</div><div class='_2WPGa'>원프레드화이트 쇼파커버 (거실러그, 블랭킷, 다용도 패브릭)</div>"
-				output += "<div class='_2WAbO'>34,900원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
+				output += "<img class='_2TSZD' src='"+gimg+"'>"
+				output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>"+company+"</div><div class='_2WPGa'>"+gname+"</div>"
+				output += "<div class='_2WAbO'>"+gprice+"원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
 				output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
 				output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
 			$(".tag_detail").append(output);
@@ -398,11 +386,29 @@
 		
 		$(".production_tag_scoller_item").mouseleave(function(){
 			$(this).removeClass('tag_active');
-			$('.pop').fadeOut(1800);
+			$('.pop').hide(1800);
+		}); 
+		
+		$('.tag_detail').mouseover(function(){
+			$('.pop').stop();
 		});
 		
-		$('.pop').mouseover(function(){
-			$(this).show();
+		$('button.card-detail-edit-menu__button').click(function(){
+			if($(this).parent().children('div').children('div.popout').css('display')=='block')
+				$(this).parent().children('div').children('div.popout').css('display','none');
+			else $(this).parent().children('div').children('div.popout').css('display','');
+		});
+		
+		$('button.card-detail-edit-menu__item').click(function(){
+			var choice = confirm("정말로 삭제하시겠습니까?");
+			if(choice){
+				$.ajax({
+					url :"photo_delete_proc.do?pno=${pvo.pno}",
+					success:function(result){
+						location.href="http://localhost:9000/myhouse/community_index.do"
+					}
+				});
+			}
 		});
 		
 		var swiper = new Swiper('.swiper-container', {
@@ -1617,6 +1623,22 @@
 		cursor: pointer;
    }
    
+   img._2TSZD{
+  		 line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		color: inherit;
+		cursor: pointer;
+		font-family: "Noto Sans KR", "Noto Sans CJK KR", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-tap-highlight-color: transparent;
+		border: none;
+		width: 100%;
+		height: 100%;
+   }
+   
    div._3bqx7{
    		margin: 0;
 		padding: 0;
@@ -1633,7 +1655,14 @@
    }
    
    div._2WPGa{
-   		margin: 0;
+   		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		pointer-events: auto;
+		visibility: visible;
+		cursor: pointer;
+		font-family: "Noto Sans KR", "Noto Sans CJK KR", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
 		padding: 0;
 		border: none;
 		height: 36px;
@@ -1929,12 +1958,176 @@
 	    background: white; 
 	    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 	}
+
+	div.drop-down card-detail-edit-menu{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		display: inline-block;
+	}
 	
-/* 	div.tag_detail{
-		height:100px;
-	} */
-
-
+	button.card-detail-edit-menu__button{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		display: inline-block;
+		margin: 0 5px;
+		padding: 13px 0;
+		border: none;
+		background: none;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		transition: opacity .1s;
+	}
+	
+	svg.addicon{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		cursor: pointer;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		width: 1em;
+		height: 1em;
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	svg.addicon >g {
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		cursor: pointer;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		fill: currentcolor;
+		transform: translate(11, 3);
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	div.animated-popout{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		transform-origin: 50% 0;
+		box-sizing: border-box;
+		z-index: 1000;
+		position: relative;
+		margin-top: 17px;
+		pointer-events: auto;
+		visibility: visible;
+		opacity: 1;
+		transform: none;
+		transition: opacity .2s,transform .2s;
+	}
+	
+	ul.card-detail-edit-menu__list{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		-webkit-tap-highlight-color: transparent;
+		list-style: none;
+		width: 150px;
+		margin: 0 -1px;
+		padding: 10px;
+		box-sizing: border-box;
+		background-color: #fff;
+		box-shadow: 0 4px 6px 0 rgba(0,0,0,.18);
+		border: 1px solid #dbdbdb;
+		border-radius: 4px;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	li.card-detail-edit-menu__item-wrap{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		list-style: none;
+		white-space: nowrap;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.card-detail-edit-menu__item{
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		pointer-events: auto;
+		visibility: visible;
+		list-style: none;
+		white-space: nowrap;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+		display: block;
+		position: relative;
+		width: 100%;
+		margin: 0;
+		padding: 10px 14px 11px;
+		box-sizing: border-box;
+		border: none;
+		background: #fff;
+		color: #424242;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: 15px;
+		line-height: 21px;
+		text-decoration: none;
+		text-align: left;
+		cursor: pointer;
+		border-radius: 2px;
+	}
+	.card-detail-edit-menu__content:before {
+	    margin: 0 0 0 -4px;
+	    border-width: 0 5px 10px;
+	    border-color: transparent transparent #dbdbdb;
+	    transform: translateX(.5px);
+	}
+	
+	.card-detail-edit-menu__content:after {
+	    margin: 0 0 -1px -4px;
+	    border-width: 0 4.5px 9px;
+	    border-color: transparent transparent #fff;
+	}
+	
+	.card-detail-edit-menu__content:after, .card-detail-edit-menu__content:before {
+	    content: "";
+	    position: absolute;
+	    display: block;
+	    right: 12px;
+	    bottom: 100%;
+	    border-style: solid;
+	}
+	
+	.card-detail-edit-menu__item:active, .card-detail-edit-menu__item:hover{
+	    background-color: #f7f8fa;
+	}
 </style>
 </head>
 <body>
@@ -1963,84 +2156,27 @@
 						</div>
 					
 					<!-- swiper -->
+					<c:if test="${tagcount != 0}">
 					  <div class="swiper-container">
 						    <div class="swiper-wrapper">
+						    <c:forEach var="tag" items="${taglist}"> 
 						      <div class="swiper-slide">
 						      	<div class="production_tag_scoller_item">
 									<a href="#" class="production_tag_scoller_item_link">
 										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
+											<img class="production_tag_scoller_item_image" src="http://localhost:9000/myhouse/resources/upload/${tag.goods_simage}" alt="${tag.goods_name}">
+											<input type="hidden" class="company" value="${tag.company}">
+											<input type="hidden" class="price" value="${tag.goods_price}">
 										</div>
 									</a>
 								</div>
 							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
-						      <div class="swiper-slide">
-						      	<div class="production_tag_scoller_item">
-									<a href="#" class="production_tag_scoller_item_link">
-										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1531964785710_VEwgN1.jpg?gif=1&w=144&h=144&c=c" alt="타미 1인">
-										</div>
-									</a>
-								</div>
-							</div>
+						   </c:forEach>
 						    </div>
 					    <div class="swiper-button-next"></div>
 					    <div class="swiper-button-prev"></div>
   					</div>
+  					</c:if>
   					<div class="tag_detail"></div>
   					
 					<p class="card_detail_description">
@@ -2377,6 +2513,23 @@
 										</svg>
 										<span class="count">${scrap}</span>
 									</button>
+								</c:if>
+								
+								<c:if test="${getwriter != 0}">
+								<div class="drop-down card-detail-edit-menu" style="position:relative;">
+									<button class="card-detail-edit-menu__button" type="button" title="더보기">
+										<svg class="addicon" width="1em" height="1em" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+											<g fill="currentColor" transform="translate(11 3)"><circle cx="1.5" cy="1.5" r="1.5"></circle><circle cx="1.5" cy="8.5" r="1.5"></circle><circle cx="1.5" cy="15.5" r="1.5"></circle></g>
+										</svg>
+									</button>
+									<div><div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 1000; top: 40px; right:-75px; display:none">
+									<div class="animated-popout drop-down__content card-detail-edit-menu__content open open-active">
+									<ul class="card-detail-edit-menu__list">
+									<li class="card-detail-edit-menu__item-wrap">
+									<a class="card-detail-edit-menu__item" href="photo_update.do?pno=${pvo.pno}">수정</a></li>
+									<li class="card-detail-edit-menu__item-wrap">
+									<button class="card-detail-edit-menu__item" type="button">삭제</button></li></ul></div></div></div>
+								</div>
 								</c:if>
 								
 								</div>

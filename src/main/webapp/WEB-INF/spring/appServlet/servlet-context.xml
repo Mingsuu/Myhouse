@@ -68,6 +68,7 @@
 	<beans:bean class="com.myhouse.dao.yk_MemberDAO" id="ykmemberDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_interiorDAO" id="ykinteriorDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_goodsDAO" id="ykgoodsDAO"></beans:bean>
+	<beans:bean class="com.myhouse.dao.yk_tagDAO" id="yktagDAO"></beans:bean>
 	
 	<!-- search에 쓰이는 beans -->
 	<beans:bean class="com.myhouse.dao.yj_InteriorDAO" id="interiorDAO2"></beans:bean>

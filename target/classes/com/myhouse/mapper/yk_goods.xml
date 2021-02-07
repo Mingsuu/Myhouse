@@ -6,7 +6,7 @@
 
 <mapper namespace="mapper.ykgoods">
 <insert id="insert" parameterType="com.myhouse.vo.goodsVO">
-	insert into h_goods values ('c'||SEQU_H_GOODS.nextval, #{ino}, #{goods_image},
+	insert into h_goods values ('g'||SEQU_H_GOODS.nextval, #{ino}, #{goods_image},
 								 #{goods_simage}, #{goods_name}, #{goods_price})
 </insert>
 </mapper>

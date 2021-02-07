@@ -14,7 +14,7 @@
 		update h_photo set phits = phits+1 where pno=#{pno}
 	</update>
 	
-	<select id="getwriter" parameterType="java.lang.String" resultType="com.myhouse.vo.MemberVO">
+	<select id="getwriterinfo" parameterType="java.lang.String" resultType="com.myhouse.vo.MemberVO">
 		select nickname, member_spimage, intro from h_member, h_photo 
 		where h_member.email=h_photo.email and pno=#{pno}
 	</select>
@@ -26,5 +26,25 @@
 			order by pdate)
 		where rownum between 1 and 4
 	</select>
+	
+	<select id ="getwriter"  parameterType="map" resultType="int">
+	  select count(*) from h_photo where email=#{email} and pno=#{pno}
+	</select> 
+	
+	<update id="update" parameterType="com.myhouse.vo.PhotoVO">
+		update h_photo 
+		set pcontent=#{pcontent} , pstyle=#{pstyle}, ptype=#{ptype}
+		<choose>
+			<when test="photo_image != null">
+				,photo_image=#{photo_image}, photo_simage=#{photo_simage} 
+			</when>
+		</choose>
+		where pno=#{pno}			
+	</update>
+	
+	
+	<delete id="getdelete" parameterType="java.lang.String" >
+		delete from h_photo where pno =#{pno}
+	</delete>
  	
 </mapper>

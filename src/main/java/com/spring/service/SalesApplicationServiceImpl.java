@@ -22,12 +22,10 @@ public class SalesApplicationServiceImpl {
 	@Autowired
 	private yk_MemberDAO ykmemberDAO;
 	
-	 public String getResultWrite(Object vo, Object vo2, String nickname) {
+	 public String getResultWrite(Object vo, Object vo2) {
 	      interiorVO ivo = (interiorVO) vo;
 	      goodsVO gvo = (goodsVO) vo2;
 	      boolean dao_result = false;
-	      
-	      ivo.setEmail(ykmemberDAO.getEmail(nickname));
 	      
 	      if(ivo.getInterior_file().getSize() !=0) {
 	    	  //파일존재
