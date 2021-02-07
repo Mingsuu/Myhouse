@@ -20,6 +20,14 @@ public class yj_communityDAO  extends DBConn{
 	/**
 	 * 전체사진 리스트 (최신인기순)
 	 */
+	public ArrayList<CommunityVO> getList2(){
+		List<CommunityVO> list = sqlSession.selectList(namespace+".index_community_list");
+		return (ArrayList<CommunityVO>) list;
+	}
+	
+	/**
+	 * 전체사진 리스트 (최신인기순)
+	 */
 	public ArrayList<CommunityVO> getList(String value){
 		List<CommunityVO> list = sqlSession.selectList(namespace+".list22",value);
 		return (ArrayList<CommunityVO>) list;

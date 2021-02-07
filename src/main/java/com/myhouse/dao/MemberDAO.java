@@ -13,6 +13,12 @@ public class MemberDAO extends DBConn{
 	
 	private static String namespace="mapper.member";
 	
+	/**
+	 *  select : 이메일 입력 시 회원 정보 가져옴 
+	 */
+	public String getProfile(String email) {
+		return sqlSession.selectOne(namespace+".getprofile", email);
+	}
 	
 	/**
 	 *  select : 이메일 입력 시 회원 정보 가져옴 

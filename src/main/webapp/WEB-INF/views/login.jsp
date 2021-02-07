@@ -151,17 +151,20 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 					<section class="sign-in-form__sns">
 						<h2 class="sign-in-form__sns__title">SNS계정으로 간편 로그인/회원가입</h2>
 						<div class="sign-in-form__sns__list">
-							<a class="sign-in-form__sns__entry" data-type="facebook"
-								href="http://localhost:9000/myhouse/login"> <span
-								class="icon-page-login__a-3" aria-label="페이스북으로 로그인"></span>
-							</a> <a
-								class="sign-in-form__sns__entry sign-in-form__sns__entry--kakao"
+							<!-- 
+							<a class="sign-in-form__sns__entry sign-in-form__sns__entry--kakao"
 								data-type="kakao" href="http://localhost:9000/myhouse/login"> <span
 								class="icon-page-login__c-3" aria-label="카카오계정으로 로그인"></span>
-							</a> <a class="sign-in-form__sns__entry" data-type="naver"
+							</a> 
+							 -->
+							<a class="sign-in-form__sns__entry" data-type="naver"
 								href="${url}"> <span class="icon-page-login__e-3"
 								aria-label="네이버 아이디로 로그인"></span>
 							</a>
+							<a class="sign-in-form__sns__entry" data-type="facebook"
+								href="http://localhost:9000/myhouse/login"> <span
+								class="icon-page-login__a-3" aria-label="페이스북으로 로그인"></span>
+							</a> 
 						</div>
 					</section>
 					
