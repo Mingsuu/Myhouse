@@ -4,13 +4,21 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PhotoVO {
 	String pno,email,pcontent,pstyle,ptype,photo_image,
-	photo_simage,pdate,savepath;
+	photo_simage,pdate,savepath,ptag;
 	
+
 	int phits;
 
 	CommonsMultipartFile file1, file2, file3, file4;
 
 	
+	public String getPtag() {
+		return ptag;
+	}
+	
+	public void setPtag(String ptag) {
+		this.ptag = ptag;
+	}
 	
 	public String getPno() {
 		return pno;
