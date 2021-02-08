@@ -16,7 +16,13 @@ public class yj_InteriorDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	private static String namespace="mapper.interior2";
-
+	
+	// store_index - list
+		public ArrayList<StoreIndexVO> getInteriorList2(){
+			List<StoreIndexVO> interior_list = sqlSession.selectList(namespace+".index_interior_list");
+			return (ArrayList<StoreIndexVO>)interior_list;
+		} 
+		
 	// store_index - list
 	public ArrayList<StoreIndexVO> getInteriorList(String value){
 		List<StoreIndexVO> interior_list = sqlSession.selectList(namespace+".list1", value);
