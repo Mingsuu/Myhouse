@@ -7,6 +7,19 @@
 <mapper namespace="mapper.interior2">
 
 <!-- store_index - list -->
+<select id="index_interior_list"  resultType="com.myhouse.vo.StoreIndexVO">
+	select rownum,ino, company, ititle, category, tone, color, goods_simage, goods_price, star_avg, star_count from(select  ino, company, ititle, category, tone, color, goods_simage, goods_price, star_avg, star_count from(select gno ,count(*)sellnum from h_order group by gno) s,
+	(select distinct ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, star_avg, star_count
+		from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, avg(star)over(partition by ino) as star_avg, 
+			count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
+			from(select i.ino, company, ititle, interior_simage, category, tone, color, g.gno, goods_simage, goods_name, goods_price, vno, star
+			from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))) i
+	 where i.gno=s.gno(+)
+	 order by sellnum asc,goods_price desc)
+   where rownum between 1 and 3
+	 
+</select>
+
 <select id="list1"  parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
 	select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, star_avg, star_count
 	from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, avg(star)over(partition by ino) as star_avg, 

@@ -25,6 +25,23 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
+	/**
+	 * 프로필 갖어오기
+	 */
+	public ModelAndView getProfile(HttpSession session) {
+		ModelAndView mv=new ModelAndView();
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		
+		if(svo!=null) {
+			String profile=memberDAO.getProfile(svo.getEmail());
+			mv.addObject("profile",profile);
+			mv.setViewName("index");
+		}else {
+			mv.setViewName("index");
+		}
+		return mv;
+	}
 	/**
 	 * 패스워드 찾기 이메일 발송
 	 */

@@ -31,7 +31,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/pass_update_proc.do",method=RequestMethod.POST)
 	public String pass_update(String email) {
-		return memberService.mailSendWithPassword(email);//ajax 전송
+		return memberService.mailSendWithPassword(email);
 	}
 	/**
 	 * 비밀번호 찾기 화면
