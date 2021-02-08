@@ -1,89 +1,117 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>test</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage1.css"> -->
+<!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
-    input[type="file"] {
-  display: block;
-}
-.imageThumb {
-  max-height: 75px;
-  border: 2px solid;
-  padding: 1px;
-  cursor: pointer;
-}
-.pip {
-  display: inline-block;
-  margin: 10px 10px 0 0;
-}
-.remove {
-  display: block;
-  background: #444;
-  border: 1px solid black;
-  color: white;
-  text-align: center;
-  cursor: pointer;
-}
-.remove:hover {
-  background: white;
-  color: black;
-}
-    </style>
-    <script type="text/javascript">
-    $(document).ready(function() {
-    	  if (window.File && window.FileList && window.FileReader) {
-    	    $("#files").on("change", function(e) {
-    	      var files = e.target.files,
-    	        filesLength = files.length;
-    	      for (var i = 0; i < filesLength; i++) {
-    	        var f = files[i]
-    	        var fileReader = new FileReader();
-    	        fileReader.onload = (function(e) {
-    	          var file = e.target;
-    	          $("<span class=\"pip\">" +
-    	            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-    	            "<br/><span class=\"remove\">Remove image</span>" +
-    	            "</span>").insertAfter("#files");
-    	          $(".remove").click(function(){
-    	            $(this).parent(".pip").remove();
-    	          });
-    	          
-    	          // Old code here
-    	          /*$("<img></img>", {
-    	            class: "imageThumb",
-    	            src: e.target.result,
-    	            title: file.name + " | Click to remove"
-    	          }).insertAfter("#files").click(function(){$(this).remove();});*/
-    	          
-    	        });
-    	        fileReader.readAsDataURL(f);
-    	      }
-    	    });
-    	  } else {
-    	    alert("Your browser doesn't support to File API")
-    	  }
-    	});
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
 
-    </script>
-</head>
+ <script>
+	$(document).ready(function(){
+		
+		//선택등록 버튼 
+		$("#btnInsert").click(function(){
+			var choice = confirm("등록하시겠습니까?");
+			if(choice){
+				var chk_list = new Array();		
+				
+				$("input[type=checkbox]:checked").each(function(i){
+
+					chk_list += $(this).attr("id") + ","
+				});	
+				/* alert(chk_list); */
+				$(opener.document).find("#ptag").val(chk_list);
+				
+				window.close();
+			}			
+		});
+	});
+ </script>
+ <style>
+ .search-page__title{
+ 	display:block;
+ 	background-color:#35c5f0;
+ 	text-align:center;
+ }
+ .ul{
+ 		display: block;
+		padding: 0 30px;
+ }
+.list_item{
+		margin-left:85px;
+		float: left;
+		padding: 35px 10px;
+		list-style-type: none;	
+
+}
+.list_item>.image{
+		height: 200px;
+		width: 200px;
+		border-radius:8px;
+}
+.search-page container{
+	width: 750px;
+	display: block;
+	margin: auto;
+	padding:50px 0 0 0 ;
+}
+.info{
+	text-align:center;
+	margin:auto;
+}
+.btn_style{
+  	width:100px;
+    background-color: #35c5f0;
+    border: none;
+    color:#fff;
+    padding:20px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:4px;
+}
+ </style>
 <body>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div class="field" align="left">
-  <h3>Upload your images</h3>
-  <input type="file" id="files" name="files[]" multiple />
-</div>
-
-									
-<!-- <canvas id="Canvas" width="700" height="700"></canvas> -->
-
+<article class="search-page container">
+	<h1 class="search-page__title" style="color:white;,size:100px;">‘${value}’에 대한 스토어 검색 결과 
+		<span class="search-page__number"style="color:white;">${interior_list.size()+community_list.size()}개</span>
+	</h1>
+	<section class="search-item">
+		<div class="scroller-wrap search-store__scroller scroller-wrap--enabled">
+			<div class="scroller">
+				<div class="scroller__content-wrap" tabindex="-1">
+						<ul>
+							<c:forEach var="vo" items="${interior_list}">
+							<li class="list_item">
+							<input type="checkbox" id="${vo.gno}">
+										<a href="http://localhost:9000/myhouse/store_page.do?gno=${vo.gno}"></a>
+											<img class="image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}">
+											<div class="production-item-image__dark-overlay"></div>
+										<div class="info">
+											<h1 class="production-item__header">
+												<span class="production-item__header__brand">${vo.company}</span>
+												<span class="production-item__header__name">${vo.ititle}</span>
+											</h1>
+											<span class="production-item-price">
+												<span class="production-item-price__price">${vo.goods_price}</span>
+											</span>
+										</div>
+							</li>
+								</c:forEach>
+								</ul>
+								<button type="button" class="btn_style" id="btnInsert">태그 등록</button>
+					</div>
+				</div>
+		</div>
+	</section>
+</article>
 </body>
 </html>
