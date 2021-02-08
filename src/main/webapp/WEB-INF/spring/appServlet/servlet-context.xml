@@ -64,6 +64,9 @@
 	<beans:bean class="com.myhouse.dao.photo_commentDAO" id="photo_commentDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_likeDAO" id="likeDAO"></beans:bean>
 	<beans:bean class="com.myhouse.dao.yk_scrapDAO" id="scrapDAO"></beans:bean>
+	
+	<beans:bean class="com.myhouse.dao.NoticeDAO" id="noticeDAO"></beans:bean>
+	<beans:bean class="com.spring.service.NoticeServiceImpl" id="noticeService"></beans:bean>
 	<!-- search에 쓰이는 beans -->
 	<beans:bean class="com.myhouse.dao.yj_InteriorDAO" id="interiorDAO2"></beans:bean>
 	<beans:bean class="com.spring.service1.SearchServiceImpl" id="searchService"></beans:bean>
