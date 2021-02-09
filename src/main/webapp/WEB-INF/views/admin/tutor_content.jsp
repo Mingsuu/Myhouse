@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="com.one_day_class.dao.*, com.one_day_class.vo.*,java.util.*"%>
-<%
+    %>
+<%--
 	String email = request.getParameter("email");
 
 	sh_TutorDAO dao_tutor = new sh_TutorDAO();
@@ -12,7 +12,7 @@
 	ArrayList<sh_ClassVO> list_class_open = dao_class.getMakeClassOpen(email);
 	ArrayList<sh_ClassVO> list_class_wait = dao_class.getMakeClassWait(email);
 	
-%>
+--%>
     
 <!DOCTYPE html>
 <html>
@@ -163,7 +163,7 @@
 </head>
 <body>
 	<!-- header -->
-	<jsp:include page="../header_tutor.jsp"></jsp:include>
+	<jsp:include page="../header1.jsp"></jsp:include>
 
 	<!-- content -->
 	<div class="admin_content">
@@ -182,7 +182,7 @@
 		</aside>
 		<section class="admin_section1">
 			<div class="ad_title">회원상세정보</div>
-			<table class="admin_member_content">
+			<%-- <table class="admin_member_content">
 				<tr>
 					<th>아이디</th>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getEmail() %></td>
@@ -200,13 +200,13 @@
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getArea() %></td>
 				</tr>
 				<tr>
-					<%-- <th>튜터 이미지</th>
+					<th>튜터 이미지</th>
 					<% if(vo_tutor.getSprofile_img() != null) { %>
 						<td style="background-image: url('http://localhost:9000/One_day_class/upload/<%= vo_tutor.getSprofile_img()%>');
 									backgroun-repeat:none; height:30px; width:30px;"></td>
 					<%} else {%>
 						<td >신청한 수업이 없습니다.</td>
-					<% } %> --%>
+					<% } %>
 					<th>총 등록수업</th>
 					<% if(list_class.size() != 0){ %>
 						<td colspan="5">
@@ -253,7 +253,7 @@
 						<a href="member_list.jsp"><button type="button" class="btn_style" >목록으로</button></a>
 					</td>
 				</tr>
-			</table>
+			</table> --%>
 		</section>
 	</div>
 

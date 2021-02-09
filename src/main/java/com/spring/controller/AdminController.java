@@ -24,6 +24,24 @@ public class AdminController {
 	 *  공지사항 삭제
 	 */
 	@ResponseBody
+	@RequestMapping(value="/sellerUpdate2.do",method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String sellerUpdate2(String[] emails) {
+		return memberService.sellerUpdate2(emails);
+	}
+	/**
+	 *  공지사항 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/sellerUpdate.do",method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String sellerUpdate(String[] emails) {
+		return memberService.sellerUpdate(emails);
+	}
+	/**
+	 *  공지사항 삭제
+	 */
+	@ResponseBody
 	@RequestMapping(value="/stateUpdate2.do",method=RequestMethod.GET,
 			produces="text/plain;charset=UTF-8")
 	public String stateUpdate2(String[] inos) {
@@ -121,15 +139,15 @@ public class AdminController {
 		return noticeService.getList(rpage);
 	}
 	/**
-	 *  스토어 리스트
+	 *  회원 리스트
 	 */
 	@RequestMapping(value="/member_list.do",method=RequestMethod.GET)
-	public String member_list() {
-		return "/admin/member_list";
+	public ModelAndView member_list(String rpage) {
+		return memberService.getMemberList2(rpage);
 	}
 	
 	/**
-	 *  회원 리스트
+	 *  스토어 리스트
 	 */
 	@RequestMapping(value="/store_list.do",method=RequestMethod.GET)
 	public ModelAndView class_list(String rpage) {

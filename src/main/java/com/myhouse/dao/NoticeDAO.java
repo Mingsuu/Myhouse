@@ -62,7 +62,7 @@ public class NoticeDAO {
 		return vo;
 	}
 	/**
-	 * 전체사진 리스트 (최신인기순)
+	 * 전체 리스트 
 	 */
 	public ArrayList<noticeVO> getList(int start, int end){
 		Map<String, String> param = new HashMap<String, String>();

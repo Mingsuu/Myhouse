@@ -6,6 +6,28 @@
 
 <mapper namespace="mapper.member">
 	
+	<!-- id : sellerUpdate1 -->
+	<update id="sellerUpdate1" parameterType="java.lang.String" >
+		update h_member set seller=1 where email=#{email}
+	</update>
+	
+	<!-- id : sellerUpdate0 -->
+	<update id="sellerUpdate0" parameterType="java.lang.String" >
+		update h_member set seller=0 where email=#{email}
+	</update>
+	
+	<!-- id : memberlist -->
+	<select id="memberlist" parameterType="map" resultType="com.myhouse.vo.MemberVO">
+	select * from (select rownum rno,email,nickname,seller,to_char(mdate, 'yyyy.mm.dd') mdate
+			from (select * from h_member order by mdate desc)) 
+	where rno between #{start} and #{end}
+	</select> 
+	
+	<!-- id : memberlistcount -->
+	<select id="memberlistcount" resultType="int">
+	 	select count(*) from h_member
+	</select>
+	
 	<!-- id : stateUpdate1 -->
 	<update id="stateUpdate1" parameterType="java.lang.String" >
 		update h_interior set status=1 where ino=#{ino}

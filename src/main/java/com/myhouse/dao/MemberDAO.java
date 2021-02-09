@@ -1,6 +1,9 @@
 package com.myhouse.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,56 @@ public class MemberDAO extends DBConn{
 	private SqlSessionTemplate sqlSession;
 	
 	private static String namespace="mapper.member";
+	
+	/**
+	 *  update : seller 업데이트 1로
+	 */
+	public boolean sellerUpdate2(String[] emails) {
+		boolean result=true;
+		for(String email:emails) {
+			if(sqlSession.update(namespace+".sellerUpdate1",email)==0) {
+				result=false;
+			}
+			
+		}
+		return result;
+	}
+	/**
+	 *  update : seller 업데이트 0으로
+	 */
+	public boolean sellerUpdate(String[] emails) {
+		boolean result=true;
+		for(String email:emails) {
+			if(sqlSession.update(namespace+".sellerUpdate0",email)==0) {
+				result=false;
+			}
+			
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * 전체 리스트 카운트
+	 */
+	public int getListCount() {
+		return sqlSession.selectOne(namespace + ".memberlistcount");
+	}
+	
+	/**
+	 * 전체사진 리스트 (최신인기순)
+	 */
+	public ArrayList<MemberVO> getMemberList(int start, int end){
+		Map<String, String> param = new HashMap<String, String>();
+		
+		String str_start=String.valueOf(start);
+		String str_end=String.valueOf(end);
+		param.put("start",str_start);
+		param.put("end",str_end);
+		
+		List<MemberVO> list = sqlSession.selectList(namespace+".memberlist", param);
+		return (ArrayList<MemberVO>) list;
+	}
 	
 	/**
 	 *  update : 공지사항 업데이트
