@@ -1,10 +1,14 @@
 package com.myhouse.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.SessionVO;
+import com.myhouse.vo.interiorVO;
+import com.myhouse.vo.noticeVO;
 
 public class MemberDAO extends DBConn{
 	
@@ -13,7 +17,43 @@ public class MemberDAO extends DBConn{
 	
 	private static String namespace="mapper.member";
 	
-	
+	/**
+	 *  update : 공지사항 업데이트
+	 */
+	public boolean stateUpdate2(String[] inos) {
+		boolean result=true;
+		for(String ino:inos) {
+			if(sqlSession.update(namespace+".stateUpdate1",ino)==0) {
+				result=false;
+			}
+			
+		}
+		return result;
+	}
+	/**
+	 *  update : 공지사항 업데이트
+	 */
+	public boolean stateUpdate(String[] inos) {
+		boolean result=true;
+		for(String ino:inos) {
+			if(sqlSession.update(namespace+".stateUpdate0",ino)==0) {
+				result=false;
+			}
+			
+		}
+		return result;
+	}
+	/**
+	 *  select : nid 입력 시 회원정보 가져옴 
+	 */
+	public ArrayList<MemberVO> getInfo2(ArrayList<interiorVO> list) {
+		ArrayList<MemberVO> mlist=new ArrayList<MemberVO>();
+		for(interiorVO vo:list) {
+			String email=vo.getEmail();
+			mlist.add((MemberVO)sqlSession.selectOne(namespace+".getinfo3", email));
+		}
+		return mlist;
+	}
 	/**
 	 * Insert : 네이버 첫 로그인 시 정보 저장 
 	 */

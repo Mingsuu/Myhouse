@@ -714,7 +714,7 @@
 						<% if(vo.getBpart() != null) { %>
 							<% if(vo.getBpart().equals("공지사항/약관")) { %>
 								<label class="cont3-label"></label>
-							<% } else {%>
+							<% } else {%> 
 							<% } %>
 						<% } else { %>
 								<label class="cont3-label"></label>

@@ -8,14 +8,53 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.vo.noticeVO;
+import com.spring.service.InteriorServiceImpl;
 import com.spring.service.NoticeServiceImpl;
+import com.spring.service1.MemberServiceImpl;
 
 @Controller
 public class AdminController {
 
 	@Autowired
 	private NoticeServiceImpl noticeService;
+	@Autowired
+	private MemberServiceImpl memberService;
 	
+	/**
+	 *  공지사항 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/stateUpdate2.do",method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String stateUpdate2(String[] inos) {
+		return memberService.stateUpdate2(inos);
+	}
+	/**
+	 *  공지사항 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/stateUpdate.do",method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String stateUpdate(String[] inos) {
+		return memberService.stateUpdate(inos);
+	}
+	/**
+	 *  공지사항 수정
+	 */
+	@RequestMapping(value="/store_content.do",method=RequestMethod.GET)
+	public ModelAndView store_content(String ino) {
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("ino", ino);
+		mv.setViewName("/admin/store_content");
+		return mv;
+	}	
+	/**
+	 * store_page_sample 
+	 */
+	@RequestMapping(value="/store_page_sample.do",method=RequestMethod.GET) 
+	public ModelAndView store_page(String ino, String email) {
+		return noticeService.getInteriorTop(ino, "test0@naver.com");
+	}
 	/**
 	 *  공지사항 수정 proc
 	 */
@@ -93,7 +132,7 @@ public class AdminController {
 	 *  회원 리스트
 	 */
 	@RequestMapping(value="/store_list.do",method=RequestMethod.GET)
-	public String class_list() {
-		return "/admin/store_list";
+	public ModelAndView class_list(String rpage) {
+		return noticeService.getList2(rpage);
 	}
 }

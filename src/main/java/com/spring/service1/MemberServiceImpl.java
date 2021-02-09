@@ -27,8 +27,23 @@ public class MemberServiceImpl implements MemberService {
 	private JavaMailSender javaMailSender;
 	
 	/**
+	 * 상태 1만들기
+	 */
+	@Override
+	public String stateUpdate2(String[] inos) {
+		return String.valueOf(memberDAO.stateUpdate2(inos));
+	};
+	/**
+	 * 상태 0만들기
+	 */
+	@Override
+	public String stateUpdate(String[] inos) {
+		return String.valueOf(memberDAO.stateUpdate(inos));
+	};
+	/**
 	 * 프로필 갖어오기
 	 */
+	
 	public ModelAndView getProfile(HttpSession session) {
 		ModelAndView mv=new ModelAndView();
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
