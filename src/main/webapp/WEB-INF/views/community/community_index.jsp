@@ -152,26 +152,30 @@
 			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
-				$(this).removeClass("card_action");
-				$(this).addClass("card_action_active");
-				$(this).children('span.count').text(count+1);
-				
-			$.ajax({
-					url :"like_proc.do?pno="+pno,
-					success:function(result){
-					}
-				});
+				$.ajax({
+						url :"like_proc.do?pno="+pno,
+						success:function(result){
+							if(result=="") {
+								location.href="http://localhost:9000/myhouse/login.do";
+							}else{
+								$(this).removeClass("card_action");
+								$(this).addClass("card_action_active");
+								$(this).children('span.count').text(count+1);
+							}
+						}
+					});
+			
 			
 			}else{
-				$(this).removeClass("card_action_active");
-				$(this).addClass("card_action");
-				$(this).children('span.count').text(count-1);
-				
 				$.ajax({
 					url :"like_cancel_proc.do?pno="+pno,
 					success:function(result){
 					}
-				});
+					});
+				$(this).removeClass("card_action");
+				$(this).addClass("card_action_active");
+				$(this).children('span.count').text(count+1);
+				
 			}
 		});
 		
@@ -179,24 +183,27 @@
 			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
-				$(this).removeClass("card_action");
-				$(this).addClass("card_action_active");
-				var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
-				output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-				output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
-				output +="<div class='toast-message__body'>스크랩했습니다</div>"
-				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
-				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-				if($('div.toast-message').length == 1){
-					$('div.toast-message').first().remove();
-				}
-				$(this).children('span.count').text(count+1);
-				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(3800);
-				
 				$.ajax({
 					url :"scrap_proc.do?pno="+pno,
 					success:function(result){
+						if(result==""){
+							location.href="http://localhost:9000/myhouse/login.do";
+						}else{
+							$(this).removeClass("card_action");
+							$(this).addClass("card_action_active");
+							var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
+							output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
+							output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
+							output +="<div class='toast-message__body'>스크랩했습니다</div>"
+							output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
+							output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
+							if($('div.toast-message').length == 1){
+								$('div.toast-message').first().remove();
+							}
+							$(this).children('span.count').text(count+1);
+							$("div.toast-message-root").append(output);
+							$('div.toast-message').fadeOut(3800);
+						}
 					}
 				});
 				
@@ -230,15 +237,18 @@
 		$(document).on("click","button#follow",function(){
 			var email = $(this).parent().parent().parent().parent().parent().children('.email').val();
 			if ($(this).hasClass("card_item_follow")){
-				$(this).removeClass("card_item_follow");
-				$(this).addClass("card_item_following");
-				$(this).html('팔로잉');
-				
 				$.ajax({
 					url :"follow_proc.do?w_email="+email,
 					success:function(result){
+						if(result=="") location.href="http://localhost:9000/myhouse/login.do";
+						else{
+								$(this).removeClass("card_item_follow");
+								$(this).addClass("card_item_following");
+								$(this).html('팔로잉');
+							}
 					}
 				});
+				
 			}else{
 				$(this).removeClass("card_item_following");
 				$(this).addClass("card_item_follow");
@@ -1269,9 +1279,9 @@
 												<div class="drop_down_panel" data-panel-title="주거형태" data-panel-parents="">
 													<ul class="panel_entry_list2">
 														<li class="panel_entry_list_item_wrap">
-															<button id="btn_list" class="panel_entry_list_item" type="button" value="원룸오피스텔">
+															<button id="btn_list" class="panel_entry_list_item" type="button" value="원룸&오피스텔">
 																<div class="panel_entry_list_item_header">
-																	<span class="panel_entry_list_item_title"  id="원룸오피스텔">원룸&오피스텔</span>
+																	<span class="panel_entry_list_item_title"  id=원룸오피스텔>원룸&오피스텔</span>
 																</div>
 															</button>
 														</li>
@@ -1283,7 +1293,7 @@
 															</button>
 														</li>
 														<li class="panel_entry_list_item_wrap">
-															<button id="btn_list" class="panel_entry_list_item " type="button" value="빌라연립">
+															<button id="btn_list" class="panel_entry_list_item " type="button" value="빌라&연립">
 																<div class="panel_entry_list_item_header">
 																	<span class="panel_entry_list_item_title" id="빌라연립">빌라&연립</span>
 																</div>
@@ -1363,21 +1373,21 @@
 														</button>
 														</li>
 														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="프로방스로맨틱">
+														<button id="btn_list" class="panel_entry_list_item " type="button" value="프로방스&로맨틱">
 															<div class="panel-entry-list__item__header">
 																<span class="panel_entry_list_item_title" id="프로방스로맨틱">프로방스&로맨틱</span>
 															</div>
 														</button>
 														</li>
 														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="클래식앤틱">
+														<button id="btn_list" class="panel_entry_list_item " type="button" value="클래식&앤틱">
 															<div class="panel-entry-list__item__header">
-																<span class="panel_entry_list_item_title" id="클래식엔틱">클래식&앤틱</span>
+																<span class="panel_entry_list_item_title" id="클래식앤틱">클래식&앤틱</span>
 															</div>
 														</button>
 														</li>
 														<li class="panel_entry_list_item_wrap">
-														<button id="btn_list" class="panel_entry_list_item " type="button" value="한국아시아">
+														<button id="btn_list" class="panel_entry_list_item " type="button" value="한국&아시아">
 															<div class="panel-entry-list__item__header">
 																<span class="panel_entry_list_item_title" id="한국아시아">한국&아시아</span>
 															</div>

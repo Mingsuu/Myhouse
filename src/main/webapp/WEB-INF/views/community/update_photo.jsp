@@ -21,7 +21,7 @@
     $(document).ready(function() {
     	  if (window.File && window.FileList && window.FileReader) {
     	    $("#imageSelector").on("change", function(e) {
-    	    	alert("파일");
+    	        $('img.card-collection-form__card-image__image').removeAttr('src');
     	      	var files = e.target.files,
     	        filesLength = files.length;
     	      	for (var i = 0; i < filesLength; i++) {

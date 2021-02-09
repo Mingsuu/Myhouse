@@ -52,14 +52,14 @@
 			select count(*) from h_photo
 			<choose>
 				<when test="type != ''">
-				 where ptype = #{type}
+				 where ptype LIKE '%'||#{type}||'%'
 				<if test="style != null">
-					and pstyle =#{style}
+					and pstyle LIKE '%'||#{style}||'%'
 				</if>
 				</when>
 				<otherwise>
 				<if test="style != ''">
-					where pstyle =#{style}
+					where pstyle LIKE '%'||#{style}||'%'
 				</if>
 				</otherwise>
 			</choose>
@@ -81,10 +81,10 @@
 		    (select pno, count(*)comments from h_photo_comment group by pno) co
 			where p.email=m.email and p.pno=c.pno(+) and  p.pno = l.pno and p.pno=s.pno and co.pno(+) = p.pno 
 		<if test="type != ''">
-			and ptype = #{type}
+			and ptype LIKE '%'||#{type}||'%'
 		</if>
 		<if test="style != ''">
-			 and pstyle =#{style}
+			 and pstyle LIKE '%'||#{style}||'%'
 		</if> 
 		<choose>
 			<when test="order == ''">
@@ -123,10 +123,10 @@
 	        (select h_photo.pno pno, instr(h_member.follower ,#{email}) isfollow from h_photo, h_member where h_photo.email = h_member.email) follow
 	      	where p.email=m.email and p.pno=c.pno(+) and  p.pno = l.pno and p.pno=s.pno and co.pno(+) = p.pno and mlike.pno(+)=p.pno and mscrap.pno(+)=p.pno and follow.pno(+)=p.pno
 		<if test="type != ''">
-			and ptype = #{type}
+			and ptype LIKE '%'||#{type}||'%'
 		</if>
 		<if test="style != ''">
-			 and pstyle =#{style}
+			 and pstyle LIKE '%'||#{style}||'%'
 		</if> 
 		<choose>
 			<when test="order == ''">

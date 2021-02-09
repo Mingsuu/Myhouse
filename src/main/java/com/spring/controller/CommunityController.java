@@ -66,7 +66,8 @@ public class CommunityController {
 	@RequestMapping(value="/follow_proc.do", method=RequestMethod.GET)
 	public String follow_proc(String w_email, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getFollow(w_email, svo.getEmail());
+		if(svo == null) return null;
+		else return communityService.getFollow(w_email, svo.getEmail());
 		
 	}
 	
@@ -83,7 +84,11 @@ public class CommunityController {
 	@RequestMapping(value="/like_proc.do", method=RequestMethod.GET)
 	public String like_proc(String pno, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getLike(pno, svo.getEmail());
+		if (svo == null) {
+			return null;
+		}else {
+			return communityService.getLike(pno, svo.getEmail());
+		}
 		
 	}
 	
@@ -100,7 +105,8 @@ public class CommunityController {
 	@RequestMapping(value="/scrap_proc.do", method=RequestMethod.GET)
 	public String scrap_proc(String pno, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getScrap(pno, svo.getEmail());
+		if (svo == null)  return null;
+		else return communityService.getScrap(pno, svo.getEmail());
 	}
 	
 	/** 스크랩 취소 **/
@@ -117,7 +123,8 @@ public class CommunityController {
 			produces="text/plain;charset=UTF-8")
 	public String comment_write_proc(String pno, String content, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getCommentWrite(pno, content, svo.getEmail());
+		if(svo == null) return null;
+		else return communityService.getCommentWrite(pno, content, svo.getEmail());
 	}
 	
 	/**답글 달기**/
@@ -126,7 +133,8 @@ public class CommunityController {
 	produces="text/plain;charset=UTF-8")
 	public String comment_reply_write_proc(String pno, String tag, String content, String cgroup,HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getReplyWrite(pno, tag, content, cgroup, svo.getEmail());
+		if (svo == null) return null;
+		else return communityService.getReplyWrite(pno, tag, content, cgroup, svo.getEmail());
 	}
 	
 	/** 자식 댓글이 있는 댓글 삭제**/
@@ -148,7 +156,8 @@ public class CommunityController {
 	@RequestMapping(value="/comment_like_proc.do", method=RequestMethod.GET)
 	public String commnet_like_proc(String cno, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return communityService.getCommentLike(cno, svo.getEmail());
+		if(svo == null) return null;
+		else return communityService.getCommentLike(cno, svo.getEmail());
 		
 	}
 	
