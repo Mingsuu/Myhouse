@@ -17,7 +17,7 @@
 				    if(input.files && input.files[0]) {
 				        var reader = new FileReader();
 				        reader.onload = function (e) {
-				            $('.p_image').html("<img src="+ e.target.result +">");
+				            $('#p_img').attr("src", e.target.result);
 				        }
 				        reader.readAsDataURL(input.files[0]);
 				    }
@@ -27,6 +27,15 @@
 				     readInputFile(this);
 				});
 		
+				
+				
+				//파일선택
+				$("input[type='file']").on('change',function(){
+					if(window.FileReader){
+						var fileName = $(this)[0].files[0].name;
+						$("#fname").text("").text(fileName);
+					}
+				});
 			
 				
 				
@@ -376,6 +385,10 @@ input[type="file"] {
 						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"><p class="gender" >남성</p>
 						<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"checked><p class="gender" >여성</p>
 					</c:if>
+					<c:if test="${ovo.gender == null}">
+						<input type="radio" name="gender" value="남성" style="width:20px;height:20px;border:1px;"checked><p class="gender" >남성</p>
+						<input type="radio" name="gender" value="여성" style="width:20px;height:20px;border:1px;"><p class="gender" >여성</p>
+					</c:if>
 					</div>
 				</div>
 				<div class="option2">
@@ -384,11 +397,18 @@ input[type="file"] {
 				</div>
 				<div class="option2">
 					<span class="op3">프로필 이미지</span>
-					<div class="p_image" style="background-image: url(http://localhost:9000/myhouse/images/mypage/${ovo.member_spimage})" id="profile_image">
-						<img src="http://localhost:9000/myhouse/resources/upload/${ovo.member_spimage }" id="p_img">
-						<div id="p_img"></div>
-						<input type="file" id="p_picture" name="file1" style="width:198px;height:198px;border:1px;">
-					</div>
+					<c:if test="${ovo.member_spimage != null }">
+						<div class="p_image"  id="profile_image">
+							<img src="http://localhost:9000/myhouse/resources/upload/${ovo.member_spimage}" id="p_img">
+							<input type="file"  id="p_picture" name="file1" style="width:198px;height:198px;border:1px;">
+						</div>
+					</c:if>
+					<c:if test="${ovo.member_spimage == null }">
+						<div class="p_image"  id="profile_image">
+							<img src="http://localhost:9000/myhouse/resources/upload/pro.png" id="p_img">
+							<input type="file"  id="p_picture" name="file1" style="width:198px;height:198px;border:1px;">
+						</div>
+					</c:if>
 				</div>
 				<div class="option2">
 					<span class="op3">한줄 소개</span>

@@ -159,6 +159,16 @@
 	margin-top:-10px;
 	margin-right:3px;
 }
+.besongnull {
+	height:500px;
+	text-align:center;
+}
+.besongnull span {
+	margin-top:100px;
+	font-size:15px;
+	color:#424242;
+	display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -186,8 +196,11 @@
 <div class="mid">
 	<div class="q-title"><span>나의문의내역</span></div>
 	<div class="question">
+		<c:if test="${lcount == 0 }">
+			<div class="besongnull"><span>현재 문의한 상품이 존재하지 않습니다.</span></div>
+		</c:if>
 		<c:forEach var="vo" items="${list}">
-		<a href="#"><div class="q-list">
+		<a><div class="q-list">
 			<div class="q-box2"><span class="q-span"><span class="q-icon">Q&nbsp;&nbsp;</span>상품번호 - ${vo.gno} </span></div>
 			<div class="q-box1"><img src="http://localhost:9000/myhouse/images/mypage/enter.png" class="enter"><span class="q-span">${vo.qcontent }</span></div>
 			<div class="q-box"><p>${vo.qdate}</p></div>

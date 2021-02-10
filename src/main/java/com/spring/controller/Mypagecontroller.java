@@ -45,28 +45,33 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_like.do", method=RequestMethod.GET)
-	public ModelAndView like() {
-		return mypageService.getlike();
+	public ModelAndView like(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getlike(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_activity.do", method=RequestMethod.GET)
-	public String activity() {
-		return "/mypage/activity";
+	public ModelAndView activity(HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		return mypageService.getlactivity(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_activity2.do", method=RequestMethod.GET)
-	public String activity2() {
-		return "/mypage/activity2";
+	public ModelAndView activity2(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getpanme(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_activity3.do", method=RequestMethod.GET)
-	public ModelAndView activity3() {
-		return mypageService.getqna();
+	public ModelAndView activity3(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getqna(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_orderlist.do", method=RequestMethod.GET)
-	public ModelAndView orderlist() {
-		return mypageService.getorder();
+	public ModelAndView orderlist(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getorder(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_reception.do", method=RequestMethod.GET)
@@ -75,8 +80,8 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_notice.do", method=RequestMethod.GET)
-	public String notice() {
-		return "/mypage/notice";
+	public ModelAndView notice() {
+		return mypageService.getnotice();
 	}
 	
 	@RequestMapping(value="/mypage_clientcenter.do", method=RequestMethod.GET)
@@ -86,33 +91,39 @@ public class Mypagecontroller {
 	
 	
 	@RequestMapping(value="/mypage_review.do", method=RequestMethod.GET)
-	public ModelAndView rivew() {
-		return mypageService.getreviewpage();
+	public ModelAndView rivew(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getreviewpage(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_review1.do", method=RequestMethod.GET)
-	public ModelAndView review1() {;
-		return mypageService.getreview1();
+	public ModelAndView review1(HttpSession session) {
+	SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getreview1(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_review2.do", method=RequestMethod.GET)
-	public ModelAndView rivew2() {
-		return mypageService.getreview();
+	public ModelAndView rivew2(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getreview(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_option.do", method=RequestMethod.GET)
-	public ModelAndView option() {
-		return mypageService.getoption();
+	public ModelAndView option(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getoption(svo.getEmail());
 	}
 	
 	@RequestMapping(value="/option_update_proc.do", method=RequestMethod.POST)
-	public ModelAndView option_update_proc(MemberVO vo, HttpServletRequest request) {
+	public ModelAndView option_update_proc(MemberVO vo, HttpServletRequest request,HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
 		//서버의 저장경로
 		String root_path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "\\resources\\upload\\";
-		System.out.println(root_path+attach_path);
 		//vo에 저장경로 추가
 		vo.setSavepath(root_path+attach_path);
+		System.out.println("저장경로 = "+vo.getSavepath());
+		vo.setEmail(svo.getEmail());
 		return mypageService.getResultUpdate(vo);
 	}
 	
@@ -125,8 +136,9 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/pass_word_change_proc.do", method=RequestMethod.POST)
-	public ModelAndView password(MemberVO vo) {
-		return mypageService.getpasschange(vo);
+	public ModelAndView password(MemberVO vo,HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getpasschange(vo.getPass(),svo.getEmail());
 	}
 	
 	@RequestMapping(value="/mypage_memberdelete.do", method=RequestMethod.GET)
@@ -134,27 +146,61 @@ public class Mypagecontroller {
 		return "/mypage/memberdelete";
 	}
 	
-	@RequestMapping(value="/mypage_picture.do", method=RequestMethod.GET)
-	public ModelAndView picture() {
-		return mypageService.getpicture();
+	
+	@RequestMapping(value="/mypage_member_delete_proc.do", method=RequestMethod.POST)
+	public String member_delete_proc(HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		return mypageService.getmember_delete(svo.getEmail());
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage_picture.do", method=RequestMethod.GET)
+	public ModelAndView picture(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getpicture(svo.getEmail());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage_picture_scrap.do",method=RequestMethod.GET)
+	public String picture_scrap(String pno,HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		return mypageService.getpicturescrap(pno,svo.getEmail());
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage_picture_scrapdelete.do",method=RequestMethod.GET)
+	public String picture_scrapdelete(String pno,HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		return mypageService.getpscrapdelete(pno,svo.getEmail());
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/mypage_picture_proc.do", method=RequestMethod.GET)
 	public String picture_proc(String pno, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		return mypageService.getpictureproc(pno,svo.getNickname());
+			return mypageService.getpictureproc(pno,svo.getNickname());
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/mypage_picture_delete.do", method=RequestMethod.GET)
+	public String picture_delete(String pno, HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+			return mypageService.getpicturedelete(pno,svo.getEmail());
+	}
 	
 	@RequestMapping(value="/mypage_noticecontent.do", method=RequestMethod.GET)
-	public String noticecontent() {
-		return "/mypage/noticecontent";
+	public ModelAndView noticecontent(String nno) {
+		return mypageService.getnoticecontent(nno);
 	}
 	
 	@RequestMapping(value="/mypage_profile1.do", method=RequestMethod.GET)
-	public ModelAndView profile1() {
-		return mypageService.getphotolist();
+	public ModelAndView profile1(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+			return mypageService.getphotolist(svo.getEmail());
+		
 	}
 	
 	@RequestMapping(value="/mypage_scrap1.do", method=RequestMethod.GET)
@@ -168,7 +214,9 @@ public class Mypagecontroller {
 	}
 	
 	@RequestMapping(value="/mypage_question.do", method=RequestMethod.GET)
-	public ModelAndView question() {
-		return mypageService.getquestlist();
+	public ModelAndView question(HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		return mypageService.getquestlist(svo.getEmail());
 	}
+	
 }

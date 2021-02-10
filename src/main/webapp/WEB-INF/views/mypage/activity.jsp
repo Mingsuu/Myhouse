@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,31 +94,43 @@
 .ab{
 	border-bottom: 5px solid #35c5f0;
 }
+.myhome{
+	float:right;
+	margin-right:40px;
+	font-size:15px;
+	text-decoration:none;
+}
+.likenone {
+	text-align:center;
+	font-size:15px;
+	color:#424242;
+	margin-bottom:50px;
+}
+.likenone span {
+	display:inline-block;
+	margin-top:60px;
+}
 </style>
 </head>
 <body>
 	<div class="profile">
 		<div class="active">
-			<div class="act-title"><a href="mypage_activity.do"><p class="ab" style="color:#35c5f0;">나의 활동</p></a><a href="mypage_activity2.do"><p>판매 활동</p></a><a href="mypage_activity3.do"><p>문의 답변</p></a></div>
-			<div class="month">2021년 01월</div>
-			<a href="#"><div class="textbox">
-				<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/pic1.jpg"></div>
-				<div class="messagebox"> 사진 을 <span>스크랩</span> 했어요.</div>
-				<div class="datebox">2021년 1월 14일 23시 15분</div>
-				<hr class="textbar">
-			</div></a>
-			<a href="#"><div class="textbox">
-				<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/pic2.jpg"></div>
-				<div class="messagebox"> 사진 을 <span>좋아요</span> 했어요.</div>
-				<div class="datebox">2021년 1월 15일 23시 33분</div>
-				<hr class="textbar">
-			</div></a>
-			<a href="#"><div class="textbox">
-				<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/pic1.jpg"></div>
-				<div class="messagebox"> 사진 을 <span>스크랩</span> 했어요.</div>
-				<div class="datebox">2021년 1월 16일 20시 05분</div>
-				<hr class="textbar">
-			</div></a>
+			<div class="act-title"><a href="mypage_activity.do"><p class="ab" style="color:#35c5f0;">나의 활동</p></a><a href="mypage_activity2.do"><p>판매 활동</p></a><a href="mypage_activity3.do"><p>문의 답변</p></a><a class="myhome" href="mypage_profile1.do"><span>마이홈으로</span></a></div>
+			<div class="month">2021년 02월</div>
+			<c:forEach var="vo" items="${list }">
+			<c:if test="${vo.photo_simage != null }">
+				<a href="#"><div class="textbox">
+					<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage }"></div>
+					<div class="messagebox"> 사진 을 <span>좋아요</span> 했어요.</div>
+					<!-- <div class="datebox">2021년 1월 14일 23시 15분</div> -->
+					<hr class="textbar">
+				</div></a>
+			</c:if>
+			</c:forEach>
+			<c:if test="${lcount == 0}">
+				<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
+					마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
+			</c:if>
 		</div>
 	</div>
 </body>

@@ -1602,6 +1602,16 @@ input[id="check1"]:checked + label {
 	margin-left:10px;
 	border-radius:6px;
 }
+.besongnull {
+	height:500px;
+	text-align:center;
+}
+.besongnull span {
+	margin-top:100px;
+	font-size:15px;
+	color:#424242;
+	display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -1631,6 +1641,9 @@ input[id="check1"]:checked + label {
 			<span style="color:#35c5f0;">베스트순</span>
 			<a href="mypage_review1.do"><span>최신순</span></a>
 		</div>
+		<c:if test="${rcount == 0}">
+			<div class="besongnull"><span>현재 작성한 리뷰가 존재하지 않습니다.</span></div>
+		</c:if>
 		<c:forEach var="vo" items="${list}">
 		<div class="review2">
 			<img src ="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage}" class="sangpum">

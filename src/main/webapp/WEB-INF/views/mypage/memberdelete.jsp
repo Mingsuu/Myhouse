@@ -363,6 +363,7 @@
 <div class="mid">
 	<div class="review">
 		<div class="option">
+		<form name="memberdelete" action="member_delete_proc.do" method="post">
 			<div class="member"><span>회원탈퇴 신청</span></div>
 			<div class="member1"><span>회원 탈퇴 신청에 앞서 아래 내용을 반드시 확인해 주세요.</span></div>
 			<div class="member2">
@@ -416,9 +417,10 @@
   				</div>
   			</div>
 			<div class="member7">
-				<button type="button" class="mem7" id="memdel">탈퇴신청</button>
+				<button type="submit" class="mem7" id="memdel">탈퇴신청</button>
 				<button type="button" class="mem8">취소하기</button>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>

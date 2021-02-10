@@ -6,12 +6,46 @@ public class PhotoVO {
 	String pno,email,pcontent,pstyle,ptype,photo_image,
 	photo_simage,pdate,savepath;
 	
-	int phits;
+	int phits,plike,islike,pscrap,iscrap;
 
 	CommonsMultipartFile file1, file2, file3, file4;
 
 	
 	
+	
+	
+	public int getPscrap() {
+		return pscrap;
+	}
+
+	public void setPscrap(int pscrap) {
+		this.pscrap = pscrap;
+	}
+
+	public int getIscrap() {
+		return iscrap;
+	}
+
+	public void setIscrap(int iscrap) {
+		this.iscrap = iscrap;
+	}
+
+	public int getPlike() {
+		return plike;
+	}
+
+	public void setPlike(int plike) {
+		this.plike = plike;
+	}
+
+	public int getIslike() {
+		return islike;
+	}
+
+	public void setIslike(int islike) {
+		this.islike = islike;
+	}
+
 	public String getPno() {
 		return pno;
 	}

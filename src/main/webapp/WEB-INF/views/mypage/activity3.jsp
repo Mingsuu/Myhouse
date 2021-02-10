@@ -130,13 +130,33 @@
 .ab{
 	border-bottom: 5px solid #35c5f0;
 }
+.myhome{
+	float:right;
+	margin-right:40px;
+	font-size:15px;
+	text-decoration:none;
+}
+.likenone {
+	text-align:center;
+	font-size:15px;
+	color:#424242;
+	margin-bottom:50px;
+}
+.likenone span {
+	display:inline-block;
+	margin-top:60px;
+}
 </style>
 </head>
 <body>
 	<div class="profile">
 		<div class="active">
-			<div class="act-title"><a href="mypage_activity.do"><p>나의 활동</p></a><a href="mypage_activity2.do"><p >판매 활동</p></a><a href="mypage_activity3.do"><p class="ab" style="color:#35c5f0;">문의 답변</p></a></div>
+			<div class="act-title"><a href="mypage_activity.do"><p>나의 활동</p></a><a href="mypage_activity2.do"><p >판매 활동</p></a><a href="mypage_activity3.do"><p class="ab" style="color:#35c5f0;">문의 답변</p></a><a class="myhome" href="mypage_profile1.do"><span>마이홈으로</span></a></div>
 			<div class="month">2021년 02월</div>
+			<c:if test="${qcount == 0 }">
+			<div class="likenone"><span>아직 문의 답변한 상품이 없습니다.<br>
+					문의가 들어오면 답변해보세요!</span></div>
+			</c:if>
 			<c:forEach var="vo" items="${list}">
 			<a href="#"><div class="textbox">
 				<div class="QAimgbox"><img src="http://localhost:9000/myhouse/images/mypage/${vo.goods_simage }"></div>

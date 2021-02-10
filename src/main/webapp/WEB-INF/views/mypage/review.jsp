@@ -12,9 +12,12 @@
 <script>
 	$(document).ready(function(){
 		
-		$("#moclose").click(function(){
+		var ino = $(".react-modal").parent().children("#ino").val();
+		
+		$("button.review-modal__close").click(function(){
+			var ino = $(".react-modal").parent().children("#ino").val();
 			alert("작성하고있는 내용이 유실됩니다. 정말 종료하시겠습니까?");
-			$("#modal").css("display","none");
+			$("#modal"+ino).css("display","none");
 			
 		});//click
 
@@ -30,8 +33,11 @@
 		
 			});
 		
-		$("#gum").click(function(){
-				$("#modal").css("display","block");
+		$("span.gum").click(function(){
+			/* var ino = $(".react-modal").parent().children("#ino").val(); */
+			var ino = $(this).attr("id");
+			alert(ino);
+				$("#modal"+ino).css("display","block");
 		});
 		
 		
@@ -1642,6 +1648,16 @@ font-weight: 700;
 .renum2{
 	margin-left:32px;
 }
+.besongnull {
+	height:500px;
+	text-align:center;
+}
+.besongnull span {
+	margin-top:100px;
+	font-size:15px;
+	color:#424242;
+	display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -1664,11 +1680,14 @@ font-weight: 700;
 	</div>
 </div>
 <div class="profile1">
-<div class="retitle"><span>내가 구입한 상품</span></div>
+	<div class="retitle"><span>내가 구입한 상품</span></div>
+	<c:if test="${rcount == 0 }">
+		<div class="besongnull"><span>현재 구입한 상품이 존재하지 않습니다.</span></div>
+	</c:if>
 	<c:forEach var="vo" items="${list}">
 	<div class="rewrite">
-		<img src="http://localhost:9000/myhouse/images/mypage/${vo.goods_simage }" class="reimg">
-		<div class="rebox"><span class="renum">상품 번호&nbsp;</span>  <span>&nbsp;&nbsp;${vo.gno}</span> <div class="rebox2"><span id="gum"><a href="#">리뷰 작성</a></span></div> </div>
+		<img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }?ino=${vo.ino}" class="reimg">
+		<div class="rebox"><span class="renum">상품 번호&nbsp;</span>  <span>&nbsp;&nbsp;${vo.gno}</span> <div class="rebox2"><span id="${vo.ino }" class="gum">리뷰 작성</span></div> </div>
 		<div class="rebox1"><span class="renum1">회사명&nbsp;</span><span>:&nbsp;${vo.company }</span></div>
 		<div class="rebox1"><span class="renum1">상품명&nbsp;</span><span>:&nbsp;${vo.ititle }</span></div>
 		<div class="rebox1-1"><span class="renum2">가격&nbsp;</span><span>:&nbsp;${vo.goods_price} 원</span></div>
@@ -1677,13 +1696,14 @@ font-weight: 700;
 	<!-- <button class="review-my-home__search__form__button" type="button" id="gum">검색</button> -->
 </div>
 
-
-<div class="react-modal react-modal--center review-modal__modal__wrap open open-active" id="modal">
+<c:forEach var="vo" items="${list }">
+<input type="hidden" value="${vo.ino }" id="ino">
+<div class="react-modal react-modal--center review-modal__modal__wrap open open-active" id="modal${vo.ino}">
 	<div class="react-modal__content-wrap">
 		<div class="react-modal__content review-modal__modal">
 			<div class="review-modal">
 				<div class="review-modal__title">리뷰 쓰기
-					<button type="button" class="review-modal__close" id="moclose">
+					<button type="button" class="review-modal__close" id="moclose${vo.ino }">
 						<svg class="review-modal__close__icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 							<path fill-rule="nonzero" d="M11.6 10l7.1 7.1-1.6 1.6-7.1-7.1-7.1 7.1-1.6-1.6L8.4 10 1.3 2.9l1.6-1.6L10 8.4l7.1-7.1 1.6 1.6z"></path>
 						</svg>
@@ -1691,10 +1711,10 @@ font-weight: 700;
 				</div>
 				<form class="review-modal__form">
 				<div class="review-modal__form__product">
-					<img class="review-modal__form__product__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/157043700789497913.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/157043700789497913.jpg?gif=1&amp;w=160&amp;h=160&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/157043700789497913.jpg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/157043700789497913.jpg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1 3x">
+					<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }">
 					<div class="review-modal__form__product__contents">
-						<div class="review-modal__form__product__contents__brand">에이픽스</div>
-						<div class="review-modal__form__product__contents__name">컴퓨터 게이밍 의자 GC001 울프 4D팔걸이 쿠션3종</div>
+						<div class="review-modal__form__product__contents__brand">${vo.company }</div>
+						<div class="review-modal__form__product__contents__name">${vo.ititle }</div>
 						<div class="review-modal__form__product__contents__options"></div>
 					</div>
 				</div>
@@ -1857,6 +1877,7 @@ font-weight: 700;
 		</div>
 	</div>
 </div>
+</c:forEach>
 <div class="bean"></div>
 
 

@@ -431,7 +431,6 @@
 .besongnull {
 	height:500px;
 	text-align:center;
-	display:none;
 }
 .besongnull span {
 	margin-top:100px;
@@ -464,8 +463,10 @@
 </div>
 <div class="profile">
 <h2>배송내역</h2>
-	<div class="besongnull"><span>현재 구입한 상품이 존재하지 않습니다.</span></div>
 <div class="besong">
+	<c:if test="${ocount == 0}">
+		<div class="besongnull"><span>현재 구입한 상품이 존재하지 않습니다.</span></div>
+	</c:if>
 	<c:forEach var="vo" items="${list}">
 	 <div class="order-list__item__title">
 		<div class="order-list__item__title__order">${vo.ino} | ${vo.idate}</div>

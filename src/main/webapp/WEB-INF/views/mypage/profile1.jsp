@@ -273,7 +273,7 @@
 .pic1 {
 	display:inline-block;
 	width:700px;
-	height:100px;
+	height:160px;
 	border:2px solid lightgray;
 	border-style:dotted solid;
 	text-align:center;
@@ -416,10 +416,23 @@
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
+		<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
 		<div class="leftbox">
 			<span>${prof.nickname}</span>
-			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+				<c:if test="${prof.follower != null }">
+					<a href="#" class="mybtn1">팔로워 ${prof.follower}</a>
+				</c:if>
+				<c:if test="${prof.follower == null }">
+					<a href="#" class="mybtn1">팔로워 0</a>
+				</c:if>
+				<div></div>
+				<c:if test="${prof.following != null }">
+					<a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+				</c:if>
+				<c:if test="${prof.following == null }">
+					<a href="#" class="mybtn1">팔로잉 0</a>
+				</c:if>
+			
 			<a href="mypage_option.do" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
@@ -427,7 +440,7 @@
 			<a href="scrap_all.do"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
-				<span class="left3">0</span>
+				<span class="left3">${scount}</span>
 			</div></a>
 			<a href="mypage_like.do"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
@@ -439,14 +452,12 @@
 	<div class="right">
 		<h5 class="mytitle">사진 <p>${count}</p></h5><a href="mypage_picture.do"><span class="allsee">전체보기</span></a>
 		<div class="pic2">
-	<c:forEach var ="vo" items="${list}" begin="0" end="4" step="1">
 		<c:if test="${count == 0}">
-			<a href="#" class="pic">
+			<a href="#" class="pic1">
 			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
 		</c:if>
-		<c:if test="${count != 0}">
+	<c:forEach var ="vo" items="${list}" begin="0" end="4" step="1">
 			<a href="community_page.do?pno=${vo.pno}"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno})"></div></a>
-		</c:if>
 	</c:forEach>	
 			<!-- <a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
 			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
