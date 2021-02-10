@@ -2,7 +2,7 @@ package com.myhouse.vo;
 
 public class photo_commentVO {
 	String cno,email,pno,c_tag,c_content,c_like,cdate,c_group,nickname,member_simage;
-	int c_depth, rcount;
+	int c_depth, rcount, getwrite, cliked;
 	
 	public String getNickname() {
 		return nickname;
@@ -75,6 +75,18 @@ public class photo_commentVO {
 	}
 	public void setC_depth(int c_depth) {
 		this.c_depth = c_depth;
+	}
+	public int getGetwrite() {
+		return getwrite;
+	}
+	public void setGetwrite(int getwrite) {
+		this.getwrite = getwrite;
+	}
+	public int getCliked() {
+		return cliked;
+	}
+	public void setCliked(int cliked) {
+		this.cliked = cliked;
 	}
 	
 }

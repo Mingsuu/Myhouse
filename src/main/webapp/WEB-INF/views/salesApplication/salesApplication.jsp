@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*"%>
+<%
+	Random random = new Random();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,10 +48,10 @@
 			$('button#product_add').click(function(){
 				var name = $(this).parent().parent().parent().attr('class').split(" ");
 				var output="<div class='row sales_form_group sales_product'><div class='offset1 offset1_1'><label for='sales_application_brand' class='form_label form_label_sales_form'></label></div>"
-				output+="<div class='col-8 product_add'><div class='sales_form_control_wrap_product'><div class='product'><div class='pro_label'><label class='product'>상품명</label></div><div><input type='text' id='sales_application_product_name"+i+"'class='form_control' placeholder='라인 벨벳 소파 1인용' value></div></div>"
-				output += "<div class='product'><div class='pro_label'><label class='product'>상품가격</label></div><div><input type='text' id='sales_application_product_price"+i+"' class='form_control' placeholder='178000' value></div></div>"
-				output += "<div class='product'><div class='pro_label'><label class='product'>상품사진</label></div><div><label class='sales_product_file_btn'>사진 추가<input type='file' id='sales_application_product_photo' class='form_control sales-form__file--uploader'>"
-				output += "<p class='sales-form__product_file__name"+i+"'></p></label></div></div></div></div></div>"
+				output+="<div class='col-8 product_add'><div class='sales_form_control_wrap_product'><div class='product'><div class='pro_label'><label class='product'>상품명</label></div><div><input type='text' name='goods_name' id='sales_application_product_name"+i+"'class='form_control' placeholder='라인 벨벳 소파 1인용' value></div></div>"
+				output += "<div class='product'><div class='pro_label'><label class='product'>상품가격</label></div><div><input type='text' name='goods_price' id='sales_application_product_price"+i+"' class='form_control' placeholder='178000' value></div></div>"
+				output += "<div class='product'><div class='pro_label'><label class='product'>상품사진</label></div><div><label class='sales_product_file_btn'>사진 추가<input type='file' name='gfile"+(i+1)+"' id='sales_application_product_photo' class='form_control sales-form__file--uploader'></label>"
+				output += "<p class='sales-form__product_file__name"+i+" file_name'></p></div></div></div></div></div>"
 				$('div.'+name[2]).last().after(output);
 				i++;
 			});
@@ -128,7 +131,7 @@
 				$("input:checkbox[name='cate-chk']").prop("checked",false);
 			});
 			
-			$("input[type=file]").on('change',function(){
+			$(document).on("change","input[type=file]",function(){
 				if(window.FileReader){
 					var fileName = $(this)[0].files[0].name;
 					$(this).parent().parent().children('p').first().text("").text(fileName);
@@ -136,7 +139,6 @@
 			});
 		
 			$(document).on("click","button.btn_priority",function(){
-				alert(i);
 				for(var j=1; j<=i; j++){
 				if($("#sales_application_company").val()==""){
 					alert("회사이름을 입력해주세요");
@@ -207,6 +209,8 @@
 				}else if($("input#sales_form_private_policy_agree_check:checked").length == 0){
 					alert("개인정보 수집에 동의해주세요");
 					return false;
+				}else{
+					salesForm.submit();
 				}
 			}
 		});
@@ -794,7 +798,7 @@
 		font-size: inherit;
 		display: none;
 	}
-	p.sales-form__file__name, p.sales-form__product_file__name{
+	p.sales-form__file__name, p.file_name{
 		margin: 0;
 		padding: 0;
 		margin-left: 15px;
@@ -1504,6 +1508,8 @@
 </style>
 </head>
 <body>
+
+	
 	<header class="sales_application">
 		<span class='icon_page_sales_application'>
 		</span>
@@ -1531,9 +1537,10 @@
 					</div>
 				</div>
 				<div class="seller_layout_body">
-					<form class="sales_form_application">
+					<form class="sales_form_application" name="salesForm" action="sales_form_write_proc.do" method="post" enctype="multipart/form-data">
 						<div class="sales_form_section">
 							<div class="row">
+								<input type="hidden" name="ino" value="<%="i_" + String.valueOf(random.nextInt(10000))%>">
 								<div class="offset1">
 									<p class="sales_form_section_title">회사 정보</p>
 								</div>
@@ -1547,7 +1554,7 @@
 								</div>
 								<div class ="col-8">
 									<div class="sales_form_control_wrap">
-										<input type="text" id="sales_application_company" class="form_control" placeholder='오늘의집' value="">
+										<input type="text" name="company" id="sales_application_company" class="form_control" placeholder='오늘의집' value="">
 									</div>
 								</div>
 							</div>
@@ -1659,7 +1666,7 @@
 								</div>
 								<div class ="col-8">
 									<div class="sales_form_control_wrap">
-										<input type="text" id="sales_application_representative_product_name" class="form_control" placeholder='라인 벨벳 소파 3size' value="">
+										<input type="text" name="ititle" id="sales_application_representative_product_name" class="form_control" placeholder='라인 벨벳 소파 3size' value="">
 									</div>
 								</div>
 							</div>
@@ -1675,47 +1682,47 @@
 								<input type="hidden" id="sales_application__product_categories" name="sales_application[product_categories]" value="">
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--주방">
-									<input type="radio" name="category" id="sales_application__category--주방" name="sales_application[category--주방]" class="form_check category__checkbox" value="주방">
+									<input type="radio" name="category" id="sales_application__category--주방" name="sales_application[category--주방]" class="form_check category__checkbox" value="5">
 									<span class="check_img"></span>주방</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--생활용품">
-									<input type="radio" name="category" id="sales_application__category--생활용품" name="sales_application[category--생활용품]" class="form_check category__checkbox" value="생활용품">
-									<span class="check_img"></span>생활용품</label>
+									<input type="radio" name="category" id="sales_application__category--생활용품" name="sales_application[category--생활용품]" class="form_check category__checkbox" value="4">
+									<span class="check_img"></span>생활</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--가구">
-									<input type="radio" name="category" id="sales_application__category--가구" name="sales_application[category--가구]" class="form_check category__checkbox" value="가구">
+									<input type="radio" name="category" id="sales_application__category--가구" name="sales_application[category--가구]" class="form_check category__checkbox" value="0">
 									<span class="check_img"></span>가구</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--홈데코/조명">
-									<input type="radio" name="category" id="sales_application__category--홈데코/조명" name="sales_application[category--홈데코/조명]" class="form_check category__checkbox" value="홈데코/조명">
+									<input type="radio" name="category" id="sales_application__category--홈데코/조명" name="sales_application[category--홈데코/조명]" class="form_check category__checkbox" value="1">
 									<span class="check_img"></span>홈데코/조명</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--반려동물">
-									<input type="radio" name="category" id="sales_application__category--반려동물" name="sales_application[category--반려동물]" class="form_check category__checkbox" value="반려동물">
+									<input type="radio" name="category" id="sales_application__category--반려동물" name="sales_application[category--반려동물]" class="form_check category__checkbox" value="8">
 									<span class="check_img"></span>반려동물</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--패브릭">
-									<input type="radio" name="category" id="sales_application__category--패브릭" name="sales_application[category--패브릭]" class="form_check category__checkbox" value="패브릭">
+									<input type="radio" name="category" id="sales_application__category--패브릭" name="sales_application[category--패브릭]" class="form_check category__checkbox" value="11">
 									<span class="check_img"></span>패브릭</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--수납/정리">
-									<input type="radio" name="category" id="sales_application__category--수납/정리" name="sales_application[category--수납/정리]" class="form_check category__checkbox" value="수납/정리">
+									<input type="radio" name="category" id="sales_application__category--수납/정리" name="sales_application[category--수납/정리]" class="form_check category__checkbox" value="3">
 									<span class="check_img"></span>수납/정리</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--가전">
-									<input type="radio" name="category" id="sales_application__category--가전" name="sales_application[category--가전]" class="form_check category__checkbox" value="가전">
+									<input type="radio" name="category" id="sales_application__category--가전" name="sales_application[category--가전]" class="form_check category__checkbox" value="2">
 									<span class="check_img"></span>가전</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--DIY/공구">
-									<input type="radio" name="category" id="sales_application__category--DIY/공구" name="sales_application[category--DIY/공구]" class="form_check category__checkbox" value="DIY/공구">
+									<input type="radio" name="category" id="sales_application__category--DIY/공구" name="sales_application[category--DIY/공구]" class="form_check category__checkbox" value="6">
 									<span class="check_img"></span>DIY/공구</label>
 								</div>
 								
@@ -1736,7 +1743,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="밝은 톤" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="밝은 톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">밝은 톤</span></div></div></button></li>
@@ -1745,7 +1752,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="중간 톤" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="중간 톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">중간 톤</span></div></div></button></li>
@@ -1754,7 +1761,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="어두운 톤" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="어두운 톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">어두운 톤</span></div></div></button></li>
@@ -1775,7 +1782,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">화이트</span></div></div></button></li>
@@ -1784,7 +1791,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그레이</span></div></div></button></li>
@@ -1793,7 +1800,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블랙</span></div></div></button></li>
@@ -1802,7 +1809,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">베이지</span></div></div></button></li>
@@ -1811,7 +1818,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">브라운</span></div></div></button></li>
@@ -1820,7 +1827,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">실버</span></div></div></button></li>
@@ -1829,7 +1836,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">골드</span></div></div></button></li>
@@ -1838,7 +1845,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">레드</span></div></div></button></li>
@@ -1847,7 +1854,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">오렌지</span></div></div></button></li>
@@ -1856,7 +1863,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">옐로우</span></div></div></button></li>
@@ -1865,7 +1872,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그린</span></div></div></button></li>
@@ -1874,7 +1881,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블루</span></div></div></button></li>
@@ -1883,7 +1890,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">네이비</span></div></div></button></li>
@@ -1892,7 +1899,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">바이올렛</span></div></div></button></li>
@@ -1901,7 +1908,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">핑크</span></div></div></button></li>
@@ -1910,7 +1917,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">멀티(혼합)</span></div></div></button></li>
@@ -1919,7 +1926,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">투명</span></div></div></button></li>
@@ -1947,7 +1954,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="봄/가을">
+																				<input type="checkbox" class="_3UImz cate-chk" value="봄/가을" name="season">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">봄/가을</span></div></div></button></li>
@@ -1956,7 +1963,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="여름" >
+																				<input type="checkbox" class="_3UImz cate-chk" value="여름" name="season">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">여름</span></div></div></button></li>
@@ -1965,7 +1972,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="겨울">
+																				<input type="checkbox" class="_3UImz cate-chk" value="겨울" name="season">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">겨울</span></div></div></button></li>
@@ -1974,7 +1981,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="사계절" >
+																				<input type="checkbox" class="_3UImz cate-chk" value="사계절" name="season">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">사계절</span></div></div></button></li>
@@ -1994,7 +2001,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">화이트</span></div></div></button></li>
@@ -2003,7 +2010,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그레이</span></div></div></button></li>
@@ -2012,7 +2019,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블랙</span></div></div></button></li>
@@ -2021,7 +2028,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">베이지</span></div></div></button></li>
@@ -2030,7 +2037,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">브라운</span></div></div></button></li>
@@ -2039,7 +2046,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">실버</span></div></div></button></li>
@@ -2048,7 +2055,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">골드</span></div></div></button></li>
@@ -2057,7 +2064,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">레드</span></div></div></button></li>
@@ -2066,7 +2073,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">오렌지</span></div></div></button></li>
@@ -2075,7 +2082,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">옐로우</span></div></div></button></li>
@@ -2084,7 +2091,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그린</span></div></div></button></li>
@@ -2093,7 +2100,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블루</span></div></div></button></li>
@@ -2102,7 +2109,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">네이비</span></div></div></button></li>
@@ -2111,7 +2118,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">바이올렛</span></div></div></button></li>
@@ -2120,7 +2127,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">핑크</span></div></div></button></li>
@@ -2129,7 +2136,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">멀티(혼합)</span></div></div></button></li>
@@ -2138,7 +2145,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">투명</span></div></div></button></li>
@@ -2153,7 +2160,7 @@
 										<button class="category-filter-bar-button" type="button" id="btn3">색상
 											<svg class="chevron" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M2.154 3L1 4.125 6 9l5-4.875L9.846 3 6 6.75z"></path></g></svg>
 										</button>
-									<div style="display:none;" id="btn3-category">
+										<div style="display:none;" id="btn3-category">
 											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="색상" data-panel-parents="">
@@ -2163,7 +2170,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="화이트" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">화이트</span></div></div></button></li>
@@ -2172,7 +2179,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그레이" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그레이</span></div></div></button></li>
@@ -2181,7 +2188,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블랙" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블랙</span></div></div></button></li>
@@ -2190,7 +2197,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="베이지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">베이지</span></div></div></button></li>
@@ -2199,7 +2206,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="브라운" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">브라운</span></div></div></button></li>
@@ -2208,7 +2215,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="실버" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">실버</span></div></div></button></li>
@@ -2217,7 +2224,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="골드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">골드</span></div></div></button></li>
@@ -2226,7 +2233,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="레드" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">레드</span></div></div></button></li>
@@ -2235,7 +2242,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="오렌지" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">오렌지</span></div></div></button></li>
@@ -2244,7 +2251,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="옐로우" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">옐로우</span></div></div></button></li>
@@ -2253,7 +2260,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="그린" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">그린</span></div></div></button></li>
@@ -2262,7 +2269,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="블루" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">블루</span></div></div></button></li>
@@ -2271,7 +2278,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="네이비" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">네이비</span></div></div></button></li>
@@ -2280,7 +2287,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="바이올렛" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">바이올렛</span></div></div></button></li>
@@ -2289,7 +2296,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="핑크" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">핑크</span></div></div></button></li>
@@ -2298,7 +2305,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="멀티(혼합)" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">멀티(혼합)</span></div></div></button></li>
@@ -2307,7 +2314,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="cate-chk">
+																				<input type="checkbox" class="_3UImz cate-chk" value="투명" name="color">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">투명</span></div></div></button></li>
@@ -2343,13 +2350,13 @@
 							<div class="col-8 product_add">
 								<div class="sales_form_control_wrap_product">
 									<div class="product"><div class="pro_label"><label class="product">상품명</label></div>
-									<div><input type="text" id="sales_application_product_name" class="form_control" placeholder='라인 벨벳 소파 1인용' value=""></div></div>
+									<div><input type="text" name="goods_name" id="sales_application_product_name" class="form_control" placeholder='라인 벨벳 소파 1인용' value=""></div></div>
 									<div class="product"><div class="pro_label"><label class="product">상품가격</label></div>
-									<div><input type="text" id="sales_application_product_price" class="form_control" placeholder='178000' value=""></div></div>
+									<div><input type="text" name="goods_price" id="sales_application_product_price" class="form_control" placeholder='178000' value=""></div></div>
 									<div class="product"><div class="pro_label"><label class="product">상품사진</label></div>
 									<div><label class="sales_product_file_btn">사진 추가
-									<input type="file" id="sales_application_product_photo" class="form_control sales-form__file--uploader"></label>
-									<p class="sales-form__product_file__name"></p>
+									<input type="file" name="gfile1" id="sales_application_product_photo" class="form_control sales-form__file--uploader"></label>
+									<p class="sales-form__product_file__name file_name"></p>
 									</div></div>
 								</div>
 							</div>
@@ -2365,7 +2372,7 @@
 							</div>
 							<div class="col-8 pro">
 								<label class="btn btn-sm btn-priority sales-form__file__btn">파일 업로드
-								<input type="file" id="sales-form__file__uploader" class="sales-form__file--uploader" data-max-size="1048" accept=".png,.jpg,.jpeg,.pdf,.ppt">
+								<input type="file" name="interior_file" id="sales-form__file__uploader" class="sales-form__file--uploader" data-max-size="1048" accept=".png,.jpg,.jpeg,.pdf,.ppt">
 								</label>
 								<p class="sales-form__file__name">선택된 파일이 없습니다.</p>
 								<p class="sales-form__file__caption">※ 상품정보란에 쓰일 사진을 첨부해주세요</div>	
