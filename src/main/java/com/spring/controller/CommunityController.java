@@ -63,7 +63,6 @@ public class CommunityController {
 	@ResponseBody
 	@RequestMapping(value="/find_goods.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	public String find_goods(String gname) {
-		System.out.println(gname);
 		return communityService.getGoodsList(gname);
 	}
 	
