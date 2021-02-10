@@ -21,6 +21,12 @@ public class MemberDAO extends DBConn{
 	private static String namespace="mapper.member";
 	
 	/**
+	 *  select : email 입력 시 회원정보 모두 가져옴 
+	 */
+	public MemberVO getMemberInfo(String email) {
+		return sqlSession.selectOne(namespace+".getInfoAll", email);
+	}
+	/**
 	 *  update : seller 업데이트 1로
 	 */
 	public boolean sellerUpdate2(String[] emails) {
