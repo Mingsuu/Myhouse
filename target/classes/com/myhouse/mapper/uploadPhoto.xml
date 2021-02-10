@@ -22,5 +22,14 @@
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
 	where RowIdx='1' and ititle like '%${value}%'
 </select>
-	
+	<!-- tag:insert  -->
+	<insert id="InsertTag" parameterType="map">
+		insert into h_tag
+    	values('t_'||seq_h_tag.nextval,#{pno},#{gno})
+	</insert>
+	<!-- pno:check -->
+	<select id="pnoCheck" parameterType="map" resultType="java.lang.String">
+		select pno from h_photo
+		where email=#{email} and pcontent=#{pcontent} and pstyle=#{pstyle} and ptype=#{ptype} and ptag=#{ptag} and photo_image=#{photo_image} and photo_simage=#{photo_simage}
+	</select>
 </mapper>

@@ -169,7 +169,7 @@
 		    display:inline;
 		}
 		 #ptag{
-			display:none; 
+			/* display:none;  */
 			float: right;
 			width:150px;
 		} 

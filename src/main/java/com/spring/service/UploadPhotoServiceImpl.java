@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.dao.H_UploadPhotoDAO;
-import com.myhouse.dao.yj_InteriorDAO;
-import com.myhouse.vo.CommunityVO;
 import com.myhouse.vo.PhotoVO;
 import com.myhouse.vo.StoreIndexVO;
 
@@ -37,12 +35,18 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			pvo.setPhoto_simage(uuid +"_"+pvo.getFile1().getOriginalFilename());
 		}
 		//DB저장
-		System.out.println(pvo.getPtag());
 		boolean dao_result = uploadDAO.getInsert(pvo);//object타입이니까 캐스팅해서 보내야함
-		
+		System.out.println(pvo.getPtag());
+		System.out.println("1=>"+pvo.getPno());
 		if(dao_result){
 			//서버 저장-->upload폴더 저장(폴더위치)
 
+			if(uploadDAO.getInsertTag(uploadDAO.getPnoCheck(pvo), pvo.getPtag())){
+				System.out.println("db 구분");
+				System.out.println("2=>"+pvo.getPno());
+			}else {
+				System.out.println("실패");
+			}
 			// String root_path = request.getSession().getServletContext().getRealPath("/");
 			 //String attach_path = "\\resources\\upload\\";
 			System.out.println("통과");
