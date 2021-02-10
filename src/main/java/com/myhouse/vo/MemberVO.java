@@ -3,7 +3,7 @@ package com.myhouse.vo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class MemberVO {
-	String email,pass,nickname,homepage,gender,
+	String rno,email,pass,nickname,homepage,gender,
 	birth,member_image,member_spimage,intro,follower,
 	following,mdate,addr,addr_num,memo,phone ,name,savepath,email1,email2;
 	
@@ -13,7 +13,7 @@ public class MemberVO {
 
 	
 	
-	
+
 	
 	
 	
@@ -31,6 +31,15 @@ public class MemberVO {
 
 	public void setEmail2(String email2) {
 		this.email2 = email2;
+	}
+	
+	public String getRno() {
+		return rno;
+	}
+
+	public void setRno(String rno) {
+		this.rno = rno;
+
 	}
 
 	public String getEmail() {

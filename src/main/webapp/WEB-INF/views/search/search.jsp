@@ -19,6 +19,55 @@ margin:0 -15px}@media (min-width:375px){.scroller-wrap.scroller-wrap--remove-mar
 .search-item__header {
     border: 0;
 }
+.production-item-scrap-badge {
+	    bottom: 12px;
+	    right: 12px;
+	    position: absolute;
+	    width: 24px;
+	    height: 24px;
+	    margin: 0;
+	    padding: 0;
+	    background: none;
+	    border: none;
+	    z-index: 2;
+	    transition: opacity .1s;
+	}
+	.production-item-scrap-badge--active {
+	    bottom: 12px;
+	    right: 12px;
+	    position: absolute;
+	    width: 24px;
+	    height: 24px;
+	    margin: 0;
+	    padding: 0;
+	    background: none;
+	    border: none;
+	    z-index: 2;
+	    transition: opacity .1s;
+	}
+	.production-item-scrap-badge>.active-icon, .production-item-scrap-badge>.inactive-icon {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    transition: opacity .1s;
+	}
+	.production-item-scrap-badge>.active-icon {
+	    opacity: 0;
+	}
+	.production-item-scrap-badge--active>.inactive-icon {
+	    opacity: 0;
+	}
+	.production-item-scrap-badge--active>.active-icon {
+	    opacity: 1;
+	     position: absolute;
+	    top: 0;
+	    left: 0;
+	    transition: opacity .1s;
+	}
+	.production-item-scrap-badge:focus, .production-item-scrap-badge--active:focus {
+		outline: none;
+	    text-decoration: none;
+	}
 </style>
 <script>
  $(document).ready(function(){
@@ -125,7 +174,7 @@ margin:0 -15px}@media (min-width:375px){.scroller-wrap.scroller-wrap--remove-mar
 						<a class="search-card-item__link" href='community_page.do?pno=${community_list.get(i).getPno()}'></a>
 						<div class="search-card-item__img">
 							<img
-								src="http://localhost:9000/myhouse/resources/upload/${img_list[i]}"
+								src='http://localhost:9000/myhouse/resources/upload/${img_list[i]}'
 								srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/159483214313893355.jpeg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/159483214313893355.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/159483214313893355.jpeg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;webp=1 3x">
 						</div>
 						<div class="search-card-item__user">
@@ -139,7 +188,7 @@ margin:0 -15px}@media (min-width:375px){.scroller-wrap.scroller-wrap--remove-mar
 			</c:forEach>
 			</c:if>
 		</div>
-<!-- 	</section> -->
+	<!--</section> -->
 	<button class="top-button" type="button" id="top_btn">
 		<svg class="top-button__icon" width="45" height="45"
 			viewBox="0 0 45 45" preserveAspectRatio="xMidYMid meet">
@@ -151,6 +200,23 @@ margin:0 -15px}@media (min-width:375px){.scroller-wrap.scroller-wrap--remove-mar
 				stroke-width="1.5" d="M16 20l6.5-6 6.5 6m-6.5-5v15.999"></path></g></svg>
 	</button>
 	</article>
+	<!-- 스크랩 팝업 -->
+<div class="toast-message-root">
+	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-add">
+		<button class="toast-message__footer" type="button" id="taost-none2">
+			<div class="toast-message__footer__close">
+				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>
+		<div class="toast-message__body">스크랩했습니다</div>
+		<a class="button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button" 
+			href="http://localhost:9000/myhouse/scrap_all.do">스크랩북 보기</a>
+	</div>
+	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-del">
+		<button class="toast-message__footer" type="button">
+			<div class="toast-message__footer__close">
+				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>
+			<div class="toast-message__body">스크랩북에서 삭제했습니다.</div>
+	</div>
+</div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp" />
 </body>

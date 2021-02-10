@@ -18,7 +18,28 @@ public class SearchServiceImpl implements SearchService  {
 	@Autowired
 	private yj_communityDAO communityDAO2;
 	
-	// store_index - list
+	// index페이지 - list
+		@Override
+		public ModelAndView getList2() {
+			ModelAndView mv = new ModelAndView();
+			ArrayList<StoreIndexVO> interior_list = interiorDAO2.getInteriorList2(); 
+			ArrayList<CommunityVO> community_list = communityDAO2.getList2();
+			ArrayList<String> img_list = new ArrayList<String>();
+			for(CommunityVO vo:community_list) {
+				String[] photos=vo.getPhoto_simage().split(",");
+				img_list.add(photos[0]);
+			}
+					
+			mv.addObject("interior_list", interior_list);
+			mv.addObject("community_list", community_list);
+			mv.addObject("img_list", img_list);
+		    mv.setViewName("/index");
+			
+			return mv;
+		}
+	
+	// store페이지 - list
+	@Override
 	public ModelAndView getList(String value) {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<StoreIndexVO> interior_list = interiorDAO2.getInteriorList(value); 

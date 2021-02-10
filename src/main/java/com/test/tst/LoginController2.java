@@ -1,6 +1,8 @@
 package com.test.tst;
 import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -10,7 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.myhouse.dao.MemberDAO;
+import com.myhouse.vo.MemberVO;
+import com.myhouse.vo.SessionVO;
 /**
 * Handles requests for the application home page.
 */
@@ -19,6 +25,9 @@ public class LoginController2 {
 /* NaverLoginBO */
 private NaverLoginBO naverLoginBO;
 private String apiResult = null;
+
+@Autowired
+private MemberDAO memberDAO;
 @Autowired
 private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 this.naverLoginBO = naverLoginBO;
@@ -57,9 +66,23 @@ JSONObject response_obj = (JSONObject)jsonObj.get("response");
 //response의 nickname값 파싱
 String nickname = (String)response_obj.get("nickname");
 String naverId = (String)response_obj.get("id");
-//4.파싱 닉네임 세션으로 저장
-session.setAttribute("sessionId",nickname); //세션 생성
-session.setAttribute("naverId",naverId); //세션 생성
+//기존회원인지db확인
+SessionVO svo=memberDAO.getInfo(naverId);
+if(svo==null) {
+	//기존회원 아니면 insert하기
+	MemberVO vo =new MemberVO();
+	vo.setEmail(naverId);
+	vo.setPass("네이버로그인");
+	vo.setNickname(nickname);
+	if(memberDAO.getInsert2(vo)) {
+		svo=memberDAO.getInfo(naverId);
+		System.out.println("네이버첫 로그인 db저장 성공");
+	}
+}
+
+//4.파싱한것들 세션으로 저장
+session.setAttribute("sessionId",nickname); //닉네임 세션 생성
+session.setAttribute("svo",svo); //svo 세션 생성
 model.addAttribute("result", apiResult);
 return "login";
 }

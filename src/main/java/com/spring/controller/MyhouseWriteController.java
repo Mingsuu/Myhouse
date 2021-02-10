@@ -1,21 +1,24 @@
 package com.spring.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.vo.PhotoVO;
-import com.spring.service.UploadPhotoService;
+import com.myhouse.vo.SessionVO;
+import com.spring.service.UploadPhotoServiceImpl;
 
 
 @Controller
 public class MyhouseWriteController {
 	
 	@Autowired
-	private UploadPhotoService uploadService;
+	private UploadPhotoServiceImpl uploadService;
 	
 	
 	/**
@@ -23,8 +26,11 @@ public class MyhouseWriteController {
 	 * 
 	 */
 	@RequestMapping(value="/upload_photo_proc.do",method=RequestMethod.POST)
-	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request) {
-		
+	public String upload_photo_proc(PhotoVO vo,HttpServletRequest request,HttpSession session) {
+		//세션 email 작성자 저장
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		String email = svo.getEmail();
+		vo.setEmail(email);
 		//서버의 저장경로
 		String root_path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "\\resources\\upload\\";
@@ -48,8 +54,8 @@ public class MyhouseWriteController {
 	 * @return
 	 */
 	@RequestMapping(value="/product_review.do",method=RequestMethod.GET)
-	public String product_review() {
-		return "/myhouseWrite/product_review";
+	public ModelAndView search(String value) {
+		return uploadService.getList(value); 
 	}
 	
 	/**

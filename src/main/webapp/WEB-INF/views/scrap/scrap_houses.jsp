@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,6 +84,7 @@ $(document).ready(function(){
 				<div>
 					<h1 class="collection-book-title__book-name">스크랩북</h1>
 					<p class="collection-book-owner">
+
 						<a class="collection-book-owner__link" href="mypage_profile1.do"><img
 							class="profile-image"
 							src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}"
