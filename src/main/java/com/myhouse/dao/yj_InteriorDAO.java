@@ -8,6 +8,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.StoreIndexVO;
 import com.myhouse.vo.interiorVO;
 import com.myhouse.vo.noticeVO;
@@ -18,6 +19,14 @@ public class yj_InteriorDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	private static String namespace="mapper.interior2";
+	
+	/**
+	 *  select : email 입력 시 회원정보 모두 가져옴 
+	 */
+	public ArrayList<interiorVO> getInteriorInfo(String email) {
+		List<interiorVO> interior_list =sqlSession.selectList(namespace+".getInfoAll3", email);
+		return (ArrayList<interiorVO>) interior_list;
+	}
 	
 	// 관리자페이지 - 스토어 인테리어 리스트 카운트
 	public int getListCount() {

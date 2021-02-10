@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
 	String email = request.getParameter("email");
 
@@ -19,8 +20,8 @@
 <head>
 <meta charset="UTF-8">
 <title>탈멍 :: 회원관리 - 튜터</title>
-<link rel="stylesheet" href="http://localhost:9000/One_day_class/js_sh/swiper-bundle.min.css">
-<script src="http://localhost:9000/One_day_class/js_sh/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/swiper-bundle.min.css">
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <style>
 	*{
 		box-sizing: border-box;
@@ -158,6 +159,9 @@
 		border-top: 1px solid #333;
 		padding-top: 15px;
 	}
+	   	.footer{
+	display:inline-block;
+	}
 </style>
 
 </head>
@@ -182,82 +186,71 @@
 		</aside>
 		<section class="admin_section1">
 			<div class="ad_title">회원상세정보</div>
-			<%-- <table class="admin_member_content">
+			 <table class="admin_member_content">
 				<tr>
 					<th>아이디</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getEmail() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>성명</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getName() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>가입일</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getRdate() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getPhone() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>나이</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getAge() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>거주지역</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutor.getArea() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
-					<th>튜터 이미지</th>
-					<% if(vo_tutor.getSprofile_img() != null) { %>
-						<td style="background-image: url('http://localhost:9000/One_day_class/upload/<%= vo_tutor.getSprofile_img()%>');
-									backgroun-repeat:none; height:30px; width:30px;"></td>
-					<%} else {%>
-						<td >신청한 수업이 없습니다.</td>
-					<% } %>
-					<th>총 등록수업</th>
-					<% if(list_class.size() != 0){ %>
-						<td colspan="5">
-						<% for(sh_ClassVO vo : list_class){ %>
-							<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-								<span style="color:#ff0045; font-weight:bold; ">|<%= vo.getCatemain() %>|</span> 
-								<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-						<% } %>
-						</td>
-					<% } else { %>
-						<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;수강중인 수업이 없습니다.</td>
-					<%} %>
+					<th>커뮤니티</th>
+					<c:choose>
+						<c:when test="${photolist ne null}">
+							<th>사진 게시물</th>
+								<td colspan="5">
+								<c:forEach var="vo" items="${photolist}" varStatus="status">
+									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
+										<span style="color:#ff0045; font-weight:bold; ">${vo.pcontent}</span> 
+										<br> <span style="margin:0 10px;">- </span> ${vo.pcontent}<br>
+								</c:forEach>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 사진 게시물이 없습니다.</td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<tr>
-					<th>대기중인 수업</th>
-					<% if(list_class_wait.size() != 0){ %>
-						<td colspan="5">
-						<% for(sh_ClassVO vo : list_class_wait){ %>
-							<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-								<span style="color:#ff0045; font-weight:bold;">|<%= vo.getCatemain() %>|</span> 
-								<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-						<%} %>
-						</td>
-					<%} else { %>
-					<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;대기중인 수업이 없습니다.</td>
-					<%} %>
-				</tr>
-				<tr>
-					<th>개설된수업</th>
-					<% if(list_class_open.size() != 0){ %>
-						<td colspan="5">
-						<% for(sh_ClassVO vo : list_class_open){ %>
-							<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-								<span style="color:#ff0045; font-weight:bold;">|<%= vo.getCatemain() %>|</span> 
-								<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-						<%} %>
-						</td>
-					<%} else { %>
-					<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;개설된 수업이 없습니다.</td>
-					<%} %>
+					<th>스토어 게시물</th>
+					
+					<c:choose>
+						<c:when test="${interiorlist ne null}">
+							<td colspan="5">
+								<c:forEach var="vo" items="${interiorlist}" varStatus="status">
+									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
+										<span style="color:#ff0045; font-weight:bold;">${vo.ititle}</span> 
+										<br> <span style="margin:0 10px;">- </span> ${vo.ititle}<br>
+								</c:forEach>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 스토어 게시물이 없습니다.</td>
+						</c:otherwise>
+					</c:choose>
+					
 				</tr>
 				<tr>
 					<td colspan="6">
 						<a href="member_list.jsp"><button type="button" class="btn_style" >목록으로</button></a>
-					</td>
-				</tr>
-			</table> --%>
+					</td> 
+				</tr> 
+			</table>
 		</section>
 	</div>
-
-	<!-- footer -->
-	<jsp:include page="../footer.jsp"></jsp:include>
+	<div class="footer">
+		<!-- footer -->
+		<jsp:include page="../footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>
