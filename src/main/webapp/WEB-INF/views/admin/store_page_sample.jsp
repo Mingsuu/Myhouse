@@ -164,13 +164,12 @@
 	}
 	.production-selling-cover-image-container {
 	    position: relative;
-	    width:450px;
+	    width:250px;
 	    height:400px;
 	    padding-left:80px;
 	}
 	/* 캐러셀 */
 	.swiper-container {
-      width: 100%;
       height: 300px;
       margin-left: auto;
       margin-right: auto;
@@ -185,7 +184,6 @@
     }
     .gallery-top {
       height: 95%;
-      width: 100%;
       border-radius:5px;
       margin-left:30px;
     }
@@ -2614,6 +2612,16 @@
 	.production-question-feed__item__header>.answered {
 	    color: #35c5f0;
 	}
+	.gallery-top {
+    height: 95%;
+    border-radius: 5px;
+    margin-left: 30px;
+}
+.swiper-container {
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
 <script>
 	$(document).ready(function(){
@@ -3926,8 +3934,6 @@
   </script>
 </head>
 <body>
-<!-- header -->
-	<jsp:include page="../header1.jsp" />
 <div class="production-selling">
 	<div class="production-selling-overview container">
 		<nav class="commerce-category-breadcrumb-wrap production-selling-overview__category">
@@ -4757,8 +4763,6 @@
 			<div class="toast-message__body">스크랩북에서 삭제했습니다.</div>
 	</div>
 </div>
-<!-- footer -->
-	<jsp:include page="../footer.jsp"/>
 
 </body>
 <script>
