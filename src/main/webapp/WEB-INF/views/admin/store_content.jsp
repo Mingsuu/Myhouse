@@ -1,56 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" 
-    %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 	 ClassDAO dao = new ClassDAO();
-	TutorDAO dao_tutor = new TutorDAO();	
-	
-	//1. 선택한 페이지값
-	String rpage= request.getParameter("rpage");
-	
-	//2-1. 페이지 값에 따라서 start, end count 구하기
-	//1페이지(1~10) , 2페이지(11~20)...
-	int start =0;
-	int end=0;
-	int pageSize=10; //한 페이지당 출력되는 row
-	int pageCount = 1;//전체 페이지수 : 전체 리스트 row / 한 페이지당 출력되는 row
-	int dbCount = dao.getListCount();// DB연동 후 전체로우수 출력
-	int reqPage = 1;//요청페이지
-	
-	//2-2. 전체페이지 수 구하기
-	if(dbCount%pageSize==0){
-		pageCount= dbCount/pageSize;
-	}else{
-		pageCount= dbCount/pageSize+1;
-	
-	}
-	
-	//2-3. start, end 값 구하기
-	if(rpage != null){
-		reqPage = Integer.parseInt(rpage);
-		start = (reqPage -1) * pageSize +1 ;
-		end = reqPage * pageSize;
-	}else{
-		start = reqPage;
-		end = pageSize;
-	}
-
-
-	ArrayList<ClassVO> list = dao.getCList(start,end); 
-	int i=0; */
-	
---%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>스위트홈 :: 회원관리 </title>
-<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<link rel="stylesheet" href="http://localhost:9000/myhouse/css/am-pagination.css">
-<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
-<script src="http://localhost:9000/myhouse/js/am-pagination.js"></script> <!-- 제이쿼리 라이브러리 -->
+<title>스윗트홈 :: 수업관리</title>
 <style>
-	
 	#newsroom-main {
 		display:inline-block;
 		margin:0 atuo;
@@ -69,7 +24,7 @@
 	}
 	#newsroom-main .main-logo{
 		display:inline-block;
-		margin:20px 0 30px 60px;
+		margin:20px 0 30px 90px;
     	font-size:50px;
 	}
 	#newsroom-main .main-logo span {
@@ -175,14 +130,13 @@
 		margin-left:35px;
 	}
 	.main-section2 .section2-title .title-2 {
-		margin-left:35px;
-		width: 250px;
+		width: 400px;
 	}
 	.main-section2 .section2-title .title-3 {
-		width: 160px;
+		width: 85px;
 	}
 	.main-section2 .section2-title .title-4 {
-		width: 120px;
+		width: 90px;
 	}
 	.main-section2 .section2-cont {
 		display: inline-block;
@@ -251,7 +205,7 @@
 		background-image:url(http://localhost:9000/myhouse/images/complete.png); 
 	}
 	.main-section2 .section2-cont li.cont-4 {
-		width: 346px;
+		width: 413px;
 	    padding: 2px 50px 0 30px;
 	    text-align: left;
 	}
@@ -262,7 +216,6 @@
 	.main-section2 .section2-cont li.cont-6 {
 		width: 99px;
     	padding-top: 2px;
-    	padding-left:80px;
 	}
 	
 	a {
@@ -298,7 +251,7 @@
 	    float: left;
 	    width: 853px;
 	    height:10px;
-	    margin-left:-17px;
+	    margin-left:-60px;
 	}
 	.main-section3 .section-paging {
 	    width: 853px;
@@ -523,187 +476,45 @@
 		margin:30px 0 0 200px;
 		text-align: center;
 	}
-	</style>
+	.main-section3{
+   text-align:right;
+   margin-right:15px;
+   
+   }
+    .main-section3 button{
+    margin: 5px;
+    width:55px;
+    height:35px;
+    color:white;
+     border:none;
+     font-size:14px;
+    }
+</style>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
-		/* 체크박스 체크시 전체선택 체크 여부 */
-		function oneCheckFunc(obj) {
-			var allObj = $("[name=checkAll]");
-			var objName = $(obj).attr("name");
-
-			if($(obj).prop("checked")){
-				checkBoxLength = $("[name="+ objName +"]").length;
-				checkedLength = $("[name="+ objName +"]:checked").length;                
-
-				if(checkBoxLength == checkedLength){
-					allObj.prop("checked", true);    
-				}else{
-					allObj.prop("checked", false);
-				}
-			}else{
-				allObj.prop("checked", false); 
-			}
-		}
-		
-		$("[name=checkTerms]").each(function(){
-			$(this).click(function(){
-				oneCheckFunc($(this));
-			});                
-		});
-		//open/close 변경
-		$("img[name=open]").click(function(){
-			var i=$(this).attr("id");
-			var status = $(this).attr("src");
-			if(status == "http://localhost:9000/myhouse/images/notice_open.png") {
-				var url="http://localhost:9000/myhouse/admin/class_iframe.jsp?cno="+$(this).attr("alt");
-				$("#cont-8-"+i).css("display","block").height("450px");
-				$("#"+i).attr("src","http://localhost:9000/myhouse/images/notice_close.png");
-				$("#cont8-wrap-"+i).load(url+" .section2-cont");
-			} else {
-				$("#cont-8-"+i).css("display","none").height("0px");
-				$("#"+i).attr("src","http://localhost:9000/myhouse/images/notice_open.png");
-			}
+		$("#accept").click(function(){
+			var link='class_contentProc.jsp?wbutton=accept&cid='+${ino};
+			location.href=link;
 		});
 		
-		//페이지 번호 및 링크
-		var pager = jQuery("#ampaginationsm").pagination({
-			maxSize : 5,
-	        totals:${dbCount},
-	        page :${reqPage},
-	        pageSize :${pageSize},
-			
-			lastText : '&raquo;&raquo;',
-			firstText : '&laquo,&laquo',
-			prevTest : '&laquo;',
-			nextTest : '&raquo;',
-			
-			btnSize : 'sm'
+		$("#reject").click(function(){
+			var link='class_contentProc.jsp?wbutton=reject&cid='+${ino};
+			location.href=link;
 		});
-		
-		jQuery("#ampaginationsm").on('am.pagination.change',function(e){
-			$(location).attr('href','http://localhost:9000/myhouse/member_list.do?rpage='+e.page); 
-			//location.href('이동페이지')';
-		});
-		
-/* 		 $("#accept").click(function(){
-			 $("#wbutton").val("accept");
-			 ClassMForm.submit(); 
-		 });
-		 
-		 $("#reject").click(function(){
-			 $("#wbutton").val("reject");
-			 ClassMForm.submit(); 
-		 }); */
-		 $("#reject").click(function(){
-	          var emails = "";
-	          var count = 0;
-	          
-	          $("input[name=checkTerms]:checked").each(function(i){
-	              count++;
-	              //del_list += "bid=" $(this).attr("id")+"&";
-	              emails += "emails="+$(this).attr("value")+"&";
-	               /* var tr=$(".cont-0#"+bid);
-	               tr.remove(); */
-	           });
-	          if(count == 0){
-	               alert("한 개 이상 선택하셔야 삭제가 가능합니다.")
-	               return false;
-	            }else{
-	               //서버전송                         
-	               $.ajax({
-	                   url:"sellerUpdate.do?"+emails,
-	                   success:function(result) {
-	                    if(result != 0) {
-	                  	  location.reload();
-	                    } else {
-	                  	  return false;
-	                    }
-	                      
-	                   }
-	                }); 
-	               
-	               
-	            }
-	             
-	   });  //reject
-	   
-	   $("#accept").click(function(){
-	          var emails = "";
-	          var count = 0;
-	          
-	          $("input[name=checkTerms]:checked").each(function(i){
-	              count++;
-	              //del_list += "bid=" $(this).attr("id")+"&";
-	              emails += "emails="+$(this).attr("value")+"&";
-	               /* var tr=$(".cont-0#"+bid);
-	               tr.remove(); */
-	           });
-	          if(count == 0){
-	               alert("한 개 이상 선택하셔야 삭제가 가능합니다.")
-	               return false;
-	            }else{
-	               //서버전송                         
-	               $.ajax({
-	                   url:"sellerUpdate2.do?"+emails,
-	                   success:function(result) {
-	                    if(result != 0) {
-	                  	  location.reload();
-	                    } else {
-	                  	  return false;
-	                    }
-	                      
-	                   }
-	                }); 
-	               
-	               
-	            }
-	             
-	   });  //reject
-		
 	});
-	
-	function getselectbox(){
-		 document.getElementById("cid_1").value()=document.getElementById("selectbox").value();
-	}
-	
-	
-
-
-	
-	function allCheck() { 
-		var all = document.getElementById("checkAll");
-		/* var chk = document.getElementById("check1");
-		var privacy = document.getElementById("termsPrivacy"); */
-		var chk_list = document.getElementsByName("checkTerms");
-		
-		if(all.checked) {
-			for(var i=0;i<chk_list.length;i++) {
-				chk_list[i].checked = true;
-			}
-			
-		}   else {
-			for(var i=0;i<chk_list.length;i++) {
-				chk_list[i].checked = false;
-			}
-		}
-		
-	}
-	
-	 
-	
 </script>
 </head>
 <body>
-	<!-- header -->
-	<jsp:include page="../header1.jsp"></jsp:include>
+	<!--  header  -->
+	<jsp:include page="../header1.jsp" />
 
-	<!-- content -->
-	<div style="margin:0 auto;">
 	<div class="content">
+		<div style="width:100%; height:50px;"></div>
 		<aside class="admin_main">
 			<nav>
 				<div>
-					<img src="http://localhost:9000/myhouse/images/admin_profile.png"><br>
+				<img src="http://localhost:9000/myhouse/images/admin_profile.png"><br>
 					<span class="admin_icon2">[ 관리자 시스템 ]</span>
 				</div>
 				<ul>
@@ -712,73 +523,32 @@
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
+		<!-- board_ newsroom201301 -->
+		<div id="newsroom-main" class="interpark-board2013">
+			<div class="main-section1" style="
+					    height: 35px;
+					    font-size: 16px;
+					    font-weight: bold;
+					    text-align: center;
+					    color: #333;
+					    border: 1px solid lightgray;
+					    padding-top:10px;">스토어관리
+			</div>
 
-	
-	<div class="board_wrap" id="newsroom-main">
-		<span class="main-logo">SweetHome <span>'MEMBER'</span> ROOM</span>
-		<div class="main-section1">
-			<ul class="section1-category">
-				<li id="first" class="first selected"><a href="#">회원관리</a></li>
-			</ul>
-		</div>
-		<div class="main-section2">
-			<ul class="section2-title">
-				<li class="title-0">
-					<input class="blind inp_label" type="checkbox" name="checkAll" id="checkAll" onchange="allCheck()">
-					<label for="checkAll" class="inp_chkbox"></label>
-				</li>
-				<li class="title-1">번호</li>
-				<li class="title-1-1">판매자 상태</li>
-				<li class="title-2">회원 email/고유id</li>
-				<li class="title-3">별명</li>
-				<li class="title-4">가입일</li>
-			</ul>
-			<div id="nesListNew">
-			<form name="ClassMForm" action="class_listProc.jsp" method="get" class="join">
-			<input type="hidden" name="wbutton" value="" id="wbutton">
-				<c:forEach var="MemberVO" items="${list}" varStatus="status">
-					<ul class="section2-cont">
-						<li class="cont-0">
-							<input class="blind inp_label" type="checkbox" name="checkTerms"
-							 id="check${status.count}" value="${MemberVO.email}">
-							<label for="check${status.count}" class="inp_chkbox"></label>
-						</li>
-						<li class="cont-1">${MemberVO.rno}</li>
-						<li class="cont-2">
-							<a id="test1" class="cont2-btn">
-								<img src="http://localhost:9000/myhouse/images/notice_open.png" id="${status.count}" name="open" >
-								<label></label>
-							</a>
-						</li>
-						<li class="cont-3">
-							<label class="cont3-label" id="status${MemberVO.seller}" ></label>
-						</li>
-						<li class="cont-4">
-							<a href="#">${MemberVO.email}</a>
-						</li>
-						
-						<li class="cont-5">${MemberVO.nickname}</li>
-						<li class="cont-6">${MemberVO.mdate}</li>
-					</ul>
-				</c:forEach> 
-			</form>
-	
-				
+			<div class="main-section2" id="section2">
+				<iframe width="800px"  height="800px" src="store_page_sample.do?ino=${ino}">
+				</iframe>
+				<div class="main-section3">
+				<button type=button  class="accept" id="accept">수락</button>
+				<button type=button  class="reject" id="reject">거절</button>
+			</div>
 			</div>
 		</div>
-		<div class="main-section3">
-			<div class="admin_btn">
-					<button type="button" class="accept" id="accept">수락</button>
-					<button type="button" class="reject" id="reject">거절</button>
-			</div>
-			<div id="ampaginationsm"></div>
-		</div>
-			
-		</div>
 	</div>
-	</div>
-</div>
-	<!-- footer -->
-	<jsp:include page="../footer.jsp"></jsp:include>
+
+
+
+	<!--  footer  -->
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

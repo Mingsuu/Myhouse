@@ -1,10 +1,19 @@
 package com.myhouse.vo;
 
 public class noticeVO {
-	String nno,ntitle,ndate,ncontent;
+	String rno,nno,ntitle,ndate,ncontent;
 
 	
 	
+	
+	public String getRno() {
+		return rno;
+	}
+
+	public void setRno(String rno) {
+		this.rno = rno;
+	}
+
 	public String getNno() {
 		return nno;
 	}

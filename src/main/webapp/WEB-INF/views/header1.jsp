@@ -220,7 +220,7 @@
 							href="logout.do">로그아웃</a>
 					</div>
 					<div class="drop-down layout-navigation-bar-upload-button">
-						<a href="http://localhost:9000/myhouse/notice_list_admin.do">
+						<a href="http://localhost:9000/myhouse/notice_list_admin.do?rpage=1">
 							<button class="layout-navigation-bar-upload-button__button"
 								type="button" id="depth_my_page" >
 								관리자Page

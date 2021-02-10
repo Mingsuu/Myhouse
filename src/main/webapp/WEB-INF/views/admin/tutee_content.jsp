@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="com.one_day_class.dao.*, com.one_day_class.vo.*,java.util.*"%>
-<%
+    %>
+<%--
 	String email = request.getParameter("email");
 
 	sh_TuteeDAO dao_tutee = new sh_TuteeDAO();
@@ -11,7 +11,7 @@
 	ArrayList<sh_ClassVO> list_apply_class = dao_class.getApplyClass(email);
 	ArrayList<sh_ClassVO> list_ing_class = dao_class.getIngClass(email);
 	ArrayList<sh_ClassVO> list_wish_class = dao_class.getMywishList(email);
-%>
+--%>
     
 <!DOCTYPE html>
 <html>
@@ -157,7 +157,7 @@
 </head>
 <body>
 	<!-- header -->
-	<jsp:include page="../header_tutor.jsp"></jsp:include>
+	<jsp:include page="../header1.jsp"></jsp:include>
 
 	<!-- content -->
 	<div class="admin_content">
@@ -176,7 +176,7 @@
 		</aside>
 		<section class="admin_section1">
 			<div class="ad_title">회원상세정보</div>
-			<table class="admin_member_content">
+			<%-- <table class="admin_member_content">
 				<tr>
 					<th>아이디</th>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getEmail() %></td>
@@ -240,7 +240,7 @@
 						<a href="tutee_list.jsp"><button type="button" class="btn_style">목록으로</button></a>
 					</td>
 				</tr>
-			</table>
+			</table> --%>
 		</section>
 	</div>
 
