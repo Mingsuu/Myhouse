@@ -2618,7 +2618,7 @@
 <script>
 	$(document).ready(function(){
 		best_ajax("","베스트순");
-		q_ajax();
+		q_ajax("");
 		
 		/* swiper */
 	    var galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -2639,9 +2639,6 @@
 	      }
 	    });
 	    
-	 
-	 
-	      
 		/* 스크랩 유무에 따른 표시 여부 */
 		if(${scrap_exist}!=0) {
 			$("#main-scrap").addClass("production-selling-header__action__button--active");
@@ -3634,13 +3631,11 @@
 		
 		}); 
 		
-		
-
 		/* 문의화면 ajax */
-		function q_ajax() {
+		function q_ajax(qpage) {
 			
 			$.ajax({
-				url:"interior_question_proc.do?ino=${ino}",
+				url:"interior_question_proc.do?ino=${ino}&qpage="+qpage,
 				success: function(result) {
 					var jdata = JSON.parse(result);
 					var output = '';
@@ -3690,15 +3685,43 @@
 						output += '</article>';
 					}
 					
+					$(".production-question-feed__list").empty();
+					$("#ampaginationsm_q").remove();
+					var pagee = '<div id="ampaginationsm_q" style="text-align:center;"></div>';
+					
 					$(".production-question-feed__list").append(output);
+					$(".production-question-feed__list").after(pagee);
 
 							
-						
+					 page2(jdata.dbcount, jdata.reqpage, jdata.pagesize)	
 					
 				}	
 			});
 			
 		}
+		
+		 /** 페이징 처리 함수 **/
+	    function page2(dbcount, reqpage, pagesize){
+	       //페이지 번호 및  링크
+	          var pager = jQuery("#ampaginationsm_q").pagination({
+	             maxSize : 5,
+	             totals:dbcount,
+	             page : reqpage,
+	             pageSize : pagesize,
+	             
+	             lastText : '&raquo;&raquo;',
+	             firstText : '&laquo;&laquo;',
+	             preTest : '&laquo;',
+	             nextTest : '&raquo;',
+	             
+	             btnSize : 'sm'
+	          });
+	          
+	          //
+	          jQuery("#ampaginationsm_q").on('am.pagination.change',function(e){
+	        	  q_ajax(e.page);
+	          });
+	    }//page
 		
 		/* 문의답변 - 답변하기 클릭시 */
 		$(document).on("click",".production-selling-section__right-answer",function(){
