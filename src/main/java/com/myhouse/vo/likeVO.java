@@ -2,10 +2,18 @@ package com.myhouse.vo;
 
 public class likeVO {
 
-	String ino,email,pno;
+	String ino,email,pno,photo_simage;
 	int photo_like;
 	
 	
+	
+	
+	public String getPhoto_simage() {
+		return photo_simage;
+	}
+	public void setPhoto_simage(String photo_simage) {
+		this.photo_simage = photo_simage;
+	}
 	public String getIno() {
 		return ino;
 	}

@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
 	String email = request.getParameter("email");
 
-	sh_TuteeDAO dao_tutee = new sh_TuteeDAO();
-	sh_TuteeVO vo_tutee = dao_tutee.getTuteeContent(email);
-	
+	sh_TutorDAO dao_tutor = new sh_TutorDAO();
+	sh_TutorVO vo_tutor = dao_tutor.getTutorContent(email);
+
 	sh_ClassDAO dao_class = new sh_ClassDAO();
-	ArrayList<sh_ClassVO> list_apply_class = dao_class.getApplyClass(email);
-	ArrayList<sh_ClassVO> list_ing_class = dao_class.getIngClass(email);
-	ArrayList<sh_ClassVO> list_wish_class = dao_class.getMywishList(email);
+	ArrayList<sh_ClassVO> list_class = dao_class.getMakeClass(email);
+	ArrayList<sh_ClassVO> list_class_open = dao_class.getMakeClassOpen(email);
+	ArrayList<sh_ClassVO> list_class_wait = dao_class.getMakeClassWait(email);
+	
 --%>
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>탈멍 :: 회원관리 - 튜티</title>
-<link rel="stylesheet" href="http://localhost:9000/One_day_class/js_sh/swiper-bundle.min.css">
-<script src="http://localhost:9000/One_day_class/js_sh/jquery-3.5.1.min.js"></script>
+<title>탈멍 :: 회원관리 - 튜터</title>
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/swiper-bundle.min.css">
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <style>
 	*{
 		box-sizing: border-box;
@@ -124,6 +126,10 @@
 	table.admin_member_content tr:nth-child(2) th {
 		height: 40px;
 	}
+	table.admin_member_content tr:nth-child(3) td {
+		width:90px;
+		height:50px;
+	}
 	table.admin_member_content tr:last-child td{
 		padding: 0;
 	}
@@ -144,6 +150,7 @@
 	table.admin_member_content tr:last-child td a > button:focus {
 		outline:none;
 	}
+	
 	table.admin_member_content tr:last-child td {
 		text-align: right;
 	}
@@ -151,6 +158,9 @@
 		border: 1px solid white;
 		border-top: 1px solid #333;
 		padding-top: 15px;
+	}
+	   	.footer{
+	display:inline-block;
 	}
 </style>
 
@@ -176,75 +186,71 @@
 		</aside>
 		<section class="admin_section1">
 			<div class="ad_title">회원상세정보</div>
-			<%-- <table class="admin_member_content">
+			 <table class="admin_member_content">
 				<tr>
 					<th>아이디</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getEmail() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>성명</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getName() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>가입일</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getRdate() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getPhone() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>나이</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getAge() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<th>거주지역</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%= vo_tutee.getArea() %></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
-					<th>신청한 수업</th>
-					<% if(list_apply_class.size() != 0){ %>
-					<td colspan="5">
-					<% for(sh_ClassVO vo : list_apply_class){ %>
-						<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-							<span style="color:#ff0045; font-weight:bold;">|<%= vo.getCatemain() %>|</span> 
-							<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-					<%} %>
-					</td>
-					<%} else { %>
-					<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;신청한 수업이 없습니다.</td>
-					<%} %>
+					<th>커뮤니티</th>
+					<c:choose>
+						<c:when test="${photolist ne null}">
+							<th>사진 게시물</th>
+								<td colspan="5">
+								<c:forEach var="vo" items="${photolist}" varStatus="status">
+									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
+										<span style="color:#ff0045; font-weight:bold; ">${vo.pcontent}</span> 
+										<br> <span style="margin:0 10px;">- </span> ${vo.pcontent}<br>
+								</c:forEach>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 사진 게시물이 없습니다.</td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<tr>
-					<th>수강중인 수업</th>
-					<% if(list_ing_class.size() != 0){ %>
-					<td colspan="5">
-					<% for(sh_ClassVO vo : list_ing_class){ %>
-						<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-							<span style="color:#ff0045; font-weight:bold;">|<%= vo.getCatemain() %>|</span> 
-							<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-					<%} %>
-					</td>
-					<%} else { %>
-					<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;수강중인 수업이 없습니다.</td>
-					<%} %>
-				</tr>
-				<tr>
-					<th>위시리스트</th>
-					<% if(list_wish_class.size() != 0) {  %>
-						<td colspan="5">
-						<% for(sh_ClassVO vo : list_wish_class){ %>
-						<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-							<span style="color:#ff0045; font-weight:bold;">|<%= vo.getCatemain() %>|</span> 
-							<br> <span style="margin:0 10px;">- </span> <%= vo.getTitle() %><br>
-						<%} %>	
-						</td>
-					<% } else { %>
-						<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;추가된 위시리스트가 존재하지 않습니다.</td>
-					<% } %>
+					<th>스토어 게시물</th>
+					
+					<c:choose>
+						<c:when test="${interiorlist ne null}">
+							<td colspan="5">
+								<c:forEach var="vo" items="${interiorlist}" varStatus="status">
+									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
+										<span style="color:#ff0045; font-weight:bold;">${vo.ititle}</span> 
+										<br> <span style="margin:0 10px;">- </span> ${vo.ititle}<br>
+								</c:forEach>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 스토어 게시물이 없습니다.</td>
+						</c:otherwise>
+					</c:choose>
+					
 				</tr>
 				<tr>
 					<td colspan="6">
-						<a href="tutee_list.jsp"><button type="button" class="btn_style">목록으로</button></a>
-					</td>
-				</tr>
-			</table> --%>
+						<a href="member_list.jsp"><button type="button" class="btn_style" >목록으로</button></a>
+					</td> 
+				</tr> 
+			</table>
 		</section>
 	</div>
-
-	<!-- footer -->
-	<jsp:include page="../footer.jsp"></jsp:include>
+	<div class="footer">
+		<!-- footer -->
+		<jsp:include page="../footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>

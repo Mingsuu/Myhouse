@@ -1,13 +1,20 @@
 package com.myhouse.vo;
 
 public class reviewVO {
-	String vno,email,gno,vcontent,date,company,ino,ititle,nickname,vdate;
+	String vno,email,gno,vcontent,date,company,ino,ititle,nickname,vdate,interior_simage;
 	int star;
 	
 	
 	
 	
 	
+	
+	public String getInterior_simage() {
+		return interior_simage;
+	}
+	public void setInterior_simage(String interior_simage) {
+		this.interior_simage = interior_simage;
+	}
 	public String getVdate() {
 		return vdate;
 	}

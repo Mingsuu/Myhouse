@@ -8,4 +8,17 @@
 	<select id="countscrap" parameterType="java.lang.String" resultType="int">
 		select count(*) from h_scrap where pno=#{pno}
 	</select>
+	
+	<insert id="getinsert" parameterType="map" >
+		insert into h_scrap values ('s'||SCRAP_SEQUENCE.nextval,#{email},#{pno},null,sysdate)
+	</insert>
+	
+	<delete id="getdelete" parameterType="map">
+		delete from h_scrap where email=#{email} and pno=#{pno}
+	</delete>
+	
+	<select id="getscrap" parameterType="map" resultType="int">
+	 	select count(h_scrap.sno) from h_photo,h_scrap 
+	 	where h_photo.pno=h_scrap.pno and h_scrap.email=#{email} and h_photo.pno=#{pno}
+	</select>
 </mapper>

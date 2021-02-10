@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.yktag">
+	<select id="taglist" parameterType="java.lang.String" resultType="com.myhouse.vo.tagVO">
+	 	select tno, company, h_goods.gno, goods_name, goods_price, goods_simage
+   		from h_interior, h_goods, h_tag
+   		where h_interior.ino = h_goods.ino and h_goods.gno = h_tag.gno and h_tag.pno=#{pno}
+	</select>
+	<select id="tagcount" parameterType="java.lang.String" resultType="int">
+	 	select count(*)
+   		from h_interior, h_goods, h_tag
+   		where h_interior.ino = h_goods.ino and h_goods.gno = h_tag.gno and h_tag.pno=#{pno}
+	</select>
+</mapper>

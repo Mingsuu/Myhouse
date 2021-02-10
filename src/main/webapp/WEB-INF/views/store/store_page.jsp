@@ -4107,7 +4107,7 @@
 						</p>
 					</div>
 					<div class="production-selling-option-form__footer">
-						<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="button">장바구니</button>
+						<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
 						<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
 					</div>
 				</div> <!-- production-selling-option-form production-selling-overview__option-form -->
