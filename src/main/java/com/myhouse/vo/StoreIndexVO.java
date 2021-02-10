@@ -5,7 +5,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class StoreIndexVO {
 
 	String email, nickname, member_spimage,
-		   ino, company, ititle, interior_simage, category, tone, color, icontent,
+		   ino, company, ititle, interior_simage, category, tone, color, season, icontent,
 		   gno, goods_simage, goods_name, goods_price,
 		   vno, vcontent, review_image, review_simage, vdate, savepath,
 		   sno,
@@ -14,8 +14,13 @@ public class StoreIndexVO {
 	double star_avg, star_float;
 	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count;
 	CommonsMultipartFile file1;
-
 	
+	public String getSeason() {
+		return season;
+	}
+	public void setSeason(String season) {
+		this.season = season;
+	}
 	public String getReview_image() {
 		return review_image;
 	}

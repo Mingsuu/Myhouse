@@ -1,9 +1,12 @@
 package com.spring.controller;
 
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,6 +58,49 @@ public class StoreController {
 		}
 	
 	/*
+	 * store_page :: question - delete
+	 */
+	@ResponseBody
+	@RequestMapping(value="/interior_question_answer_delete.do", method=RequestMethod.GET)
+	public String interior_question_answer_delete(String qno, String ino) {
+		System.out.println("store_index qno!!!!!!!!!!!!---------->"+qno);
+		System.out.println("store_index ino!!!!!!!!!!!!!!---------->"+ino);
+		return interiorService.getInteriorQuestionAnswerDelete(qno, ino);
+	}
+	
+	/*
+	 * store_page :: question - answer :: 화면
+	 */
+	@ResponseBody
+	@RequestMapping(value="/interior_question_answer_proc.do", method=RequestMethod.GET,
+					produces="text/plain;charset=UTF-8")
+	public String interior_question_answer_proc(String qno, String ino) {
+		System.out.println("store_index qno!!!---------->"+qno);
+		System.out.println("store_index ino!!!---------->"+ino);
+		return interiorService.getInteriorQuestionAnswerProc(qno, ino);
+	}
+	
+	/*
+	 * store_page :: question - answer
+	 */
+	@RequestMapping(value="/interior_question_answer.do", method=RequestMethod.GET)
+	public ModelAndView interior_question_answer(String qno, String qreply, String ino) {
+		System.out.println("store_index qno---------->"+qno);
+		System.out.println("store_index ino---------->"+ino);
+		System.out.println("store_index qreply---------->"+qreply);
+		return interiorService.getInteriorQuestionAnswer(qno, qreply, ino);
+	}
+	
+	/*
+	 * store_page :: question - write
+	 */
+	@RequestMapping(value="/interior_question_insert.do", method=RequestMethod.POST)
+	public String interior_question_insert(StoreIndexVO vo) {
+		vo.setEmail("test0@naver.com");
+		return interiorService.getInteriorQuestionInsert(vo);
+	}
+	
+	/*
 	 * store_page :: review - write
 	 */
 	@RequestMapping(value="/interior_review_insert.do", method=RequestMethod.POST)
@@ -84,8 +130,10 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/interior_review_photo.do", method=RequestMethod.GET,
 					produces="text/plain;charset=UTF-8") 
-	public String interior_review_photo(String ino) {
-		return interiorService.getInteriorReviewPhoto(ino);
+	public String interior_review_photo(String ino, String rpage) {
+		
+		System.out.println("photo~~"+rpage);
+		return interiorService.getInteriorReviewPhoto(ino, rpage);
 	}
 	
 	/*
@@ -94,8 +142,9 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/interior_review_recently.do", method=RequestMethod.GET,
 				produces="text/plain;charset=UTF-8") 
-	public String interior_review_recently(String ino) {
-		return interiorService.getInteriorReviewRecently(ino);
+	public String interior_review_recently(String ino, String rpage) {
+		System.out.println("recently~~"+rpage);
+		return interiorService.getInteriorReviewRecently(ino, rpage);
 	}
 	
 	/*
@@ -103,10 +152,12 @@ public class StoreController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/interior_review.do", method=RequestMethod.GET,
-	produces="text/plain;charset=UTF-8") 
-	public String interior_review(String ino) {
-		return interiorService.getInteriorReview(ino);
+					produces="text/plain;charset=UTF-8") 
+	public String interior_review(String ino, String rpage) {
+		return interiorService.getInteriorReview(ino, rpage);
 	}
+	
+	
 	
 	/*
 	 * store_page :: 스크랩 처리 :: 삭제
@@ -127,23 +178,91 @@ public class StoreController {
 		System.out.println("store_index---------->"+email);
 		return interiorService.getInteriorScrapProc("test0@naver.com", ino);
 	}
+	/*
+	 * store_index :: 스크랩 처리 :: 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/store_scrap_del_proc.do", method=RequestMethod.GET)
+	public String store_scrap_del_proc(String email, String ino) {
+		System.out.println("store_index~!~!~---------->"+ino);
+		System.out.println("store_index~!~!~!~!---------->"+email);
+		return interiorService.getStoreScrapDelProc("test0@naver.com", ino);
+	}
+	
+	/*
+	 * store_index :: 스크랩 처리
+	 */
+	@ResponseBody
+	@RequestMapping(value="/store_scrap_proc.do", method=RequestMethod.GET)
+	public String store_scrap_proc(String email, String ino) {
+		System.out.println("store_index~!~!~!~!---------->"+ino);
+		System.out.println("store_index~!~!~!~!---------->"+email);
+		return interiorService.getStoreScrapProc("test0@naver.com", ino);
+	}
+	
+	
 	
 	/*
 	 * store_page 화면
 	 */
 	@RequestMapping(value="/store_page.do",method=RequestMethod.GET) 
-	public ModelAndView store_page(String ino, String email) {
+	public ModelAndView store_page(String ino, String email ) {
 		System.out.println("store_index page---------->"+ino);
 		System.out.println("store_index page---------->"+email);
 		return interiorService.getInteriorTop(ino, "test0@naver.com");
 	}
+	
+	/*
+	 * store_index - 상세카테고리
+	 */
+	@ResponseBody
+	@RequestMapping(value="/category_list.do", method=RequestMethod.GET,
+				produces="text/plain;charset=UTF-8")
+	public String category_tone(String category, String tone, String color, String season, String rpage) {
 		
+		System.out.println(category);
+		System.out.println("controller---->"+tone);
+		System.out.println("controller---->"+color);
+		System.out.println("controller---->"+season);
+		System.out.println("controller + rpage---->"+rpage);
+		
+		StringTokenizer tone_ = new StringTokenizer(tone,",");
+		StringTokenizer color_ = new StringTokenizer(color,",");
+		StringTokenizer season_ = new StringTokenizer(season,",");
+		
+		String[] tonelist = new String[tone_.countTokens()];
+		String[] colorlist = new String[color_.countTokens()];
+		String[] seasonlist = new String[season_.countTokens()];
+		
+		for(int i=0; i<tonelist.length; i++) {
+			tonelist[i] = tone_.nextToken();
+		}
+		for(int i=0; i<colorlist.length; i++) {
+			colorlist[i] = color_.nextToken();
+		}
+		for(int i=0; i<seasonlist.length; i++) {
+			seasonlist[i] = season_.nextToken();
+		}
+		
+		
+		return interiorService.getListCategory(category, tonelist, colorlist, seasonlist, rpage); 
+	}
+	/*
+	 * store_index 화면 - 스크랩
+	 */
+	@ResponseBody
+	@RequestMapping(value="/scrap_exist_proc.do", method=RequestMethod.GET)
+	public String scrap_exist_proc(String email, String ino) {
+		System.out.println("inooooo"+ino);
+		System.out.println("emailll"+email);
+		return interiorService.getScrapProc("test0@naver.com",ino ); 
+	}
 	/*
 	 * store_index 화면
 	 */
 	@RequestMapping(value="/store_index.do", method=RequestMethod.GET)
-	public ModelAndView store_index(String category) {
-		
+	public ModelAndView store_index(String category, String rpage) {
+		System.out.println("rpage~~~~~~~~~~>"+rpage);
 		return interiorService.getList(category); 
 	}
 	
