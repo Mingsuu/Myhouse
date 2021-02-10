@@ -1,15 +1,21 @@
 package com.myhouse.vo;
 
 public class CommunityVO {
-	String pno, w_nickname, intro, w_member_image, w_member_simage,
+	String pno, w_email, w_nickname, intro, w_member_image, w_member_simage,
 	pcontent, pstyle, ptype, photo_image, photo_simage, pdate,
 	c_nickname, c_member_image, c_member_simage ,c_content;
-	int phits,plike, scrap, comments;
+	int phits,plike, scrap, comments, islike, isscrap, isfollow, iswriter;
 	public String getPno() {
 		return pno;
 	}
 	public void setPno(String pno) {
 		this.pno = pno;
+	}
+	public String getW_email() {
+		return w_email;
+	}
+	public void setW_email(String w_email) {
+		this.w_email = w_email;
 	}
 	public String getW_nickname() {
 		return w_nickname;
@@ -120,7 +126,29 @@ public class CommunityVO {
 	public void setComments(int comments) {
 		this.comments = comments;
 	}
-
-	
+	public int getIslike() {
+		return islike;
+	}
+	public void setIslike(int islike) {
+		this.islike = islike;
+	}
+	public int getIsscrap() {
+		return isscrap;
+	}
+	public void setIsscrap(int isscrap) {
+		this.isscrap = isscrap;
+	}
+	public int getIsfollow() {
+		return isfollow;
+	}
+	public void setIsfollow(int isfollow) {
+		this.isfollow = isfollow;
+	}
+	public int getIswriter() {
+		return iswriter;
+	}
+	public void setIswriter(int iswriter) {
+		this.iswriter = iswriter;
+	}
 	
 }

@@ -1,15 +1,13 @@
-package com.myhouse.vo;
+ package com.myhouse.vo;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class interiorVO {
 
 	String rno,ino,email,company,ititle,interior_image,interior_simage,
-	idate,category,tone,color,price,season,detail_category,savepath,status;
+	idate,category,tone,color,price,season,detail_category,savepath,status,nickname;
 	
-	CommonsMultipartFile file1,file2;
-
-	
+	CommonsMultipartFile interior_file;
 	
 	public String getStatus() {
 		return status;
@@ -139,20 +137,22 @@ public class interiorVO {
 		this.savepath = savepath;
 	}
 
-	public CommonsMultipartFile getFile1() {
-		return file1;
+	
+
+	public CommonsMultipartFile getInterior_file() {
+		return interior_file;
 	}
 
-	public void setFile1(CommonsMultipartFile file1) {
-		this.file1 = file1;
+	public void setInterior_file(CommonsMultipartFile interior_file) {
+		this.interior_file = interior_file;
 	}
 
-	public CommonsMultipartFile getFile2() {
-		return file2;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setFile2(CommonsMultipartFile file2) {
-		this.file2 = file2;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 	
