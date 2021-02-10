@@ -15,12 +15,27 @@
 		var ino = $(".react-modal").parent().children("#ino").val();
 		
 		$("button.review-modal__close").click(function(){
-			var ino = $(".react-modal").parent().children("#ino").val();
+			var ino = $(this).attr("id");
 			alert("작성하고있는 내용이 유실됩니다. 정말 종료하시겠습니까?");
 			$("#modal"+ino).css("display","none");
 			
 		});//click
 
+		
+		$(".review-modal__form__submit").click(function(){
+			if($("#echeck").val().length !=0){
+				alert("마지막 동의를 하셔야 완료됩니다.")
+				$("#echeck").focus();
+				return false;
+			}
+			
+			
+		});
+			
+		
+		
+		
+		
 		
 		$("#search").change(function(){
 				
@@ -1328,7 +1343,7 @@ path[Attributes Style] {
 .form-check:not(:disabled):checked+.check-img:after{
 	opacity: 1;
 }
-  .check-img {
+/*   .check-img {
 	box-sizing: border-box;
     height: 22px;
     width: 22px;
@@ -1342,7 +1357,7 @@ path[Attributes Style] {
     top: 0;
     margin-top:12px;
 	
-} 
+}  */
 .review-modal__form__agree{
 	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -1658,6 +1673,16 @@ font-weight: 700;
 	color:#424242;
 	display:inline-block;
 }
+.form-check1{
+	float:left;
+	margin-left:0px;
+}
+.form-check1:checked {
+	background-color:#35c5f0;
+}
+input[id="check1"]:checked + label {
+	background-color:#35c5f0;
+}
 </style>
 </head>
 <body>
@@ -1703,7 +1728,7 @@ font-weight: 700;
 		<div class="react-modal__content review-modal__modal">
 			<div class="review-modal">
 				<div class="review-modal__title">리뷰 쓰기
-					<button type="button" class="review-modal__close" id="moclose${vo.ino }">
+					<button type="button" class="review-modal__close" id="${vo.ino }">
 						<svg class="review-modal__close__icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" preserveAspectRatio="xMidYMid meet">
 							<path fill-rule="nonzero" d="M11.6 10l7.1 7.1-1.6 1.6-7.1-7.1-7.1 7.1-1.6-1.6L8.4 10 1.3 2.9l1.6-1.6L10 8.4l7.1-7.1 1.6 1.6z"></path>
 						</svg>
@@ -1851,16 +1876,16 @@ font-weight: 700;
 				<div class="review-modal__section">
 					<div class="review-modal__section__title">상품을 직접 사용하고 작성한 리뷰인가요?</div>
 						<div class="form-check checkbox-input">
-							<label class="form-check-label">
-								<input class="form-check" type="checkbox">
+							<!-- <label class="form-check-label"> -->
+								<input id="check1" class="form-check1" type="checkbox" style="zoom:2.0; border:1px solid #dbdbdb; margin-top:5px;">
 								<span class="check-img"></span>
 								<span class="review-modal__form__agree">네. 상품을 직접 사용 후 작성한 리뷰이며,&nbsp;
 									<span class="review-modal__form__agree__policy-button">오늘의집 리뷰 정책</span>에 동의합니다.
 								</span>
-							</label>
+							<!-- </label> -->
 						</div>
 				</div>
-				<button class="button button--color-blue button--size-50 button--shape-4 review-modal__form__submit" type="submit">완료</button>
+				<button class="button button--color-blue button--size-50 button--shape-4 review-modal__form__submit" type="submit" id="enter">완료</button>
 				</form>
 				<div class="review-modal__explain">
 					<ul>
