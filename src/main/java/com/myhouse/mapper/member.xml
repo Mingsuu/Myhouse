@@ -51,7 +51,7 @@
 	<!-- id : naverinsert -->
 	<insert id="naverinsert" parameterType="com.myhouse.vo.MemberVO">
 	insert into h_member values(#{email},#{pass},#{nickname},'','',
-		'','','','','','','',0,sysdate,'','','','','')
+		'','pf_img.png','pf_img.png','','','','',0,sysdate,'','','','','')
 	</insert>
 	
 	<!-- id : getinfo2 -->
@@ -72,7 +72,7 @@
 	<!-- id : insert -->
 	<insert id="insert" parameterType="com.myhouse.vo.MemberVO">
 	insert into h_member values(#{email},#{pass},#{nickname},'','',
-		'','','','','','','',0,sysdate,'','','','','')
+		'','pf_img.png','pf_img.png','','','','',0,sysdate,'','','','','')
 	</insert>
 	
 	<!-- id : idcheck -->

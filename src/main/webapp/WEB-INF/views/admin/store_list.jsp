@@ -706,7 +706,7 @@
 				</div>
 				<ul>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
@@ -734,7 +734,6 @@
 			<div id="nesListNew">
 			<form name="ClassMForm" action="class_listProc.jsp" method="get" class="join">
 			<input type="hidden" name="wbutton" value="" id="wbutton">
-				<c:if test="${lise.size()>0} }">
 				<c:forEach var="i" begin="0" end="${list.size()-1}">
 					<ul class="section2-cont">
 						<li class="cont-0">
@@ -764,7 +763,6 @@
 						</li>
 					</ul>
 				</c:forEach>
-				</c:if>
 			</form>
 	
 				

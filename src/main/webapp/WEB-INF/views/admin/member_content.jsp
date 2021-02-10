@@ -19,7 +19,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>탈멍 :: 회원관리 - 튜터</title>
+<title>스윗트홈 :: 회원관리</title>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/swiper-bundle.min.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <style>
@@ -179,7 +179,7 @@
 		      </div>
 		      <ul>
 		         <li><img src="http://localhost:9000/One_day_class/images/admin_list.png"><a href="notice_list_admin.jsp">공지사항/이벤트</a></li>
-		         <li><img src="http://localhost:9000/One_day_class/images/admin_list.png"><a href="class_list.jsp">수업관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
 		         <li><img src="http://localhost:9000/One_day_class/images/admin_list.png"><a href="member_list.jsp">회원관리</a></li>
 		      </ul>
 		   </nav>
