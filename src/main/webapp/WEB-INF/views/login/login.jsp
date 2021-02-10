@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<title>Home</title>
@@ -67,6 +68,13 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 </style>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionId != null}">
+		<h2> 네이버 아이디 로그인 성공하셨습니다!! </h2>
+		<h3>'${sessionId}' 님 환영합니다! </h3>
+		<h3><a href="logout">로그아웃</a></h3>
+		</c:when>
+	</c:choose>
 	<div class="sign-in-form-wrap">
 		<div class="sign-in-form">
 			<h1 class="sign-in-form__header">
@@ -109,7 +117,7 @@ html{color:#424242;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,
 						data-type="kakao" href="http://localhost:9000/myhouse/login.do"> <span
 						class="icon-page-login__c-3" aria-label="카카오계정으로 로그인"></span>
 					</a> <a class="sign-in-form__sns__entry" data-type="naver"
-						href="http://localhost:9000/myhouse/login.do"> <span class="icon-page-login__e-3"
+						href="${url}"> <span class="icon-page-login__e-3"
 						aria-label="네이버 아이디로 로그인"></span>
 					</a>
 				</div>

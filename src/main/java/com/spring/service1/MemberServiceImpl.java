@@ -1,6 +1,7 @@
 package com.spring.service1;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -9,7 +10,6 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +25,96 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
+	/**
+	 * 상태 1만들기(테이블구조변경으로 인테리어 테이블status상태를 1로바꿈)
+	 */
+	@Override
+	public String sellerUpdate2(String[] emails) {
+		return String.valueOf(memberDAO.sellerUpdate2(emails));
+	};
+	/**
+	 * 상태 0만들기(테이블구조변경으로 인테리어 테이블status상태를 0으로바꿈)
+	 */
+	@Override
+	public String sellerUpdate(String[] emails) {
+		return String.valueOf(memberDAO.sellerUpdate(emails));
+	};
+	/**
+	 *  admin페이지 - 회원 리스트 가져오기
+	 */
+	@Override
+	public ModelAndView getMemberList2(String rpage) {
+		ModelAndView mv=new ModelAndView();
+		
+		//2-1. 페이지값에 따라서 star, end count 구하기
+		//1페이지(1~10), 2페이지(11~20) ...
+		int start = 0;
+		int end = 0;
+		int pageSize = 3; // 한 페이지당 출력되는 row
+		int pageCount = 1; // 전체 페이지 수 : 전체 리스트 row / 한 페이지당 출력되는 row
+		int dbCount = memberDAO.getListCount(); // DB연동 후 전체 row 수 출력
+		int reqPage = 1; // 요청 페이지
+		
+		//2-2. 전체페이지 수 구하기
+		if(dbCount % pageSize == 0){
+			pageCount = dbCount / pageSize;
+		} else {
+			pageCount = dbCount / pageSize + 1;
+		}
+		
+		//2-3. start, end 값 구하기
+		if(rpage != null){
+			reqPage = Integer.parseInt(rpage);
+			//start = (요청페이지 - 1) * 한페이지 출력행 + 1;
+			start = (reqPage-1) * pageSize + 1;
+			end = reqPage * pageSize;
+		} else {
+			start = reqPage;
+			end = pageSize;
+		}
+
+		ArrayList<MemberVO> list = memberDAO.getMemberList(start,end);
+		System.out.println("맴버 리스트 사이즈"+list.size());
+		mv.addObject("list", list);
+		mv.addObject("dbCount", dbCount);
+		mv.addObject("pageSize", pageSize);
+		mv.addObject("reqPage", reqPage);
+		mv.setViewName("/admin/member_list");
+		
+		return mv;
+	};
+	/**
+	 * 상태 1만들기(테이블구조변경으로 인테리어 테이블status상태를 1로바꿈)
+	 */
+	@Override
+	public String stateUpdate2(String[] inos) {
+		return String.valueOf(memberDAO.stateUpdate2(inos));
+	};
+	/**
+	 * 상태 0만들기(테이블구조변경으로 인테리어 테이블status상태를 0으로바꿈)
+	 */
+	@Override
+	public String stateUpdate(String[] inos) {
+		return String.valueOf(memberDAO.stateUpdate(inos));
+	};
+	/**
+	 * 프로필 갖어오기
+	 */
+	
+	public ModelAndView getProfile(HttpSession session) {
+		ModelAndView mv=new ModelAndView();
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		
+		if(svo!=null) {
+			String profile=memberDAO.getProfile(svo.getEmail());
+			mv.addObject("profile",profile);
+			mv.setViewName("index");
+		}else {
+			mv.setViewName("index");
+		}
+		return mv;
+	}
 	/**
 	 * 패스워드 찾기 이메일 발송
 	 */
