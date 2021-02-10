@@ -37,8 +37,9 @@ public class UploadPhotoServiceImpl implements UploadPhotoService{
 			pvo.setPhoto_simage(uuid +"_"+pvo.getFile1().getOriginalFilename());
 		}
 		//DB저장
+		System.out.println(pvo.getPtag());
 		boolean dao_result = uploadDAO.getInsert(pvo);//object타입이니까 캐스팅해서 보내야함
-				
+		
 		if(dao_result){
 			//서버 저장-->upload폴더 저장(폴더위치)
 

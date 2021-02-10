@@ -278,12 +278,7 @@
 						</div></li>
 				</ol>
 			</div>
-		</section>
-		
-		
-		
-		
-		
+		</section>		
 
 		<div data-sticky-enabled="true" data-sticky-disabled="false"
 			data-sticky-always="true" data-sticky-ignore="false"

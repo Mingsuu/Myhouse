@@ -22,6 +22,20 @@
 <body>
 <jsp:include page="../header_login.jsp" />
 
+<c:choose>
+	<c:when test="${map.count == 0}">
+	 	<div class="commerce-cart-empty">
+			<div class="commerce-cart-empty__content">
+				<img class="commerce-cart-empty__content__image"
+					src="http://localhost:9000/myhouse/images/BasketBanner.PNG" alt="장바구니가 비었습니다."><a
+					class="button button--color-blue button--size-50 button--shape-4 commerce-cart-empty__content__button"
+					href="http://localhost:9000/myhouse/store_index.do?category=0">상품 담으러 가기</a>
+			</div>
+		</div>
+	</c:when>
+
+	<c:otherwise>
+	<form class="card-collection-form container" name="basketForm" action="basket_proc.do" method="post" enctype="multipart/form-data">
 	<div class="commerce-cart-wrap">
 		<div class="container">
 			<div class="commerce-cart row">
@@ -293,18 +307,18 @@
 										<span class="number">213,400</span>원
 									</dd>
 								</div>
-								<div class="commerce-cart__summary__row">
+							<!-- 	<div class="commerce-cart__summary__row">
 									<dt>총 배송비</dt>
 									<dd>
 										+ <span class="number">2,500</span>원
 									</dd>
-								</div>
-								<div class="commerce-cart__summary__row">
+								</div> -->
+								<!-- <div class="commerce-cart__summary__row">
 									<dt>총 할인금액</dt>
 									<dd>
 										- <span class="number">104,100</span>원
 									</dd>
-								</div>
+								</div> -->
 								<div
 									class="commerce-cart__summary__row commerce-cart__summary__row--total">
 									<dt>결제금액</dt>
@@ -338,17 +352,10 @@
 			</div>
 		</div>
 	</div>
+	</form>
+	</c:otherwise>
+</c:choose>
 
-	<!-- 	<div class="commerce-cart-empty">
-		<div class="commerce-cart-empty__content">
-			<img class="commerce-cart-empty__content__image"
-				src="http://localhost:9000/myhouse/images/BasketBanner.PNG" alt="장바구니가 비었습니다."><a
-				class="button button--color-blue button--size-50 button--shape-4 commerce-cart-empty__content__button"
-				href="http://localhost:9000/myhouse/store_index.do?category=0">상품 담으러 가기</a>
-		</div>
-	</div>
- -->
-	<jsp:include page="../footer.jsp" />
-
+	<%-- <jsp:include page="../footer.jsp" /> --%>
 </body>
 </html>

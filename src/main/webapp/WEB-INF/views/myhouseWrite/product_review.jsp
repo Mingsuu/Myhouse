@@ -24,7 +24,7 @@
 
 					chk_list += $(this).attr("id") + ","
 				});	
-				/* alert(chk_list); */
+				alert(chk_list); 
 				$(opener.document).find("#ptag").val(chk_list);
 				
 				window.close();
