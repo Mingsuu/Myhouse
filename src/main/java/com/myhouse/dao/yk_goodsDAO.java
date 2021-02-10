@@ -1,5 +1,8 @@
 package com.myhouse.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,5 +20,10 @@ public class yk_goodsDAO extends DBConn {
 		if (value != 0)
 			result = true;
 		return result;
-	} 
+	}
+	
+	public ArrayList<goodsVO> getGoodsList(String gname){
+		List<goodsVO> list = sqlSession.selectList(namespace+".getlist", gname);
+		return (ArrayList<goodsVO>) list;
+	}
 }

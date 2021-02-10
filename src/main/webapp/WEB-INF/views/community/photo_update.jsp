@@ -55,6 +55,19 @@
   			}
 		});
     	  
+    	 function popup(){
+              var url = "product_tag.do";
+              var name = "상품태그하기";
+              var option = "width = 350, height = 500, top = 100, left = 200, location = no"
+              window.open(url, name, option);
+         }
+    	 $('#tag_btn').click(function(){
+    		popup(); 
+    	 });
+    	 
+    	$(document).on("click","button#gname",function(){
+    	 	$(this).parent().remove();
+    	 });
     	  
     	});    
     
@@ -372,6 +385,65 @@
 		d: path("M 11.952 9.778 l 2.397 -5.994 A 1.778 1.778 0 0 1 16 2.667 h 16 c 0.727 0 1.38 0.442 1.65 1.117 l 2.398 5.994 h 10.174 c 0.982 0 1.778 0.796 1.778 1.778 v 32 c 0 0.981 -0.796 1.777 -1.778 1.777 H 1.778 A 1.778 1.778 0 0 1 0 43.556 v -32 c 0 -0.982 0.796 -1.778 1.778 -1.778 h 10.174 Z M 24 38 c 6.075 0 11 -4.925 11 -11 s -4.925 -11 -11 -11 s -11 4.925 -11 11 s 4.925 11 11 11 Z");
 		-webkit-tap-highlight-color: transparent;
 	}
+	button.tag_btn{
+		list-style: none;
+		touch-action: manipulation;
+		user-select: none;
+		margin: 0;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		background: none;
+		font-family: inherit;
+		text-decoration: none;
+		text-align: center;
+		transition: color .1s,background-color .1s,border-color .1s;
+		cursor: pointer;
+		background-color: #35c5f0;
+		border-color: #35c5f0;
+		color: #fff;
+		display: block;
+		padding: 1px 8px 3px;
+		font-size: 13px;
+		line-height: 18px;
+		font-weight: 700;
+		border-radius: 26px;
+	}
+	button.filter_bar_tag{
+		list-style: none;
+		touch-action: manipulation;
+		user-select: none;
+		margin: 0;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		background: none;
+		font-family: inherit;
+		text-decoration: none;
+		text-align: center;
+		transition: color .1s,background-color .1s,border-color .1s;
+		cursor: pointer;
+		
+		display: block;
+		padding: 1px 8px 3px;
+		font-size: 13px;
+		line-height: 18px;
+		font-weight: 700;
+		border-radius: 26px;
+	}
+	svg.tagIcon{
+		width: 12;
+		height: 12;
+		fill: currentcolor;
+		margin: 0 -4px 0 7px;
+		vertical-align: -1px;
+	}
+	div.goods_list_wrap{
+		padding:10px 0;
+	}
+	div#gname{
+		padding:5px 0;
+	}
+	
+
 	
 </style>
 </head>
@@ -458,11 +530,25 @@
 							<div class="card-collection-form__card-item__content">
 								<div class="card-collection-form__card-item__content__row">
 									<textarea placeholder="사진에 대해서 설명해주세요."
-										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 300px;">${pvo.pcontent }</textarea>
+										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 200px;">${pvo.pcontent }</textarea>
 								</div>
 								<div class="card-collection-form__card-item__content__row">
 									<div class="keyword-input">
-										
+										<button id='tag_btn' class='tag_btn' type='button'>
+										상품 태그하기
+										</button>
+										<div class="goods_list_wrap">
+											<ul id="goods_list">
+											 <c:forEach var="tag" items="${taglist}"> 
+												<li><button id='gname' class='filter_bar_tag' type='button'>${tag.goods_name}
+														<svg class='tagIcon' width='12' height='12' viewBox='0 0 12 12' fill='currentColor' preserveAspectRatio='xMidYMid meet'>"
+															<path d='M6 4.94L3.879 2.817l-1.061 1.06L4.939 6 2.818 8.121l1.06 1.061L6 7.061l2.121 2.121 1.061-1.06L7.061 6l2.121-2.121-1.06-1.061L6 4.939zM6 12A6 6 0 1 1 6 0a6 6 0 0 1 0 12z'></path>"
+														</svg>
+													</button>
+												</li>
+											</c:forEach>
+											</ul>
+										</div>
 									</div>
 								</div>
 							</div>

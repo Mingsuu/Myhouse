@@ -19,16 +19,31 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityService;
 	
+	/** 커뮤니티 리스트 **/
 	@RequestMapping(value="/community_index.do", method=RequestMethod.GET)
 	public ModelAndView community_index(String rpage, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
 		if(svo != null) {
-			return communityService.getListMember(rpage, svo.getEmail());
+			return communityService.getList(rpage, svo.getEmail());
 		}else {
-			return communityService.getList(rpage);
+			return communityService.getList(rpage, "");
 		}
 	}
 	
+	/** 커뮤니티 리스트 카테고리**/
+	@ResponseBody
+	@RequestMapping(value="community_index_proc.do", method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String community_index_proc(String order, String type, String style, String rpage, HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		if(svo != null) {
+			return communityService.getCommunityListAjax(order, type, style, rpage, svo.getEmail());
+		}else {
+			return communityService.getCommunityListAjax(order, type, style, rpage,"");
+		}
+	}
+	
+	/** 커뮤니티 페이지**/
 	@RequestMapping(value="/community_page.do", method=RequestMethod.GET)
 	public ModelAndView community_page(String pno, HttpSession session) {
 		SessionVO svo=(SessionVO)session.getAttribute("svo");
@@ -37,6 +52,19 @@ public class CommunityController {
 			email=svo.getEmail();
 		}
 		return communityService.getContent(pno,email);
+	}
+	
+	@RequestMapping(value="/product_tag.do", method=RequestMethod.GET)
+	public String product_tag() {
+		return "/community/product_tag";
+	}
+	
+	/** 상품 가져오기 **/
+	@ResponseBody
+	@RequestMapping(value="/find_goods.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public String find_goods(String gname) {
+		System.out.println(gname);
+		return communityService.getGoodsList(gname);
 	}
 	
 	/** 사진수정 **/
@@ -169,16 +197,4 @@ public class CommunityController {
 		return communityService.deleteCommentLike(cno, svo.getEmail());
 	}
 	
-	/** 커뮤니티 리스트 **/
-	@ResponseBody
-	@RequestMapping(value="community_index_proc.do", method=RequestMethod.GET,
-			produces="text/plain;charset=UTF-8")
-	public String community_index_proc(String order, String type, String style, String rpage, HttpSession session) {
-		SessionVO svo=(SessionVO)session.getAttribute("svo");
-		if(svo != null) {
-			return communityService.getCommunityListAjaxMember(order, type, style, rpage, svo.getEmail());
-		}else {
-			return communityService.getCommunityListAjax(order, type, style, rpage);
-		}
-	}
 }

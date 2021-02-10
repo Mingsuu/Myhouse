@@ -15,12 +15,14 @@ import com.myhouse.dao.CommunityDAO;
 import com.myhouse.dao.photo_commentDAO;
 import com.myhouse.dao.yk_MemberDAO;
 import com.myhouse.dao.yk_PhotoDAO;
+import com.myhouse.dao.yk_goodsDAO;
 import com.myhouse.dao.yk_likeDAO;
 import com.myhouse.dao.yk_scrapDAO;
 import com.myhouse.dao.yk_tagDAO;
 import com.myhouse.vo.CommunityVO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.photo_commentVO;
 import com.myhouse.vo.tagVO;
 
@@ -40,82 +42,13 @@ public class CommunityServcieImpl implements CommunityService{
 	@Autowired
 	private yk_MemberDAO ykmemberDAO;
 	@Autowired
+	private yk_goodsDAO ykgoodsDAO;
+	@Autowired
 	private yk_tagDAO yktagDAO;
 	
-	/** 커뮤니티 리스트 카테고리(로그인X) **/
-	public String getCommunityListAjax(String order, String type, String style, String rpage) {
-		int start = 0;
-		int end = 0;
-		int pageSize = 9; //한 페이지당 출력되는 row
-		int pageCount = 1; //전체 페이지 수  : 전체 리스트 row /한 페이지당 출력되는 row
-		int dbCount = communityDAO.getListCount(order, type, style); //DB연동 후 전체로우수 출력
-		int reqPage = 1; //요청페이지
-		
-		//2-2. 전체페이지 수 구하기 - 화면출력
-		if(dbCount % pageSize == 0){
-			pageCount = dbCount/pageSize;		
-		}else{
-			pageCount = dbCount/pageSize +1;
-		}
-		
-		//2-3. start, end 값 구하기
-		if(rpage != ""){
-			reqPage = Integer.parseInt(rpage);
-			start = (reqPage-1) * pageSize +1 ;
-			end = reqPage*pageSize;	
-		}else{
-			start = reqPage;
-			end = pageSize;
-		}	
-		
-		
-		ArrayList<CommunityVO> list = communityDAO.getSortList(order,type,style,start,end);
-
-		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
-		JsonArray jarry = new JsonArray();
-		JsonObject jdata = new JsonObject();
-		Gson gson =new Gson();
-		
-		for(CommunityVO vo:list){
-			JsonObject jobj = new JsonObject();
-			jobj.addProperty("pno", vo.getPno());  
-			jobj.addProperty("w_email", vo.getW_email());  
-			jobj.addProperty("w_nickname", vo.getW_nickname());  
-			jobj.addProperty("intro", vo.getIntro());  
-			jobj.addProperty("w_member_image", vo.getW_member_image());  
-			jobj.addProperty("w_member_simage", vo.getW_member_simage());  
-			jobj.addProperty("pcontent", vo.getPcontent());  
-			jobj.addProperty("pstyle", vo.getPstyle());  
-			jobj.addProperty("ptype", vo.getPtype());  
-			jobj.addProperty("photo_image", vo.getPhoto_image());  
-			jobj.addProperty("photo_simage", vo.getPhoto_simage());  
-			jobj.addProperty("pdate", vo.getPdate());  
-			jobj.addProperty("c_nickname", vo.getC_nickname());  
-			jobj.addProperty("c_member_image", vo.getC_member_image());  
-			jobj.addProperty("c_member_simage", vo.getC_member_simage());  
-			jobj.addProperty("c_content", vo.getC_content());  
-			jobj.addProperty("phits", vo.getPhits());  
-			jobj.addProperty("plike", vo.getPlike());  
-			jobj.addProperty("scrap", vo.getScrap());  
-			jobj.addProperty("comments", vo.getComments());  
-			jobj.addProperty("islike", vo.getIslike());  
-			jobj.addProperty("isscrap", vo.getIsscrap());  
-			jobj.addProperty("isfollow", vo.getIsfollow());
-			
-			jarry.add(jobj);		
-		}
-		
-		jdata.add("jlist", jarry);
-		jdata.addProperty("dbcount", dbCount);
-		jdata.addProperty("reqpage", reqPage);
-		jdata.addProperty("pagesize", pageSize);
-		
-		return gson.toJson(jdata);
-	}
-	
-	/** 커뮤니티 리스트 카테고리(로그인O) **/
+	/** 커뮤니티 리스트 카테고리 **/
 	@Override
-	public String getCommunityListAjaxMember(String order, String type, String style, String rpage,String email) {
+	public String getCommunityListAjax(String order, String type, String style, String rpage,String email) {
 		int start = 0;
 		int end = 0;
 		int pageSize = 9; //한 페이지당 출력되는 row
@@ -141,7 +74,7 @@ public class CommunityServcieImpl implements CommunityService{
 		}	
 		
 		
-		ArrayList<CommunityVO> list = communityDAO.getSortListMember(order,type,style,start,end,email);
+		ArrayList<CommunityVO> list = communityDAO.getSortList(order,type,style,start,end,email);
 		
 		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
 		JsonArray jarry = new JsonArray();
@@ -172,8 +105,9 @@ public class CommunityServcieImpl implements CommunityService{
 			jobj.addProperty("comments", vo.getComments());  
 			jobj.addProperty("islike", vo.getIslike());  
 			jobj.addProperty("isscrap", vo.getIsscrap());  
-			jobj.addProperty("isfollow", vo.getIsfollow());  
-			
+			jobj.addProperty("isfollow", vo.getIsfollow()); 
+			jobj.addProperty("iswriter", vo.getIswriter());
+			 
 			jarry.add(jobj);		
 		}
 		
@@ -185,49 +119,8 @@ public class CommunityServcieImpl implements CommunityService{
 		return gson.toJson(jdata);
 	}
 	
-	/** 커뮤니티 리스트 (로그인X) **/
-	@Override
-	public ModelAndView getList(String rpage) {
-		ModelAndView mv = new ModelAndView();
-		
-		 //1페이지(1~10), 2페이지(11~20) ...
-	     int start =0;
-	     int end = 0;
-	     int pageSize = 5; // 한페이지당 출력되는 row
-	     int pageCount = 1; // 전체 페이지 수 : 전체 리스트 row / 한 페이지당 출력되는 row
-	     int dbCount = communityDAO.getListCount(); //DB연동 후 전체로우수 출력
-	     int reqPage = 1; //요청페이지
-	      
-	     //2-2. 전체페이지 수 구하기 - 화면출력
-	     if(dbCount % pageSize == 0) {
-	        pageCount = dbCount/pageSize;
-	     }else {
-	        pageCount = dbCount/pageSize +1;
-	     }
-	      
-	     //2-3. start, end 값 구하기
-	     if(rpage != null) {
-	        reqPage = Integer.parseInt(rpage);
-	        start = (reqPage -1) * pageSize +1;
-	        end = reqPage*pageSize;
-	     } else {
-	        start = reqPage;
-	        end = pageSize;
-	     }
-	      
-	    ArrayList<CommunityVO> list = communityDAO.getList(start, end);
-	     
-	    mv.addObject("list", list);
-	    mv.addObject("dbCount", dbCount);
-	    mv.addObject("pageSize", pageSize);
-	    mv.addObject("reqPage", reqPage);
-	    mv.setViewName("/community/community_index");
-	    
-	    return mv;
-	}
-	
-	/** 커뮤니티 리스트 (로그인O) **/
-	public ModelAndView getListMember(String rpage, String email) {
+	/** 커뮤니티 리스트 **/
+	public ModelAndView getList(String rpage, String email) {
 		ModelAndView mv = new ModelAndView();
 		
 		//1페이지(1~10), 2페이지(11~20) ...
@@ -255,7 +148,7 @@ public class CommunityServcieImpl implements CommunityService{
 			end = pageSize;
 		}
 		
-		ArrayList<CommunityVO> list = communityDAO.getListMember(start, end, email);
+		ArrayList<CommunityVO> list = communityDAO.getList(start, end, email);
 		
 		mv.addObject("list", list);
 		mv.addObject("dbCount", dbCount);
@@ -266,6 +159,7 @@ public class CommunityServcieImpl implements CommunityService{
 		return mv;
 	}
 
+	/**커뮤니티 페이지 내용 **/
 	@Override
 	public ModelAndView getContent(String pno, String email) {
 		ModelAndView mv = new ModelAndView();
@@ -303,15 +197,42 @@ public class CommunityServcieImpl implements CommunityService{
 		return mv;
 	}
 	
+	/** 상품 가져오기 **/
+	@Override
+	public String getGoodsList(String gname) {
+		ArrayList<goodsVO> list = ykgoodsDAO.getGoodsList(gname);
+		
+		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson =new Gson();
+		
+		for(goodsVO vo:list){
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("gno", vo.getGno());  
+			jobj.addProperty("ino", vo.getIno());  
+			jobj.addProperty("goods_simage", vo.getGoods_simage());  
+			jobj.addProperty("goods_name", vo.getGoods_name());  
+			jobj.addProperty("goods_price", vo.getGoods_price());  
+			
+			jarry.add(jobj);		
+		}
+		jdata.add("jlist", jarry);
+		
+		return gson.toJson(jdata);
+	}
+
 	/** 사진 수정 **/
 	@Override
 	public ModelAndView getUpdate(String pno) {
 		ModelAndView mv = new ModelAndView();
 		
 		PhotoVO vo = photoDAO.content(pno);
+		ArrayList<tagVO> taglist = yktagDAO.tagList(pno);
 		
 		mv.addObject("pvo", vo);
-		mv.setViewName("/community/update_photo");
+		mv.addObject("taglist", taglist);
+		mv.setViewName("/community/photo_update");
 		
 		return mv;
 	}

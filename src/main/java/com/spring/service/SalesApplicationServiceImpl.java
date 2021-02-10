@@ -22,11 +22,14 @@ public class SalesApplicationServiceImpl {
 	@Autowired
 	private yk_MemberDAO ykmemberDAO;
 	
+	
 	 public String getResultWrite(Object vo, Object vo2) {
 	      interiorVO ivo = (interiorVO) vo;
 	      goodsVO gvo = (goodsVO) vo2;
+	      String email = ivo.getEmail();
 	      boolean dao_result = false;
 	      
+	      ykmemberDAO.updateSeller(email);
 	      if(ivo.getInterior_file().getSize() !=0) {
 	    	  //파일존재
 	    	  //1. bfile, bsfile 이름생성 

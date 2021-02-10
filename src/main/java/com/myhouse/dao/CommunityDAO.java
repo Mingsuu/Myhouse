@@ -18,21 +18,16 @@ public class CommunityDAO  extends DBConn{
 	private static String namespace="mapper.community";
 	
 	/**
-	 * 전체사진 리스트 (최신인기순)
+	 * 전체 리스트 카운트
 	 */
-	public ArrayList<CommunityVO> getList(int start, int end){
-		Map<String, String> param = new HashMap<String, String>();
-		param.put("start", String.valueOf(start));
-		param.put("end", String.valueOf(end));
-		
-		List<CommunityVO> list = sqlSession.selectList(namespace+".list", param);
-		return (ArrayList<CommunityVO>) list;
+	public int getListCount() {
+		return sqlSession.selectOne(namespace + ".listcount");
 	}
 	
 	/**
-	 * 전체사진 리스트 (최신인기순) -로그인O
+	 * 전체사진 리스트 (최신인기순) 
 	 */
-	public ArrayList<CommunityVO> getListMember(int start, int end, String email){
+	public ArrayList<CommunityVO> getList(int start, int end, String email){
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("start", String.valueOf(start));
 		param.put("end", String.valueOf(end));
@@ -41,12 +36,6 @@ public class CommunityDAO  extends DBConn{
 		return (ArrayList<CommunityVO>) list;
 	}
 	
-	/**
-	 * 전체 리스트 카운트
-	 */
-	public int getListCount() {
-		return sqlSession.selectOne(namespace + ".listcount");
-	}
 	
 	/**
 	 *  리스트 카운트
@@ -59,18 +48,10 @@ public class CommunityDAO  extends DBConn{
 		return sqlSession.selectOne(namespace+".listcountajax",param);
 	}
 	
-	public ArrayList<CommunityVO> getSortList(String order, String type, String style, int start, int end){
-		Map<String, String> param = new HashMap<String, String>();
-		param.put("order", order);
-		param.put("type", type);
-		param.put("style", style);
-		param.put("start", String.valueOf(start));
-		param.put("end", String.valueOf(end));
-		List<CommunityVO> list = sqlSession.selectList(namespace+".sortlist", param);
-		return (ArrayList<CommunityVO>) list;
-	}
-	
-	public ArrayList<CommunityVO> getSortListMember(String order, String type, String style, int start, int end, String email){
+	/**
+	 * 리스트(카테고리)
+	 */
+	public ArrayList<CommunityVO> getSortList(String order, String type, String style, int start, int end, String email){
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("order", order);
 		param.put("type", type);
@@ -78,7 +59,7 @@ public class CommunityDAO  extends DBConn{
 		param.put("start", String.valueOf(start));
 		param.put("end", String.valueOf(end));
 		param.put("email", email);
-		List<CommunityVO> list = sqlSession.selectList(namespace+".sortlist_member", param);
+		List<CommunityVO> list = sqlSession.selectList(namespace+".sortlist", param);
 		return (ArrayList<CommunityVO>) list;
 	}
 	

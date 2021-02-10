@@ -4,7 +4,7 @@ public class CommunityVO {
 	String pno, w_email, w_nickname, intro, w_member_image, w_member_simage,
 	pcontent, pstyle, ptype, photo_image, photo_simage, pdate,
 	c_nickname, c_member_image, c_member_simage ,c_content;
-	int phits,plike, scrap, comments, islike, isscrap, isfollow;
+	int phits,plike, scrap, comments, islike, isscrap, isfollow, iswriter;
 	public String getPno() {
 		return pno;
 	}
@@ -144,6 +144,11 @@ public class CommunityVO {
 	public void setIsfollow(int isfollow) {
 		this.isfollow = isfollow;
 	}
-
+	public int getIswriter() {
+		return iswriter;
+	}
+	public void setIswriter(int iswriter) {
+		this.iswriter = iswriter;
+	}
 	
 }

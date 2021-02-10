@@ -12,10 +12,12 @@ public class yk_MemberDAO extends DBConn {
 
 	private static String namespace = "mapper.ykmember";
 
-	/** 이메일 찾기 **//*
-					 * public String getEmail(String nickname) { return
-					 * sqlSession.selectOne(namespace+".getemail", nickname); }
-					 */
+	/**
+	 * 판매자신청
+	 */
+	public int updateSeller(String email) {
+		return sqlSession.update(namespace+".updateseller", email);
+	}
 
 	/**
 	 * 팔로우

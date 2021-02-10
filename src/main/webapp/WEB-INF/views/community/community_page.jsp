@@ -2563,11 +2563,13 @@
 											</a>
 											<p class="card_detail_writer_intro">${member.intro}</p>
 										</div>
-										<c:if test="${isfollow != null}">
-											<button id="btn_following" class="card_detail_writer_following" type="button">팔로잉</button>
-										</c:if>
-										<c:if test="${isfollow == null}">
-											<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
+										<c:if test="${cvo[i].getwrite >0}">
+											<c:if test="${isfollow != null}">
+												<button id="btn_following" class="card_detail_writer_following" type="button">팔로잉</button>
+											</c:if>
+											<c:if test="${isfollow == null}">
+												<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
+											</c:if>
 										</c:if>
 									</div>
 									<div class="card_detail_card_list">

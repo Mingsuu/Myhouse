@@ -1682,47 +1682,47 @@
 								<input type="hidden" id="sales_application__product_categories" name="sales_application[product_categories]" value="">
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--주방">
-									<input type="radio" name="category" id="sales_application__category--주방" name="sales_application[category--주방]" class="form_check category__checkbox" value="주방">
+									<input type="radio" name="category" id="sales_application__category--주방" name="sales_application[category--주방]" class="form_check category__checkbox" value="5">
 									<span class="check_img"></span>주방</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--생활용품">
-									<input type="radio" name="category" id="sales_application__category--생활용품" name="sales_application[category--생활용품]" class="form_check category__checkbox" value="생활용품">
-									<span class="check_img"></span>생활용품</label>
+									<input type="radio" name="category" id="sales_application__category--생활용품" name="sales_application[category--생활용품]" class="form_check category__checkbox" value="4">
+									<span class="check_img"></span>생활</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--가구">
-									<input type="radio" name="category" id="sales_application__category--가구" name="sales_application[category--가구]" class="form_check category__checkbox" value="가구">
+									<input type="radio" name="category" id="sales_application__category--가구" name="sales_application[category--가구]" class="form_check category__checkbox" value="0">
 									<span class="check_img"></span>가구</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--홈데코/조명">
-									<input type="radio" name="category" id="sales_application__category--홈데코/조명" name="sales_application[category--홈데코/조명]" class="form_check category__checkbox" value="홈데코/조명">
+									<input type="radio" name="category" id="sales_application__category--홈데코/조명" name="sales_application[category--홈데코/조명]" class="form_check category__checkbox" value="1">
 									<span class="check_img"></span>홈데코/조명</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--반려동물">
-									<input type="radio" name="category" id="sales_application__category--반려동물" name="sales_application[category--반려동물]" class="form_check category__checkbox" value="반려동물">
+									<input type="radio" name="category" id="sales_application__category--반려동물" name="sales_application[category--반려동물]" class="form_check category__checkbox" value="8">
 									<span class="check_img"></span>반려동물</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--패브릭">
-									<input type="radio" name="category" id="sales_application__category--패브릭" name="sales_application[category--패브릭]" class="form_check category__checkbox" value="패브릭">
+									<input type="radio" name="category" id="sales_application__category--패브릭" name="sales_application[category--패브릭]" class="form_check category__checkbox" value="11">
 									<span class="check_img"></span>패브릭</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--수납/정리">
-									<input type="radio" name="category" id="sales_application__category--수납/정리" name="sales_application[category--수납/정리]" class="form_check category__checkbox" value="수납/정리">
+									<input type="radio" name="category" id="sales_application__category--수납/정리" name="sales_application[category--수납/정리]" class="form_check category__checkbox" value="3">
 									<span class="check_img"></span>수납/정리</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--가전">
-									<input type="radio" name="category" id="sales_application__category--가전" name="sales_application[category--가전]" class="form_check category__checkbox" value="가전">
+									<input type="radio" name="category" id="sales_application__category--가전" name="sales_application[category--가전]" class="form_check category__checkbox" value="2">
 									<span class="check_img"></span>가전</label>
 								</div>
 								<div class="form_check sales-form__form-check">
 									<label class="form_check_label" for="sales_application__category--DIY/공구">
-									<input type="radio" name="category" id="sales_application__category--DIY/공구" name="sales_application[category--DIY/공구]" class="form_check category__checkbox" value="DIY/공구">
+									<input type="radio" name="category" id="sales_application__category--DIY/공구" name="sales_application[category--DIY/공구]" class="form_check category__checkbox" value="6">
 									<span class="check_img"></span>DIY/공구</label>
 								</div>
 								

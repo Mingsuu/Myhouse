@@ -35,6 +35,7 @@ public class yk_PhotoDAO extends DBConn {
 	public MemberVO getWriterInfo(String pno) {
 		return sqlSession.selectOne(namespace+".getwriterinfo",pno);
 	}
+	
 	/**
 	 * 작성자 사진 리스트
 	 */
@@ -53,7 +54,6 @@ public class yk_PhotoDAO extends DBConn {
 			result = true;
 		return result;
 	}
-	
 	/**
 	 * 사진 삭제 
 	 */

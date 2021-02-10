@@ -157,14 +157,12 @@
 						success:function(result){
 							if(result=="") {
 								location.href="http://localhost:9000/myhouse/login.do";
-							}else{
-								$(this).removeClass("card_action");
-								$(this).addClass("card_action_active");
-								$(this).children('span.count').text(count+1);
 							}
 						}
 					});
-			
+				$(this).removeClass("card_action");
+				$(this).addClass("card_action_active");
+				$(this).children('span.count').text(count+1);
 			
 			}else{
 				$.ajax({
@@ -188,24 +186,24 @@
 					success:function(result){
 						if(result==""){
 							location.href="http://localhost:9000/myhouse/login.do";
-						}else{
-							$(this).removeClass("card_action");
-							$(this).addClass("card_action_active");
-							var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
-							output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-							output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
-							output +="<div class='toast-message__body'>스크랩했습니다</div>"
-							output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
-							output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-							if($('div.toast-message').length == 1){
-								$('div.toast-message').first().remove();
-							}
-							$(this).children('span.count').text(count+1);
-							$("div.toast-message-root").append(output);
-							$('div.toast-message').fadeOut(3800);
 						}
 					}
 				});
+				
+				$(this).removeClass("card_action");
+				$(this).addClass("card_action_active");
+				var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
+				output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
+				output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
+				output +="<div class='toast-message__body'>스크랩했습니다</div>"
+				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
+				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
+				if($('div.toast-message').length == 1){
+					$('div.toast-message').first().remove();
+				}
+				$(this).children('span.count').text(count+1);
+				$("div.toast-message-root").append(output);
+				$('div.toast-message').fadeOut(3800);
 				
 			}else{
 				$(this).removeClass("card_action_active");
@@ -276,12 +274,14 @@
 						output +="<address class='card_writer_content'><div class='card_writer_header'><a href='http://localhost:9000/myhouse/mypage_picture.do' class='card_writer_link'>";
 						if(jdata.jlist[i].w_member_simage == null) output +="<img class='card_writer_img' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1580049055_v.jpeg?gif=1&w=36&h=36&c=c&webp=1'>";
 						else output +="<img class='card_writer_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].w_member_simage+"'>";
-						output +="<span class='card_writer_name'>"+jdata.jlist[i].w_nickname+"</span>";
-						output +="</a><span class='seperator'>·</span>"
-						if(jdata.jlist[i].isfollow == null || jdata.jlist[i].isfollow == 0){
-							output +="<button id='follow' class='card_item_follow' type='button'>팔로우</button></div>";
-						}else{
-							output +="<button id='follow' class='card_item_following' type='button'>팔로잉</button></div>";
+						output +="<span class='card_writer_name'>"+jdata.jlist[i].w_nickname+"</span></a>";
+						if(jdata.jlist[i].iswriter == 0 || jdata.jlist[i].iswriter == null){
+						output +="<span class='seperator'></span>"
+							if(jdata.jlist[i].isfollow == null || jdata.jlist[i].isfollow == 0){
+								output +="<button id='follow' class='card_item_follow' type='button'>팔로우</button></div>";
+							}else{
+								output +="<button id='follow' class='card_item_following' type='button'>팔로잉</button></div>";
+							}
 						}
 						if(jdata.jlist[i].intro == null){
 							output += "<p class='card_writer_intro'></p></address></div>";
@@ -731,6 +731,10 @@
 		bottom: 0;
 		z-index: 1;
 	}
+	span.seperator::before {
+    content: "·";
+    margin: 0px 2px 0px 3px;
+}
 	
 	div.card_item_text{
 		padding: 0;
