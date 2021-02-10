@@ -21,6 +21,14 @@ public class AdminController {
 	private MemberServiceImpl memberService;
 	
 	/**
+	 *  회원 상세 페이지
+	 */
+	@RequestMapping(value="/member_content.do",method=RequestMethod.GET)
+	public ModelAndView member_content(String email) {
+		return memberService.getMemberInfo(email);
+	}
+	
+	/**
 	 *  공지사항 삭제
 	 */
 	@ResponseBody

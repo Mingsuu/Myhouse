@@ -4,12 +4,44 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class goodsVO {
 
-	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath;
+	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath,email,company,ititle,ostatus;
 	
 	CommonsMultipartFile gfile1, gfile2, gfile3, gfile4, gfile5;
 
 	
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getItitle() {
+		return ititle;
+	}
+
+	public void setItitle(String ititle) {
+		this.ititle = ititle;
+	}
+
+	public String getOstatus() {
+		return ostatus;
+	}
+
+	public void setOstatus(String ostatus) {
+		this.ostatus = ostatus;
+	}
+
 	public String getGno() {
 		return gno;
 	}

@@ -15,8 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.dao.MemberDAO;
+import com.myhouse.dao.yj_InteriorDAO;
+import com.myhouse.dao.yj_communityDAO;
 import com.myhouse.vo.MemberVO;
+import com.myhouse.vo.PhotoVO;
 import com.myhouse.vo.SessionVO;
+import com.myhouse.vo.interiorVO;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -25,6 +29,30 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	@Autowired
+	private yj_communityDAO communityDAO2;
+	@Autowired
+	private yj_InteriorDAO interiorDAO2;
+	
+	/**
+	 *  회원 상세 페이지(해당 email의 h_member , h_community ,h_interior 정보 갖어오기)
+	 */
+	@Override
+	public ModelAndView getMemberInfo(String email) {
+		ModelAndView mv=new ModelAndView();
+		
+		MemberVO membervo=memberDAO.getMemberInfo(email);
+		ArrayList<PhotoVO> photolist=communityDAO2.getCoummunityInfo(email);
+		ArrayList<interiorVO> interiorlist=interiorDAO2.getInteriorInfo(email);
+		mv.addObject("membervo", membervo);
+		System.out.println(membervo.getEmail());
+		mv.addObject("photolist",photolist);
+		System.out.println(photolist.size());
+		mv.addObject("interiorlist", interiorlist);
+		System.out.println(interiorlist.size());
+		mv.setViewName("/admin/member_content");
+		return mv;
+	};
 	
 	/**
 	 * 상태 1만들기(테이블구조변경으로 인테리어 테이블status상태를 1로바꿈)

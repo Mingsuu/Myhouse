@@ -15,16 +15,43 @@ $(document).ready(function(){
 	
 
 	$("button#card_action1").click(function(){
+		var count = parseInt($(this).children('span.count').text());
 		if ($(this).hasClass("card_action")){
 			$(this).removeClass("card_action");
 			$(this).addClass("card_action_active");
+			$(this).children('span.count').text(count+1);
+			
+			var pno = $(this).parent().children("#liking").val();
+			alert(pno);
+			$.ajax({
+				url:"mypage_picture_proc.do?pno="+pno,
+				success:function(result){
+				}//success
+				
+			});//ajax
+			
 		}else{
 			$(this).removeClass("card_action_active");
 			$(this).addClass("card_action");
+			$(this).children('span.count').text(count-1);
+			
+			
+			var pno = $(this).parent().children("#liking").val();
+			alert(pno);
+			$.ajax({
+				url:"mypage_picture_delete.do?pno="+pno,
+				success:function(result){
+				}//success
+				
+			});//ajax
+			
+			
+			
 		}
 	});
 	
 	$("button#card_action2").click(function(){
+		var count = parseInt($(this).children('span.count').text());
 		if ($(this).hasClass("card_action")){
 			$(this).removeClass("card_action");
 			$(this).addClass("card_action_active");
@@ -37,8 +64,20 @@ $(document).ready(function(){
 			if($('div.toast-message').length == 2){
 				$('div.toast-message').first().remove();
 			}
+			$(this).children('span.count').text(count+1);
 			$("div.toast-message-root").append(output);
 			$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+			
+			
+			var pno1 = $(this).parent().children("#scraping").val();
+			alert(pno1);
+			$.ajax({
+				url:"mypage_picture_scrap.do?pno="+pno1,
+				success:function(result){
+				}//success
+				
+			});//ajax
+			
 			
 		}else{
 			$(this).removeClass("card_action_active");
@@ -50,8 +89,20 @@ $(document).ready(function(){
 			if($('div.toast-message').length == 2){
 				$('div.toast-message').first().remove();
 			}
+			$(this).children('span.count').text(count-1);
 			$("div.toast-message-root").append(output);
 			$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+			
+			var pno1 = $(this).parent().children("#scraping").val();
+			alert(pno1);
+			$.ajax({
+				url:"mypage_picture_scrapdelete.do?pno="+pno1,
+				success:function(result){
+				}//success
+				
+			});//ajax
+			
+			
 		}
 	});
 	
@@ -67,6 +118,22 @@ $(document).ready(function(){
 			$("#share1").css("visibility","hidden");				
 		}
 	});
+	
+	
+	
+	
+	/* function plike () {
+	var pno = $("#card_action1").parent().children("#liking").val();
+	alert(pno);
+	$.ajax({
+		url:"mypage_picture.do?pno="+pno,
+		success:function(result){
+		}//success
+		
+	});//ajax
+	
+	
+	} */
 	
 	
 
@@ -346,14 +413,13 @@ $(document).ready(function(){
 	opacity:0.5;
 }
 .picpic {
-	border:1px solid red;
+	width:500px;
 	height:500px;
 	text-align:center;
-	display:none;
 }
 .picpic span {
 	display:inline-block;
-	font-size:18px;
+	font-size:15px;
 	font-weight: 500px;
 	margin-top:40px;
 	color:#424242;
@@ -678,30 +744,46 @@ div.card_item_content{
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
+		<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
 		<div class="leftbox">
 			<span>${prof.nickname}</span>
-			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+			
+				<c:if test="${prof.follower != null }">
+					<a href="#" class="mybtn1">팔로워 ${prof.follower}</a>
+				</c:if>
+				<c:if test="${prof.follower == null }">
+					<a href="#" class="mybtn1">팔로워 0</a>
+				</c:if>
+				<div></div>
+				<c:if test="${prof.following != null }">
+					<a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+				</c:if>
+				<c:if test="${prof.following == null }">
+					<a href="#" class="mybtn1">팔로잉 0</a>
+				</c:if>
+			
 			<a href="mypage_option.do" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
-			<a href="#"><div class="scrap">
+			<a href="scrap_all.do"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
-				<span class="left3">0</span>
+				<span class="left3">${scount}</span>
 			</div></a>
-			<a href="#"><div class="like">
+			<a href="mypage_like.do"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
 				<span class="left2">좋아요</span><br>
-				<span class="left4">0</span>
+				<span class="left4">${lcount}</span>
 			</div></a>
 		</div>
 	</div>
 	<div class="right">
 	<div class="user-card-feed">
 		<div class="virtualized-list user-card-feed__content row" style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
-		
+		<c:if test="${pcount == 0 }">
+			<div class="picpic"><span>게시한 사진이 없습니다. 사진을 올려보세요.</span></div>
+		</c:if>
 	<c:forEach var="vo" items="${list}">
 		<c:if test="${vo.photo_simage != null}" >
 		<div class="user-card-feed__item-wrap col-12 col-md-4">
@@ -710,7 +792,7 @@ div.card_item_content{
 				<div class="card-item-writer">
 					<address class="card-item-writer__content">
 						<div class="card-item-writer__header">
-							<a class="card-item-writer__link" href="/users/11910615">
+							<a class="card-item-writer__link" href="community_page.do?pno=${vo.pno}">
 								<img class="card-item-writer__image" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/1610430931_naver_98fa1c51c220430f705f88ee4aa119fab6005b2b158b188714085614b7112149.jpg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x" alt=""><span class="card-item-writer__name">귤먹고갈래</span>
 							</a>
 						</div>
@@ -718,7 +800,7 @@ div.card_item_content{
 					</address>
 				</div>
 				<div id="card-item-7734689" class="card-item__content">
-					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="#"></a>
+					<a class="card-item__content__link" aria-describedby="card-item-7734689" href="community_page.do?pno=${vo.pno}"></a>
 					<div class="expandable-text card-item-description card-item__description">
 						<div class="card-item-description__content">${vo.pcontent}</div>
 					</div>
@@ -729,16 +811,28 @@ div.card_item_content{
 						</div>
 					</div>
 					<aside class="card-item-action-list">
+					<input type="hidden" name="like" value="${vo.pno}" id="liking">
+						<c:if test="${vo.islike !=0}">
+							<button class="card_action_active" type="button" id="card_action1">
+						</c:if>
+						<c:if test="${vo.islike ==0}">
 							<button class="card_action" type="button" id="card_action1">
+						</c:if>
 								<svg class="icon icon--stroke" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z">
 								</path>
 								</svg>
-								<span class="count">2</span>
+								<span class="count">${vo.plike}</span>
 							</button>
-							<button class="card_action" type="button" id="card_action2">
+							<input type="hidden" name="scrap" value="${vo.pno}" id="scraping">
+							<c:if test="${vo.iscrap !=0}">
+								<button class="card_action_active" type="button" id="card_action2">
+							</c:if>
+							<c:if test="${vo.iscrap ==0}">
+								<button class="card_action" type="button" id="card_action2">
+							</c:if>
 								<svg class="icon icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
 								</svg>
-								<span class="count">1</span>
+								<span class="count">${vo.pscrap }</span>
 							</button>
 							<a class="card-item-action-list__action" href="#">
 								<svg class="icon" aria-label="댓글 달기" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
@@ -758,9 +852,6 @@ div.card_item_content{
 			</article>
 			</div>
 		</div>
-		</c:if>
-		<c:if test="${vo.photo_simage == null}">
-			<div class="picpic"><span>게시한 사진이 없습니다. 사진을 올려보세요.</span></div>
 		</c:if>
 	</c:forEach>	
 		
