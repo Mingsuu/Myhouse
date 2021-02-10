@@ -23,14 +23,13 @@ public class H_UploadPhotoDAO extends DBConn{
 		int value = sqlSession.insert(namespace+".insert",vo);
 		if(value != 0) result = true;
 		return result;
-	
 	}
+	
 	// store_index - list
 		public ArrayList<StoreIndexVO> getInteriorList(String value){
 			List<StoreIndexVO> interior_list = sqlSession.selectList(namespace+".list1", value);
 			return (ArrayList<StoreIndexVO>)interior_list;
 		} 
-		
 	
 	
 }
