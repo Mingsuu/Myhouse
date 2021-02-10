@@ -10,8 +10,10 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/swiper-bundle.min.css">
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/am-pagination.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script src="http://localhost:9000/myhouse/js/swiper-bundle.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/am-pagination.js"></script>
 <style>
 	* {
 	    box-sizing: border-box;
@@ -908,6 +910,9 @@
 	    box-shadow: 0 0 20px 0 rgba(0,0,0,.26);
 	    margin-bottom:10px;
 	}
+	.toast-message-transition-enter-done {
+	    display: none;
+	}
 	.toast-message__footer {
 		-webkit-box-flex: 0;
 		flex:0 0 52px;
@@ -1118,6 +1123,11 @@
 </style>
 <script>
 $(document).ready(function(){
+	/* 전체 index */
+	 cateList("", "", "","");
+	// 스크랩 유무
+	scrap_exist();
+	
 	/* 사이드 카테고리 선택 */
  	if("${category}" == "0" )  {
 		select_list();
@@ -1321,6 +1331,11 @@ $(document).ready(function(){
 		$("#btn1-6").removeClass("category-filter-bar-button--modal-open");
 	}
 	
+	
+	var tone = new Array();
+	var color = new Array();
+	var season = new Array();
+	
 	/* 상세카테고리 클릭시 -> 해당 단어 나열 */
 	//$('input:checkbox[id="checkbox_id"]').val();
 	$(".cate-chk").change(function(){
@@ -1330,23 +1345,245 @@ $(document).ready(function(){
 		var cate_word = '<li class="category-filter-bar-tag-list__item" id="'+chk_val+'"><button class="category-filter-bar-tag" type="button">'
 			cate_word += chk_val
 			cate_word += '<svg class="icon" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd" opacity=".5"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M9.778 1.5l.722.75-3.778 3.722L6.75 6l-.028.028L10.5 9.75l-.722.75L6 6.745 2.222 10.5 1.5 9.75l3.777-3.723L5.25 6l.027-.027L1.5 2.25l.722-.75L6 5.255 9.778 1.5z"></path></g></svg></button></li>';
-		//alert(cate_word);
+		
+		$("input[type=checkbox]:checked"). each(function(i){	
+			if($(this).val() == '밝은톤' || $(this).val() == '중간톤' || $(this).val() == '어두운톤') {
+				tone[i] = $(this).val();
+			} 
+			if($(this).val() == '화이트' || $(this).val() == '블랙' || $(this).val() == '브라운' || $(this).val() == '골드' ||$(this).val() == '오렌지' ||$(this).val() == '그린' ||$(this).val() == '네이비' ||$(this).val() == '핑크' ||$(this).val() == '투명' || $(this).val() == '그레이' ||
+				$(this).val() == '베이지' ||$(this).val() == '실버' ||$(this).val() == '레드' ||$(this).val() == '옐로우' ||$(this).val() == '블루' ||$(this).val() == '바이올렛' ||$(this).val() == '멀티(혼합)') {
+				color[i] = $(this).val();
+			}
+			if($(this).val() == '봄가을' || $(this).val() == '겨울' || $(this).val() == '여름' || $(this).val() == '사계절'){
+				season[i] = $(this).val();
+			}
+		});
 		
 		if($(this).is(":checked")){
 				$(".category-filter-bar-tag-list__list").append(cate_word);
 				$("#chk-tag-ul").removeClass("category-filter-bar-tag-list-none");
 				$("#chk-tag-ul").addClass("category-filter-bar-tag-list");
+				
+				 cateList(tone, color, season, "");
+				
 			}else{
 
+				 
+				 var itemtoRemove = chk_val;
+				 
+						if($(this).val() == '밝은톤' || $(this).val() == '중간톤' || $(this).val() == '어두운톤') {
+							 tone.splice($.inArray(itemtoRemove, tone),1);
+							
+						} 
+						if($(this).val() == '화이트' || $(this).val() == '블랙' || $(this).val() == '브라운' || $(this).val() == '골드' ||$(this).val() == '오렌지' ||$(this).val() == '그린' ||$(this).val() == '네이비' ||$(this).val() == '핑크' ||$(this).val() == '투명' || $(this).val() == '그레이' ||
+							$(this).val() == '베이지' ||$(this).val() == '실버' ||$(this).val() == '레드' ||$(this).val() == '옐로우' ||$(this).val() == '블루' ||$(this).val() == '바이올렛' ||$(this).val() == '멀티(혼합)') {
+							color.splice($.inArray(itemtoRemove, color),1);
+						}
+						if($(this).val() == '봄가을' || $(this).val() == '겨울' || $(this).val() == '여름' || $(this).val() == '사계절'){
+							season.splice($.inArray(itemtoRemove, season),1);
+					}
+						// alert(itemtoRemove);
+				
 					if($('li.category-filter-bar-tag-list__item').length == 1){   
 						 $("li#"+chk_val).remove();
 						 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
 						 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
+						
+						 cateList(tone, color, season, "");
 					} else {
 						 $("li#"+chk_val).remove();
+						 cateList(tone, color, season, "");
 					}
+					 cateList(tone, color, season, "");
 		}
+		
+			
 	});
+	
+	/* 태그 닫기 창*/
+	$(document).on("click","button.category-filter-bar-tag",function(){
+		var tag_id=$(this).text();
+		 $("li#"+tag_id).remove();
+		 $("input:checkbox[value='"+tag_id+"']").prop("checked", false);
+		 
+		 var itemtoRemove = $(this).text();
+		 //alert(itemtoRemove);
+			if($(this).text() == '밝은톤' || $(this).text() == '중간톤' || $(this).text() == '어두운톤') {
+				 tone.splice($.inArray(itemtoRemove, tone),1);
+				
+			} 
+			if($(this).text() == '화이트' || $(this).text() == '블랙' || $(this).text() == '브라운' || $(this).text() == '골드' ||$(this).text() == '오렌지' ||$(this).text() == '그린' ||$(this).text() == '네이비' ||$(this).text() == '핑크' ||$(this).text() == '투명' || $(this).text() == '그레이' ||
+				$(this).text() == '베이지' ||$(this).text() == '실버' ||$(this).text() == '레드' ||$(this).text() == '옐로우' ||$(this).text() == '블루' ||$(this).text() == '바이올렛' ||$(this).text() == '멀티(혼합)') {
+				color.splice($.inArray(itemtoRemove, color),1);
+			}
+			if($(this).text() == '봄가을' || $(this).text() == '겨울' || $(this).text() == '여름' || $(this).text() == '사계절'){
+				season.splice($.inArray(itemtoRemove, season),1);
+		}
+		 
+			if($('li.category-filter-bar-tag-list__item').length == 0){   
+				 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
+				 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
+				 cateList(tone, color, season, "");
+			}
+	});
+	
+	var ino = new Array();
+	
+	function cateList(tone, color, season, rpage){
+		
+		 $.ajax({
+				url:"category_list.do?category=${category}&tone="+tone+"&color="+color+"&season="+season+"&rpage="+rpage,
+				success:function(result) {
+					
+					var jdata = JSON.parse(result);
+					var output = '';
+					$(".category-feed__content__content").empty();
+					for (var i in jdata.category_list ) {
+						output += '<input class="ino_input" type="hidden" value="'+jdata.category_list[i].ino+'">';
+						output += '<div class="category-feed__content__item-wrap col-6 col-lg-4">';
+						output += '<article class="production-item" id="pro-'+jdata.category_list[i].rno+'">';
+						output += '<a class="production-item__overlay" href="http://localhost:9000/myhouse/store_page.do?ino='+ jdata.category_list[i].ino +'"></a>';
+						output += '<div class="production-item-image production-item__image">';
+						output += '<img class="image" src="http://localhost:9000/myhouse/images/'+ jdata.category_list[i].goods_simage +'">';
+						output += '<button class="production-item-scrap-badge" type="button" id="pro-scrap-'+jdata.category_list[i].ino+'">';
+						output += '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="inactive-icon"><defs><path id="scrap-icon-7-b" d="M12.472 6.93l7.056-3.811A1 1 0 0 1 21 4.002v15.496c0 .83-.672 1.502-1.5 1.502h-15c-.828 0-1.5-.673-1.5-1.502V4.002a1 1 0 0 1 1.472-.883l7.056 3.811a.999.999 0 0 0 .944 0z"></path><filter id="scrap-icon-7-a" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1.5"></feGaussianBlur><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.26 0"></feColorMatrix></filter><filter id="scrap-icon-7-c" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceAlpha" result="shadowBlurInner1" stdDeviation="1.5"></feGaussianBlur><feOffset in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset><feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"></feComposite><feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"></feColorMatrix></filter></defs><g fill="none" fill-rule="nonzero" transform="matrix(1 0 0 -1 0 24)"><use fill="#000" filter="url(#scrap-icon-7-a)" href="#scrap-icon-7-b"></use><use fill="#FFF" fill-opacity=".4" href="#scrap-icon-7-b"></use><use fill="#000" filter="url(#scrap-icon-7-c)" href="#scrap-icon-7-b"></use><path stroke="#FFF" d="M12.71 7.37h-.002a1.5 1.5 0 0 1-1.417 0L4.236 3.56a.499.499 0 0 0-.736.442v15.496c0 .553.448 1.002 1 1.002h15c.552 0 1-.449 1-1.002V4.002a.499.499 0 0 0-.734-.443l-7.057 3.81zm-.475-.88h-.001z"></path></g></svg>';
+						output += '<svg class="active-icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#35C5F0" fill-rule="nonzero" d="M12.472 17.07a.999.999 0 0 0-.944 0l-7.056 3.811A.999.999 0 0 1 3 19.998V4.502C3 3.672 3.672 3 4.5 3h15c.828 0 1.5.673 1.5 1.502v15.496a1 1 0 0 1-1.472.883l-7.056-3.811z"></path></svg>';
+						output += '</button>';
+						output += '<div class="production-item-image__dark-overlay"></div>';
+						output += '</div>';
+						output += '<div class="production-item__content">';
+						output += '<h1 class="production-item__header">';
+						output += '<span class="production-item__header__brand">'+jdata.category_list[i].company+'</span>';
+						output += '<span class="production-item__header__name">'+jdata.category_list[i].ititle+'</span>';
+						output += '</h1>';
+						output += '<span class="production-item-price">';
+						output += '<span class="production-item-price__rate">39<span class="percentage">%</span></span>';
+						output += '<span class="production-item-price__price">'+jdata.category_list[i].goods_price+' 외</span>';
+						output += '</span>';
+						output += '<p class="production-item-stats production-item-stats--review">';
+						output += '<svg class="icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"></path></svg>';
+						output += '<strong class="avg">'+jdata.category_list[i].star_avg+'</strong>';
+						output += '리뷰 '+jdata.category_list[i].star_count+'';
+						output += '</p>';
+						output += '<span class="production-item-badge-list">';
+						output += '<svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg>';
+						output += '</span>';
+						output += '</div>';
+						output += '</article>';
+						output += '</div>';
+						
+						
+						
+					}
+						
+					$(".category-feed__content__content").empty();
+					$("#ampaginationsm").remove();
+					$(".category-feed-filter-secondary").empty();
+					
+					var pagee = '<div id="ampaginationsm" style="text-align:center;"></div>';
+					
+					var output3 = '<p class="category-feed-filter-secondary__summary">전체'+jdata.dbcount+'개</p>';
+					output3 += '<div class="category-feed-filter-secondary__right">';
+					output3 += '<div class="category-feed-filter-secondary__right__item">';
+					output3 += '<div class="drop-down panel-drop-down">';
+					output3 += '<button class="category-filter-bar-order-button" type="button" value="인기순"  id="btn-list-2">인기순';
+					output3 += '<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>';
+					output3 += '</div>';
+					output3 += '<div class="btn-none" id="btn-orderby">';
+					output3 += '<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 100000; right:10px; margin-top:20px;">';
+					output3 += '<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">';
+					output3 += '<div class="drop-down-panel" data-panel-title="정렬" data-panel-parents="">';
+					output3 += '<ul class="property-filter-panel-entry-list">';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="판매순"  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">판매순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="인기순" checked="" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">인기순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="낮은가격순"  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">낮은가격순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="높은가격순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">높은가격순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="많은리뷰순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">많은리뷰순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="유저사진 많은순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">유저사진 많은순</span></div></div></button></li>';
+					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
+					output3 += '<input type="radio" class="fs-4H list-chk" value="최신순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">최신순</span></div></div></button></li></ul></div></div></div>';
+					output3 += '</div>';
+					output3 += '</div>';
+						
+				
+					$(".category-feed-filter-secondary").append(output3);
+					
+					$(".category-feed__content__content").after(pagee);
+					$(".category-feed__content__content").append(output);
+					
+					
+					
+					// 스크랩 처리
+					for (var i in jdata.category_list ) {
+						var	output2 = '<input class="ino_input" type="hidden" value="'+jdata.category_list[i].ino+'">';
+						ino = jdata.category_list[i].ino;
+						//alert(ino);
+						scrap_exist(ino);
+					}
+					
+					
+					
+					 page(jdata.dbcount, jdata.reqpage, jdata.pagesize)
+					
+					 
+					 
+				}
+			}); 
+	} //catelist
+	
+	
+	/* 스크랩 유무에 따른 표시 여부 */
+	 function scrap_exist(ino) {
+		$.ajax({
+			url:"scrap_exist_proc.do?email=${email}&ino="+ino,
+			success:function(result) {
+				var jdata = JSON.parse(result);
+				//alert("ino::"+ino+"jdata::"+jdata.scrap_exist);
+				if(jdata.scrap_exist!=0) {
+					$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge");
+					$("#pro-scrap-"+ino).addClass("production-item-scrap-badge--active");
+					
+				} else {
+					$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge--active");
+					$("#pro-scrap-"+ino).addClass("production-item-scrap-badge");
+				} 
+			}
+		});
+	} 
+	
+
+	
+	  
+    /** 페이징 처리 함수 **/
+    function page(dbcount, reqpage, pagesize){
+       //페이지 번호 및  링크
+          var pager = jQuery("#ampaginationsm").pagination({
+             maxSize : 5,
+             totals:dbcount,
+             page : reqpage,
+             pageSize : pagesize,
+             
+             lastText : '&raquo;&raquo;',
+             firstText : '&laquo;&laquo;',
+             preTest : '&laquo;',
+             nextTest : '&raquo;',
+             
+             btnSize : 'sm'
+          });
+          
+          //
+          jQuery("#ampaginationsm").on('am.pagination.change',function(e){
+             cateList(tone, color, season, e.page);
+          });
+    }//page
+	
+	
 	
 	/* (가격)상세카테고리 클릭시 -> 해당 단어 나열 */
 	$(".price-list").change(function(){
@@ -1356,6 +1593,9 @@ $(document).ready(function(){
 			cate_word += '<svg class="icon" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd" opacity=".5"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M9.778 1.5l.722.75-3.778 3.722L6.75 6l-.028.028L10.5 9.75l-.722.75L6 6.745 2.222 10.5 1.5 9.75l3.777-3.723L5.25 6l.027-.027L1.5 2.25l.722-.75L6 5.255 9.778 1.5z"></path></g></svg></button></li>';
 		//alert(cate_word);
 		if($(this).is(":checked")){
+			
+
+			
 			if($("li.category-filter-bar-tag-list__item-price").length == 1) {
 				$("li.category-filter-bar-tag-list__item-price").remove();
 			} 
@@ -1364,27 +1604,20 @@ $(document).ready(function(){
 			$("#chk-tag-ul").addClass("category-filter-bar-tag-list");
 			
 		}else{
+				
 				if($('li.category-filter-bar-tag-list__item-price').length == 1){   
 					 $("li#"+chk_val).remove();
 					 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
 					 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
+					 cateList(tone, color, season, "");
 				} else {
 					 $("li#"+chk_val).remove();
+					 cateList(tone, color, season, "");
 				}
 	}
 	});
 	
-	/* 태그 닫기 창*/
-	$(document).on("click","button.category-filter-bar-tag",function(){
-		var tag_id=$(this).text();
-		 $("li#"+tag_id).remove();
-		 $("input:checkbox[value='"+tag_id+"']").prop("checked", false);
-		 
-			if($('li.category-filter-bar-tag-list__item').length == 0){   
-				 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
-				 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
-			}
-	});
+	
 	/*(가격)태그 닫기창*/
 	$(document).on("click","button.category-filter-bar-tag-price",function(){
 		//alert("aaaaaaaaaa")
@@ -1418,7 +1651,7 @@ $(document).ready(function(){
 	
 	
 	/* 인기순 , 최신순 등 선택창 */
-	$(".category-feed-filter-secondary__right__item").click(function(){
+	$(document).on("click",".category-feed-filter-secondary__right__item",function(){
 		if($("#btn-orderby").hasClass("btn-none")) {
 			$("#btn-orderby").removeClass("btn-none");
 			$("#btn-orderby").addClass("btn-orderby");
@@ -1429,7 +1662,7 @@ $(document).ready(function(){
 	});
 	
 	/* 인기순, 최신순 등 선택하면 나타나는 화면 */
-	 $(".list-chk").click(function(){
+	$(document).on("click",".list-chk",function(){
 		var chk = $('.list-chk').children().children().children().html();
 		//alert(chk);
 		var cate_name = $('input[name="btn-filter"]:checked').val();
@@ -1489,21 +1722,49 @@ $(document).ready(function(){
 
 	
 	/* 상품 스크랩 */
-	$("#pro-scrap").click(function(){
-		if($(this).hasClass("production-item-scrap-badge")) {
-			$("#pro-scrap").addClass("production-item-scrap-badge--active");
-			$("#pro-scrap").removeClass("production-item-scrap-badge");
-			$("#scrap-add").css("display","flex");
-			$("#scrap-del").css("display","none");
-			$("#scrap-add").fadeOut(3800);
-		} else {
-			$("#pro-scrap").addClass("production-item-scrap-badge");
-			$("#pro-scrap").removeClass("production-item-scrap-badge--active");
-			$("#scrap-add").css("display","none");
-			$("#scrap-del").css("display","flex");
-			$("#scrap-del").fadeOut(3800);
-		}
+	$(document).on("click",".production-item-scrap-badge",function(){
+		var id = $(this).attr("id");
+			id = id.split("-");
+			//alert(id);
+				$.ajax({
+					url:"store_scrap_proc.do?email=${email}&ino="+id[2],
+					success: function(result) {
+						if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge")) {
+							$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge--active");
+							$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge");
+							$("#scrap-add-"+id[2]).removeClass("toast-message-transition-enter-done");
+							$("#scrap-add-"+id[2]).addClass("toast-message");
+							$("#scrap-del-"+id[2]).addClass("toast-message-transition-enter-done");
+							$("#scrap-del-"+id[2]).removeClass("toast-message");
+							$("#scrap-add-"+id[2]).fadeOut(3800);
+						} 
+					
+					} 
+				});	
+			
 	});
+	$(document).on("click",".production-item-scrap-badge--active",function(){
+		var id = $(this).attr("id");
+			id = id.split("-");
+				$.ajax({
+					url:"store_scrap_del_proc.do?email=${email}&ino="+id[2],
+					success: function(result) {
+						if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge--active")) {
+							$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge");
+							$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge--active");
+							$("#scrap-add-"+id[2]).addClass("toast-message-transition-enter-done");
+							$("#scrap-add-"+id[2]).removeClass("toast-message");
+							$("#scrap-del-"+id[2]).removeClass("toast-message-transition-enter-done");
+							$("#scrap-del-"+id[2]).addClass("toast-message");
+							$("#scrap-del-"+id[2]).fadeOut(3800);
+						} 
+					}
+				});
+			
+	});
+	
+	
+	
 	/* 싱품 스크랩 닫기버튼 */
 	$(".toast-message__footer__close").click(function(){
 			$(".toast-message").css("display","none");
@@ -1771,7 +2032,7 @@ $(document).ready(function(){
 											</button>
 										</div>
 										<div style="display:none;" id="btn1-1-category">
-											<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
+											<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 100000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="우드톤" data-panel-parents="">
 														<ul class="property-filter-panel-entry-list wide">
@@ -1815,7 +2076,7 @@ $(document).ready(function(){
 											</button>
 										</div>
 										<div style="display:none;" id="btn1-3-category">
-											<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
+											<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 100000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="우드톤" data-panel-parents="">
 														<ul class="property-filter-panel-entry-list wide">
@@ -1824,10 +2085,10 @@ $(document).ready(function(){
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="봄/가을" name="cate-chk" >
+																				<input type="checkbox" class="_3UImz cate-chk" value="봄가을" name="cate-chk" >
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
-																			<span class="property-filter-panel-entry-list__item__title" id="봄/가을">봄/가을</span></div></div></button></li>
+																			<span class="property-filter-panel-entry-list__item__title" id="봄가을">봄가을</span></div></div></button></li>
 															<li class="property-filter-panel-entry-list__item-wrap">
 																<button class="property-filter-panel-entry-list__item selected" type="button">
 																	<div class="property-filter-panel-entry-list__item__header">
@@ -1868,7 +2129,7 @@ $(document).ready(function(){
 											</button>
 										</div>
 										<div style="display:none;" id="btn1-2-category">
-											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
+											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 100000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="색상" data-panel-parents="">
 														<ul class="property-filter-panel-entry-list wide">
@@ -2031,14 +2292,14 @@ $(document).ready(function(){
 											</div>
 										</div> <!-- 색상 선택창 -->
 									</li>
-									<li class="category-filter-bar-control-list__item" id="가격">
+									<!-- <li class="category-filter-bar-control-list__item" id="가격">
 										<div class="drop-down panel-drop-down" >
 											<button class="category-filter-bar-button" type="button" id="btn1-6">
 											가격<svg class="chevron" width="12" height="12" preserveAspectRatio="xMidYMid meet"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0z"></path><path fill="currentColor" fill-rule="nonzero" d="M2.154 3L1 4.125 6 9l5-4.875L9.846 3 6 6.75z"></path></g></svg>
 											</button>
 										</div>
 										<div style="display:none;" id="btn1-6-category">
-											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 1000;">
+											<div class="popout popout--prepared popout--axis-1 popout--dir-0 popout--cross-dir-0" data-popout="true" style="position: absolute; z-index: 100000;">
 												<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 													<div class="drop-down-panel" data-panel-title="가격" data-panel-parents="">
 														<section class="property-filter-panel-range-control">
@@ -2056,9 +2317,12 @@ $(document).ready(function(){
 																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H price-list" value="800,000원~900,000원" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">800,000원 ~ 900,000원</div></span></div></div></button></li>
 																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H price-list" value="900,000원~1,000,000원" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">900,000원 ~ 1000,000원</div></span></div></div></button></li>
 																	<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item" type="button"><div class="property-filter-panel-entry-list__item__header"><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type"><input type="radio" class="fs-4H price-list" value="1,000,000원이상" name="price-list"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title"><div class="property-filter-panel-range-control__list-item">1,000,000원 이상</div></span></div></div></button></li></ul>				
-										</section></div></div></div>
-										</div> <!-- 가격 선택창 -->
-									</li>
+														 </section>
+													   </div>
+													 </div>
+												</div>
+										</div> 가격 선택창
+									</li> -->
 								</ul>
 							</div> <!-- category-filter-bar-control-list -->
 							<div class="category-filter-bar-tag-list-none"id="chk-tag-ul">
@@ -2070,15 +2334,15 @@ $(document).ready(function(){
 							</div>
 							<div class="category-filter-bar-tag-list-placeholder"></div>
 							<div class="category-feed-filter-secondary">
-								<p class="category-feed-filter-secondary__summary">전체 ${icount}개</p>
-								<div class="category-feed-filter-secondary__right">
+								<%-- <p class="category-feed-filter-secondary__summary">전체${dbcount }개</p> --%>
+								<!-- <div class="category-feed-filter-secondary__right">
 									<div class="category-feed-filter-secondary__right__item">
 										<div class="drop-down panel-drop-down">
 											<button class="category-filter-bar-order-button" type="button" value="인기순"  id="btn-list-2">인기순
 											<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>
 									</div>
 									<div class="btn-none" id="btn-orderby">
-										<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 1000; right:10px; margin-top:20px;">
+										<div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 100000; right:10px; margin-top:20px;">
 										<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">
 										<div class="drop-down-panel" data-panel-title="정렬" data-panel-parents="">
 										<ul class="property-filter-panel-entry-list">
@@ -2097,20 +2361,20 @@ $(document).ready(function(){
 											<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">
 												<input type="radio" class="fs-4H list-chk" value="최신순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">최신순</span></div></div></button></li></ul></div></div></div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div> <!-- filter-bar category-feed-filter-bar -->
 					</div> <!-- filter -->
 				</div> <!-- category-feed__content__filter -->
 				<div class="virtualized-list category-feed__content__content row" style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
 				
-				<c:forEach var="vo" items="${interior_list }">
+		<%-- 		<c:forEach var="vo" items="${interior_list }">
 					<div class="category-feed__content__item-wrap col-6 col-lg-4">
 						<article class="production-item" id="pro-1">
 							<a class="production-item__overlay" href="http://localhost:9000/myhouse/store_page.do?ino=${vo.ino }"></a>
 							<div class="production-item-image production-item__image">
 								<img class="image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}">
-								<button class="production-item-scrap-badge" type="button" id="pro-scrap">
+								<button class="production-item-scrap-badge" type="button" id="pro-scrap-${vo.ino }">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="inactive-icon"><defs><path id="scrap-icon-7-b" d="M12.472 6.93l7.056-3.811A1 1 0 0 1 21 4.002v15.496c0 .83-.672 1.502-1.5 1.502h-15c-.828 0-1.5-.673-1.5-1.502V4.002a1 1 0 0 1 1.472-.883l7.056 3.811a.999.999 0 0 0 .944 0z"></path><filter id="scrap-icon-7-a" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feOffset in="SourceAlpha" result="shadowOffsetOuter1"></feOffset><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1.5"></feGaussianBlur><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.26 0"></feColorMatrix></filter><filter id="scrap-icon-7-c" width="150%" height="150%" x="-25%" y="-25%" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceAlpha" result="shadowBlurInner1" stdDeviation="1.5"></feGaussianBlur><feOffset in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset><feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"></feComposite><feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"></feColorMatrix></filter></defs><g fill="none" fill-rule="nonzero" transform="matrix(1 0 0 -1 0 24)"><use fill="#000" filter="url(#scrap-icon-7-a)" href="#scrap-icon-7-b"></use><use fill="#FFF" fill-opacity=".4" href="#scrap-icon-7-b"></use><use fill="#000" filter="url(#scrap-icon-7-c)" href="#scrap-icon-7-b"></use><path stroke="#FFF" d="M12.71 7.37h-.002a1.5 1.5 0 0 1-1.417 0L4.236 3.56a.499.499 0 0 0-.736.442v15.496c0 .553.448 1.002 1 1.002h15c.552 0 1-.449 1-1.002V4.002a.499.499 0 0 0-.734-.443l-7.057 3.81zm-.475-.88h-.001z"></path></g></svg>
 									<svg class="active-icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#35C5F0" fill-rule="nonzero" d="M12.472 17.07a.999.999 0 0 0-.944 0l-7.056 3.811A.999.999 0 0 1 3 19.998V4.502C3 3.672 3.672 3 4.5 3h15c.828 0 1.5.673 1.5 1.502v15.496a1 1 0 0 1-1.472.883l-7.056-3.811z"></path></svg>
 								</button>
@@ -2137,7 +2401,7 @@ $(document).ready(function(){
 						</article>
 					</div> <!-- category-feed__content__item-wrap -->
 					</c:forEach>
-				
+				 --%>
 					
 				</div> <!-- virtualized-list category-feed__content__content row  -->
 			</div> <!-- category-feed__content -->
@@ -2151,25 +2415,24 @@ $(document).ready(function(){
 
 
 <!-- 스크랩 팝업 -->
+<c:forEach var="vo" items="${interior_list }">
 <div class="toast-message-root">
-	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-add">
+	<div class="toast-message-transition-enter-done"  id="scrap-add-${vo.ino }">
 		<button class="toast-message__footer" type="button" id="taost-none2">
 			<div class="toast-message__footer__close">
 				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>
 		<div class="toast-message__body">스크랩했습니다</div>
 		<a class="button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button" 
 			href="/users/11910649/collections">스크랩북 보기</a>
-		<button class="button button--color-blue button--size-40 button--shape-4 toast-message__button 
-		toast-message__button--last">폴더에 담기</button>
 	</div>
-	<div class="toast-message toast-message-transition-enter-done" style="display:none" id="scrap-del">
+	<div class="toast-message-transition-enter-done"  id="scrap-del-${vo.ino }">
 		<button class="toast-message__footer" type="button">
 			<div class="toast-message__footer__close">
 				<svg class="toast-message__footer__close__icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="#bdbdbd" d="M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z"></path></svg></div></button>
 			<div class="toast-message__body">스크랩북에서 삭제했습니다.</div>
 	</div>
 </div>
-
+</c:forEach>
 
 </body>
 </html>
