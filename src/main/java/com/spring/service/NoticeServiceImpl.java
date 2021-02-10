@@ -27,38 +27,48 @@ public class NoticeServiceImpl implements NoticeService{
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	//샘플페이지
-	public ModelAndView getInteriorTop(String ino, String email) {
-		ModelAndView mv = new ModelAndView();
-		
-		// 상세페이지 : 상단부분 ---> 데이터 가져오기
-		ArrayList<StoreIndexVO> interior_top = interiorDAO.getInteriorTop(ino);   
-		StoreIndexVO vo = interior_top.get(0);
-		
-		for(int i=0; i<interior_top.size(); i++ ) {
-			vo = interior_top.get(i);
+	// store_page - top
+		public ModelAndView getInteriorTop(String ino, String email) {
+			ModelAndView mv = new ModelAndView();
+			
+			
+			
+			// 상세페이지 : 상단부분 ---> 데이터 가져오기
+			ArrayList<StoreIndexVO> interior_top = interiorDAO.getInteriorTop(ino);   
+			StoreIndexVO vo = interior_top.get(0);
+			
+			for(int i=0; i<interior_top.size(); i++ ) {
+				vo = interior_top.get(i);
+				System.out.println(vo);
+			}
+			
+			
+			int scrap_exist = interiorDAO.getInteriorScrapExist(email, ino);
+			
+			
+			// 문의페이지
+			ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino); 
+
+			StoreIndexVO qvo = interior_question.get(0);
+			
+			for(int i=0; i<interior_question.size(); i++ ) {
+				qvo = interior_question.get(i);
+				System.out.println(qvo);
+			}
+			
+			mv.addObject("interior_top", interior_top);
+			mv.addObject("vo", vo); 
+			mv.addObject("ino", ino);
+			mv.addObject("email", email);
+			mv.addObject("scrap_exist", scrap_exist);
+			mv.addObject("interior_question", interior_question);
+			mv.addObject("qvo", qvo);
+			mv.setViewName("/store/store_page");
+			
+			//System.out.println("service-- ino ----->"+interior_top);
+			
+			return mv;
 		}
-		
-		int scrap_exist = interiorDAO.getInteriorScrapExist(email, ino);
-		
-		// 리뷰페이지
-		ArrayList<StoreIndexVO> interior_review = interiorDAO.getInteriorReview(ino);
-		
-		// 문의페이지
-		ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino); 
-		
-		mv.addObject("interior_top", interior_top);
-		mv.addObject("vo", vo); 
-		mv.addObject("ino", ino);
-		mv.addObject("email", email);
-		mv.addObject("scrap_exist", scrap_exist);
-		mv.addObject("interior_review", interior_review);
-		mv.addObject("interior_question", interior_question);
-		mv.setViewName("/admin/store_page_sample");
-		
-		
-		return mv;
-	}
 	
 	@Override
 	public ModelAndView getList2(String rpage) {
