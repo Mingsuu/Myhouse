@@ -734,6 +734,7 @@
 			<div id="nesListNew">
 			<form name="ClassMForm" action="class_listProc.jsp" method="get" class="join">
 			<input type="hidden" name="wbutton" value="" id="wbutton">
+				<c:if test="${lise.size()>0} }">
 				<c:forEach var="i" begin="0" end="${list.size()-1}">
 					<ul class="section2-cont">
 						<li class="cont-0">
@@ -763,6 +764,7 @@
 						</li>
 					</ul>
 				</c:forEach>
+				</c:if>
 			</form>
 	
 				
