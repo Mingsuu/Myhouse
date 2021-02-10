@@ -3,15 +3,16 @@ package com.spring.controller;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.myhouse.vo.SessionVO;
 import com.myhouse.vo.StoreIndexVO;
 import com.spring.service.InteriorServiceImpl;
 
@@ -101,6 +102,18 @@ public class StoreController {
 	}
 	
 	/*
+	 * store_page :: question 화면
+	 */
+	@ResponseBody
+	@RequestMapping(value="/interior_question_proc.do", method=RequestMethod.GET,
+					produces="text/plain;charset=UTF-8")
+	public String interior_question_proc(String ino) {
+		System.out.println("store_index ino!!!---------->"+ino);
+		return interiorService.getInteriorQuestionProc(ino);
+	}
+	
+	
+	/*
 	 * store_page :: review - write
 	 */
 	@RequestMapping(value="/interior_review_insert.do", method=RequestMethod.POST)
@@ -124,37 +137,15 @@ public class StoreController {
 		return interiorService.getInteriorReviewGoodsList(gno);
 	}
 	
-	/*
-	 * store_page :: review - 포토리뷰만
-	 */
-	@ResponseBody
-	@RequestMapping(value="/interior_review_photo.do", method=RequestMethod.GET,
-					produces="text/plain;charset=UTF-8") 
-	public String interior_review_photo(String ino, String rpage) {
-		
-		System.out.println("photo~~"+rpage);
-		return interiorService.getInteriorReviewPhoto(ino, rpage);
-	}
-	
-	/*
-	 * store_page :: review - 최신순
-	 */
-	@ResponseBody
-	@RequestMapping(value="/interior_review_recently.do", method=RequestMethod.GET,
-				produces="text/plain;charset=UTF-8") 
-	public String interior_review_recently(String ino, String rpage) {
-		System.out.println("recently~~"+rpage);
-		return interiorService.getInteriorReviewRecently(ino, rpage);
-	}
-	
+
 	/*
 	 * store_page :: review - 베스트순
 	 */
 	@ResponseBody
 	@RequestMapping(value="/interior_review.do", method=RequestMethod.GET,
 					produces="text/plain;charset=UTF-8") 
-	public String interior_review(String ino, String rpage) {
-		return interiorService.getInteriorReview(ino, rpage);
+	public String interior_review(String ino, String status, String rpage) {
+		return interiorService.getInteriorReview(ino, status, rpage);
 	}
 	
 	
@@ -183,10 +174,17 @@ public class StoreController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/store_scrap_del_proc.do", method=RequestMethod.GET)
-	public String store_scrap_del_proc(String email, String ino) {
+	public String store_scrap_del_proc(HttpSession session, String ino) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		
 		System.out.println("store_index~!~!~---------->"+ino);
-		System.out.println("store_index~!~!~!~!---------->"+email);
-		return interiorService.getStoreScrapDelProc("test0@naver.com", ino);
+		System.out.println("store_index~!~!~!~! sovooo---------->"+svo);
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getStoreScrapDelProc(svo.getEmail(), ino); 
+		}
 	}
 	
 	/*
@@ -194,14 +192,23 @@ public class StoreController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/store_scrap_proc.do", method=RequestMethod.GET)
-	public String store_scrap_proc(String email, String ino) {
-		System.out.println("store_index~!~!~!~!---------->"+ino);
-		System.out.println("store_index~!~!~!~!---------->"+email);
-		return interiorService.getStoreScrapProc("test0@naver.com", ino);
+	public String store_scrap_proc(HttpSession session, String ino) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		
+		System.out.println("store_index~!~!~!~!---------->"+ ino);
+		System.out.println("store_index~!~!~svo!~!---------->"+svo);
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getStoreScrapProc(svo.getEmail(), ino); 
+		}
+		
+	
+		
 	}
 	
-	
-	
+
 	/*
 	 * store_page 화면
 	 */
@@ -252,10 +259,15 @@ public class StoreController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/scrap_exist_proc.do", method=RequestMethod.GET)
-	public String scrap_exist_proc(String email, String ino) {
+	public String scrap_exist_proc(HttpSession session, String ino) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("inooooo"+ino);
-		System.out.println("emailll"+email);
-		return interiorService.getScrapProc("test0@naver.com",ino ); 
+		System.out.println("emailll svo"+svo);
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getScrapProc(svo.getEmail(),ino ); 
+		}
 	}
 	/*
 	 * store_index 화면

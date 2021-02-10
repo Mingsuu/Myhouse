@@ -19,8 +19,11 @@ public class yh_InteriorDAO {
 	
 	
 	/** 전체 리스트 카운트 - 리뷰 */
-	public int getListReviewCount(String ino) {
-		return sqlSession.selectOne(namespace+".review-count", ino); 
+	public int getListReviewCount(String ino, String status) {
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("ino", ino);
+		param.put("status", status);
+		return sqlSession.selectOne(namespace+".review-count", param); 
 	}
 	//  문의 답변하기 - 삭제
 	public boolean getInteriorQuestionAnswerDelete(String qno) {
@@ -89,36 +92,13 @@ public class yh_InteriorDAO {
 		List<StoreIndexVO> interior_review_goods_list = sqlSession.selectList(namespace+".interior-review-goods-list", gno);
 		return (ArrayList<StoreIndexVO>)interior_review_goods_list;
 	}
-	
-	// 리뷰 페이지 - 포토
-	public ArrayList<StoreIndexVO> getInteriorReviewPhoto(String ino, int start, int end) {
-		Map<String, String> param = new HashMap<String, String>();
-		
-		param.put("ino",ino);
-		param.put("start", String.valueOf(start));
-		param.put("end", String.valueOf(end));
-		
-		List<StoreIndexVO> interior_review = sqlSession.selectList(namespace+".interior-review-photo", param);
-		return (ArrayList<StoreIndexVO>)interior_review;
-	}
-	
-	// 리뷰 페이지 - 최신순
-	public ArrayList<StoreIndexVO> getInteriorReviewRecently(String ino, int start, int end) {
-		Map<String, String> param = new HashMap<String, String>();
-		
-		param.put("ino",ino);
-		param.put("start", String.valueOf(start));
-		param.put("end", String.valueOf(end));
-		
-		List<StoreIndexVO> interior_review = sqlSession.selectList(namespace+".interior-review-recently", param);
-		return (ArrayList<StoreIndexVO>)interior_review;
-	}
-	
+
 	// 리뷰 페이지 - 베스트순
-	public ArrayList<StoreIndexVO> getInteriorReview(String ino, int start, int end) {
+	public ArrayList<StoreIndexVO> getInteriorReview(String ino, String status, int start, int end) {
 		Map<String, String> param = new HashMap<String, String>();
 		
 		param.put("ino",ino);
+		param.put("status",status);
 		param.put("start", String.valueOf(start));
 		param.put("end", String.valueOf(end));
 		

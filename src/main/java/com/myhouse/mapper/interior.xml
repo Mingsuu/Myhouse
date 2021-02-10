@@ -19,7 +19,8 @@
 
 <!-- 문의답변 화면 -->
 <select id="interior-question-answer-proc" parameterType="java.lang.String"  resultType="com.myhouse.vo.StoreIndexVO">
-	select qno, qreply, qdate_r from h_question where qno=#{qno}
+	  select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+) and qno=#{qno}
 </select>
 
 <!-- 문의답변 입력 및 수정-->
@@ -62,35 +63,25 @@
 	select company, ititle, goods_simage, goods_name from h_interior i, h_goods g where i.ino = g.ino and gno=#{gno}
 </select>
 
-<!-- 리뷰 포토 -->
-<select id="interior-review-photo" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select * from (select rownum rno, vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
-	from h_review r, h_member m, h_goods g
-	where r.email = m.email and r.gno=g.gno and ino=#{ino} and review_simage IS NOT NULL) where rno between #{start} and #{end}
-</select>
-<!-- 리뷰 최신순 -->
-<select id="interior-review-recently" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select * from (select rownum rno, vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
-	from h_review r, h_member m, h_goods g
-	where r.email = m.email and r.gno=g.gno and ino=#{ino}
-	order by vdate desc) where rno between #{start} and #{end}
-</select>
 
 <!-- 리뷰 베스트순 -->
 <select id="interior-review" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
 	select * from (select rownum rno, vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
 	from h_review r, h_member m, h_goods g
 	where r.email = m.email and r.gno=g.gno and ino=#{ino}
-	order by star desc) where rno between #{start} and #{end}
+	<if test="status == '베스트순' ">
+		order by star desc) 
+	</if>
+	<if test="status == '최신순' ">
+		order by vdate desc) 
+	</if>
+	<if test="status == '사진리뷰' ">
+		and review_simage IS NOT NULL) 
+	</if>
+	
+	where rno between #{start} and #{end}
 </select>
 
-<!-- 전체 리스트 - 리뷰 -->
-<!--  <select id="interior-review" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
-	select * 
-	from (select rownum rno, vno, v.gno, star, vcontent, review_simage, to_char(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, ino, goods_simage, goods_name 
-		from h_review v, h_goods g where v.gno = g.gno and ino=#{ino})
-	where rno between #{start} and #{end}
-</select> -->
 
 <!-- 스크랩 등록여부 -->
 <select id="interior-scrap-exist" parameterType="map" resultType="int">
@@ -128,10 +119,10 @@
 <!-- store_index - 상세카테고리 -->
 <select id="category_list"  parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
 select * from (select * from
-(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, goods_price, star_avg, star_count
+(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count
 from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
 	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
-		count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
 		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
 	where RowIdx='1' and  
@@ -172,7 +163,7 @@ select count(*) from
 (select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, goods_price, star_avg, star_count
 from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
 	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
-		count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
 		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
 	where RowIdx='1' and

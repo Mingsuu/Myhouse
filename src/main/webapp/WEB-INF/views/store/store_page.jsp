@@ -160,7 +160,7 @@
 	    box-sizing: border-box;
 	    -webkit-box-flex: 0;
 	    flex: 0 0 58.3333333333%;
-	    max-width: 58.3333333333%;
+	    max-width: 0 0 58.3333333333%;
 	}
 	.production-selling-cover-image-container {
 	    position: relative;
@@ -2617,7 +2617,8 @@
 </style>
 <script>
 	$(document).ready(function(){
-		best_ajax("");
+		best_ajax("","베스트순");
+		q_ajax();
 		
 		/* swiper */
 	    var galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -3044,91 +3045,12 @@
 		        return all_first_sub.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 		    }
 		
-		/* 리뷰 - 베스트순, 최신순, 사진리뷰 클릭시  */
-		function output(jdata, status) {
-			$(".production-review-feed__list").empty();
-			var output = "";
-			for(var i in jdata.interior_review) {
-				output += '<div class="production-review-item__container">';
-				output += '<article class="production-review-item">';
-				output += '<div class="production-review-item__writer">';
-				output += '<a href="http://localhost:9000/myhouse/mypage_profile1.do">';
-				output += '<img src="http://localhost:9000/myhouse/resources/upload/'+jdata.interior_review[i].member_spimage+'" class="production-review-item__writer__img">';
-				output += '</a>';
-				output += '<div class="production-review-item__writer__info">';
-				output += '<p class="production-review-item__writer__info__name">'+jdata.interior_review[i].nickname+'</p>';
-				output += '<button class="production-review-item__writer__info__total-star-wrap" type="button">';
-				output += '<span class="production-review-item__writer__info__total-star" aria-label="별점 2.8점">';
-				if(jdata.interior_review[i].star==1) {
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
-				
-				} else if(jdata.interior_review[i].star==2) {
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
-				
-				} else if(jdata.interior_review[i].star==3) {
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>&nbsp';
-					output +='<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
-				
-				} else if(jdata.interior_review[i].star==4) {
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-544" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-544"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-544" fill="#DBDBDB"></use><use clip-path="url(#star-clip-544)" xlink:href="#star-path-544"></use></svg>';
-				
-				} else if(jdata.interior_review[i].star==5) {
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-					output += '<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-1.000" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path><clipPath id="star-clip-1.000"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-1.000" fill="#DBDBDB"></use><use clip-path="url(#star-clip-1.000)" xlink:href="#star-path-1.000"></use></svg>&nbsp';
-				} 
-				output += '</span>';
-				output += '<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>';
-				output += '<span class="production-review-item__writer__info__date">'+ jdata.interior_review[i].vdate +' ∙ 오늘의집 구매</span>';
-				output += '</div>';
-				output += '</div>';
-				output += '<div class="production-review-item__name">'+ jdata.interior_review[i].goods_name +'</div>';
-				if(jdata.interior_review[i].review_simage != null) {
-					output += '<button type="button" class="production-review-item__img__btn">';
-					output += '<img class="production-review-item__img" src="http://localhost:9000/myhouse/resources/upload/'+jdata.interior_review[i].review_simage +'">';
-					output += '</button>';
-				}
-				output += '<p class="production-review-item__description">'+jdata.interior_review[i].vcontent+'</p>';
-				output += '</article>';
-				output += '</div>';
-			}
-			
-			$(".production-review-feed__list").empty();
-			$("#ampaginationsm").remove();
-			
-			var pagee = '<div id="ampaginationsm" style="text-align:center;"></div>';
-			$(".production-review-feed__list").append(output);
-			$(".production-review-feed__list").after(pagee);
-			
-			page(jdata.dbcount, jdata.reqpage, jdata.pagesize, status);
-			
-		}
-		/* 베스트순 */
-		$("#review-best").click(function(){
-			best_ajax("");
-		});
+		var status = '';
 		
-		function best_ajax(rpage) {
+		function best_ajax(rpage, status) {
 			
 			$.ajax({
-				url:"interior_review.do?ino=${ino}&rpage="+rpage,
+				url:"interior_review.do?ino=${ino}&rpage="+rpage+"&status="+status,
 				success: function(result) {
 					var jdata = JSON.parse(result);
 					$(".production-review-feed__list").empty();
@@ -3201,69 +3123,62 @@
 						$(".production-review-feed__list").append(output);
 						$(".production-review-feed__list").after(pagee);
 						
-						$("#review-best").addClass("production-review-feed__filter__order--active");
-						$("#review-best").removeClass("production-review-feed__filter__order");
-						$("#review-recently").addClass("production-review-feed__filter__order"); 
-						$("#review-recently").removeClass("production-review-feed__filter__order--active"); 
-						$("#review-photo").addClass("production-review-feed__filter__order");
-						$("#review-photo").removeClass("production-review-feed__filter__order--active");
+						if(status == '베스트순') {
+							$("#review-best").addClass("production-review-feed__filter__order--active");
+							$("#review-best").removeClass("production-review-feed__filter__order");
+							$("#review-recently").addClass("production-review-feed__filter__order"); 
+							$("#review-recently").removeClass("production-review-feed__filter__order--active"); 
+							$("#review-photo").addClass("production-review-feed__filter__order");
+							$("#review-photo").removeClass("production-review-feed__filter__order--active");
+						} else if(status == '최신순') {
+							$("#review-recently").addClass("production-review-feed__filter__order--active");
+							$("#review-recently").removeClass("production-review-feed__filter__order");
+							$("#review-best").removeClass("production-review-feed__filter__order--active"); 
+							$("#review-best").addClass("production-review-feed__filter__order"); 
+							$("#review-photo").addClass("production-review-feed__filter__order");
+							$("#review-photo").removeClass("production-review-feed__filter__order--active");
+						} else if (status == '사진리뷰') {
+							$("#review-photo").addClass("production-review-feed__filter__order--active");
+							$("#review-photo").removeClass("production-review-feed__filter__order");
+							$("#review-recently").addClass("production-review-feed__filter__order");
+							$("#review-recently").removeClass("production-review-feed__filter__order--active");
+							$("#review-best").removeClass("production-review-feed__filter__order--active"); 
+							$("#review-best").addClass("production-review-feed__filter__order"); 
+						}
 						
 						
-						page(jdata.dbcount, jdata.reqpage, jdata.pagesize, "best");
+						page(jdata.dbcount, jdata.reqpage, jdata.pagesize);
 				}
 			});
 			
 		}
 		
+		/* 베스트순 */
+		$("#review-best").click(function(){
+			best_ajax("", "베스트순");
+		});
+		
+		
 		/* 최신순 */
 		$("#review-recently").click(function (){
-			$.ajax({
-				url:"interior_review_recently.do?ino=${ino}&rpage=1&status=recently",
-				success: function(result) {
-					var jdata = JSON.parse(result);
-					output(jdata, "recently");
-					
-					$("#review-recently").addClass("production-review-feed__filter__order--active");
-					$("#review-recently").removeClass("production-review-feed__filter__order");
-					$("#review-best").removeClass("production-review-feed__filter__order--active"); 
-					$("#review-best").addClass("production-review-feed__filter__order"); 
-					$("#review-photo").addClass("production-review-feed__filter__order");
-					$("#review-photo").removeClass("production-review-feed__filter__order--active");
-					
-					
-				}
-			});	
-				
+			status = $(this).text();
+			best_ajax("", status);
 		});
 		
 		/* 사진리뷰 */
 		$("#review-photo").click(function photo(rpage){
-			$.ajax({
-				url:"interior_review_photo.do?ino=${ino}&rpage="+rpage,
-				success: function(result) {
-					var jdata = JSON.parse(result);
-					output(jdata, "photo");
-					
-					$("#review-photo").addClass("production-review-feed__filter__order--active");
-					$("#review-photo").removeClass("production-review-feed__filter__order");
-					$("#review-recently").addClass("production-review-feed__filter__order");
-					$("#review-recently").removeClass("production-review-feed__filter__order--active");
-					$("#review-best").removeClass("production-review-feed__filter__order--active"); 
-					$("#review-best").addClass("production-review-feed__filter__order"); 
-					
-				}
-			});	
+			status = $(this).text();
+			best_ajax("", status);
 		});
 		
 		   /** 페이징 처리 함수 **/
-	      function page(dbcount, reqpage, pagesize, status){
+	      function page(dbcount, reqpage, pagesize){
 	         //페이지 번호 및  링크
 	            var pager = jQuery("#ampaginationsm").pagination({
 	               maxSize : 5,
 	               totals:dbcount,
 	               page : reqpage,
 	               pageSize : pagesize,
-	               status: status,
 	               
 	               lastText : '&raquo;&raquo;',
 	               firstText : '&laquo;&laquo;',
@@ -3275,16 +3190,7 @@
 	            
 	            jQuery("#ampaginationsm").on('am.pagination.change',function(e){
 	            	
-	            	if(status == "best") {
-	               best_ajax(e.page);
-	            		
-	            	} else if ( status == "recently") {
-	              	recently(e.page);
-	            		
-	            	} else if ( status == "photo") {
-	              	photo(e.page);
-	            		
-	            	}
+	               best_ajax(e.page,"");
 	            });
 	      }//page
 	      
@@ -3729,7 +3635,288 @@
 		}); 
 		
 		
+
+		/* 문의화면 ajax */
+		function q_ajax() {
+			
+			$.ajax({
+				url:"interior_question_proc.do?ino=${ino}",
+				success: function(result) {
+					var jdata = JSON.parse(result);
+					var output = '';
+					$(".production-question-feed__list").empty();
+					
+					for(var i in jdata.interior_question) {
+						output += '<article class="production-question-feed__item" id="answer-wrap-'+jdata.interior_question[i].qno+'">';
+						output += '<header class="production-question-feed__item__header">';
+						if(jdata.interior_question[i].ostatus == 0) {
+							output += '비구매 | ';
+						} else if (jdata.interior_question[i].ostatus == null) {
+							output += '비구매 | ';
+						} else if (jdata.interior_question[i].ostatus == 1) {
+							output += '구매 | ';
+						}
+						output += ''+jdata.interior_question[i].qtype+' |';
+						if(jdata.interior_question[i].qstatus == 0) {
+							output += '<span class="unanswered">미답변</span>';
+						} else if (jdata.interior_question[i].qtype == 1) {
+							output += '<span class="answered">답변완료</span>';
+						}
+						if(jdata.interior_question[i].qstatus == 0) {
+							output += '<div class="production-selling-section__right-answer" id="answer-'+jdata.interior_question[i].qno+'"><button type="button" >답변하기</button></div>';
+						}else if(jdata.interior_question[i].qstatus == 1) {
+							output += '<div class="production-selling-section__right-update" id="update-'+jdata.interior_question[i].qno+'"><button type="button" >수정</button></div>'
+							output += '<span> | </span>';
+							output += '<div class="production-selling-section__right-delete" id="delete-'+jdata.interior_question[i].qno+'"><button type="button" >삭제</button></div>';
+						}
+						output += '</header> ';
+						output += '<p class="production-question-feed__item__author">'+jdata.interior_question[i].nickname+' | '+jdata.interior_question[i].qdate+'</p>';
+						output += '<div class="production-question-feed__item__question">';
+						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
+						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">'+jdata.interior_question[i].goods_name+'<br></span>'+jdata.interior_question[i].qcontent+'</p>';
+						output += '</div>';
+						output += '<div class="production-question-feed__item__answer" id="answer-'+jdata.interior_question[i].qno+'">';
+						if(jdata.interior_question[i].qstatus == 1) {
+							output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+							output += '<p class="production-question-feed__item__answer__author">';
+							output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_question[i].qdate_r+'</span></p>';
+							output += '<p class="production-question-feed__item__content">'+jdata.interior_question[i].qreply+'</p>';
+						}
+						output += '</div>';
+						output += '<div class="production-question-feed__item__answer-write answer-none" id="'+jdata.interior_question[i].qno+'">';
+						output += '<input type="hidden" value="${vo.ino}">';
+						output += '';
+						output += '</div>';
+						output += '</article>';
+					}
+					
+					$(".production-question-feed__list").append(output);
+
+							
+						
+					
+				}	
+			});
+			
+		}
 		
+		/* 문의답변 - 답변하기 클릭시 */
+		$(document).on("click",".production-selling-section__right-answer",function(){
+			var id = $(this).attr("id");
+				id = id.split("-");
+				
+				if($("#"+id[1]).hasClass("answer-none")) {
+					$("#"+id[1]).removeClass("answer-none");
+					var	output = '<form name="answerForm" class="answerForm'+id[1]+'">'
+					 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+						output += '<div>';
+						output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${vo.company }</span>';
+						output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
+						output += '</div>';
+						output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;"></textarea>';
+						output += '<div class="product-question__wrap__buttons" id="'+id[1]+'-btn" style="display:block; margin:16px auto; ">';
+						output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="'+id[1]+'-fin" type="button" style="width:49%; margin-right:5px;">작성완료</button>';
+						output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="'+id[1]+'-del" type="button" style="width:49%;">작성취소</button>';
+						output += '</div>';
+						output += '</form>';
+						$("#"+id[1]).append(output);
+						
+						$("#answer-"+id[1]+" button").text("취소하기");	 
+				} else {
+						$("#answer-"+id[1]+" button").text("답변하기");
+						$("#"+id[1]).empty();
+						$("#"+id[1]).addClass("answer-none");
+				}
+				
+		}); 
+		
+		/* 문의답변 완료 클릭 시 alert ----> 문의답변 쓰기*/
+		$(document).on("click",".product-question__wrap__buttons__submit-fin",function(event){
+			
+			var id = $(this).attr("id");
+				id = id.split("-");
+				//alert(id);
+			
+			var qreply = $("#qcontent-admin-"+id[0]).val();
+			/* 문의답변 - 문의내용 */
+			if($("#qcontent-admin-"+id[0]).val().length < 1 ) {
+				$("#qcontent-admin-"+id[0]).addClass("error");
+				$("#question-content-admin-"+id[0]).addClass("product-question__wrap__sub-title--error");
+			} else if($("#qcontent-admin-"+id[0]).val().length >= 1) {
+				$("#qcontent-admin-"+id[0]).removeClass("error"); 
+				$("#question-content-admin-"+id[0]).removeClass("product-question__wrap__sub-title--error");
+				
+			
+				$.ajax({
+					url:"interior_question_answer.do?qno="+id[0]+"&qreply="+qreply+"&ino=${ino}",
+					success: function(result) {
+						//alert("aaaaaaaaaa");
+						answer_page(id);
+						
+					} 
+				});
+				
+				
+			}
+			
+			
+			// submit
+		});
+		/* 문의답변 화면처리 */
+		function answer_page(id){ 
+		$.ajax({
+			url:"interior_question_answer_proc.do?qno="+id[0]+"&ino=${ino}",
+			success: function(result) {
+				//alert("bbbbbbbb");
+				 $("#"+id[0]).addClass("answer-none");
+				
+				var jdata = JSON.parse(result);
+				var output = "";
+				$("#answer-wrap-"+id[0]).empty();
+				for(var i in jdata.interior_answer) {
+					//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
+					output += '<header class="production-question-feed__item__header">';
+					var ostatus = "${qvo.ostatus}";
+					if(ostatus == '0') {
+						output += '비구매 | ';
+					} else if (ostatus == '1') {
+						output += '구매 | ';
+					} else if (ostatus == null) {
+						output += '비구매 | ';
+					}
+					output += '${qvo.qtype } | ';
+					var qstatus = "${qvo.qstatus}";
+					/* if(qstatus == 0) {
+						output += '<span class="unanswered">미답변</span>';
+						output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
+					} else if (qstatus == 1) {
+					} */
+					output += '<span class="answered">답변완료</span>';
+					output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
+					output += '<span> | </span>';
+					output += '<div class="production-selling-section__right-delete" id="delete-'+id[0]+'"><button type="button" >삭제</button></div>';
+					output += '</header>';
+					output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
+					output += '<div class="production-question-feed__item__question">';
+					output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
+					output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
+					output += '</div>';
+					output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
+					//if(qstatus ==1) {
+						output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+						output += '<p class="production-question-feed__item__answer__author">';
+						output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
+						output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
+					//}
+					output += '</div>';
+					//output += '</article>';
+				}
+				
+				$("#answer-wrap-"+id[0]).append(output); 
+			} 
+			
+		});
+		
+		}
+		
+		/* 문의답변 수정처리 */
+		$(document).on("click",".production-selling-section__right-update",function(event){
+			var id = $(this).attr("id");
+			id = id.split("-");
+				//alert("update===>"+id[1]);
+			var qreply = $("#qcontent-admin-"+id[1]).val();
+				
+				$.ajax({
+					url:"interior_question_answer_proc.do?qno="+id[1]+"&ino=${ino}",
+					success: function(result) {
+						var jdata = JSON.parse(result);
+						var	output = "";
+						$("#answer-"+id[1]).empty();
+						$("#"+id[1]).removeClass("answer-none");
+						//alert("aaaaaaaaaa-update");
+						for(var i in jdata.interior_answer) {
+							output += '<form name="answerForm" class="answerForm'+id[1]+'">'
+						 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+							output += '<div>';
+							output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>';
+							output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
+							output += '</div>';
+							output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;">'+jdata.interior_answer[i].qreply+'</textarea>';
+							output += '<div class="product-question__wrap__buttons" id="'+id[1]+'-btn" style="display:block; margin:16px auto; ">';
+							output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="'+id[1]+'-fin" type="button" style="width:49%; margin-right:5px;">작성완료</button>';
+							output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="'+id[1]+'-del" type="button" style="width:49%;">작성취소</button>';
+							output += '</div>';
+							output += '</form>';
+						}
+						$("#answer-"+id[1]).append(output);
+						
+					} 
+				});
+				
+			
+		});
+		
+		/* 문의답변 삭제처리 */
+		$(document).on("click",".production-selling-section__right-delete",function(event){
+			var id = $(this).attr("id");
+			id = id.split("-");
+			alert("1");
+			
+			$.ajax({
+				url:"interior_question_answer_delete.do?qno="+id[1]+"&ino=${ino}",
+				async:false,
+				success: function(result) {
+					var jdata = JSON.parse(result);
+					//alert(jdata);
+					//alert("delete~~");
+					$("#answer-"+id[1]).empty();
+					$("#answer-wrap-"+id[1]).empty();
+					$("#"+id[1]).addClass("answer-none");
+					
+					
+						var output = "";
+						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
+						output += '<header class="production-question-feed__item__header">';
+						var ostatus = "${qvo.ostatus}";
+						if(ostatus == '0') {
+							output += '비구매 | ';
+						} else if (ostatus == '1') {
+							output += '구매 | ';
+						} else if (ostatus == null) {
+							output += '비구매 | ';
+						}
+						output += '${qvo.qtype } | ';
+						var qstatus = "${qvo.qstatus}";
+						/* if(qstatus == 0) {
+							output += '<span class="unanswered">미답변</span>';
+						} else if (qstatus == 1) {
+						}  */
+						output += '<span class="unanswered">미답변</span>';
+						output += '<div class="production-selling-section__right-answer" id="answer-'+id[1]+'"><button type="button" >답변하기</button></div>';
+						output += '</header>';
+						output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
+						output += '<div class="production-question-feed__item__question">';
+						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
+						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
+						output += '</div>';
+						//if(qstatus ==1) {
+						//}
+						//output += '</article>';
+					
+					$("#answer-wrap-"+id[1]).append(output); 
+				}  
+			});
+			
+		});
+		
+		/* 문의답변 취소 클릭 시 */
+		$(document).on("click",".product-question__wrap__buttons__submit-cancel",function(event){
+			var id = $(this).attr("id");
+			id = id.split("-");
+				$("textarea#qcontent-admin-"+id[0]).val("");
+				//alert("del"+id[0]);
+		});
+
 	
 		
 		
@@ -4206,7 +4393,7 @@
 						</header>
 						<div class="production-question-feed">
 							<div class="production-question-feed__list" >
-							<c:forEach var="qvo" items="${interior_question}">
+							<%-- <c:forEach var="qvo" items="${interior_question}">
 								<article class="production-question-feed__item" id="answer-wrap-${qvo.qno}">
 									<header class="production-question-feed__item__header">
 										<c:choose>
@@ -4242,7 +4429,7 @@
 									
 										<div class="production-question-feed__item__answer-write answer-none" id="${qvo.qno}">
 											<input type="hidden" value="${vo.ino}">
-												<%-- <span class="production-question-feed__item__badge">A&nbsp;</span>
+												<span class="production-question-feed__item__badge">A&nbsp;</span>
 												<div>
 													<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>
 													<div class="product-question__wrap__sub-title" id="question-content-admin" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>
@@ -4251,11 +4438,11 @@
 												<div class="product-question__wrap__buttons" style="display:block; margin:16px auto; ">
 													<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="${qvo.qno}" type="button" style="width:49%; margin-right:5px;">작성완료</button>
 													<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="${qvo.qno}" type="button" style="width:49%;">작성취소</button>
-												</div> --%>
+												</div>
 										</div> 
 									
 								</article>
-							</c:forEach>
+							</c:forEach> --%>
 							</div> <!-- production-question-feed__list -->
 							<!-- <div id="ampaginationsm"></div> -->
 						</div> <!-- production-question-feed -->
@@ -4576,223 +4763,7 @@
 </body>
 <script>
 $(document).ready(function(){
-	/* 문의답변 - 답변하기 클릭시 */
-	$(".production-selling-section__right-answer").click(function(){
-		var id = $(this).attr("id");
-			id = id.split("-");
-			
-			if($("#"+id[1]).hasClass("answer-none")) {
-				$("#"+id[1]).removeClass("answer-none");
-				var	output = '<form name="answerForm" class="answerForm'+id[1]+'">'
-				 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
-					output += '<div>';
-					output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${vo.company }</span>';
-					output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
-					output += '</div>';
-					output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;"></textarea>';
-					output += '<div class="product-question__wrap__buttons" id="'+id[1]+'-btn" style="display:block; margin:16px auto; ">';
-					output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="'+id[1]+'-fin" type="button" style="width:49%; margin-right:5px;">작성완료</button>';
-					output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="'+id[1]+'-del" type="button" style="width:49%;">작성취소</button>';
-					output += '</div>';
-					output += '</form>';
-					$("#"+id[1]).append(output);
-					
-					$("#answer-"+id[1]+" button").text("취소하기");	 
-			} else {
-					$("#answer-"+id[1]+" button").text("답변하기");
-					$("#"+id[1]).empty();
-					$("#"+id[1]).addClass("answer-none");
-			}
-			
-	}); 
 	
-	/* 문의답변 완료 클릭 시 alert ----> 문의답변 쓰기*/
-	$(document).on("click",".product-question__wrap__buttons__submit-fin",function(event){
-		
-		var id = $(this).attr("id");
-			id = id.split("-");
-			//alert(id);
-		
-		var qreply = $("#qcontent-admin-"+id[0]).val();
-		/* 문의답변 - 문의내용 */
-		if($("#qcontent-admin-"+id[0]).val().length < 1 ) {
-			$("#qcontent-admin-"+id[0]).addClass("error");
-			$("#question-content-admin-"+id[0]).addClass("product-question__wrap__sub-title--error");
-		} else if($("#qcontent-admin-"+id[0]).val().length >= 1) {
-			$("#qcontent-admin-"+id[0]).removeClass("error"); 
-			$("#question-content-admin-"+id[0]).removeClass("product-question__wrap__sub-title--error");
-			
-		
-			$.ajax({
-				url:"interior_question_answer.do?qno="+id[0]+"&qreply="+qreply+"&ino=${ino}",
-				success: function(result) {
-					//alert("aaaaaaaaaa");
-					answer_page(id);
-					
-				} 
-			});
-			
-			
-		}
-		
-		
-		// submit
-	});
-	/* 문의답변 화면처리 */
-	function answer_page(id){ 
-	$.ajax({
-		url:"interior_question_answer_proc.do?qno="+id[0]+"&ino=${ino}",
-		success: function(result) {
-			//alert("bbbbbbbb");
-			 $("#"+id[0]).addClass("answer-none");
-			
-			var jdata = JSON.parse(result);
-			var output = "";
-			$("#answer-wrap-"+id[0]).empty();
-			for(var i in jdata.interior_answer) {
-				//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-				output += '<header class="production-question-feed__item__header">';
-				var ostatus = "${qvo.ostatus}";
-				if(ostatus == '0') {
-					output += '비구매 | ';
-				} else if (ostatus == '1') {
-					output += '구매 | ';
-				} else if (ostatus == null) {
-					output += '비구매 | ';
-				}
-				output += '${qvo.qtype } | ';
-				var qstatus = "${qvo.qstatus}";
-				/* if(qstatus == 0) {
-					output += '<span class="unanswered">미답변</span>';
-					output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
-				} else if (qstatus == 1) {
-				} */
-				output += '<span class="answered">답변완료</span>';
-				output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
-				output += '<span> | </span>';
-				output += '<div class="production-selling-section__right-delete" id="delete-'+id[0]+'"><button type="button" >삭제</button></div>';
-				output += '</header>';
-				output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-				output += '<div class="production-question-feed__item__question">';
-				output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-				output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-				output += '</div>';
-				output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
-				//if(qstatus ==1) {
-					output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
-					output += '<p class="production-question-feed__item__answer__author">';
-					output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
-					output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
-				//}
-				output += '</div>';
-				//output += '</article>';
-			}
-			
-			$("#answer-wrap-"+id[0]).append(output); 
-		} 
-		
-	});
-	
-	}
-	
-	/* 문의답변 수정처리 */
-	$(document).on("click",".production-selling-section__right-update",function(event){
-		var id = $(this).attr("id");
-		id = id.split("-");
-			//alert("update===>"+id[1]);
-		var qreply = $("#qcontent-admin-"+id[1]).val();
-			
-			$.ajax({
-				url:"interior_question_answer_proc.do?qno="+id[1]+"&ino=${ino}",
-				success: function(result) {
-					var jdata = JSON.parse(result);
-					var	output = "";
-					$("#answer-"+id[1]).empty();
-					$("#"+id[1]).removeClass("answer-none");
-					//alert("aaaaaaaaaa-update");
-					for(var i in jdata.interior_answer) {
-						output += '<form name="answerForm" class="answerForm'+id[1]+'">'
-					 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
-						output += '<div>';
-						output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>';
-						output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
-						output += '</div>';
-						output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;">'+jdata.interior_answer[i].qreply+'</textarea>';
-						output += '<div class="product-question__wrap__buttons" id="'+id[1]+'-btn" style="display:block; margin:16px auto; ">';
-						output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="'+id[1]+'-fin" type="button" style="width:49%; margin-right:5px;">작성완료</button>';
-						output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="'+id[1]+'-del" type="button" style="width:49%;">작성취소</button>';
-						output += '</div>';
-						output += '</form>';
-					}
-					$("#answer-"+id[1]).append(output);
-					
-				} 
-			});
-			
-		
-	});
-	
-	/* 문의답변 삭제처리 */
-	$(document).on("click",".production-selling-section__right-delete",function(event){
-		var id = $(this).attr("id");
-		id = id.split("-");
-		alert("1");
-		
-		$.ajax({
-			url:"interior_question_answer_delete.do?qno="+id[1]+"&ino=${ino}",
-			async:false,
-			success: function(result) {
-				var jdata = JSON.parse(result);
-				//alert(jdata);
-				//alert("delete~~");
-				$("#answer-"+id[1]).empty();
-				$("#answer-wrap-"+id[1]).empty();
-				$("#"+id[1]).addClass("answer-none");
-				
-				
-					var output = "";
-					//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-					output += '<header class="production-question-feed__item__header">';
-					var ostatus = "${qvo.ostatus}";
-					if(ostatus == '0') {
-						output += '비구매 | ';
-					} else if (ostatus == '1') {
-						output += '구매 | ';
-					} else if (ostatus == null) {
-						output += '비구매 | ';
-					}
-					output += '${qvo.qtype } | ';
-					var qstatus = "${qvo.qstatus}";
-					/* if(qstatus == 0) {
-						output += '<span class="unanswered">미답변</span>';
-					} else if (qstatus == 1) {
-					}  */
-					output += '<span class="unanswered">미답변</span>';
-					output += '<div class="production-selling-section__right-answer" id="answer-'+id[1]+'"><button type="button" >답변하기</button></div>';
-					output += '</header>';
-					output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-					output += '<div class="production-question-feed__item__question">';
-					output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-					output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-					output += '</div>';
-					//if(qstatus ==1) {
-					//}
-					//output += '</article>';
-				
-				$("#answer-wrap-"+id[1]).append(output); 
-			}  
-		});
-		
-	});
-	
-	/* 문의답변 취소 클릭 시 */
-	$(document).on("click",".product-question__wrap__buttons__submit-cancel",function(event){
-		var id = $(this).attr("id");
-		id = id.split("-");
-			$("textarea#qcontent-admin-"+id[0]).val("");
-			//alert("del"+id[0]);
-	});
-
 	
 }); // document
 

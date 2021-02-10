@@ -70,6 +70,9 @@ public class InteriorServiceImpl implements InteriorService{
 				jobj.addProperty("qreply", vo.getQreply());
 				jobj.addProperty("qdate_r", vo.getQdate_r());
 				jobj.addProperty("qstatus", vo.getQstatus());
+				jobj.addProperty("ostatus", vo.getOstatus());
+				jobj.addProperty("qtype", vo.getQtype());
+				jobj.addProperty("qno", vo.getQno());
 				
 				jarry.add(jobj);
 			}
@@ -80,6 +83,42 @@ public class InteriorServiceImpl implements InteriorService{
 			
 			return gson.toJson(jdata);
 		}
+		
+		// 문의 답변하기 - 화면
+		public String getInteriorQuestionProc(String ino) {
+			
+			ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino);
+			JsonArray jarry = new JsonArray();
+			JsonObject jdata = new JsonObject();
+			Gson gson = new Gson();
+			for(StoreIndexVO vo : interior_question) {
+				JsonObject jobj = new JsonObject();
+				jobj.addProperty("rno", vo.getRno());
+				jobj.addProperty("gno", vo.getGno());
+				jobj.addProperty("goods_name", vo.getGoods_name());
+				jobj.addProperty("qno", vo.getQno());
+				jobj.addProperty("email", vo.getEmail());
+				jobj.addProperty("qtype", vo.getQtype());
+				jobj.addProperty("qcontent", vo.getQcontent());
+				jobj.addProperty("qreply", vo.getQreply());
+				jobj.addProperty("qstatus", vo.getQstatus());
+				jobj.addProperty("qdate", vo.getQdate());
+				jobj.addProperty("qdate_r", vo.getQdate_r());
+				jobj.addProperty("ono", vo.getOno());
+				jobj.addProperty("ostatus", vo.getOstatus());
+				jobj.addProperty("nickname", vo.getNickname());
+				jobj.addProperty("company", vo.getCompany());
+				
+				jarry.add(jobj);
+			}
+			
+			jdata.add("interior_question", jarry);
+			jdata.addProperty("ino", ino);
+			
+			return gson.toJson(jdata);
+		}
+		
+		
 		
 	// 문의 작성하기
 	public String getInteriorQuestionInsert(StoreIndexVO vo) {
@@ -149,135 +188,16 @@ public class InteriorServiceImpl implements InteriorService{
 		return gson.toJson(jdata);
 		
 	}
-	
-	// 리뷰 페이지 - 사진순
-	public String getInteriorReviewPhoto(String ino, String rpage) {
-		 int start = 0;
-	      int end = 0;
-	      int pageSize = 3; //한 페이지당 출력되는 row
-	      int pageCount = 1; //전체 페이지 수  : 전체 리스트 row /한 페이지당 출력되는 row
-	      int dbCount = interiorDAO.getListReviewCount(ino); //DB연동 후 전체로우수 출력
-	      int reqPage = 1; //요청페이지
-	      String status = "photo";
-	      //2-2. 전체페이지 수 구하기 - 화면출력
-	      if(dbCount % pageSize == 0){
-	         pageCount = dbCount/pageSize;      
-	      }else{
-	         pageCount = dbCount/pageSize +1;
-	      }
-	      
-	      //2-3. start, end 값 구하기
-	      if(rpage != ""){
-	         reqPage = Integer.parseInt(rpage);
-	         start = (reqPage-1) * pageSize +1 ;
-	         end = reqPage*pageSize;   
-	      }else{
-	         start = reqPage;
-	         end = pageSize;
-	      }   
-		
-		ArrayList<StoreIndexVO> interior_review = interiorDAO.getInteriorReviewPhoto(ino, start, end);
-		
-		JsonArray jarry = new JsonArray();
-		JsonObject jdata = new JsonObject();
-		Gson gson = new Gson();
-		for(StoreIndexVO vo : interior_review) {
-			JsonObject jobj = new JsonObject();
-			jobj.addProperty("vno", vo.getVno());
-			jobj.addProperty("email", vo.getEmail());
-			jobj.addProperty("gno", vo.getGno());
-			jobj.addProperty("goods_name", vo.getGoods_name());
-			jobj.addProperty("star", vo.getStar());
-			jobj.addProperty("vcontent", vo.getVcontent());
-			jobj.addProperty("review_simage", vo.getReview_simage());
-			jobj.addProperty("vdate", vo.getVdate());
-			jobj.addProperty("nickname", vo.getNickname());
-			jobj.addProperty("member_spimage", vo.getMember_spimage());
-			
-			jarry.add(jobj);
-		}
-		
-		jdata.add("interior_review", jarry);
-		jdata.addProperty("ino", ino);
-		
-		
-		jdata.addProperty("dbcount", dbCount);
-	    jdata.addProperty("reqpage", reqPage);
-	    jdata.addProperty("pagesize", pageSize);
-	    jdata.addProperty("status", status);
-		
-		return gson.toJson(jdata);
-	}
-	
-	// 리뷰 페이지 - 최신순
-	public String getInteriorReviewRecently(String ino, String rpage) {
-		  int start = 0;
-	      int end = 0;
-	      int pageSize = 3; //한 페이지당 출력되는 row
-	      int pageCount = 1; //전체 페이지 수  : 전체 리스트 row /한 페이지당 출력되는 row
-	      int dbCount = interiorDAO.getListReviewCount(ino); //DB연동 후 전체로우수 출력
-	      int reqPage = 1; //요청페이지
-	      String status = "recently";
-	      
-	      //2-2. 전체페이지 수 구하기 - 화면출력
-	      if(dbCount % pageSize == 0){
-	         pageCount = dbCount/pageSize;      
-	      }else{
-	         pageCount = dbCount/pageSize +1;
-	      }
-	      
-	      //2-3. start, end 값 구하기
-	      if(rpage != ""){
-	         reqPage = Integer.parseInt(rpage);
-	         start = (reqPage-1) * pageSize +1 ;
-	         end = reqPage*pageSize;   
-	      }else{
-	         start = reqPage;
-	         end = pageSize;
-	      }   
-		
-		ArrayList<StoreIndexVO> interior_review = interiorDAO.getInteriorReviewRecently(ino, start, end);
-		
-		JsonArray jarry = new JsonArray();
-		JsonObject jdata = new JsonObject();
-		Gson gson = new Gson();
-		for(StoreIndexVO vo : interior_review) {
-			JsonObject jobj = new JsonObject();
-			jobj.addProperty("vno", vo.getVno());
-			jobj.addProperty("email", vo.getEmail());
-			jobj.addProperty("gno", vo.getGno());
-			jobj.addProperty("goods_name", vo.getGoods_name());
-			jobj.addProperty("star", vo.getStar());
-			jobj.addProperty("vcontent", vo.getVcontent());
-			jobj.addProperty("review_simage", vo.getReview_simage());
-			jobj.addProperty("vdate", vo.getVdate());
-			jobj.addProperty("nickname", vo.getNickname());
-			jobj.addProperty("member_spimage", vo.getMember_spimage());
-			
-			jarry.add(jobj);
-		}
-		
-		jdata.add("interior_review", jarry);
-		jdata.addProperty("ino", ino);
-		
-		jdata.addProperty("dbcount", dbCount);
-	    jdata.addProperty("reqpage", reqPage);
-	    jdata.addProperty("pagesize", pageSize);
-	    jdata.addProperty("status", status);
-		
-		return gson.toJson(jdata);
-	}
-	
+
 	// 리뷰 페이지 - 베스트순
-	public String getInteriorReview(String ino, String rpage) {
+	public String getInteriorReview(String ino, String status, String rpage) {
 		
 		int start = 0;
 	      int end = 0;
-	      int pageSize = 3; //한 페이지당 출력되는 row
+	      int pageSize = 5; //한 페이지당 출력되는 row
 	      int pageCount = 1; //전체 페이지 수  : 전체 리스트 row /한 페이지당 출력되는 row
-	      int dbCount = interiorDAO.getListReviewCount(ino); //DB연동 후 전체로우수 출력
+	      int dbCount = interiorDAO.getListReviewCount(ino, status); //DB연동 후 전체로우수 출력
 	      int reqPage = 1; //요청페이지
-	      String status = "best";
 	      
 	      //2-2. 전체페이지 수 구하기 - 화면출력
 	      if(dbCount % pageSize == 0){
@@ -297,7 +217,7 @@ public class InteriorServiceImpl implements InteriorService{
 	      }   
 		
 		
-		ArrayList<StoreIndexVO> interior_review = interiorDAO.getInteriorReview(ino, start, end);
+		ArrayList<StoreIndexVO> interior_review = interiorDAO.getInteriorReview(ino, status, start, end);
 		
 		JsonArray jarry = new JsonArray();
 		JsonObject jdata = new JsonObject();
@@ -320,6 +240,7 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		jdata.add("interior_review", jarry);
 		jdata.addProperty("ino", ino);
+		jdata.addProperty("status", status);
 		
 		jdata.addProperty("dbcount", dbCount);
 	    jdata.addProperty("reqpage", reqPage);
