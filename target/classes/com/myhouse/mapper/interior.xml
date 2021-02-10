@@ -6,6 +6,33 @@
     
 <mapper namespace="mapper.interior">
 
+
+<!-- 전체 리스트 카운트 - 리뷰 -->
+<select id="review-count" parameterType="java.lang.String" resultType="int">
+	select count(*) from h_review v, h_goods g where v.gno = g.gno and ino=#{ino}
+</select>
+
+<!-- 문의답변 삭제 -->
+<update id="interior-question-answer-delete" parameterType="java.lang.String">
+	update h_question set qreply='', qdate_r='', qstatus=0 where qno=#{qno}
+</update>
+
+<!-- 문의답변 화면 -->
+<select id="interior-question-answer-proc" parameterType="java.lang.String"  resultType="com.myhouse.vo.StoreIndexVO">
+	  select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+) and qno=#{qno}
+</select>
+
+<!-- 문의답변 입력 및 수정-->
+<update id="interior-question-answer" parameterType="map" >
+	update h_question set qreply=#{qreply}, qdate_r=sysdate, qstatus=1 where qno=#{qno}
+</update>
+
+<!-- 문의작성하기 -->
+<insert id="interior-question-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	insert into h_question values('q_'||seq_h_question.nextval,#{email},#{gno},#{qtype},#{qcontent},'',0,sysdate,'')
+</insert>
+
 <!-- 문의하기 -->
 <select id="interior-question" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
 	select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
@@ -15,35 +42,46 @@
 		from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
 		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno order by ino asc)
 		where ino=#{ino}) q, h_member m, h_interior i
-	where q.email = m.email and i.ino = q.ino
+	where q.email = m.email and i.ino = q.ino order by qno desc
 </select>
 
 <!-- 리뷰작성하기 -->
-<!-- <insert id="interior-review-insert" parameterType="com.myhouse.vo.StoreIndexVO">
-	insert into h_review values('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},#{review_image},#{review_simage},sysdate)
-</insert> -->
+<insert id="interior-review-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	insert into h_review values
+	<choose>
+		<when test="review_image != null">
+			('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},#{review_image},#{review_simage},sysdate)
+		</when>
+		<otherwise>
+			('v_'||seq_h_review.nextval,#{email},#{gno},#{star},#{vcontent},'','',sysdate)
+		</otherwise>
+	</choose>
+</insert>
 
-<!-- 리뷰 포토 -->
-<select id="interior-review-photo" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
-	from h_review r, h_member m, h_goods g
-	where r.email = m.email and r.gno=g.gno and ino=#{ino} and review_simage IS NOT NULL
+<!-- 리뷰 - 상품리스트 선택 -->
+<select id="interior-review-goods-list" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select company, ititle, goods_simage, goods_name from h_interior i, h_goods g where i.ino = g.ino and gno=#{gno}
 </select>
-<!-- 리뷰 최신순 -->
-<select id="interior-review-recently" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
-	from h_review r, h_member m, h_goods g
-	where r.email = m.email and r.gno=g.gno and ino=#{ino}
-	order by vdate desc
-</select>
+
 
 <!-- 리뷰 베스트순 -->
-<select id="interior-review" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
+<select id="interior-review" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from (select rownum rno, vno, r.email, r.gno, ino, goods_name, star, vcontent, review_simage, TO_CHAR(vdate, 'YYYY/MM/DD HH:MI:SS PM') vdate, nickname, member_spimage 
 	from h_review r, h_member m, h_goods g
 	where r.email = m.email and r.gno=g.gno and ino=#{ino}
-	order by star desc
+	<if test="status == '베스트순' ">
+		order by star desc) 
+	</if>
+	<if test="status == '최신순' ">
+		order by vdate desc) 
+	</if>
+	<if test="status == '사진리뷰' ">
+		and review_simage IS NOT NULL) 
+	</if>
+	
+	where rno between #{start} and #{end}
 </select>
+
 
 <!-- 스크랩 등록여부 -->
 <select id="interior-scrap-exist" parameterType="map" resultType="int">
@@ -78,12 +116,88 @@
 	where RowIdx=1 order by gno asc, goods_price desc
 </select>
 
+<!-- store_index - 상세카테고리 -->
+<select id="category_list"  parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
+select * from (select * from
+(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count
+from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
+	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
+		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
+	where RowIdx='1' and  
+	<foreach collection="category" item="category" index="index">
+	category=#{category}
+	</foreach>
+	)
+	<if test="tonelist.length != 0">
+			where 
+			<foreach collection="tonelist" item="tone" index="index" separator='or'>
+				tone like '%'||#{tone}||'%' 
+			</foreach>
+	</if>
+	)
+	 <if test="colorlist.length != 0 or seasonlist.length != 0">
+			where 
+			 <foreach collection="colorlist" item="color" index="index" separator='or'>
+				color like '%'||#{color}||'%' 
+			 </foreach>
+		<if test="seasonlist.length != 0">
+			<foreach collection="seasonlist" item="season" index="index" separator='or'> 
+				 season like '%'||#{season}||'%'  
+			</foreach>
+		</if>
+	 </if> 
+)where rno between 
+	<foreach collection="start" item="startdo" index="index">
+		#{startdo}
+	</foreach>
+	 and
+	<foreach collection="end" item="enddo" index="index">
+		#{enddo}
+	</foreach>
+</select>
+<!-- store_index - 상세카테고리 - 리스트 카운트!! -->
+<select id="category_list_count"  parameterType="map" resultType="int">
+select count(*) from
+(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, goods_price, star_avg, star_count
+from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
+	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
+		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
+	where RowIdx='1' and
+	<foreach collection="category" item="category" index="index">
+	category=#{category}
+	</foreach>
+	)
+	<if test="tonelist.length != 0">
+			where 
+			<foreach collection="tonelist" item="tone" index="index" separator='or'>
+				tone like '%'||#{tone}||'%' 
+			</foreach>
+	</if>
+	)
+	 <if test="colorlist.length != 0 or seasonlist.length != 0">
+			where 
+			 <foreach collection="colorlist" item="color" index="index" separator='or'>
+				color like '%'||#{color}||'%' 
+			 </foreach>
+		<if test="seasonlist.length != 0">
+			<foreach collection="seasonlist" item="season" index="index" separator='or'> 
+				 season like '%'||#{season}||'%'  
+			</foreach>
+		</if>
+	 </if> 
+	
+</select>
+
 <!-- store_index - list -->
 <select id="interior-list"  parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
 	select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, star_avg, star_count
-	from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, avg(star)over(partition by ino) as star_avg, 
+	from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price,  ceil(avg(star)over(partition by ino)) as star_avg, 
 		count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
-		from(select i.ino, company, ititle, interior_simage, category, tone, color, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from(select i.ino, company, ititle, interior_simage, category, tone, color, g.gno, goods_simage, goods_name,  to_char(goods_price,'999,999,999,999') goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
 	where RowIdx='1' and category=#{category}
 </select>
