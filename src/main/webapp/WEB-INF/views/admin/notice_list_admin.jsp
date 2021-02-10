@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"
     import=" java.util.*"
     %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
 	String bpart = request.getParameter("bpart");
 	String rpage = request.getParameter("rpage");
@@ -297,10 +298,15 @@
 	}
 	.main-section2 .section2-cont li.cont-8 {
 		display:none;
-	    width: 831px;
-	    height: 430px;
 	    overflow-y: auto !important;
 	    margin-left:20px;
+	    margin: 20px;
+	    padding:20px;
+	    line-height: 21px;
+	    border: 1px solid #999;
+	}
+	.udp_text{
+	  overflow-y: hidden; overflow-x: hidden;
 	}
 	.main-section2 .section2-cont li.cont-8 .cont8-wrap {
 	    margin: 20px 0;
@@ -507,8 +513,8 @@
 	    background-size: 13px;
 	}
 	.am-pagination-default > .active > a {
-	 	background-color:#ff0045;
-	 	border-color: #ff0045;
+	 	background-color:#35c5f0;
+	 	border-color: #35c5f0;
 	}
 	.am-pagination-default > .active > a:hover {
 	 	background-color:#ff0045;
@@ -541,7 +547,7 @@
 					$("li#"+bid).css("display","block");
 					$(this).attr("src","http://localhost:9000/myhouse/images/notice_close.png");
 					//$("#cont8-wrap").css("display","block");
-					$(".cont-8#"+bid).load("http://localhost:9000/myhouse/admin/admin_notice_detail.jsp?bid="+bid+" .udp_text"); 
+					$(".cont-8#"+bid).load("http://localhost:9000/myhouse/admin_notice_detail.do?nno="+bid+" .udp_text"); 
 					
 				} else {
 					$("li#"+bid).css("display","none");
@@ -549,30 +555,27 @@
 					//$("#cont8-wrap").css("display","none");
 				}
 		});
-		
-			 //페이지 번호 및  링크
-			var pager = jQuery("#ampaginationsm").pagination({
-				maxSize : 7,
-				totals : '0',
-				pageSize : '0',
-				page : '0',
-				
-				//alert(maxSize + "," + totals + "," + pageSize + "," + page);
-				
-				lastText : '&raquo;&raquo;',
-				firstText : '&laquo;&laquo;',
-				preTest : '&laquo;',
-				nextTest : '&raquo;',
-				
-				btnSize : 'sm'
-			});
 			
-			//
-			jQuery("#ampaginationsm").on('am.pagination.change',function(e){
-				$(location).attr('href','http://localhost:9000/myhouse/admin/notice_list_admin.jsp?bpart=notice&rpage='+e.page); 
-				//location.href('이동페이지');
-				
-			});
+			
+			//페이지 번호 및  링크
+		      var pager = jQuery("#ampaginationsm").pagination({
+		         maxSize : 9,
+		         totals:${dbCount},
+		         page :${reqPage},
+		         pageSize :${pageSize},
+		         
+		         lastText : '&raquo;&raquo;',
+		         firstText : '&laquo;&laquo;',
+		         preTest : '&laquo;',
+		         nextTest : '&raquo;',
+		         
+		         btnSize : 'sm'
+		      });
+		      
+		      jQuery("#ampaginationsm").on('am.pagination.change',function(e){
+		    	  //클릭 시 페이지이동
+		    	  $(location).attr('href','http://localhost:9000/myhouse/notice_list_admin.do?rpage='+e.page);
+		      });
 			
 			
 			
@@ -613,18 +616,6 @@
 					});                
 				});
 				
-				$("#btnDelete").click(function(){
-					var del_list = "";
-					
-					$("input[name='chk']:checked").each(function(index) {
-						del_list += $(this).attr("id") + ",";
-					});
-					
-					//ajax를 이용하여 서버로 전송 후 삭제 진행
-					
-				});
-				
-				
 				  $("#btnDelete").click(function(){
 		                var del_list = "";
 		                var count = 0;
@@ -632,11 +623,10 @@
 		                $("input[name=checkTerms]:checked").each(function(i){
 		                    count++;
 		                    //del_list += "bid=" $(this).attr("id")+"&";
-		                    del_list += "bid="+ $(this).attr("id")+"&";
+		                    del_list += "nno="+$(this).attr("id")+"&";
 		                     /* var tr=$(".cont-0#"+bid);
 		                     tr.remove(); */
 		                 });
-		                     
 		                if(count == 0){
 		                     alert("한 개 이상 선택하셔야 삭제가 가능합니다.")
 		                     return false;
@@ -646,10 +636,8 @@
 		                     
 		                     
 		                     $.ajax({
-		                         url:"noticeDeleteProc.jsp?"+del_list,
+		                         url:"noticeDeleteProc.do?"+del_list,
 		                         success:function(result) {
-		                            
-		                            //alert(result);
 		                          if(result != 0) {
 		                        	  location.reload();
 		                          } else {
@@ -680,10 +668,9 @@
 					<span class="admin_icon2">[ 관리자 시스템 ]</span>
 				</div>
 				<ul>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do">공지사항</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do">회원관리</a></li>
-				</ul>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
 	<div class="board_wrap" id="newsroom-main">
@@ -706,50 +693,54 @@
 				<li class="title-5">조회수</li>
 			</ul>
 			<div id="nesListNew">
-			<%-- <% for(BoardVO vo : list) { %>
 			
+			<c:forEach var="vo" items="${noticeList}"  varStatus="index">
 				<ul class="section2-cont">
 					<li class="cont-0">
-						<input class="blind inp_label" type="checkbox" name="checkTerms" id="<%= vo.getBid()%>">
-						<label for="<%= vo.getBid()%>" class="inp_chkbox"></label>
+						<input class="blind inp_label" type="checkbox" name="checkTerms" id="${vo.nno}">
+						<label for="${vo.nno}" class="inp_chkbox"></label>
 					</li>
-						<li class="cont-1"><%= vo.getRno() %></li>
+						<li class="cont-1">${vo.rno}</li>
 						<li class="cont-2">
 							<a id="test1" class="cont2-btn">
-								<img src="http://localhost:9000/myhouse/images/notice_open.png" class="open" id=<%= vo.getBid()%>>
+								<img src="http://localhost:9000/myhouse/images/notice_open.png" class="open" id="${vo.nno}">
 								<label></label>
 							</a>
 						</li>
 						<li class="cont-3">
+								<label class="normal"></label>
+						<%-- 
 						<% if(vo.getBpart() != null) { %>
 							<% if(vo.getBpart().equals("공지사항/약관")) { %>
 								<label class="cont3-label"></label>
-							<% } else {%>
-								<label class="normal"></label>
+							<% } else {%> 
 							<% } %>
 						<% } else { %>
 								<label class="cont3-label"></label>
 						<% } %>
+						 --%>
 						</li>
 						<li class="cont-4">
-							<a href="admin_notice_detail.jsp?bid=<%=vo.getBid()%>"><%= vo.getBtitle() %></a>
+							<a href="admin_notice_detail.do?nno=${vo.nno}">${vo.ntitle}</a>
 						</li>
-						<li class="cont-5"><%= vo.getBcharge() %></li>
-						<li class="cont-6"><%= vo.getBdate() %></li>
-						<li class="cont-7"><%= vo.getBhits() %></li>
-						<li class="cont-8" id="<%=vo.getBid()%>" >
-							<div class="cont8-wrap" id="<%=vo.getBid()%>">
-							<a href="admin_notice_detail.jsp?<%=vo.getBid()%>"></a>
+						<li class="cont-5">관리자</li>
+						<li class="cont-6">${vo.ndate}</li>
+						<li class="cont-7">-</li>
+						<li class="cont-8" id="${vo.nno}" >
+							<div class="cont8-wrap" id="${vo.nno}">
+							<a href="admin_notice_detail.do?nno=${vo.nno}"></a>
 							</div>
 						</li>
 				</ul>
-		<% } %> --%>
+				</c:forEach>
+				
+				
 			</div>
 		</div>
 		<div class="main-section3">
 			<div class="section-paging">
 				<div class="admin_btn">
-					<a href="admin_notice_write.jsp"><button type="button" class="btn_style">글쓰기</button></a>
+					<a href="admin_notice_write.do"><button type="button" class="btn_style">글쓰기</button></a>
 					<button type="button" class="btn_style" id="btnDelete">삭제</button>
 				</div>
 				<div id="ampaginationsm"></div>

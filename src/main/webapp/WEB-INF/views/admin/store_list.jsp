@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" 
-    import="java.util.*"%>
+    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 	 ClassDAO dao = new ClassDAO();
 	TutorDAO dao_tutor = new TutorDAO();	
 	
@@ -43,7 +44,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>스위트홈 :: 수업관리 </title>
+<title>스위트홈 :: 스토어관리 </title>
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/am-pagination.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
@@ -170,9 +171,11 @@
 		width: 80px;
 		padding-left:0;
 	}
+	.main-section2 .section2-title .title-1-1 {
+		margin-left:35px;
+	}
 	.main-section2 .section2-title .title-2 {
-		margin-left:50px;
-		width: 440px;
+		width: 400px;
 	}
 	.main-section2 .section2-title .title-3 {
 		width: 85px;
@@ -276,6 +279,10 @@
 	    width: 831px;
 	    height: 430px;
 	    overflow-y: hidden !important;
+	    overflow-x: hidden;
+	    padding:5px;
+	    border: 1px solid #999;
+	    margin-top:10px;
 	}
 	.main-section2 .section2-cont li.cont-8 .cont8-wrap {
 	    margin: 20px 0;
@@ -559,9 +566,9 @@
 		//페이지 번호 및 링크
 		var pager = jQuery("#ampaginationsm").pagination({
 			maxSize : 5,
-			totals: 0,
-			pageSize: 0,
-			page: 0,
+	        totals:${dbCount},
+	        page :${reqPage},
+	        pageSize :${pageSize},
 			
 			lastText : '&raquo;&raquo;',
 			firstText : '&laquo,&laquo',
@@ -572,11 +579,11 @@
 		});
 		
 		jQuery("#ampaginationsm").on('am.pagination.change',function(e){
-			$(location).attr('href','http://localhost:9000/myhouse/admin/class_list.jsp?rpage='+e.page); 
+			$(location).attr('href','http://localhost:9000/myhouse/store_list.do?rpage='+e.page); 
 			//location.href('이동페이지')';
 		});
 		
-		 $("#accept").click(function(){
+/* 		 $("#accept").click(function(){
 			 $("#wbutton").val("accept");
 			 ClassMForm.submit(); 
 		 });
@@ -584,7 +591,72 @@
 		 $("#reject").click(function(){
 			 $("#wbutton").val("reject");
 			 ClassMForm.submit(); 
-		 });
+		 }); */
+		 $("#reject").click(function(){
+	          var inos = "";
+	          var count = 0;
+	          
+	          $("input[name=checkTerms]:checked").each(function(i){
+	              count++;
+	              //del_list += "bid=" $(this).attr("id")+"&";
+	              inos += "inos="+$(this).attr("value")+"&";
+	               /* var tr=$(".cont-0#"+bid);
+	               tr.remove(); */
+	           });
+	          if(count == 0){
+	               alert("한 개 이상 선택하셔야 삭제가 가능합니다.")
+	               return false;
+	            }else{
+	               //서버전송                         
+	               $.ajax({
+	                   url:"stateUpdate.do?"+inos,
+	                   success:function(result) {
+	                    if(result != 0) {
+	                  	  location.reload();
+	                    } else {
+	                  	  return false;
+	                    }
+	                      
+	                   }
+	                }); 
+	               
+	               
+	            }
+	             
+	   });  //reject
+	   
+	   $("#accept").click(function(){
+	          var inos = "";
+	          var count = 0;
+	          
+	          $("input[name=checkTerms]:checked").each(function(i){
+	              count++;
+	              //del_list += "bid=" $(this).attr("id")+"&";
+	              inos += "inos="+$(this).attr("value")+"&";
+	               /* var tr=$(".cont-0#"+bid);
+	               tr.remove(); */
+	           });
+	          if(count == 0){
+	               alert("한 개 이상 선택하셔야 삭제가 가능합니다.")
+	               return false;
+	            }else{
+	               //서버전송                         
+	               $.ajax({
+	                   url:"stateUpdate2.do?"+inos,
+	                   success:function(result) {
+	                    if(result != 0) {
+	                  	  location.reload();
+	                    } else {
+	                  	  return false;
+	                    }
+	                      
+	                   }
+	                }); 
+	               
+	               
+	            }
+	             
+	   });  //reject
 		
 	});
 	
@@ -615,23 +687,7 @@
 		
 	}
 	
-	/* function partCheck() {
-
-		var cnt = 0;
-		var all = document.getElementById("checkAll");
-		var chk_list = document.getElementsByName("checkTerms");
-
-		if(chk_list.checked)
-	        {
-			all.checked = true;
-	        } else {
-	                for(var i=0; i < chk_list.length; i++)  {
-	                      if(chk_list[i].checked == true)
-	                           cnt ++;
-	                }
-	                 if(cnt == 0)  all.checked = false;
-		}
-	*/
+	 
 	
 </script>
 </head>
@@ -649,10 +705,9 @@
 					<span class="admin_icon2">[ 관리자 시스템 ]</span>
 				</div>
 				<ul>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do">공지사항</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do">회원관리</a></li>
-				</ul>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
 
@@ -661,7 +716,7 @@
 		<span class="main-logo">SweetHome <span>'STORE'</span> ROOM</span>
 		<div class="main-section1">
 			<ul class="section1-category">
-				<li id="first" class="first selected"><a href="#">수업관리</a></li>
+				<li id="first" class="first selected"><a href="#">스토어관리</a></li>
 			</ul>
 		</div>
 		<div class="main-section2">
@@ -671,48 +726,44 @@
 					<label for="checkAll" class="inp_chkbox"></label>
 				</li>
 				<li class="title-1">번호</li>
-				<li class="title-2">제목</li>
-				<li class="title-3">튜터</li>
+				<li class="title-1-1">승인 상태</li>
+				<li class="title-2">상품 제목</li>
+				<li class="title-3">판매자</li>
 				<li class="title-4">작성일</li>
 			</ul>
 			<div id="nesListNew">
 			<form name="ClassMForm" action="class_listProc.jsp" method="get" class="join">
 			<input type="hidden" name="wbutton" value="" id="wbutton">
-			<%-- 
-			<% for(ClassVO vo:list){ i++;
-				TutorVO vo_tutor = dao_tutor.getTutorInfo(vo.getCid()); 
-				System.out.println(vo_tutor.getName());
-				%>
+				<c:forEach var="i" begin="0" end="${list.size()-1}">
 					<ul class="section2-cont">
 						<li class="cont-0">
 							<input class="blind inp_label" type="checkbox" name="checkTerms"
-							 id="check<%=i%>" value="<%=vo.getCid()%>">
-							<label for="check<%=i%>" class="inp_chkbox"></label>
+							 id="check${i}" value="${list.get(i).getIno()}">
+							<label for="check${i}" class="inp_chkbox"></label>
 						</li>
-						<li class="cont-1"><%=vo.getCno() %></li>
+						<li class="cont-1">${list.get(i).getRno()}</li>
 						<li class="cont-2">
 							<a id="test1" class="cont2-btn">
-								<img src="http://localhost:9000/myhouse/images/notice_open.png" id="<%=i%>" name="open" >
+								<img src="http://localhost:9000/myhouse/images/notice_open.png" id="${i}" name="open" >
 								<label></label>
 							</a>
 						</li>
 						<li class="cont-3">
-							<label class="cont3-label" id="status<%=vo.getCstatus() %>" ></label>
+							<label class="cont3-label" id="status${list.get(i).getStatus()}" ></label>
 						</li>
 						<li class="cont-4">
-							<a href="http://localhost:9000/One_day_class/admin/class_content.jsp?cid=<%=vo.getCid()%>"><%=vo.getTitle()%></a>
+							<a href="http://localhost:9000/myhouse/store_content.do?ino=${list.get(i).getIno()}">${list.get(i).getItitle()}</a>
 						</li>
 						
-						<li class="cont-5"><%=vo_tutor.getName()%></li>
-						<li class="cont-6"><%=vo.getCdate()%></li>
-						<li class="cont-8" id="cont-8-<%=i%>" >
-							<iframe width="855px"  height="800px"  frameborder=0  src="class_iframe.jsp?cid=<%=vo.getCid()%>">
+						<li class="cont-5">${m_list.get(i).getEmail()}</li>
+						<li class="cont-6">${list.get(i).getIdate()}</li>
+						<li class="cont-8" id="cont-8-${i}" >
+							<iframe width="855px"  height="800px"  frameborder=0  src="store_page_sample.do?ino=${list.get(i).getIno()}">
 							</iframe>
 						</li>
 					</ul>
-					<%} %>
-				--%>
-				</form>
+				</c:forEach>
+			</form>
 	
 				
 			</div>

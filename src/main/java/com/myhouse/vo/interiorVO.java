@@ -1,14 +1,30 @@
-package com.myhouse.vo;
+ package com.myhouse.vo;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class interiorVO {
 
-	String ino,email,company,ititle,interior_image,interior_simage,
-	idate,category,tone,color,price,season,detail_category,savepath,nickname;
+	String rno,ino,email,company,ititle,interior_image,interior_simage,
+	idate,category,tone,color,price,season,detail_category,savepath,status,nickname;
 	
 	CommonsMultipartFile interior_file;
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getRno() {
+		return rno;
+	}
+
+	public void setRno(String rno) {
+		this.rno = rno;
+	}
+
 	public String getIno() {
 		return ino;
 	}

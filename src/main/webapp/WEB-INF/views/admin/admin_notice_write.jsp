@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>탈멍 :: 공지사항/이벤트 - 작성</title>
-<script src="http://localhost:9000/One_day_class/js_yh/jquery-3.5.1.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$("#btnNoticeWrite").click(function(){
@@ -172,7 +172,7 @@
        float: left;
        padding: 10px 35px 10px 0;
        background-position: 0 bottom;
-       background-image: url(http://localhost:9000/One_day_class/images/newsroom201301_dot.gif);
+       background-image: url(http://localhost:9000/myhouse/images/newsroom201301_dot.gif);
        background-repeat: repeat-x;
    }
    .main-section2 .section2-cont li {
@@ -209,7 +209,7 @@
        width: 70px;
        height: 20px;
        margin: -18px 0 0 -12px;
-       background-image:url(http://localhost:9000/One_day_class/images/notice_label.png);
+       background-image:url(http://localhost:9000/myhouse/images/notice_label.png);
        background-repeat:no-repeat;
        background-size: 70px 20px;
    }
@@ -223,7 +223,7 @@
       width: 31px;
        height: 15px;
        display: block;
-       background-image:url(http://localhost:9000/One_day_class/images/notice_con1.png);
+       background-image:url(http://localhost:9000/myhouse/images/notice_con1.png);
        background-repeat:no-repeat;
        background-size: 28px 18px;
    }
@@ -231,7 +231,7 @@
       width: 31px;
        height: 15px;
        display: block;
-       background-image:url(http://localhost:9000/One_day_class/images/notice_con3.png);
+       background-image:url(http://localhost:9000/myhouse/images/notice_con3.png);
        background-repeat:no-repeat;
        background-size: 28px 18px;
    }
@@ -310,12 +310,12 @@
        margin-top: 4px;
        padding: 0 !important;
        vertical-align: top;
-       background-image: url(http://localhost:9000/One_day_class/images/arrow_left.png);
+       background-image: url(http://localhost:9000/myhouse/images/arrow_left.png);
        background-repeat:no-repeat;
        background-size: 15px 15px;
    }
    .main-section3 .paging-page .next {
-       background-image: url(http://localhost:9000/One_day_class/images/arrow_right.png);
+       background-image: url(http://localhost:9000/myhouse/images/arrow_right.png);
        width: 20px;
        height: 20px !important;
        margin-top: 4px;
@@ -551,12 +551,21 @@
    .udp_title1 select option {
    		text-align:center;
    }
+   	.footer{
+	display:inline-block;
+	}
+	.noticewriteinput{
+	padding-left:10px;
+	}
+	.noticewriteinput1{
+	padding:10px;
+	}
    </style>
 
 </head>
 <body>
 	<!-- header -->
-	<jsp:include page="../header_tutor.jsp"></jsp:include>
+	<jsp:include page="../header1.jsp"></jsp:include>
 
    <!-- content -->
    <div style="margin:0 auto;"></div>
@@ -565,55 +574,48 @@
       <aside class="admin_main">
          <nav>
             <div>
-               <img src="http://localhost:9000/One_day_class/images/admin.png"><br>
+               <img src="http://localhost:9000/myhouse/images/admin.png"><br>
                <span class="admin_icon2">[ 관리자 시스템 ]</span>
             </div>
             <ul>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="notice_list_admin.jsp">공지사항/이벤트</a></li>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="#">수업관리</a></li>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="#">회원관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>
             </ul>
          </nav>
       </aside>
 
-   
-   </div>
    <div class="board_wrap" id="newsroom-main">
-      <span class="main-logo">TALMUNG <span>'NEWS'</span> ROOM</span>
+      <span class="main-logo">SweetHone<span>'NEWS'</span>ROOM</span>
       <div class="main-section2">
             <div class="udp_title1">
-            	<form name="noticeWriteForm" action="noticeWriteProc.jsp"  method="post" 
+            	<form name="noticeWriteForm" action="noticeWriteProc.do"  method="post" 
             	class="admin_notice_write" id="admin_notice_write" enctype="multipart/form-data"> 
 					<ul>
 						<li class="udp_title1">
 							<label>작성자</label>
-							<input type="text" name="bcharge" id="bcharge" style="width:115px;" autocomplete="off">
+							<input class="noticewriteinput" value="작성자"type="text"  id="bcharge" style="width:115px;" autocomplete="off">
 						</li>
 						<li class="udp_title1">
 							<label>구분</label>
-							<select name="bpart" class="notice_select">
-								<option  value="선 택">선 택</option>
-								<option value="공지사항/일반">공지사항/일반</option>
-								<option value="공지사항/약관">공지사항/약관</option>
+							<select class="noticewriteinput"  class="notice_select">
+								<option value="선 택">일 반</option>
+								<option value="공지사항/약관">약관</option>
 								<option value="이벤트">이벤트</option>
 							</select>
 						</li>
 						<li class="udp_title1">
 							<label >제목</label>
-							<input type="text" name="btitle" id="btitle" class="udp_t3" autocomplete="off">
+							<input class="noticewriteinput" type="text" name="ntitle" id="btitle" class="udp_t3" autocomplete="off">
 						</li>
 						<li class="udp_text">
 							<label>내용</label>
-							<textarea rows="10" cols="50" name="bcontent" id="bcontent"></textarea>
-						</li>
-						<li class="file_chum">
-							<label>파일첨부</label>
-							<input type="file" name="bfile" class="udp_t3">
+							<textarea class="noticewriteinput1" rows="10" cols="50" name="ncontent" id="bcontent"></textarea>
 						</li>
 						<li class="udp_btnbox">
 							<button type="submit" class="btn_style" id="btnNoticeWrite">등록</button>
 							<button type="reset" class="btn_style">취소</button>
-							<a href="notice_list_admin.jsp"><button type="button" class="btn_style">목록으로</button></a>
+							<a href="notice_list_admin.do?rpage=1"><button type="button" class="btn_style">목록으로</button></a>
 						</li>
 					</ul>
 				</form>
@@ -626,8 +628,12 @@
       </div>
    	</div>
 </div>
+   
+   </div>
+	<div class="footer">
 	<!-- footer -->
 	<jsp:include page="../footer.jsp"></jsp:include>
+	</div>
 
 </body>
 </html>

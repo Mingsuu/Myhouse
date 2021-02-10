@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="com.one_day_class.vo.*, com.one_day_class.dao.*"
     %>
-<%
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%--
    String bid = request.getParameter("bid");
    BoardDAO dao = new BoardDAO();
    BoardVO vo = dao.getContent(bid); 
    dao.getUpdateHits(bid);
 
-%>
+--%>
     
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>탈멍 :: 공지사항/이벤트 </title>
-<script src="http://localhost:9000/One_day_class/js_minsu/jquery-3.5.1.min.js"></script>
+<title>스위트홈 :: 공지사항/이벤트 </title>
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
    $(document).ready(function(){
       
@@ -53,7 +54,7 @@
 	}
 	.main-logo{
 		display:inline-block;
-		margin:20px 0 30px 117px;
+		margin:20px 0 30px 80px;
     	font-size:50px;
 	}
 	.main-logo span {
@@ -378,6 +379,7 @@
    .content {
       width:1040px;
       margin: 0 auto;
+      display:block;
    }
    .content .admin_main {
       float:left;
@@ -484,8 +486,9 @@
 	/** 내용 글자 **/
 	.udp_text>p {
 		text-align:left;
-		margin-left:50px;
+		margin-left:20px;
 		margin-top:20px;
+		margin-right:20px;
 		overflow: auto;
 		}
 	/** 버튼 **/
@@ -509,7 +512,20 @@
 	.udp_btnbox>a>button:focus {
 		outline:none;
 	}
-   
+	.footer{
+	display:inline-block;
+	}
+	p{
+	margin: 0px;
+    padding: 0px;
+    font-size: 13px;
+    line-height: 21px;
+    color: #111;
+    font-family: 'Noto Sans KR';
+    font-weight: 400;
+    -ms-overflow-style: none;
+
+	}
    </style>
 <script>
     $(document).ready(function(){
@@ -528,30 +544,28 @@
 </head>
 <body>
 	<!-- header -->
-	<jsp:include page="../header_tutor.jsp"></jsp:include>
+	<jsp:include page="../header1.jsp"></jsp:include>
 
    <!-- content -->
-   <div style="margin:0 auto;">
    <div style="width:100%; height:50px;"></div>
    <div class="content">
       <aside class="admin_main">
          <nav>
             <div>
-               <img src="http://localhost:9000/One_day_class/images/admin.png"><br>
+               <img src="http://localhost:9000/myhouse/images/admin.png"><br>
                <span class="admin_icon2">[ 관리자 시스템 ]</span>
             </div>
             <ul>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="notice_list_admin.jsp">공지사항/이벤트</a></li>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="#">수업관리</a></li>
-               <li><img src="http://localhost:9000/One_day_class/images/admin_check.png"><a href="#">회원관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>
             </ul>
          </nav>
       </aside>
 
    
-   </div>
    <div class="board_wrap" id="newsroom-main">
-      <span class="main-logo">TALMUNG <span>'NEWS'</span> ROOM</span>
+      <span class="main-logo">SweetHome<span>'NEWS'</span>ROOM</span>
       <div class="main-section1">
        <!--   <ul class="section1-category">
            <li id="first" class="first"><a href="notice_list_admin.jsp?bpart=notice">공지사항</a></li>
@@ -562,40 +576,27 @@
           <div class="udp_title1">
          <ul>
             <li class="udp_t3" >
-            <% if(vo.getBpart().equals("공지사항/일반")) { %>
-         			<span> [ 일반 ] </span><%=vo.getBtitle() %>
-         		<% } else if(vo.getBpart().equals("공지사항/약관")){ %>
-         			<span> [ 약관 ] </span><%=vo.getBtitle() %>
-         		<% } else { %>
-         			<span> [ 이벤트 ] </span><%=vo.getBtitle() %>
-         		<% } %>
+         			<span> [ 일반 ] </span>${noticeVO.ntitle}
             </li>
-            <li class="udp_t4"><%=vo.getBhits() %></li>
-            <li class="udp_t5"><%=vo.getBcharge() %></li>
-            <li class="udp_t6"><%=vo.getBdate() %></li>
+            <li class="udp_t4">-</li>
+            <li class="udp_t5">관리자</li>
+            <li class="udp_t6">${noticeVO.ndate}</li>
          </ul>
      </div>
      <div class="udp_text">
             <p>
-            <%=vo.getBcontent().replace("\r\n", "<br>")%> <!-- \r\n ==> <br> -->
-            <% if(vo.getBsfile() != null) { %>
-            <br><img src="http://localhost:9000/One_day_class/upload/<%=vo.getBsfile()%>" 
-            style="width:600px; heigth:500px;">
-            <% }  %>
+            ${fn:replace(noticeVO.ncontent,replaceChar,"<br/>")}
             </p>
+            
          </div>
       
       <div class="main-section3">
          <div class="section-paging">
            
            <div class="udp_btnbox">
-            	<a href="http://localhost:9000/One_day_class/admin/admin_notice_detail_s.jsp?bid=<%=vo.getBid()%>"><button type="button">수정</button></a>   
-            	<a href="http://localhost:9000/One_day_class/admin/admin_notice_detail_delProc.jsp?bid=<%=vo.getBid()%>"><button type="button" id="and_del">삭제</button></a>      
-        	 	<% if(vo.getBpart().equals("이벤트")) {%>
-	            <a href="http://localhost:9000/One_day_class/admin/notice_list_admin2.jsp?bpart=event"><button type="button">목록으로</button></a>      
-	           	<% } else { %>
-	            <a href="http://localhost:9000/One_day_class/admin/notice_list_admin.jsp?bpart=notice"><button type="button">목록으로</button></a>      
-	           	<% } %>
+            	<a href="admin_notice_detail_s.do?nno=${noticeVO.nno}"><button type="button">수정</button></a>   
+            	<a href="noticeDeleteProc2.do?nno=${noticeVO.nno}"><button type="button" id="and_del">삭제</button></a>      
+	            <a href="http://localhost:9000/myhouse/notice_list_admin.do?rpage=1"><button type="button">목록으로</button></a>      
          	</div>
          </div>
          
@@ -604,10 +605,10 @@
 </div>
 </div>
    <div class="footer">
-   
-   </div>
    <!-- footer -->
    <jsp:include page="../footer.jsp"></jsp:include>
+   </div>
+   
 </body>
 </html>
               

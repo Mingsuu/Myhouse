@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	import="com.myhouse.vo.*"
+	%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//로그인 성공 시 저장한 세션객체 가져오기
+	SessionVO svo = (SessionVO)session.getAttribute("svo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +23,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../header_login.jsp" />
+<jsp:include page="../header1.jsp" />
 
 	<div class="container collection-feed">
 		<main>
@@ -24,11 +31,11 @@
 				<div>
 					<h1 class="collection-book-title__book-name">스크랩북</h1>
 					<p class="collection-book-owner">
-						<a class="collection-book-owner__link" href="/users/7109166"><img
+						<a class="collection-book-owner__link" href="http://localhost:9000/myhouse/mypage_profile1.do"><img
 							class="profile-image"
 							src="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=36&amp;h=36&amp;c=c&amp;webp=1"
 							srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x"><span
-							class="collection-book-owner__name">기림6</span></a>
+							class="collection-book-owner__name"><%=svo.getNickname()%></span></a>
 					</p>
 				</div>
 				<div class="collection-book-actions">
@@ -55,7 +62,7 @@
 								href="http://localhost:9000/myhouse/scrap_product.do"
 								target="_self">상품 (12)</a></li>
 							<li class="page-navigation__item"><a class=""
-								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">집들이
+								href="http://localhost:9000/myhouse/scrap_houses.do" target="_self">커뮤니티
 									(2)</a></li>
 						</ul>
 					</nav>
@@ -75,7 +82,7 @@
 										<ul class="collection-book-control-list__left">
 											<li class="collection-book-control-list__item"><div
 													class="drop-down panel-drop-down filter-bar-control">
-													<button
+													<!-- <button
 														class="button button--color-gray-4 button--size-50 button--shape-4 filter-bar-control__button">
 														카테고리
 														<svg class="icon" width="12" height="12"
@@ -83,7 +90,7 @@
 															preserveAspectRatio="xMidYMid meet">
 															<path
 																d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path></svg>
-													</button>
+													</button> -->
 												</div></li>
 										</ul>
 									</div>
