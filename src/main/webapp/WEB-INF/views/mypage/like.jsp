@@ -289,7 +289,6 @@
 	text-align:center;
 	font-size:15px;
 	color:#424242;
-	display:none;
 }
 .likenone span {
 	display:inline-block;
@@ -363,6 +362,9 @@
 	border-radius: 4px;
 	font-size: 12px;
 }
+.praise-feed__item__image{
+	width:100%;
+}
 </style>
 </head>
 <body>
@@ -402,43 +404,64 @@
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/images/mypage/${prof.member_spimage}" class="pro">
+		<c:if test="${prof.member_spimage != null }">
+			<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
+		</c:if>
+		<c:if test="${prof.member_spimage == null }">
+			<img src="http://localhost:9000/myhouse/resources/upload/pro.png" class="pro">
+		</c:if>
 		<div class="leftbox">
 			<span>${prof.nickname}</span>
-			<a href="#" class="mybtn1">팔로워 ${prof.follower}</a><div></div><a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+				<c:if test="${prof.follower != null }">
+					<a href="#" class="mybtn1">팔로워 ${prof.follower}</a>
+				</c:if>
+				<c:if test="${prof.follower == null }">
+					<a href="#" class="mybtn1">팔로워 0</a>
+				</c:if>
+				<div></div>
+				<c:if test="${prof.following != null }">
+					<a href="#" class="mybtn1">팔로잉 ${prof.following}</a>
+				</c:if>
+				<c:if test="${prof.following == null }">
+					<a href="#" class="mybtn1">팔로잉 0</a>
+				</c:if>
 			<a href="mypage_option.do" class="mybtn">설정</a>
 		</div>
 		<hr class="leftbar">
 		<div class="leftbox1">
-			<a href="mypage_scrap.do"><div class="scrap">
+			<a href="scrap_all.do"><div class="scrap">
 				<img src="http://localhost:9000/myhouse/images/mypage/scrap.PNG">
 				<span class="left1">스크랩북</span>
-				<span class="left3">0</span>
+				<span class="left3">${scount}</span>
 			</div></a>
 			<a href="mypage_like.do"><div class="like">
 				<img src="http://localhost:9000/myhouse/images/mypage/like.PNG">
 				<span class="left2">좋아요</span><br>
-				<span class="left4">0</span>
+				<span class="left4">${lcount}</span>
 			</div></a>
 		</div>
 	</div>
 	<div class="right1">
-	<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
-			마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
+		<c:if test="${lcount  == 0}">
+			<div class="likenone"><span>아직 좋아한 콘텐츠가 없습니다.<br>
+					마음에 드는 콘텐츠를 발견하면 좋아요를 눌러보세요!</span></div>
+			</c:if>
+		<c:if test="${lcount != 0 }">
 		<div class="col-12 offset-lg-1 col-lg-8 wrap--contents">
 			<div class="praise-feed">
 				<div class="row" style="width:800px;">
 				<c:forEach var="vo" items="${list}">
-					<div class="praise-feed__item-wrap col-6 col-lg-4">
-						<a class="praise-feed__item" href="#">
-							<img class="praise-feed__item__image" src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}">
-							<span class="praise-feed__item__type">사진</span>
-						</a>
-					</div>
+						<div class="praise-feed__item-wrap col-6 col-lg-4">
+							<a class="praise-feed__item" href="community_page.do?pno=${vo.pno}">
+								<img class="praise-feed__item__image" src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno}">
+								<span class="praise-feed__item__type">사진</span>
+							</a>
+						</div>
 				</c:forEach>
 				</div>
 			</div>
-		</div> 
+		</div>
+		</c:if>
 		
 		
 		

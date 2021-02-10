@@ -237,6 +237,7 @@
 <div class="profile">
 <div class="mid">
 	<div class="review">
+	<form name="passchange" action="pass_word_change_proc.do" method="post">
 		<div class="password">
 			<div class="passtitle"><span>비밀번호 변경</span></div>
 			<div class="password1">
@@ -248,12 +249,13 @@
 			<div class="password1">
 				<span class="pass1">새비밀번호</span><br>
 			</div>
-				<input type="password" class="passwordbox1" >
+				<input type="password" class="passwordbox1" name="pass" >
 				<div id="passcheck" class="passcheck"></div>
 			<div class="password1">
-				<button type="button" class="change" id="passchange">비밀번호 변경</button>
+				<button type="submit" class="change" id="passchange">비밀번호 변경</button>
 			</div>
 		</div>
+	</form>
 	</div>
 </div>
 </div>

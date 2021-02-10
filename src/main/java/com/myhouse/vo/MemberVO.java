@@ -5,7 +5,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class MemberVO {
 	String rno,email,pass,nickname,homepage,gender,
 	birth,member_image,member_spimage,intro,follower,
-	following,mdate,addr,addr_num,memo,phone ,name,savepath;
+	following,mdate,addr,addr_num,memo,phone ,name,savepath,email1,email2;
 	
 	int seller,status;
 	
@@ -13,6 +13,25 @@ public class MemberVO {
 
 	
 	
+
+	
+	
+	
+	public String getEmail1() {
+		return email1;
+	}
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
 	
 	public String getRno() {
 		return rno;
@@ -20,14 +39,18 @@ public class MemberVO {
 
 	public void setRno(String rno) {
 		this.rno = rno;
+
 	}
 
 	public String getEmail() {
-		return email;
+		return email1+"@"+email2;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		String[] email2=email.split("@");
+		this.email1 = email2[0];
+		this.email2 = email2[1];
+		/* this.email = email1+"@"+email2; */
 	}
 
 	public String getPass() {
