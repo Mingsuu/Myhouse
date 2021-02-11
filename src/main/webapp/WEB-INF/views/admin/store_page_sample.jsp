@@ -164,7 +164,7 @@
 	}
 	.production-selling-cover-image-container {
 	    position: relative;
-	    width:250px;
+	    width:320px;
 	    height:400px;
 	    padding-left:80px;
 	}
@@ -2612,16 +2612,6 @@
 	.production-question-feed__item__header>.answered {
 	    color: #35c5f0;
 	}
-	.gallery-top {
-    height: 95%;
-    border-radius: 5px;
-    margin-left: 30px;
-}
-.swiper-container {
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-}
 </style>
 <script>
 	$(document).ready(function(){

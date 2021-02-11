@@ -746,7 +746,6 @@
 						<li class="cont-1">${MemberVO.rno}</li>
 						<li class="cont-2">
 							<a id="test1" class="cont2-btn">
-								<img src="http://localhost:9000/myhouse/images/notice_open.png" id="${status.count}" name="open" >
 								<label></label>
 							</a>
 						</li>

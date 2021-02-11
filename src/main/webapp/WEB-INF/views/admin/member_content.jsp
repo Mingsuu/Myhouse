@@ -99,11 +99,13 @@
 	.ad_title{
 		width: 1040px;
 		height: 35px;
-		font-size: 16px;
 		font-weight: bold; 
 		text-align: center;
 		color: #333;
 		border: 1px solid lightgray;
+		font-size: 25px;
+		margin:10px 0; 
+		padding-top:3px;
 	}
 	.admin_member_content { 
 		width: 820px;
@@ -117,18 +119,26 @@
 		color: #333;
 	}
 	table.admin_member_content th {
-		background-color: #eee;
+		font-weight:bold;
+		text-align:center;
+		font-family: 'Noto Sans KR';
+		background-color: #c2c2c2;
 		font-size: 16px;
 		width: 100px;
 		height: 115px;
 	}
 	table.admin_member_content tr:nth-child(1) th,
-	table.admin_member_content tr:nth-child(2) th {
+	table.admin_member_content tr:nth-child(2) th,
+	table.admin_member_content tr:nth-child(4) th  {
 		height: 40px;
 	}
-	table.admin_member_content tr:nth-child(3) td {
-		width:90px;
-		height:50px;
+	table.admin_member_content tr:nth-child(1) td{
+		padding-left:20px;
+		width:150px;
+		height:40px;
+	}
+	table.admin_member_content tr:nth-child(3) td,table.admin_member_content tr:nth-child(3) td img {
+		text-align:center;
 	}
 	table.admin_member_content tr:last-child td{
 		padding: 0;
@@ -138,7 +148,7 @@
 		width: 80px;
 		padding:4px 10px;
 		border-radius: 5px;
-		margin-right: 6px;
+		margin: 20px 20px 0 0;
 		cursor: pointer;
 		font-weight:bold;
 		border:none;
@@ -154,14 +164,34 @@
 	table.admin_member_content tr:last-child td {
 		text-align: right;
 	}
-	.admin_section1 table.admin_member_content tr:last-child td{
-		border: 1px solid white;
-		border-top: 1px solid #333;
-		padding-top: 15px;
-	}
 	   	.footer{
 	display:inline-block;
 	}
+	
+	.photobox{
+		text-align:center;
+		background-color: #eee;
+		width:500px;
+		border : 1px solid #999;
+		padding : 5px;
+		margin: 20px 155px;
+		border-radius:10px;
+	}
+	.phototable td{
+		border:none;
+	}
+	table.admin_member_content tr:last-child td:nth-child(2){
+		text-align:left;
+		width:300px;
+		padding:0 10px;
+		overflow:hidden;
+	}
+	table.admin_member_content tr:last-child td.whiteborder{
+	 border-left:1px solid white;
+	 border-right:1px solid white;
+	 border-bottom:1px solid white;
+	}
+	
 </style>
 
 </head>
@@ -174,13 +204,13 @@
 		<aside class="admin_main">
 		   <nav>
 		      <div>
-		         <img src="http://localhost:9000/One_day_class/images/admin_profile.png"><br>
+		         <img src="http://localhost:9000/myhouse/images/admin_profile.png"><br>
 		         <span class="admin_icon2">[ 관리자 시스템 ]</span>
 		      </div>
 		      <ul>
-		         <li><img src="http://localhost:9000/One_day_class/images/admin_list.png"><a href="notice_list_admin.jsp">공지사항/이벤트</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
-		         <li><img src="http://localhost:9000/One_day_class/images/admin_list.png"><a href="member_list.jsp">회원관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 		      </ul>
 		   </nav>
 		</aside>
@@ -188,31 +218,36 @@
 			<div class="ad_title">회원상세정보</div>
 			 <table class="admin_member_content">
 				<tr>
-					<th>아이디</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<th>성명</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<th>이메일</th>
+					<td>${membervo.email}</td>
+					<th>닉네임</th>
+					<td>${membervo.nickname}</td>
 					<th>가입일</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>${membervo.mdate}</td>
 				</tr>
 				<tr>
-					<th>전화번호</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<th>나이</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<th>거주지역</th>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<th colspan="6">사진 게시물</th>
 				</tr>
 				<tr>
-					<th>커뮤니티</th>
 					<c:choose>
 						<c:when test="${photolist ne null}">
-							<th>사진 게시물</th>
-								<td colspan="5">
+							<td colspan="6">
 								<c:forEach var="vo" items="${photolist}" varStatus="status">
-									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-										<span style="color:#ff0045; font-weight:bold; ">${vo.pcontent}</span> 
-										<br> <span style="margin:0 10px;">- </span> ${vo.pcontent}<br>
+									<div class="photobox">
+											<span style="color:red; font-weight:bold; ">고유 번호 : ${vo.pno}</span> 
+										<br>
+											<table class="phototable">
+											<tr>
+												<td>
+													<img  src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}" style="border-radius: 7px;display:inline-block;width:100px; height:100px; margin:20px 5px 10px 0;">
+												</td>
+												<td>
+													게시일 :<span style="margin:0 10px;">${vo.pdate}</span> <br>
+													내용 :<span style="margin:0 10px;">${vo.pcontent}</span> <br>
+												</td>
+												</tr>
+											</table>
+									</div>
 								</c:forEach>
 							</td>
 						</c:when>
@@ -222,27 +257,40 @@
 					</c:choose>
 				</tr>
 				<tr>
-					<th>스토어 게시물</th>
-					
+					<th colspan="6">인테리어 게시물</th>
+				</tr>
+				<tr>
 					<c:choose>
 						<c:when test="${interiorlist ne null}">
-							<td colspan="5">
+							<td colspan="6">
 								<c:forEach var="vo" items="${interiorlist}" varStatus="status">
-									<img  src="http://localhost:9000/One_day_class/images/admin_list.png" style="width:15px; height:15px; margin:0 5px;">
-										<span style="color:#ff0045; font-weight:bold;">${vo.ititle}</span> 
-										<br> <span style="margin:0 10px;">- </span> ${vo.ititle}<br>
+									<div class="photobox">
+											<span style="color:red; font-weight:bold; ">고유 번호 : ${vo.ino}</span> 
+										<br>
+											<table class="phototable">
+											<tr>
+												<td>
+													<img  src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}" style="border-radius: 7px;display:inline-block;width:100px; height:100px; margin:20px 5px 10px 0;">
+												</td>
+												<td>
+													<span style="margin:0 10px;">제목 :</span> ${vo.ititle}<br>
+													<span style="margin:0 10px;">게시일 :</span> ${vo.idate}<br>
+													<span style="margin:0 10px;">회사 :</span> ${vo.company}<br>
+												</td>
+												</tr>
+											</table>
+									</div>
 								</c:forEach>
 							</td>
 						</c:when>
 						<c:otherwise>
-							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 스토어 게시물이 없습니다.</td>
+							<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp; 사진 게시물이 없습니다.</td>
 						</c:otherwise>
 					</c:choose>
-					
 				</tr>
-				<tr>
-					<td colspan="6">
-						<a href="member_list.jsp"><button type="button" class="btn_style" >목록으로</button></a>
+				<tr class="whiteborder">
+					<td colspan="6" class="whiteborder">
+						<a href="#"><button type="button" class="btn_style" onClick="history.go(-1)">목록으로</button></a>
 					</td> 
 				</tr> 
 			</table>

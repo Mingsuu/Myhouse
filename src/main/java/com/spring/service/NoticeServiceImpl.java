@@ -63,7 +63,7 @@ public class NoticeServiceImpl implements NoticeService{
 			mv.addObject("scrap_exist", scrap_exist);
 			//mv.addObject("interior_question", interior_question);
 			//mv.addObject("qvo", qvo);
-			mv.setViewName("/store/store_page");
+			mv.setViewName("/admin/store_page_sample");
 			
 			//System.out.println("service-- ino ----->"+interior_top);
 			
