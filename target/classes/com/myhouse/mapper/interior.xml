@@ -7,6 +7,11 @@
 <mapper namespace="mapper.interior">
 
 
+<!-- 전체 리스트 카운트 - 문의 -->
+<select id="question-count" parameterType="java.lang.String" resultType="int">
+	select distinct count(qno)over(partition by ino)  from h_question q, h_goods g where q.gno=g.gno and ino=#{ino}
+</select>
+
 <!-- 전체 리스트 카운트 - 리뷰 -->
 <select id="review-count" parameterType="java.lang.String" resultType="int">
 	select count(*) from h_review v, h_goods g where v.gno = g.gno and ino=#{ino}
@@ -34,15 +39,16 @@
 </insert>
 
 <!-- 문의하기 -->
-<select id="interior-question" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
-		TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company
-	from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
-		from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
-		from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
-		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno order by ino asc)
-		where ino=#{ino}) q, h_member m, h_interior i
-	where q.email = m.email and i.ino = q.ino order by qno desc
+<select id="interior-question" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from ( select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
+			TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company
+		from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+			from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+			from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+			from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno order by ino asc)
+			where ino=#{ino}) q, h_member m, h_interior i
+		where q.email = m.email and i.ino = q.ino order by qno desc )
+	where rno between #{start} and #{end}
 </select>
 
 <!-- 리뷰작성하기 -->
