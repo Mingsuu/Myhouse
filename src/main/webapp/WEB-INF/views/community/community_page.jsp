@@ -9,7 +9,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$("form.comment_feed_item_reply_no_comment").hide();
@@ -46,29 +48,13 @@
 			} 
 		});
 		
-		$('button.tag').mouseover(function(){
-			
-			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
-			output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
-			output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
-			output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c&amp;webp=1'>"
-			output += "<img class='_2TSZD' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1552970124_103936_1.jpg?w=256&amp;h=256&amp;c=c'>"
-			output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>레인보우하우스</div><div class='_2WPGa'>원프레드화이트 쇼파커버 (거실러그, 블랭킷, 다용도 패브릭)</div>"
-			output += "<div class='_2WAbO'>34,900원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
-			output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-			output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
-			if($(this).parent().children('.pop').length < 1){
-				$(this).parent().append(output);
-			}
-		});
-		
 		$(document).on("mouseleave","div.pop",function(){
 			$('div.pop').remove();
 		});
 		
 		$("button#likes_icon_btn").click(function(){
 			var count = parseInt($(this).parent().children('span.comment_feed_item_footer_likes_count').text());
-			
+			var cno = $(this).parent().parent().children('.cno').val();
 			if ($(this).children("svg").hasClass("badge")){
 				$(this).children("svg").removeClass("badge");
 				$(this).children("svg").addClass("badge_liked");
@@ -80,6 +66,13 @@
 					$(this).parent().addClass('comment_feed_item_footer_likes');
 				}
 				$(this).parent().children('span.comment_feed_item_footer_likes_count').text(count+1);
+				
+				$.ajax({
+					url :"comment_like_proc.do?cno="+cno,
+						success:function(result){
+					}
+				});
+				
 			}else{
 				$(this).children("svg").removeClass("badge_liked");
 				$(this).children("svg").addClass("badge");
@@ -91,10 +84,17 @@
 					$(this).parent().addClass('comment_feed_item_footer_likes_zero');
 				}
 				$(this).parent().children('span.comment_feed_item_footer_likes_count').text(count-1);
+				
+				$.ajax({
+					url :"comment_like_cancel_proc.do?cno="+cno,
+						success:function(result){
+					}
+				});
 			}
 		});
 		
 		$("button#likes_btn").click(function(){
+			var cno = $(this).parent().children('.cno').val();
 			var count = parseInt($(this).parent().children().children('span.comment_feed_item_footer_likes_count').text());
 			if ($(this).parent().children().children().children().hasClass("badge")){
 				$(this).parent().children().children().children().removeClass("badge");
@@ -107,6 +107,13 @@
 					$(this).parent().children('span').addClass('comment_feed_item_footer_likes');
 				}
 				$(this).parent().children().children('span.comment_feed_item_footer_likes_count').text(count+1);
+				
+				$.ajax({
+					url :"comment_like_proc.do?cno="+cno,
+						success:function(result){
+					}
+				});
+				
 			}else{
 				$(this).parent().children().children().children().removeClass("badge_liked");
 				$(this).parent().children().children().children().addClass("badge");
@@ -118,6 +125,12 @@
 					$(this).parent().children('span').removeClass('comment_feed_item_footer_likes');
 				}
 				$(this).parent().children().children('span.comment_feed_item_footer_likes_count').text(count-1);
+				
+				$.ajax({
+					url :"comment_like_cancel_proc.do?cno="+cno,
+						success:function(result){
+					}
+				});
 			} 
 		});
 		
@@ -160,33 +173,60 @@
 		$("button#btn_like").click(function(){
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
-				$(this).removeClass("btn_action");
-				$(this).addClass("btn_action_active");
-				$(this).children('span.count').text(count+1);
+				$.ajax({
+						url :"like_proc.do?pno=${pvo.pno}",
+						success:function(result){
+							if(result=="") {
+								location.href="http://localhost:9000/myhouse/login.do";
+							}else{
+								$(this).removeClass("btn_action");
+								$(this).addClass("btn_action_active");
+								$(this).children('span.count').text(count+1);
+							}
+						}
+				});
+				
 			}else{
 				$(this).removeClass("btn_action_active");
 				$(this).addClass("btn_action");
 				$(this).children('span.count').text(count-1);
+				
+				$.ajax({
+					url :"like_cancel_proc.do?pno=${pvo.pno}",
+					success:function(result){
+					}
+				});
 			} 
 		});
 		
 		$("button#btn_scrap").click(function(){
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
-				$(this).removeClass("btn_action");
-				$(this).addClass("btn_action_active");
-				var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
-				output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-				output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
-				output +="<div class='toast-message__body'>스크랩했습니다</div>"
-				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
-				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-				if($('div.toast-message').length == 1){
-					$('div.toast-message').first().remove();
-				}
-				$(this).children('span.count').text(count+1);
-				$("div.toast-message-root").append(output);
-				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				$.ajax({
+					url :"scrap_proc.do?pno=${pvo.pno}",
+					success:function(result){
+						if(result==""){
+							location.href="http://localhost:9000/myhouse/login.do";
+						}else{
+							$(this).removeClass("btn_action");
+							$(this).addClass("btn_action_active");
+							var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
+							output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
+							output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
+							output +="<div class='toast-message__body'>스크랩했습니다</div>"
+							output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
+							output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
+							if($('div.toast-message').length == 1){
+								$('div.toast-message').first().remove();
+							}
+							$(this).children('span.count').text(count+1);
+							$("div.toast-message-root").append(output);
+							$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+							
+						}
+					}
+				});
+				
 			}else{
 				$(this).removeClass("btn_action_active");
 				$(this).addClass("btn_action");
@@ -200,6 +240,12 @@
 				$(this).children('span.count').text(count-1);
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				
+				$.ajax({
+					url :"scrap_cancel_proc.do?pno=${pvo.pno}",
+					success:function(result){
+					}
+				});
 			} 
 		});
 		
@@ -210,19 +256,34 @@
 		
 		$("button#btn_follow").click(function(){
 			if ($(this).hasClass("card_detail_writer_follow")){
-				$(this).removeClass("card_detail_writer_follow");
-				$(this).addClass("card_detail_writer_following");
-				$(this).html("팔로잉");
+				$.ajax({
+					url :"follow_proc.do?w_email=${pvo.email}",
+					success:function(result){
+						if(result==""){
+							location.href="http://localhost:9000/myhouse/login.do";
+						}else{
+							$(this).removeClass("card_detail_writer_follow");
+							$(this).addClass("card_detail_writer_following");
+							$(this).html("팔로잉");
+							
+						}
+					}
+				});
+				
 			}else{
 				$(this).removeClass("card_detail_writer_following");
 				$(this).addClass("card_detail_writer_follow");
 				$(this).html("팔로우");
+				
+				$.ajax({
+					url :"follow_cancel_proc.do?w_email=${pvo.email}",
+					success:function(result){
+						alert(result);
+					}
+				});
 			} 
 		});
 		
-		$('.comment_content_input').focusin(function(){
-			$(this).children().focus()
-		});
 		$('.comment_content_input_text').keydown(function(){
 			if($(this).text()!=""){
 				$("button.feed_form_submit").removeAttr("disabled");
@@ -240,7 +301,9 @@
 			$.ajax({
 				url :"comment_write_proc.do?pno="+pno+"&content="+encodeURI(content),
 				success:function(result){
-					if(result!=0){
+					if(result==""){
+						location.href="http://localhost:9000/myhouse/login.do";
+					}else{
 						alert("댓글이 정상적으로 등록되었습니다.")
 						location.href="http://localhost:9000/myhouse/community_page.do?pno="+pno;
 					}
@@ -248,18 +311,19 @@
 					
 			});
 		});
+		
 		$(".comment_reply_btn").click(function(){
 			var pno = "${pvo.pno}";
 			var tag= $('.comment_content_input_text_mention').html();
 			var html = $(this).parent().parent().children().children().children().html();
 			const content = html.split("&nbsp;");
-			alert(content.length);
 			var cgroup =$(this).parent().parent().parent().parent().children('footer').children('.cno').val();
-			
 			$.ajax({
 				url :"comment_reply_write_proc.do?pno="+pno+"&tag="+tag+"&content="+encodeURI(content[1])+"&cgroup="+cgroup,
 				success:function(result){
-					if(result!=0){
+					if(result==""){
+						location.href="http://localhost:9000/myhouse/login.do";
+					}else{
 						alert("댓글이 정상적으로 등록되었습니다.")
 						location.href="http://localhost:9000/myhouse/community_page.do?pno="+pno;
 					}
@@ -268,7 +332,120 @@
 			});
 		});
 			
-	
+		$(document).on("click","button#comment_del",function(){
+			var cno =$(this).parent().children('.cno').val();
+			var rcount = $(this).parent().children('.rcount').val();
+			var choice = confirm("댓글을 삭제하시겠습니까? 삭제한 댓글은 되돌릴 수 없습니다.");
+			if (rcount > 0){
+			 if(choice){
+					$.ajax({
+						url :"comment_update_proc.do?cno="+cno,
+						success:function(result){
+							location.href="http://localhost:9000/myhouse/community_page.do?pno=${pvo.pno}"
+						}
+					});
+			 }
+			}else{
+			 if(choice){
+					$.ajax({
+						url :"comment_delete_proc.do?cno="+cno,
+						success:function(result){
+							location.href="http://localhost:9000/myhouse/community_page.do?pno=${pvo.pno}"
+						}
+					});
+			 }
+			}
+		});
+		
+		$(document).on("click","button#reply_del",function(){
+			var cno=$(this).parent().children('.cno').val();
+			var m_cno= $(this).parent().parent().parent().parent().parent().parent().children('footer').children('.cno').val();
+			var rcount= $(this).parent().parent().parent().parent().parent().parent().children('footer').children('.rcount').val();
+			var choice = confirm("댓글을 삭제하시겠습니까? 삭제한 댓글은 되돌릴 수 없습니다.");
+			if(rcount == 1){
+				$.ajax({
+					url :"comment_delete_proc.do?cno="+m_cno,
+					success:function(result){
+					}
+				});
+			}
+			 if(choice){
+					$.ajax({
+						url :"comment_delete_proc.do?cno="+cno,
+						success:function(result){
+							location.href="http://localhost:9000/myhouse/community_page.do?pno=${pvo.pno}"
+						}
+					});
+			 }
+		});
+		
+		
+		$(".production_tag_scoller_item").mouseover(function(){
+			var gname = $(this).children().children().children("img").attr("alt");
+			var gimg = $(this).children().children().children("img").attr("src");
+			var company = $(this).children().children().children(".company").val();
+			var gprice = $(this).children().children().children(".price").val();
+			$('.pop').remove();
+			$(this).addClass('tag_active');
+			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
+				output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
+				output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
+				output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
+				output += "<img class='_2TSZD' src='"+gimg+"'>"
+				output += "</picture></div><div class='_3bqx7'><div class='_389Yp'>"+company+"</div><div class='_2WPGa'>"+gname+"</div>"
+				output += "<div class='_2WAbO'>"+gprice+"원</div></div><div class='_35DZ7'><div class='tag-item-content__icon'>"
+				output += "<svg class='tag_icon' width='1em' height='1em' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
+				output += "<path fill='currentColor' fill-rule='nonzero' d='M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z'></path></svg></div></div></div></a></div></div></div></div>"
+			$(".tag_detail").append(output);
+		});
+		
+		$(".production_tag_scoller_item").mouseleave(function(){
+			$(this).removeClass('tag_active');
+			$('.pop').hide(1800);
+		}); 
+		
+		$('.tag_detail').mouseover(function(){
+			$('.pop').stop();
+		});
+		
+		$('button.card-detail-edit-menu__button').click(function(){
+			if($(this).parent().children('div').children('div.popout').css('display')=='block')
+				$(this).parent().children('div').children('div.popout').css('display','none');
+			else $(this).parent().children('div').children('div.popout').css('display','');
+		});
+		
+		$('button.card-detail-edit-menu__item').click(function(){
+			var choice = confirm("정말로 삭제하시겠습니까?");
+			if(choice){
+				$.ajax({
+					url :"photo_delete_proc.do?pno=${pvo.pno}",
+					success:function(result){
+						location.href="http://localhost:9000/myhouse/community_index.do"
+					}
+				});
+			}
+		});
+		
+		var swiper = new Swiper('.swiper-container', {
+		      slidesPerView: 6,
+		      direction: getDirection(),
+		      navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		      },
+		      on: {
+		        resize: function () {
+		          swiper.changeDirection(getDirection());
+		        }
+		      }
+		    });
+
+		    function getDirection() {
+		      var windowWidth = window.innerWidth;
+		      var direction = window.innerWidth <= 760 ? 'vertical' : 'horizontal';
+
+		      return direction;
+		    }
 		
 	});
 </script>
@@ -724,6 +901,38 @@
 		white-space: pre-line;
 	}
 	
+	span.removed{
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		overflow-wrap: break-word;
+		font-size: 15px;
+		line-height: 1.67;
+		-webkit-tap-highlight-color: transparent;
+		white-space: pre-line;
+		color: #bdbdbd;
+	}
+	
+	span.removed svg{
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		overflow-wrap: break-word;
+		font-size: 15px;
+		line-height: 1.67;
+		white-space: pre-line;
+		color: #bdbdbd;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 14px;
+		height: 14px;
+		margin-right: 5px;
+	}
+	
 	span.comment_feed_item_content_content{
 		color: #424242;
 		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -835,6 +1044,21 @@
 		font-size: 13px;
 		font-weight: 900;
 		font-family: inherit;
+	}
+	button.comment_feed_item_footer_del_btn{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		background: none;
+		border: none;
+		padding: 0;
+		font-size: 13px;
+		font-family: inherit;
+		font-weight: 400;
+		color: #bdbdbd;
 	}
 	
 	button.comment_feed_item_footer_likes_btn_active{
@@ -1337,11 +1561,10 @@
 		letter-spacing: -0.4px;
 		font-size: 15px;
 		-webkit-tap-highlight-color: transparent;
-	/* 	margin: 0;
-		padding: 0; */
 		position: absolute;
 		z-index: 100000;
-		margin-left:10px;
+		margin-top:10px;
+		margin-left:360px;
 		transform: translateX(-50%);
    }
    
@@ -1389,7 +1612,7 @@
 		border: none;
 		display: flex;
 		align-items: center;
-		width: 280px;
+		width: 710px;
 		padding: 10px;
 		box-sizing: border-box;
 		position: relative;
@@ -1407,12 +1630,30 @@
 		border-radius: 2px;
 		overflow: hidden;
    }
+   
    picture{
    		pointer-events: auto;
 		visibility: visible;
 		color: inherit;
 		cursor: pointer;
    }
+   
+   img._2TSZD{
+  		 line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		color: inherit;
+		cursor: pointer;
+		font-family: "Noto Sans KR", "Noto Sans CJK KR", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-tap-highlight-color: transparent;
+		border: none;
+		width: 100%;
+		height: 100%;
+   }
+   
    div._3bqx7{
    		margin: 0;
 		padding: 0;
@@ -1429,7 +1670,14 @@
    }
    
    div._2WPGa{
-   		margin: 0;
+   		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		pointer-events: auto;
+		visibility: visible;
+		cursor: pointer;
+		font-family: "Noto Sans KR", "Noto Sans CJK KR", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
 		padding: 0;
 		border: none;
 		height: 36px;
@@ -1473,10 +1721,6 @@
 		border: none;
    }
    
-   div.hr{
-   		padding:30px;
-   }
-   
    div.comment-feed__reply-list__more{
    		font-size: 15px;
 		-webkit-box-direction: normal;
@@ -1503,6 +1747,402 @@
 		background: none;
 		font-weight: 700;
    }
+   
+   div.swiper-container{
+   		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		padding: 0;
+		margin: 10px 0 -10px;
+   }
+   
+   div.production_tag_scoller_item{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding:0;
+   }
+   div.tag_active div.production_tag_scoller_item_content{
+   		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		color: inherit;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		border: none;
+		position: relative;
+		overflow: hidden;
+		box-sizing: border-box;
+		width: 100px;
+		height: 100px;
+		border-radius: 34px;
+		box-shadow: 0 0 0 2px #6cd5f4;
+   }
+    div.tag_active img{
+    	transform: translate(-50%,-50%) scale(1.08);
+    }
+    
+   a.production_tag_scoller_item_link{
+   		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		color: inherit;
+		text-decoration: none;
+		cursor: pointer;
+		touch-action: manipulation;
+		position: relative;
+		display: block;
+   }
+   
+   div.production_tag_scoller_item_content{
+   		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		color: inherit;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		border: none;
+		position: relative;
+		overflow: hidden;
+		box-sizing: border-box;
+		width: 100px;
+		height: 100px;
+		border-radius: 34px;
+   }
+   
+   img.production_tag_scoller_item_image{
+   		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		list-style: none;
+		color: inherit;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
+		border: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		transform: translate(-50%,-50%);
+		transition: transform .2s;
+   }
+   
+   div._2HVeX{
+   		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 10px;
+		border: none;
+		background-color: #fff;
+		color: #000;
+		font-size: 20px;
+		line-height: 0;
+		border-radius: 100%;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+		position: absolute;
+		top: 50%;
+		width: 40px;
+		height: 40px;
+		box-sizing: border-box;
+		margin-top: -20px;
+		z-index: 2;
+		opacity: 0;
+		cursor: pointer;
+		transition: opacity .1s,background-color .1s,color .1s;
+		left: -20px;
+		display: block;
+   }
+	.production_tag_scoller_item_content:after {
+	    content: "";
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    box-sizing: border-box;
+	    border: 1px solid rgba(0,0,0,.07);
+	    border-radius: 24px;
+	}
+
+  .swiper-container {
+      width: 100%;
+      height: 100%;
+   }
+   .swiper-wrapper{
+   		padding:10px 0;
+   }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    @media (max-width: 760px) {
+      .swiper-button-next {
+        right: 20px;
+        transform: rotate(90deg);
+      }
+
+     .swiper-button-prev {
+        left: 20px;
+        transform: rotate(90deg);
+      }
+     }
+     .swiper-button-next, .swiper-button-prev {
+    	background-color:white;
+    	width:40px; 
+    	height:40px;
+    	border-radius:100px;
+    	color:#000;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+    	background-color:#35c5f0;
+    	width:40px; 
+    	height:40px;
+    	border-radius:100px;
+    	color:white;
+    }
+    .swiper-button-prev:after, .swiper-button-next:after {
+	    font-size:18px;
+	} 
+	.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+	    opacity: 0.35;
+	    cursor: auto;
+	    pointer-events: none;
+	}
+	.swiper-pagination-bullet {
+	    width: 8px;
+	    height: 8px;
+	    display: inline-block;
+	    border-radius: 100%;
+	    background: #35c5f0;
+	    opacity: 0.2;
+	}
+	.swiper-pagination-bullet-active {
+	    opacity: 1;
+	    background: white; 
+	    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+	}
+
+	div.drop-down card-detail-edit-menu{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		display: inline-block;
+	}
+	
+	button.card-detail-edit-menu__button{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		display: inline-block;
+		margin: 0 5px;
+		padding: 13px 0;
+		border: none;
+		background: none;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		transition: opacity .1s;
+	}
+	
+	svg.addicon{
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		cursor: pointer;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		width: 1em;
+		height: 1em;
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	svg.addicon >g {
+		-webkit-font-smoothing: antialiased;
+		-webkit-box-direction: normal;
+		cursor: pointer;
+		color: #424242;
+		font-size: 24px;
+		line-height: 0;
+		fill: currentcolor;
+		transform: translate(11, 3);
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	div.animated-popout{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		transform-origin: 50% 0;
+		box-sizing: border-box;
+		z-index: 1000;
+		position: relative;
+		margin-top: 17px;
+		pointer-events: auto;
+		visibility: visible;
+		opacity: 1;
+		transform: none;
+		transition: opacity .2s,transform .2s;
+	}
+	
+	ul.card-detail-edit-menu__list{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		-webkit-tap-highlight-color: transparent;
+		list-style: none;
+		width: 150px;
+		margin: 0 -1px;
+		padding: 10px;
+		box-sizing: border-box;
+		background-color: #fff;
+		box-shadow: 0 4px 6px 0 rgba(0,0,0,.18);
+		border: 1px solid #dbdbdb;
+		border-radius: 4px;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	li.card-detail-edit-menu__item-wrap{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		pointer-events: auto;
+		visibility: visible;
+		list-style: none;
+		white-space: nowrap;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.card-detail-edit-menu__item{
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		pointer-events: auto;
+		visibility: visible;
+		list-style: none;
+		white-space: nowrap;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+		display: block;
+		position: relative;
+		width: 100%;
+		margin: 0;
+		padding: 10px 14px 11px;
+		box-sizing: border-box;
+		border: none;
+		background: #fff;
+		color: #424242;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: 15px;
+		line-height: 21px;
+		text-decoration: none;
+		text-align: left;
+		cursor: pointer;
+		border-radius: 2px;
+	}
+	.card-detail-edit-menu__content:before {
+	    margin: 0 0 0 -4px;
+	    border-width: 0 5px 10px;
+	    border-color: transparent transparent #dbdbdb;
+	    transform: translateX(.5px);
+	}
+	
+	.card-detail-edit-menu__content:after {
+	    margin: 0 0 -1px -4px;
+	    border-width: 0 4.5px 9px;
+	    border-color: transparent transparent #fff;
+	}
+	
+	.card-detail-edit-menu__content:after, .card-detail-edit-menu__content:before {
+	    content: "";
+	    position: absolute;
+	    display: block;
+	    right: 12px;
+	    bottom: 100%;
+	    border-style: solid;
+	}
+	
+	.card-detail-edit-menu__item:active, .card-detail-edit-menu__item:hover{
+	    background-color: #f7f8fa;
+	}
 </style>
 </head>
 <body>
@@ -1520,38 +2160,44 @@
 							<span class="header_prop">${pvo.ptype} </span>
 						</div>
 						<time class="header_date">${pvo.pdate}</time>
-
 					</header>
 					<article class="card_detail_card">
-						<c:set var="pimg" value="${pvo.photo_simage}"/>
-						<c:set var="img" value="${fn:split(pimg,',')}" />
-						<c:forEach var="img" items="${img}">      							
 						<div class="card_detail_img_wrap">
 							<div class="card_detail_img">
 								<div class="card_img_content">
-									<img class="card_img" src="http://localhost:9000/myhouse/resources/upload/${img}">
-									<%-- <button id="card_scrap" class="card_scrap" type="button">
-									<svg class="comm_icon" width="36" height="36" viewBox="0 0 36 36" preserveAspectRatio="xMidYMid meet">
-									<circle cx="18" cy="18" r="18" fill="#FFF" fill-opacity=".5"></circle>
-									<path fill="currentColor" d="M27.15 26.79a.88.88 0 00.1-.41V10.21c0-.73-.59-1.32-1.31-1.32H11.06c-.72 0-1.3.6-1.3 1.32v16.16a.88.88 0 001.28.77l7.05-3.77a.88.88 0 01.82 0l7.05 3.77a.88.88 0 001.19-.36z"></path>
-									</svg>
-									</button> --%>
-								</div>
-								<div class="card_img_tag">
-									<button class=tag type="button" style="top:35.2657%;left:33.6957%">
-									<svg width="1em" height="1em" viewBox="0 0 24 24" class="tag">
-									<circle cx="12" cy="12" r="12" fill="currentColor"></circle>
-									<path stroke="#FFF" stroke-linecap="square" stroke-width="2" d="M12 16V8m-4 4h8"></path>
-									</svg>
-									</button>
+									<img class="card_img" src="http://localhost:9000/myhouse/resources/upload/${pvo.photo_simage}">
 								</div>
 							</div>
 						</div>
-						<div class="hr"></div>
-						</c:forEach>
-							<p class="card_detail_description">
-								${pvo.pcontent}
-							</p>
+					
+					<!-- swiper -->
+					<c:if test="${tagcount != 0}">
+					  <div class="swiper-container">
+						    <div class="swiper-wrapper">
+						    <c:forEach var="tag" items="${taglist}"> 
+						      <div class="swiper-slide">
+						      	<div class="production_tag_scoller_item">
+									<a href="#" class="production_tag_scoller_item_link">
+										<div class="production_tag_scoller_item_content">
+											<img class="production_tag_scoller_item_image" src="http://localhost:9000/myhouse/resources/upload/${tag.goods_simage}" alt="${tag.goods_name}">
+											<input type="hidden" class="company" value="${tag.company}">
+											<input type="hidden" class="price" value="${tag.goods_price}">
+										</div>
+									</a>
+								</div>
+							</div>
+						   </c:forEach>
+						    </div>
+					    <div class="swiper-button-next"></div>
+					    <div class="swiper-button-prev"></div>
+  					</div>
+  					</c:if>
+  					<div class="tag_detail"></div>
+  					
+					<p class="card_detail_description">
+						${pvo.pcontent}
+					</p>
+					
 					</article>
 					<footer class="card_detail_footer">
 						<p class="footer_metadata">
@@ -1604,7 +2250,14 @@
 												</c:if>
 												<span class="comment_feed_author_name">${cvo[i].nickname}</span>
 											</a>
+											<c:if test="${cvo[i].c_content == null}">
+												<span class="comment_feed_content removed"><svg viewBox="0 0 14 14" preserveAspectRatio="xMidYMid meet">
+												<path fill="#CCC" d="M7 0a7 7 0 100 14A7 7 0 007 0zm-.59 4.18a.59.59 0 011.18 0v3.5a.59.59 0 01-1.18 0v-3.5zm1.12 6a.76.76 0 01-.53.23.75.75 0 01-.53-1.28.75.75 0 111.06 1.06z"></path>
+												</svg>삭제된 댓글입니다.</span>
+											</c:if>
+											<c:if test="${cvo[i].c_content != null}">
 											<span class="comment_feed_content">${cvo[i].c_content}</span>
+											</c:if>
 										</p>
 										<footer class="comment_feed_item_footer">
 											<time class="comment_feed_item_footer_time">
@@ -1629,10 +2282,11 @@
 												</c:choose>
 											</c:if>
 											</time>
+											<c:if test="${cvo[i].c_content != null}">
 											<c:set var="like" value="${cvo[i].c_like}"/>
 											<c:set var="likes" value="${fn:split(like,',')}" />
 											<c:choose>
-												<c:when test="${cvo[i].c_like eq null}">
+												<c:when test="${cvo[i].c_like == null}">
 													<span class="comment_feed_item_footer_likes_zero">
 													<button id="likes_icon_btn" class="comment_feed_item_footer_likes_icon" type="button">
 														<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
@@ -1644,18 +2298,38 @@
 												</c:when>
 												<c:otherwise>
 													<span class="comment_feed_item_footer_likes">
+													<c:if test="${cvo[i].cliked !=0}">
+													<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
+														<svg class="badge_liked" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+															<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+														</svg>
+													</button>
+														<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+													</c:if>
+													<c:if test="${cvo[i].cliked ==0}">
 													<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
 														<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
 															<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
 														</svg>
 													</button>
 														<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+													</c:if>
 													</span>
 												</c:otherwise>
 											</c:choose>
-													<input type="hidden" class="cno" value="${cvo[i].cno}">
+												<c:if test="${cvo[i].cliked !=0}">
+												<button id="likes_btn" class="comment_feed_item_footer_likes_btn_active" type="button">좋아요취소</button>
+												</c:if>
+												<c:if test="${cvo[i].cliked == 0}">
 												<button id="likes_btn" class="comment_feed_item_footer_likes_btn" type="button">좋아요</button>
+												</c:if>
 												<button id="reply" class="comment_feed_item_footer_reply_btn" type="button">답글달기</button>
+												<c:if test="${cvo[i].getwrite >0}">
+												<button id="comment_del" class="comment_feed_item_footer_del_btn" type="button">삭제</button>
+												</c:if>
+											</c:if>
+												<input type="hidden" class="cno" value="${cvo[i].cno}">
+												<input type="hidden" class="rcount" value="${cvo[i].rcount}">
 											</footer>
 											
 											<c:if test="${cvo[i].rcount != 0}">
@@ -1700,7 +2374,7 @@
 																<c:set var="like" value="${cvo[k].c_like}"/>
 																<c:set var="likes" value="${fn:split(like,',')}" />
 																<c:choose>
-																	<c:when test="${cvo[k].c_like eq null}">
+																	<c:when test="${cvo[k].c_like == null}">
 																		<span class="comment_feed_item_footer_likes_zero">
 																		<button id="likes_icon_btn" class="comment_feed_item_footer_likes_icon" type="button">
 																			<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
@@ -1712,17 +2386,36 @@
 																	</c:when>
 																	<c:otherwise>
 																		<span class="comment_feed_item_footer_likes">
-																		<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
-																			<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
-																				<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
-																			</svg>
-																		</button>
-																			<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+																		<c:if test="${cvo[k].cliked !=0}">
+																			<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
+																				<svg class="badge_liked" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+																					<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+																				</svg>
+																			</button>
+																				<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+																			</c:if>
+																			<c:if test="${cvo[k].cliked ==0}">
+																			<button id="likes_icon_btn"  class="comment_feed_item_footer_likes_icon" type="button">
+																				<svg class="badge" width="15" height="14" preserveAspectRatio="xMidYMid meet">
+																					<path fill-rule="evenodd" class="heart" d="M7 12.4c4.8-2.5 6.7-5.2 6.5-8-.3-3-4.1-4-6.1-1.4l-.4.5-.4-.5C4.6.4.8 1.5.6 4.4c-.3 2.8 1.6 5.5 6.4 8z"></path>
+																				</svg>
+																			</button>
+																				<span class="comment_feed_item_footer_likes_count">${fn:length(likes)}</span>
+																		</c:if>
 																		</span>
 																	</c:otherwise>
 																</c:choose>
-																<button id="likes_btn" class="comment_feed_item_footer_likes_btn" type="button">좋아요</button>
+																<input type="hidden" class="cno" value="${cvo[k].cno}">
+																<c:if test="${cvo[k].cliked !=0}">
+																	<button id="likes_btn" class="comment_feed_item_footer_likes_btn_active" type="button">좋아요취소</button>
+																</c:if>
+																<c:if test="${cvo[k].cliked ==0}">
+																	<button id="likes_btn" class="comment_feed_item_footer_likes_btn" type="button">좋아요</button>
+																</c:if>
 																<button id="reply_btn" class="comment_feed_item_footer_reply_btn" type="button">답글달기</button>
+																<c:if test="${cvo[k].getwrite >0}">
+																<button id="reply_del" class="comment_feed_item_footer_del_btn" type="button">삭제</button>
+																</c:if>
 															</footer>
 														</article>								
 													</li>
@@ -1803,18 +2496,57 @@
 						<div class="sticky_container_card_detail_sidebar">
 							<div class="sticky_container_card_detail_sidebar_inner">
 								<div class="sticky_container_card_detail_sidebar_action_list">
+								<c:if test="${islike == 1}">
+									<button id="btn_like" class="btn_action_active">
+										<svg class="actionIcon" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+											<path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z"></path>
+										</svg>
+										<span class="count">${clike}</span>
+									</button>
+								</c:if>
+								<c:if test="${islike != 1}">
 									<button id="btn_like" class="btn_action">
 										<svg class="actionIcon" aria-label="좋아요" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 											<path d="M23.22 7.95c.4 4.94-2.92 9.71-10.92 13.85a.47.47 0 0 1-.42 0C3.88 17.66.56 12.9.96 7.93 1.54 2.48 8.28.3 12.1 4.7c3.8-4.4 10.55-2.22 11.13 3.25z"></path>
 										</svg>
 										<span class="count">${clike}</span>
 									</button>
+								</c:if>
+								
+								<c:if test="${isscrap == 1}">
+									<button id="btn_scrap" class="btn_action_active">
+										<svg class="actionIcon" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+											<path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
+										</svg>
+										<span class="count">${scrap}</span>
+									</button>
+								</c:if>
+								<c:if test="${isscrap != 1}">
 									<button id="btn_scrap" class="btn_action">
 										<svg class="actionIcon" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 											<path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path>
 										</svg>
 										<span class="count">${scrap}</span>
 									</button>
+								</c:if>
+								
+								<c:if test="${getwriter != 0}">
+								<div class="drop-down card-detail-edit-menu" style="position:relative;">
+									<button class="card-detail-edit-menu__button" type="button" title="더보기">
+										<svg class="addicon" width="1em" height="1em" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+											<g fill="currentColor" transform="translate(11 3)"><circle cx="1.5" cy="1.5" r="1.5"></circle><circle cx="1.5" cy="8.5" r="1.5"></circle><circle cx="1.5" cy="15.5" r="1.5"></circle></g>
+										</svg>
+									</button>
+									<div><div class="popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-2" data-popout="true" style="position: absolute; z-index: 1000; top: 40px; right:-75px; display:none">
+									<div class="animated-popout drop-down__content card-detail-edit-menu__content open open-active">
+									<ul class="card-detail-edit-menu__list">
+									<li class="card-detail-edit-menu__item-wrap">
+									<a class="card-detail-edit-menu__item" href="photo_update.do?pno=${pvo.pno}">수정</a></li>
+									<li class="card-detail-edit-menu__item-wrap">
+									<button class="card-detail-edit-menu__item" type="button">삭제</button></li></ul></div></div></div>
+								</div>
+								</c:if>
+								
 								</div>
 												
 								<div class="card_detail_sidebar_content">
@@ -1831,7 +2563,14 @@
 											</a>
 											<p class="card_detail_writer_intro">${member.intro}</p>
 										</div>
-										<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
+										<c:if test="${cvo[i].getwrite >0}">
+											<c:if test="${isfollow != null}">
+												<button id="btn_following" class="card_detail_writer_following" type="button">팔로잉</button>
+											</c:if>
+											<c:if test="${isfollow == null}">
+												<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
+											</c:if>
+										</c:if>
 									</div>
 									<div class="card_detail_card_list">
 										<ul class="card_detail_card_list">
@@ -1839,13 +2578,13 @@
 										<c:set var="pimg" value="${p.photo_simage}"/>
 										<c:set var="img" value="${fn:split(pimg,',')}" />
 											<li class="card_detail_card_list_item">
-												<a href="http://localhost:9000/myhouse/mypage_picture.do" class="card_detail_card_list_item_link">
+												<a href="http://localhost:9000/myhouse/community_page.do?pno=${p.pno}" class="card_detail_card_list_item_link">
 													<img class="card_detail_card_list_item_img" src="http://localhost:9000/myhouse/resources/upload/${img[0]}">
 												</a>
 											</li>
 										</c:forEach>
 										</ul>
-										<a class="card_detail_card_list_more">더보기</a>
+										<a href="http://localhost:9000/myhouse/mypage_picture.do" class="card_detail_card_list_more">더보기</a>
 									</div> 
 								</div>
 							</div>

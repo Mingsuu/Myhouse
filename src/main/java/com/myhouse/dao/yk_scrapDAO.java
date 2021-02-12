@@ -1,5 +1,8 @@
 package com.myhouse.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,4 +20,33 @@ public class yk_scrapDAO extends DBConn{
 		return sqlSession.selectOne(namespace+".countscrap",pno);
 	}
 	
+	/**
+	 * Ω∫≈©∑¶
+	 */
+	public int getInsert(String pno, String email) {
+		Map<String, String> param = new HashMap<String,String>();
+		param.put("pno", pno);
+		param.put("email", email);
+		return sqlSession.insert(namespace+".getinsert",param);
+	}
+	
+	/**
+	 * Ω∫≈©∑¶ √Îº“ 
+	 */
+	public int getDelete(String pno, String email) {
+		Map<String, String> param = new HashMap<String,String>();
+		param.put("pno", pno);
+		param.put("email", email);
+		return sqlSession.delete(namespace+".getdelete",param);
+	}
+	
+	/**
+	 * Ω∫≈©∑¶ ø©∫Œ 
+	 */
+	public int getScrap(String pno, String email) {
+		Map<String, String> param = new HashMap<String,String>();
+		param.put("pno", pno);
+		param.put("email", email);
+		return sqlSession.selectOne(namespace+".getscrap",param);
+	}
 }

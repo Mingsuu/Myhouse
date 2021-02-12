@@ -184,6 +184,7 @@
 }
 .review2 {
 	margin-bottom:30px;
+	display:inline-block;
 }
 .review1 span {
 	float:left;
@@ -198,7 +199,7 @@
 .simsa2,
 .simsatext {
 	display:inline-block;
-	width:900px;
+	width:800px;
 }
 .simsa span {
 	float:left;
@@ -1590,6 +1591,27 @@ input[id="check1"]:checked + label {
 	margin-top:0px;
 	padding-top:0px;
 }
+.back1 {
+	margin-bottom:100px;
+}
+.sangpum{
+	width:150px;
+	height:150px;
+	display:inline-block;
+	float:left;
+	margin-left:10px;
+	border-radius:6px;
+}
+.besongnull {
+	height:500px;
+	text-align:center;
+}
+.besongnull span {
+	margin-top:100px;
+	font-size:15px;
+	color:#424242;
+	display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -1619,8 +1641,12 @@ input[id="check1"]:checked + label {
 			<span style="color:#35c5f0;">베스트순</span>
 			<a href="mypage_review1.do"><span>최신순</span></a>
 		</div>
+		<c:if test="${rcount == 0}">
+			<div class="besongnull"><span>현재 작성한 리뷰가 존재하지 않습니다.</span></div>
+		</c:if>
 		<c:forEach var="vo" items="${list}">
 		<div class="review2">
+			<img src ="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage}" class="sangpum">
 			<div class="simsa"><span>리뷰 후기</span><a href="#" id="sujung">수정</a></div>
 			<div class="simsa1"><a href="#">[${vo.company }] ${vo.ino}  + ${vo.ititle}</a></div>
 			<div class="simsa2"><img src="http://localhost:9000/myhouse/images/mypage/review.png"><span>${vo.nickname } | ${vo.vdate} | 스위트홈 쇼핑몰 리뷰</span></div>
@@ -1825,6 +1851,7 @@ input[id="check1"]:checked + label {
 
 
 </div>
+	<div class="back1"></div>
 	<!-- footer -->
 	<jsp:include page="../footer.jsp" />
 </body>

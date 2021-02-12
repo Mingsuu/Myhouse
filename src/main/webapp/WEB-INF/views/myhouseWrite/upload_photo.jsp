@@ -9,110 +9,94 @@
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/gr.css">
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="http://localhost:9000/myhouse/js/myhouse.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<!--이미지 미리보기-->
-<!-- <script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script> -->
-    <script type="text/javascript">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
     $(document).ready(function() {
-    	
     /**스토어 검색**/
     $("#btn_sch").click(function() {
 				if ($("#inp_sch").val() == ""){
 					alert("검색할 데이터를 입력해주세요");
 					$("#inp_sch").focus();
-					return false;
+					return false; 
 				} else {
 					var inp_sch = $("#inp_sch").val();
 					var btn_sch = $("#btn_sch").val();
 					var value = $("#inp_sch").val();
 					/* alert(inp_sch);  */
-
-					var win = window.open('http://localhost:9000/myhouse/product_review.do?value='+value, "PopupWin", "width=1300,height=700");
+					var popupWidth =1300;
+					var popupHeight =700;
+					var popupX = (window.screen.width / 2) - (popupWidth / 2);
+					var popupY= (window.screen.height / 2) - (popupHeight / 2);
+					
+					var win = window.open('http://localhost:9000/myhouse/product_review.do?value='+value, "PopupWin", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
 					
 				}
 			});
     
 	 $("#inp_sch").keydown(function(key) {
 		 var value=$(this).val();
-         /* if (value!=null && key.keyCode == 13) {
-        	 $(location).attr('href',"http://localhost:9000/myhouse/index.do");
-         } */
      });
     
-    
     /*파일 미리보기및 삭제*/
-    	  if (window.File && window.FileList && window.FileReader) {
+    	 	  if (window.File && window.FileList && window.FileReader) {
     	    $("#imageSelector").on("change", function(e) {
-    	      var files = e.target.files,filesLength = files.length;
-    	      
-    	      for (var i = 0; i < filesLength; i++) {
-	    	        var f = files[i]
-	    	        var fileReader = new FileReader();
-	    	        fileReader.onload = (function(e) {
-	    	          var file = e.target;
-	    	          
-	    	          $("<span class=\"pip\">" +
-	    	            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-	    	            "<br/><span class=\"remove\">미리보기 끄기</span>" +
-	    	            "</span>").insertAfter("#imageSelector");
-	    	          
-	    	          $(".remove").click(function(){
-	    	            $(this).parent(".pip").remove();
-	    	          });
-	    	        });
-	    	        fileReader.readAsDataURL(f);
+    	        $('img.card-collection-form__card-image__image').removeAttr('src');
+    	      	var files = e.target.files,
+    	        filesLength = files.length;
+    	      	for (var i = 0; i < filesLength; i++) {
+    	        	var f = files[i]
+    	        	var fileReader = new FileReader();
+    	        	fileReader.onload = (function(e) {
+    	          	var file = e.target;
+    	          	$('img.card-collection-form__card-image__image').attr('src', e.target.result);
+    	          
+    	        });
+    	        fileReader.readAsDataURL(f);
     	      }
+    	      	$('label.card-collection-form__card-image-upload').css('display','none');
+              	$('div.card-collection-form__card-image').css('display','')
     	    });
     	  } else {
-    	    alert("브라우저를 업데이트 해주세요 :)");
+    	    alert("브라우저를 업데이트 해주세요");
     	  }
     	  
-    	  
+    	 $("button.card-collection-form__card-image__action").click(function(){
+          	$('label.card-collection-form__card-image-upload').css('display','');
+          	$('div.card-collection-form__card-image').css('display','none')
+		});
+    	  	 
     	  $("#btnUploadPhoto").click(function(){
-          	if($("#ptype").val() == "주거형태"){
-  				alert("ptype없음");
-  				$("#ptype").focus();
-  				return false;
-  			}else{
-				uploadPhotoForm.submit();		
-  			}
-			});
+	          	if($("#ptype").val()=="주거형태"){
+	  				alert("주거형태를 선택해주세요 :)");
+	  				$("#ptype").focus();
+	  				return false;
+	          	}else if($("#pstyle").val()=="스타일"){
+	  				alert("스타일를 선택해주세요 :)");
+	  				$("#pstyle").focus();
+	  				return false;
+	          	}else if($("#imageSelector").val()==""){
+	  				alert("사진을 등록해주세요 :)");
+	  				$("#pcontent").focus();
+	  				return false;
+	          	}else if($("#pcontent").val()==""){
+	  				alert("사진에 대해서 설명해주세요 :)");
+	  				$("#pcontent").focus();
+	  				return false;
+	          	}else if($("#ptag").val()==""){
+	  				alert("사진 물품태그를 확인해주세요 :)");
+	  				$("#ptag").focus();
+	  				return false;
+	          	}else{
+	          		//서버전송
+					uploadPhotoForm.submit();		
+	  			}
+			}); 
     	  
     	  
     	});     
-    
-    	/**
-    	*	이미지 태그 좌표 
-    	*/
-    /*     function handleImgFileSelect(e) {
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
- 
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    return;
-                }
-                sel_file = f;
- 
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#img").attr("src", e.target.result);
-                }
-                reader.readAsDataURL(f);
-            });
-        } */
-        
-     
-    /*     function test(){
-            alert("이미지태그위치" + event.offsetX  + "/" + event.offsetY)           
-    } */
- 
     </script>
 	
 	<style>		
@@ -121,10 +105,8 @@
 		}
 		
 		.imageThumb {
-			/* max-height: 450px;
-			max-width: 450px; */
-			height:430px;
-			width:470px;
+			max-height: 450px;
+			max-width: 450px;
 			border: 2px solid;
 			padding: 1px;
 			cursor: pointer;
@@ -133,7 +115,6 @@
 		.pip {
 			display: inline-block;
 			margin: 10px 10px 0 0; 
-			/* margin: left; */
 		}
 		
 		.remove {
@@ -168,8 +149,16 @@
 		    cursor: pointer;
 		    display:inline;
 		}
+			input.hidden_input{
+		margin: 0;
+		padding: 0;
+		font-family: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+		display: none;
+	} 
 		 #ptag{
-			/* display:none;  */
+			display:none;  
 			float: right;
 			width:150px;
 		} 
@@ -186,7 +175,7 @@
 				<div
 					class="input-group select-input card-collection-form__metadata__entry">
 					<select class="form-control empty" id="ptype" name="ptype">
-						<option selected="" value="" disabled="">주거형태
+						<option value="주거형태">주거형태
 						<option value="원룸&오피스텔">원룸&amp;오피스텔
 						<option value="아파트">아파트
 						<option value="빌라&연립">빌라&amp;연립
@@ -203,7 +192,7 @@
 				<div
 					class="input-group select-input card-collection-form__metadata__entry">
 					<select class="form-control empty"  id="pstyle" name="pstyle">
-						<option selected="" value="" disabled="">스타일
+						<option value="스타일">스타일
 						<option value="모던">모던
 						<option value="북유럽">북유럽
 						<option value="빈티지">빈티지
@@ -238,12 +227,24 @@
 				<ol class="card-collection-form__card-section__list">
 					<li class="card-collection-form__card-section__list__item"><div class="card-collection-form__card-item">
 							<div class="card-collection-form__card-item__image-wrap" draggable="true">							
-								<!--이미지파일만 선택,다중선택-->
-								<label class="input-file-button" for="imageSelector">
-									  사진선택
-								</label>
-							 	<input type="file" class="hidden_input" id="imageSelector" name="file1" 
-									accept="image/jpeg, image/jpg, image/png" multiple=multiple style="display:none;">
+								<label class="card-collection-form__card-image-upload card-collection-form__card-item__image" >
+								<input type="file" class="hidden_input" id="imageSelector" name="file1" accept="image/jpeg, image/jpg, image/png">	
+								<span class="content">
+								<svg class="sicon" width="48" height="48" viewBox="0 0 48 48" fill="currentColor" preserveAspectRatio="xMidYMid meet">
+								<path d="M11.952 9.778l2.397-5.994A1.778 1.778 0 0 1 16 2.667h16c.727 0 1.38.442 1.65 1.117l2.398 5.994h10.174c.982 0 1.778.796 1.778 1.778v32c0 .981-.796 1.777-1.778 1.777H1.778A1.778 1.778 0 0 1 0 43.556v-32c0-.982.796-1.778 1.778-1.778h10.174zM24 38c6.075 0 11-4.925 11-11s-4.925-11-11-11-11 4.925-11 11 4.925 11 11 11z"></path>
+								</svg>
+								<span class="ptext">사진 올리기<br></span></span>
+							</label>
+							
+							<div class="card-collection-form__card-image card-collection-form__card-item__image"  style="display:none;padding-bottom: 66.5333%;">
+								<img class="card-collection-form__card-image__image" src="http://localhost:9000/myhouse/resources/upload/${pvo.photo_simage }">
+								<div class="card-collection-form__card-image__actions">
+									<button class="card-collection-form__card-image__action" type="button" aria-label="삭제" title="삭제">
+										<svg class="icon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+											<path d="M6 19V7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2zM19 4v2H5V4h3.5l1-1h5l1 1H19z"></path></svg>
+									</button>
+								</div>
+							</div>
 							</div>
 
 

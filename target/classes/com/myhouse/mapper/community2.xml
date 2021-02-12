@@ -6,6 +6,10 @@
     
 <mapper namespace="mapper.community2">
 	
+	<select id="getInfoAll2" parameterType="java.lang.String" resultType="com.myhouse.vo.PhotoVO">
+	select * from h_photo where email=#{email}
+	</select>
+	
 	<select id="index_community_list" resultType="com.myhouse.vo.CommunityVO">
 		select * from (
 			select rownum prno, photo.* from (

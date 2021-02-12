@@ -58,34 +58,40 @@
 	padding-top:15px;
 	color:black;
 }
-.mid {
+.mid1 {
 	display:inline-block;
 	width:1136px;
 	height:596px;
-	text-align:center;
 }
 .content {
 	display:inline-block;
 	width:900px;
 	height:auto;
 	margin-top:40px;
+	margin-left:60px;
 	padding-bottom:30px;
 }
 .content a {
 	text-decoration:none;
 }
 .content h1 {
-	padding-right:600px;
 	font-size:24px;
+	margin-left:120px;
 	margin-bottom:10px;
-	width:580px;
+	text-align:center;
+	float:left;
+}
+.content span{
+	text-align:center;
 }
 .date {
-	width:580px;
-	padding-right:600px;
+	width:500px;
 	font-size:16px;
 	font-weight:bold;
 	color:#828c94;
+	float:left;
+	margin-left:-90px;
+	margin-bottom:20px;
 }
 .conbar {
 	width:800px;
@@ -156,10 +162,17 @@
 	border:1px solid #35c5f0;
 	text-align:center;
 	padding-top:4px;
+	margin-left:30px;
 }
 .conbtn:hover {
 	background-color:rgb(16,175,222);
 }	
+.conbox{
+	margin-left:120px;
+}
+.notbtn{
+	text-align:center;
+}
 </style>
 </head>
 <body>
@@ -182,44 +195,20 @@
 	</div>
 </div>
 <div class="profile">
-<div class="mid">
+<div class="mid1">
 	<div class="content">
-		<h1>오늘의집 개인정보처리방침 변경 안내</h1>
-		<span class="date">2020. 12. 31</span>
+		<h1>${vo.ntitle}</h1>
+		<span class="date">${vo.ndate }</span>
 		<hr class="conbar">
-		<div class="con1">
-			<p class="con1-1">안녕하세요.</p>
-			<p>버킷플레이스는 고객님들의 개인정보를 더욱 투명하고 안전하게 관리하고자 개인정보처리방침을 공개하고 있으며,</p>
-			<p>변경사항 발생 시 공지사항을 통해 오늘의집 고객분들에게 안내하고 있습니다.</p>
- 			<p>새롭게 바뀌는 개인정보처리방침 내용을 확인하시고 서비스 이용에 참고하시기 바랍니다.</p>
+		<div class="conbox">
+			${vo.ncontent }
 		</div>
-		<div class="con2">
-			<span class="con2-1">1. 변경내용</span><br>
-			<span class="con2-2">개인정보 국외이전 업체 추가</span><br>
-			<span>&nbsp;&nbsp;&nbsp; - 마케팅 솔루션 브레이즈를 통하여 미국에 있는 서버에 저장 (이메일, 휴대폰번호, 휴대폰 ID)</span><br>
- 			<span class="con2-2">개인정보 수탁업체 변경 및 추가</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- 트랜스 코스모스(고객센터 확장)</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- 더화이트커뮤니케이션 (고객 채팅상담 운영)</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- 아임포트 (주문 연동 전자결제)</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- 애니트랙 (일부 상품 직접 배송 서비스 제공을 위한 시스템 위탁)</span><br>
- 			<span class="con2-2">이용자의 의무사항 추가</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- ID/비밀번호 관리 의무</span><br>
- 			<span>&nbsp;&nbsp;&nbsp;- 타인의 개인정보 도용 금지 등</span>
-		</div>
-		<div class="con3">
-			<span class="con2-1">2. 개정시기</span><br>
-			<span>변경된 개인정보처리방침은 2021년 1월 10일에 개정되어 효력이 발생됩니다.</span>
-		</div>
-		<div class="con4">
-			<span class="con2-1">3. 이의 및 문의제기</span>
-			<span>개정된 개인정보처리방침 내용에 대한 문의와 이의제기는 개인정보 고충처리부서로 문의 주시기 바랍니다.</span>
-			<span>&nbsp;&nbsp;&nbsp;(대표전화 : 1670-0876, 상담시간 월~금 09:00~18:00 (주말, 공휴일 제외))</span>
-			<span>개정된 개인정보처리방침 내용에 동의하지 않으시는 경우, 회원탈퇴를 요청할 수 있습니다.</span>
-			<span class="con2-3">앞으로도 보다 나은 서비스를 제공할 수 있도록 최선의 노력을 다하는 버킷플레이스가 되도록 하겠습니다.</span>
-			<span>감사합니다.</span>
-		</div>
+		
+		
 			<hr class="conbar">
+			<div  class="notbtn">
 			<a href="mypage_notice.do"><button type="button" class="conbtn">목록으로 돌아가기</button></a>
+			</div>
 	</div>
 		
 </div>

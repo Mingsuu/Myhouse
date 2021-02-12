@@ -6,6 +6,11 @@
 
 <mapper namespace="mapper.member">
 	
+	<!-- id : getInfoAll -->
+	<select id="getInfoAll" parameterType="java.lang.String" resultType="com.myhouse.vo.MemberVO">
+	select * from h_member where email=#{email}
+	</select>
+	
 	<!-- id : sellerUpdate1 -->
 	<update id="sellerUpdate1" parameterType="java.lang.String" >
 		update h_member set seller=1 where email=#{email}

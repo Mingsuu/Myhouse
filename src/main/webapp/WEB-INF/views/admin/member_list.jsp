@@ -754,7 +754,7 @@
 							<label class="cont3-label" id="status${MemberVO.seller}" ></label>
 						</li>
 						<li class="cont-4">
-							<a href="#">${MemberVO.email}</a>
+							<a href="http://localhost:9000/myhouse/member_content.do?email=${MemberVO.email}">${MemberVO.email}</a>
 						</li>
 						
 						<li class="cont-5">${MemberVO.nickname}</li>
