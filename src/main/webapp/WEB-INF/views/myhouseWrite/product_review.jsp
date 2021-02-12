@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- <link rel="stylesheet" href="http://localhost:9000/myhouse/css/mypage1.css"> -->
-<!-- <script src="http://localhost:9000/myhouse/js/myhouse.js"></script> -->
+<title>사진태그등록</title>
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
 
@@ -24,7 +22,7 @@
 
 					chk_list += $(this).attr("id") + ","
 				});	
-				alert(chk_list); 
+				/* alert(chk_list);  */
 				$(opener.document).find("#ptag").val(chk_list);
 				
 				window.close();
@@ -35,7 +33,6 @@
  <style>
  .search-page__title{
  	display:block;
- 	background-color:#35c5f0;
  	text-align:center;
  }
  .ul{
@@ -65,6 +62,9 @@
 	margin:auto;
 }
 .btn_style{
+	 top: 30px;
+ 	 left: 1090px;
+ 	 position: fixed;
   	width:100px;
     background-color: #35c5f0;
     border: none;
@@ -78,12 +78,21 @@
     cursor: pointer;
     border-radius:4px;
 }
+.search-item{
+/*  border:2px solid #35c5f0; */
+ margin:auto;
+ width:1100px;
+}
+
  </style>
 <body>
 <article class="search-page container">
-	<h1 class="search-page__title" style="color:white;,size:100px;">‘${value}’에 대한 스토어 검색 결과 
-		<span class="search-page__number"style="color:white;">${interior_list.size()+community_list.size()}개</span>
-	</h1>
+			<div class="logo">
+				<img src="http://localhost:9000/myhouse/images/logo.png">
+			</div>
+	<section class="search-page__title" style="font-weight:bold">‘${value}’ 검색 결과 
+		<span class="search-page__number">${interior_list.size()+community_list.size()}개</span>
+	</section>
 	<section class="search-item">
 		<div class="scroller-wrap search-store__scroller scroller-wrap--enabled">
 			<div class="scroller">
@@ -107,11 +116,11 @@
 							</li>
 								</c:forEach>
 								</ul>
-								<button type="button" class="btn_style" id="btnInsert">태그 등록</button>
 					</div>
 				</div>
 		</div>
 	</section>
+	<button type="button" class="btn_style" id="btnInsert">태그 등록</button>
 </article>
 </body>
 </html>
