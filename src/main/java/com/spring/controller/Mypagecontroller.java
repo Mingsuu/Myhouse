@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.SessionVO;
+import com.myhouse.vo.reviewVO;
 import com.spring.service1.MypageService;
 
 @Controller
@@ -87,6 +88,40 @@ public class Mypagecontroller {
 	@RequestMapping(value="/mypage_clientcenter.do", method=RequestMethod.GET)
 	public String clientcenter() {
 		return "/mypage/clientcenter";
+	}
+	
+	
+	@RequestMapping(value="/review_insert_proc.do", method=RequestMethod.POST)
+	public ModelAndView review_insert(reviewVO vo, HttpServletRequest request,HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		//서버의 저장경로
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		//vo에 저장경로 추가
+		vo.setSavepath(root_path+attach_path);
+		System.out.println("저장경로 = "+vo.getSavepath());
+		vo.setEmail(svo.getEmail());
+		return mypageService.getreviewinsert(vo);
+	}
+	
+	@RequestMapping(value="/mypage_review_update_proc.do", method=RequestMethod.POST)
+	public ModelAndView review_update(reviewVO vo, HttpServletRequest request,HttpSession session) {
+		SessionVO svo=(SessionVO)session.getAttribute("svo");
+		//서버의 저장경로
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		//vo에 저장경로 추가
+		vo.setSavepath(root_path+attach_path);
+		System.out.println("저장경로 = "+vo.getSavepath());
+		vo.setEmail(svo.getEmail());
+		return mypageService.getreviewupdate(vo);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage_review_proc.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public String review_proc(String ino) {
+		return mypageService.getreviewproc(ino);
 	}
 	
 	

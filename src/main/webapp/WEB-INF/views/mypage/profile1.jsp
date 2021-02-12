@@ -419,7 +419,7 @@
 		<c:if test="${prof.member_spimage != null }">
 			<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
 		</c:if>
-			<c:if test="${prof.member_spimage == null }">
+		<c:if test="${prof.member_spimage == null }">
 			<img src="http://localhost:9000/myhouse/resources/upload/pro.png" class="pro">
 		</c:if>
 		<div class="leftbox">

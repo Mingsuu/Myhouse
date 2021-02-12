@@ -87,7 +87,12 @@ $(document).ready(function(){
 
 						<a class="collection-book-owner__link" href="mypage_profile1.do"><img
 							class="profile-image"
-							src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}"
+							<c:if test="${prof.member_spimage != null }">
+								src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}"
+							</c:if>
+							<c:if test="${prof.member_spimage == null }">
+								src="http://localhost:9000/myhouse/resources/upload/pro.png"
+							</c:if>
 							srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x"><span
 							class="collection-book-owner__name">${prof.nickname }</span></a>
 					</p>
@@ -150,9 +155,8 @@ $(document).ready(function(){
 				<c:forEach var="vo" items="${list }">
 				<div class="col-6 col-md-4">
 					<div class="collection__wrap">
-						<a
-							href="/projects/34342/detail?affect_type=UserScrapbook&amp;affect_id=7109166"><div
-								class="collection collection--project">
+						<a href="community_page.do?pno=${vo.pno}">
+						<div class="collection collection--project">
 								<div class="collection__image-wrap">
 									<img class="collection__image"
 										src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}"

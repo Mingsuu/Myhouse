@@ -484,7 +484,7 @@
 					</div>
 					<div class="order-list__item__production__item__info__wrap">
 						<div class="order-list__item__production__item__info__option">${vo.season } / ${vo.color }</div>
-						<div class="order-list__item__production__item__info__price">${vo.price }원 | 1개</div>
+						<div class="order-list__item__production__item__info__price">${vo.goods_price }원 | 1개</div>
 						<div class="order-list__item__production__item__info__status">입금완료 | 업체직접배달</div>
 					</div>
 				</div>
