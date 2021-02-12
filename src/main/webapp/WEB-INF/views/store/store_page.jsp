@@ -4057,7 +4057,6 @@
 					</p>
 				</div> <!-- production-selling-header -->
 				<div class="production-selling-option-form production-selling-overview__option-form">
-				<form class="card-collection-form container" name="StoreBasketForm" action="store_basket_proc.do" method="post" enctype="multipart/form-data">
 					<div class="selling-option-form-content deal-selling-option-form-content production-selling-option-form__form">
 						<div class="production-select-dropdown">
 							<div class="production-select-dropdown__button">
@@ -4094,6 +4093,7 @@
 							</div>
 						</div> <!-- production-select-dropdown -->
 						<ul class="selling-option-form-content__list select-none" id="pro-order-0">
+						<form class="card-collection-form container" name="StoreBasketForm" action="store_basket_proc.do" method="post" enctype="multipart/form-data">
 							<c:forEach var="vo" items="${interior_top }" >
 							<li class="order-list order-none" id="pro-order-${vo.gno }" ><article class="selling-option-item">
 								<h1 class="selling-option-item__production">${vo.goods_name }</h1>
@@ -4516,6 +4516,7 @@
 				</div>
 			</div> <!-- production-selling__detail__content col-12 col-lg-8 -->
 			<div class="production-selling__detail__sidebar col-4">
+			
 				<div data-sticky-enabled="false" data-sticky-disabled="false" data-sticky-always="false" data-sticky-ignore="false" data-direction="top" data-offset="183" class="sticky-container production-selling-sidebar-wrap" style="position: sticky; top:40px;">
 					<div class="sticky-child production-selling-sidebar" style="position: relative; box-sizing: border-box; height: 720px;">
 						<section class="production-selling-sidebar-content production-selling-sidebar__content">
@@ -4558,6 +4559,7 @@
 										</div>
 									</div> <!-- production-select-dropdown -->
 									<ul class="selling-option-form-content__list select-none" id="pro-order-side-0">
+									<form class="card-collection-form container" name="uploadPhotoForm" action="upload_photo_proc.do" method="post" enctype="multipart/form-data">
 										<c:forEach var="vo" items="${interior_top }" >
 										<li class="order-list order-none" id="pro-order-side-${vo.gno }"><article class="selling-option-item">
 												<h1 class="selling-option-item__production">${vo.goods_name }</h1>
@@ -4598,10 +4600,11 @@
 									<div class="scrap-box">
 										<button class="button button--color-gray-14-inverted button--size-55 button--shape-4 production-selling-sidebar-content__scrap" type="button" id="side-order"><svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg></button>
 									</div>
-									<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="button">장바구니</button>
+									<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
 									<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
 								</div>
 							</div> <!-- production-selling-option-form production-selling-sidebar-content__option-form -->
+							</form>
 						</section>
 					</div> <!-- sticky-child production-selling-sidebar -->
 				</div>
