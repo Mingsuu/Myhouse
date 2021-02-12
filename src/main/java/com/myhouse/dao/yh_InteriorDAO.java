@@ -17,6 +17,15 @@ public class yh_InteriorDAO {
 	
 	private static String namespace="mapper.interior";
 	
+	// 주소 입력
+	public boolean getAddrInsert(String email) {
+		boolean result = false;
+		int value = sqlSession.update(namespace+".addr-insert", email);
+		if(value !=0) result = true;
+		
+		return result;
+	}
+	
 	
 	/** 전체 리스트 카운트 - 문의 */
 	public int getListQuestionCount(String ino) {
@@ -193,6 +202,12 @@ public class yh_InteriorDAO {
 		if(value != 0) result = true;
 		
 		return result;
+	}
+	
+	// store_page - interiorTop
+	public ArrayList<StoreIndexVO> getStoreMainOrderProc(String gno) {
+		List<StoreIndexVO> main_order = sqlSession.selectList(namespace+".main-order", gno);
+		return (ArrayList<StoreIndexVO>) main_order;
 	}
 	
 	// store_page - interiorTop

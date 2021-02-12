@@ -3,8 +3,8 @@ package com.myhouse.vo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class StoreIndexVO {
-
-	String email, nickname, member_spimage,
+	String email, nickname, member_spimage, selleremail, addr, addr1, addr2, 
+		   addr_num, memo, phone, hp1, hp2, hp3, name,
 		   ino, company, ititle, interior_simage, category, tone, color, season, icontent,
 		   gno, goods_simage, goods_name, goods_price,
 		   vno, vcontent, review_image, review_simage, vdate, savepath,
@@ -12,9 +12,101 @@ public class StoreIndexVO {
 		   qno, qtype, qcontent, qreply, qdate,qdate_r,
 		   ono, ostatus;
 	double star_avg, star_float;
-	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count;
+	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus,
+		ocount;
 	CommonsMultipartFile file1;
 	
+	
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getHp1() {
+		return hp1;
+	}
+	public void setHp1(String hp1) {
+		this.hp1 = hp1;
+	}
+	public String getHp2() {
+		return hp2;
+	}
+	public void setHp2(String hp2) {
+		this.hp2 = hp2;
+	}
+	public String getHp3() {
+		return hp3;
+	}
+	public void setHp3(String hp3) {
+		this.hp3 = hp3;
+	}
+	public String getAddr() {
+		String str="";
+		if(addr1 != null) {
+			str=  getAddr1() + " " + getAddr2();
+		} else {
+			str = addr;
+		}
+		return str;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getAddr_num() {
+		return addr_num;
+	}
+	public void setAddr_num(String addr_num) {
+		this.addr_num = addr_num;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	public String getPhone() {
+		return hp1 + "-" + hp2 + "-" + hp3;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getOcount() {
+		return ocount;
+	}
+	public void setOcount(int ocount) {
+		this.ocount = ocount;
+	}
+	public String getSelleremail() {
+		return selleremail;
+	}
+	public void setSelleremail(String selleremail) {
+		this.selleremail = selleremail;
+	}
+	public int getSeller() {
+		return seller;
+	}
+	public void setSeller(int seller) {
+		this.seller = seller;
+	}
+	public int getSstatus() {
+		return sstatus;
+	}
+	public void setSstatus(int sstatus) {
+		this.sstatus = sstatus;
+	}
 	public String getSeason() {
 		return season;
 	}
