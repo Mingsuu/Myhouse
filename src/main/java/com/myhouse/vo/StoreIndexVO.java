@@ -10,13 +10,20 @@ public class StoreIndexVO {
 		   vno, vcontent, review_image, review_simage, vdate, savepath,
 		   sno,
 		   qno, qtype, qcontent, qreply, qdate,qdate_r,
-		   ono, ostatus;
+		   ono, ostatus,
+		   ocount;
 	double star_avg, star_float;
-	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus,
-		ocount;
+	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus;
 	CommonsMultipartFile file1;
 	
 	
+	
+	public String getOcount() {
+		return ocount;
+	}
+	public void setOcount(String ocount) {
+		this.ocount = ocount;
+	}
 	public String getAddr1() {
 		return addr1;
 	}
@@ -82,12 +89,6 @@ public class StoreIndexVO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getOcount() {
-		return ocount;
-	}
-	public void setOcount(int ocount) {
-		this.ocount = ocount;
 	}
 	public String getSelleremail() {
 		return selleremail;

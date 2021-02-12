@@ -55,17 +55,37 @@ public class StoreController {
 	@RequestMapping(value="/addr_insert.do",method=RequestMethod.POST) 
 	public ModelAndView addr_insert(String email) {
 		
-		return interiorService.getAddrInsert("test1@naver.com");
+		return interiorService.getAddrInsert(email);
 	}
 	
 	/*
 	 * store_payment È­¸é
 	 */
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
-		public String store_payment() {
-			
-			return "/store/store_payment";
+		public String store_payment(String email, String gno, String ocount) {
+		
+		System.out.println("controller!!---->"+email);
+		System.out.println("controller!!---->"+gno);
+		System.out.println("controller!!---->"+ocount);
+		
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		StringTokenizer ocount_ = new StringTokenizer(ocount,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		String[] ocountlist = new String[ocount_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
 		}
+		for(int i=0; i<ocountlist.length; i++) {
+			ocountlist[i] = ocount_.nextToken();
+		}
+		
+		
+			return interiorService.getPayment(email, gnolist, ocountlist);
+		}
+		
+	
 	
 	/*
 	 * store_page :: question - delete

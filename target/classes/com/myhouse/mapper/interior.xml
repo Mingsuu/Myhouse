@@ -6,11 +6,18 @@
     
 <mapper namespace="mapper.interior">
 
-
 <!-- 배송지 입력 :: 저장 -->
 <update id="addr-insert" parameterType="java.lang.String">
 	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone} where email=#{email}
 </update>
+
+<!-- 바로구매 클릭 - order에 추가하기 -->
+<insert id="order-insert" parameterType="map">
+	insert into h_order values 
+		<!-- <foreach collection="orderList" item="item" index="index" separator="," open="(" close=")"> -->
+			('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
+		<!-- </foreach> -->
+</insert>
 
 <!-- 전체 리스트 카운트 - 문의 -->
 <select id="question-count" parameterType="java.lang.String" resultType="int">
