@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 	html, body {
 	    line-height: 1;
@@ -665,6 +667,7 @@
 	}
 	#address_lists>.address_list>#form form>.field>.content>input.non_edit {
 	    background-color: #eeeeee;
+	    margin-bottom:10px;
 	}
 	#address_lists>.address_list>#form form>.field>.content>input {
 	    line-height: 38px;
@@ -684,7 +687,7 @@
 	    background-color: #35c5f0;
 	    line-height: 40px;
 	    color: #ffffff;
-	    font-size: 12px;
+	    font-size: 14px;
 	    border-radius: 2px;
 	    cursor: pointer;
 	}
@@ -766,6 +769,9 @@
 	._3wKau {
 	    position: relative;
 	    margin-bottom: 8px;
+	}
+	.txt_none {
+	    display:none;
 	}
 	._1FAgO._17HFC._1FAgO._17HFC._1FAgO._17HFC {
 	    padding-bottom: 25px;
@@ -855,7 +861,146 @@
 				$("#address_lists").css("display","block");
 			}
 		})
+		
+		/* 배송지 직접입력 클릭 */
+		$("#addr_select").change(function(){
+			if($(this).val()==5) {
+				if($("._3wKau").hasClass("txt_none")) {
+					$("._3wKau").removeClass("txt_none");
+				}
+			}else {
+				$("._3wKau").addClass("txt_none");
+			}
+		});
+		
+		/* 배송지 textarea */
+		$("#addr_txt").keyup(function(e){
+			var inputlength = $(this).val().length;
+			$("#addr-count").html(inputlength);
+			if (inputlength > 50) {
+				$("#text-required-item").removeClass("review-modal__section__title__error-message-text");
+			} else {	
+				$(".review-modal__section__title__error-message").css("display","none");
+				$("#vcontent").removeClass("error");
+				$(".review-modal__section__title-text").removeClass("review-modal__section__title--error");
+				$("#text-required-item").addClass("review-modal__section__title__error-message-text-none");
+				$("#text-required-item").removeClass("review-modal__section__title__error-message-text");
+			}
+		});
+		
+		
+		/* 주소지 찾기 */
+    	$("#find_address_on_address_book").click(function(){
+		new daum.Postcode({
+			oncomplete: function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var fullAddr = ''; // 최종 주소 변수
+				var extraAddr = ''; // 조합형 주소 변수
+
+				// 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+					fullAddr = data.roadAddress;
+
+				} else { // 사용자가 지번 주소를 선택했을 경우(J)
+					fullAddr = data.jibunAddress;
+				}
+
+				// 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+				if(data.userSelectedType === 'R'){
+					//법정동명이 있을 경우 추가한다.
+					if(data.bname !== ''){
+						extraAddr += data.bname;
+					}
+					// 건물명이 있을 경우 추가한다.
+					if(data.buildingName !== ''){
+						extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+					}
+					// 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+					fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+				}
+
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('addr_num').value = data.zonecode; //5자리 새우편번호 사용
+				document.getElementById('addr1').value = fullAddr;
+
+				// 커서를 상세주소 필드로 이동한다.
+				document.getElementById('addr2').focus();
+			}
+		}).open();
 	});
+		
+		
+		//배송지 입력 완료버튼
+		$("#submit").click(function(){
+			if($("#address_lists").css("display","block")) {
+				$("#address_lists").css("display","none");
+			}else {
+				$("#address_lists").css("display","block");
+			}
+		});
+		
+	});
+	
+	
+	 $("#order_payment_method_kakaopay").click(function(){
+	        var IMP = window.IMP; // 생략가능
+	        IMP.init('imp33600107'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	        var msg;
+	        
+	        IMP.request_pay({
+	            pg : 'kakaopay',
+	            pay_method : 'card',
+	            merchant_uid : 'merchant_' + new Date().getTime(),
+	            name : '스위트홈',
+	            amount : 50000,
+	            buyer_email : 'dudghk0924@naver.com',
+	            buyer_name : '서영화',
+	            buyer_tel : '010-1234-1234',
+	            buyer_addr : '서욽특별시',
+	            buyer_postcode : '123-456',
+	            //m_redirect_url : 'http://www.naver.com'
+	        }, function(rsp) {
+	            if ( rsp.success ) {
+	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+	                jQuery.ajax({
+	                    url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+	                    type: 'POST',
+	                    dataType: 'json',
+	                    data: {
+	                        imp_uid : rsp.imp_uid
+	                        //기타 필요한 데이터가 있으면 추가 전달
+	                    }
+	                }).done(function(data) {
+	                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	                    if ( everythings_fine ) {
+	                        msg = '결제가 완료되었습니다.';
+	                        msg += '\n고유ID : ' + rsp.imp_uid;
+	                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+	                        msg += '\결제 금액 : ' + rsp.paid_amount;
+	                        msg += '카드 승인번호 : ' + rsp.apply_num;
+	                        
+	                        alert(msg);
+	                    } else {
+	                        //[3] 아직 제대로 결제가 되지 않았습니다.
+	                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+	                    }
+	                });
+	                //성공시 이동할 페이지
+	                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
+	            } else {
+	                msg = '결제에 실패하였습니다.';
+	                msg += '에러내용 : ' + rsp.error_msg;
+	                //실패시 이동할 페이지
+	                location.href="<%=request.getContextPath()%>/order/payFail";
+	                alert(msg);
+	            }
+	        });
+	        
+	    });
+	
 	
 </script>
 </head>
@@ -903,22 +1048,23 @@
 		        <div class="field">
 		          <div class="label">받는분</div>
 		          <div class="input">
-		              <input class="non_edit can_copy half" presence="true" readonly="readonly" value="서영화" data-hj-suppress="" type="text" name="order[recipient]" id="order_recipient">
+		              <input class="non_edit can_copy half" presence="true" readonly="readonly" value="" data-hj-suppress="" type="text" name="order[recipient]" id="order_recipient">
 		            <input type="hidden" name="order[received_name]" id="order_received_name">
 		          </div>
 		        </div>
 		        <div class="field">
 		          <div class="label">우편번호</div>
 		          <div class="input">
-		              <input class="non_edit quarter" presence="true" readonly="readonly" value="06035" data-hj-suppress="" type="text" name="order[received_zip_code]" id="order_received_zip_code">
-		              <a data-remote="true" id="select-addr" href="#"><span id="select_address">배송지변경</span></a>          
+		              <input class="non_edit quarter" presence="true" readonly="readonly" value="" data-hj-suppress="" type="text" name="order[received_zip_code]" id="order_received_zip_code">
+		              <a data-remote="true" id="select-addr" href="#"><span id="select_address">배송지입력</span></a>          
+		              <a data-remote="true" id="select-addr" href="#" style="display:none;"><span id="select_address">배송지변경</span></a>          
 		          </div>
 		        </div>
 		        <div class="field">
 		          <div class="label">주소</div>
 		          <div class="input vertical">
-		              <input presence="true" readonly="readonly" class="non_edit full" value="서울 강남구 가로수길 5 (신사동) " data-hj-suppress="" type="text" name="order[received_at]" id="order_received_at">
-		              <input presence="true" readonly="readonly" class="non_edit full" value="1층" data-hj-suppress="" type="text" name="order[received_at_detail]" id="order_received_at_detail">
+		              <input presence="true" readonly="readonly" class="non_edit full" value="" data-hj-suppress="" type="text" name="order[received_at]" id="order_received_at">
+		              <input presence="true" readonly="readonly" class="non_edit full" value="" data-hj-suppress="" type="text" name="order[received_at_detail]" id="order_received_at_detail">
 		            <input presence="true" value="서울" data-hj-suppress="" class="full" type="hidden" name="order[received_at_sido]" id="order_received_at_sido">
 		            <input presence="true" value="000-000" data-hj-suppress="" class="full" type="hidden" name="order[received_at_post_code6]" id="order_received_at_post_code6">
 		          </div>
@@ -926,24 +1072,25 @@
 		        <div class="field">
 		          <div class="label">휴대전화</div>
 		          <div class="input phone">
-		              <input class="non_edit" readonly="readonly" presence="true" value="010-4512-3698" data-hj-suppress="" type="text" name="order[received_phone_number]" id="order_received_phone_number">
+		              <input class="non_edit" readonly="readonly" presence="true" value="" data-hj-suppress="" type="text" name="order[received_phone_number]" id="order_received_phone_number">
 		          </div>
 		        </div>
 		        <div class="field">
 		          <div class="label vertical">배송 메모</div>
 		          <div class="input vertical">
 		                 <div class="_2Jn8D">
-		                 	<div class="_3wKau">
-		                 		<textarea class="_3ASDR _1qwAY _1FAgO _17HFC" placeholder="배송 요청사항을 입력해주세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
-		                 		<div class="_2CKA7">0<span> / 50</span></div>
-		                 	</div>
 		                  	<div class="_3Bt8k">
-		                  		<select class="_3ASDR _1qwAY _3K8Q8">
+		                  		<select class="_3ASDR _1qwAY _3K8Q8" id="addr_select">
 			                  		<option value="0">배송시 요청사항을 선택해주세요</option><option value="1">부재시 문앞에 놓아주세요</option>
 			                  		<option value="2">배송전에 미리 연락주세요</option><option value="3">부재시 경비실에 맡겨 주세요</option>
-			                  		<option value="4">부재시 전화주시거나 문자 남겨 주세요</option><option value="5">직접입력</option>
+			                  		<option value="4">부재시 전화주시거나 문자 남겨 주세요</option>
+			                  		<option value="5">직접입력</option>
 		                  		</select>
 		                  	</div>
+		                 	<div class="_3wKau txt_none" style="margin-top:10px;">
+		                 		<textarea class="_3ASDR _1qwAY _1FAgO _17HFC" id="addr_txt" placeholder="배송 요청사항을 입력해주세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+		                 		<div class="_2CKA7" id="addr-count">0<span> / 50</span></div>
+		                 	</div>
 		                  </div>
 		            <div id="delivery_messages" style="display: none;">
 		                <div class="delivery_message first">
@@ -960,25 +1107,24 @@
     <div class="panel">
       <div class="title">
 	       <div class="title">주문자</div>
-	       <div class="button" id="copy_delivery">배송지 정보와 동일하게 채우기</div>
 	      </div>
 	      <div class="input">
 	        <div class="field">
 	          <div class="label">이름</div>
 	          <div class="input">
-	            <input presence="true" value="서영화" autocomplete="off" data-hj-suppress="" class="half" type="text" name="order[payer_name]" id="order_payer_name">
+	            <input presence="true" value="" autocomplete="off" data-hj-suppress="" class="half" type="text" name="order[payer_name]" id="order_payer_name">
 	          </div>
 	        </div> <!-- 이름 -->
 	        <div class="field">
 	          <div class="label">이메일</div>
 	          <div class="input email">
-	            <input presence="true" value="dudghk0924@naver.com" autocomplete="off" data-hj-suppress="" type="text" name="order[payer_email]" id="order_payer_email">
+	            <input presence="true" value="" autocomplete="off" data-hj-suppress="" type="text" name="order[payer_email]" id="order_payer_email">
 	          </div>
 	        </div> <!-- 이메일 -->
 	        <div class="field">
 	          <div class="label">휴대전화</div>
 	          <div class="input phone">
-	            <input presence="true" value="010-8714-9034" data-hj-suppress="" type="text" name="order[payer_phone_number]" id="order_payer_phone_number">
+	            <input presence="true" value="" data-hj-suppress="" type="text" name="order[payer_phone_number]" id="order_payer_phone_number">
 	            <div id="verified_phone_number">
 	              <div class="verified_phone_number" data-value="01087149034" data-verified="true"></div>
 	              <div class="need_verified" style="display: none;">
@@ -1185,14 +1331,13 @@
 	    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" alt="닫기 버튼">
 	</div>
 	<div class="address_list" >
-	    <div class="title first">배송지 선택<div class="close_popup"></div></div>
+	    <div class="title first" style="display:none;">배송지 선택<div class="close_popup"></div></div>
 	
-	    <table id="addresses" cellspacing="0" data-number="1">
+	    <table id="addresses" style="display:none;" cellspacing="0" data-number="1">
 	        <tbody>
 	            <tr class="name address_6637995">
 	                <td class="title">배송지명</td>
 	                <td class="content">
-	                    <div class="name">서영화</div>
 	                </td>
 	                <td class="button" rowspan="5">
 	                    <div class="select" data-id="6637995">선택</div>
@@ -1237,27 +1382,23 @@
 	        </tbody>
 	    </table>
 	
-	    <div class="title">새 배송지 등록</div>
+	
+	    <div class="title" style="margin-top:10px;">새 배송지 등록</div>
 	    <div id="form" class="form">
-	        <form class="new_address_book" id="new_address_book" action="/address_books" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="BS/dCdnHuxXfKsr3HKFaMJ7E7H4zfUgZ0sWZS0NNKj5MvIKFsswSAQlj3o2OEQanA3VKAMOy3kQ+TZ0X84U59w==">
-	            <input value="mobile" type="hidden" name="address_book[from]" id="address_book_from">
+	        <form class="new_address_book" id="new_address_book" action="addr_insert.do" accept-charset="UTF-8" data-remote="true" method="post" name="addrWriteForm">
 	
 	            <div class="field address_name">
-	                <div class="title">배송지명</div>
-	                <div class="content address_name">
-	                    <input presence="true" required="required" type="text" name="address_book[name]" id="address_book_name">
-	                </div>
 	            </div>
 	            <div class="field name">
 	                <div class="title">받는분</div>
 	                <div class="content name">
-	                    <input presence="true" required="required" type="text" name="address_book[recipient]" id="address_book_recipient">
+	                    <input presence="true" required="required" type="text" name="name" id="name">
 	                </div>
 	            </div>
 	            <div class="field post_code">
 	                <div class="title">우편번호</div>
 	                <div class="content post_code">
-	                    <input presence="true" required="required" readonly="readonly" class="non_edit" type="text" name="address_book[post_code]" id="address_book_post_code">
+	                    <input presence="true" required="required" readonly="readonly" class="non_edit" type="text" name="addr_num" id="addr_num">
 	                    <input type="hidden" name="address_book[post_code_6]" id="address_book_post_code_6">
 	                    <input type="hidden" name="address_book[sido]" id="address_book_sido">
 	                    <span id="find_address_on_address_book">주소찾기</span>
@@ -1266,23 +1407,26 @@
 	            <div class="field address">
 	                <div class="title">주소</div>
 	                <div class="content address">
-	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text" name="address_book[address]" id="address_book_address">
-	                    <input presence="true" required="required" class="address" type="text" name="address_book[extra_address]" id="address_book_extra_address">
+	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text" name="addr1" id="addr1" style="width:100%;">
+	                    <input presence="true" required="required" class="address" type="text" name="addr2" id="addr2">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title">휴대전화</div>
 	                <div class="content phone">
-	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" name="address_book[phone_1]" id="address_book_phone_1">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" name="hp1" id="hp1">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number" name="address_book[phone_2]" id="address_book_phone_2">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number" name="hp2" id="hp2">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" name="address_book[phone_3]" id="address_book_phone_3">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" name="hp3" id="hp3">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title"></div>
-	                <div class="content button"><input type="submit" name="commit" value="등록하기" id="submit" data-disable-with="등록"><input type="button" name="cancel" value="취소하기" id="cancel" data-disable-with="취소"></div>
+	                <div class="content button">
+		                <input type="submit" name="commit" value="등록하기" id="submit" data-disable-with="등록">
+		                <input type="button" name="cancel" value="취소하기" id="cancel" data-disable-with="취소">
+		            </div>
 	            </div>
 			</form>    
 		</div>

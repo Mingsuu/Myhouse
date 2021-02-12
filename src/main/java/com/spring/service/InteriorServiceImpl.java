@@ -22,11 +22,56 @@ public class InteriorServiceImpl implements InteriorService{
 	@Autowired
 	private yh_InteriorDAO interiorDAO;
 	
+	// 주소 입력하기
+	public ModelAndView getAddrInsert(String email) {
+		ModelAndView mv = new ModelAndView();
+		boolean result = interiorDAO.getAddrInsert(email);
+		
+		if(result) {
+			mv.setViewName("redirect:/store_payment.do");
+		} else {
+			System.out.println("error");
+		}
+		
+		return mv;
+		
+	}
+	
+	
 		// 문의 답변하기 - 삭제
 		public String getInteriorQuestionAnswerDelete(String qno, String ino) {
 			boolean result = interiorDAO.getInteriorQuestionAnswerDelete(qno);
+			
+			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno);
+			JsonArray jarry = new JsonArray();
 			JsonObject jdata = new JsonObject();
 			Gson gson = new Gson();
+			for(StoreIndexVO vo : interior_answer) {
+				JsonObject jobj = new JsonObject();
+				jobj.addProperty("rno", vo.getRno());
+				jobj.addProperty("gno", vo.getGno());
+				jobj.addProperty("goods_name", vo.getGoods_name());
+				jobj.addProperty("qno", vo.getQno());
+				jobj.addProperty("email", vo.getEmail());
+				jobj.addProperty("qtype", vo.getQtype());
+				jobj.addProperty("qcontent", vo.getQcontent());
+				jobj.addProperty("qreply", vo.getQreply());
+				jobj.addProperty("qstatus", vo.getQstatus());
+				jobj.addProperty("qdate", vo.getQdate());
+				jobj.addProperty("qdate_r", vo.getQdate_r());
+				jobj.addProperty("ono", vo.getOno());
+				jobj.addProperty("ostatus", vo.getOstatus());
+				jobj.addProperty("nickname", vo.getNickname());
+				jobj.addProperty("company", vo.getCompany());
+				jobj.addProperty("selleremail", vo.getSelleremail());
+				jobj.addProperty("seller", vo.getSeller());
+				jobj.addProperty("sstatus", vo.getSstatus());
+				
+				jarry.add(jobj);
+			}
+			
+			jdata.add("interior_answer", jarry);
+			
 			
 			jdata.addProperty("result", result);
 			jdata.addProperty("ino", ino);
@@ -60,18 +105,31 @@ public class InteriorServiceImpl implements InteriorService{
 	
 	// 문의 답변하기 - 화면
 		public String getInteriorQuestionAnswerProc(String qno, String ino) {
+			
 			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno);
 			JsonArray jarry = new JsonArray();
 			JsonObject jdata = new JsonObject();
 			Gson gson = new Gson();
 			for(StoreIndexVO vo : interior_answer) {
 				JsonObject jobj = new JsonObject();
-				jobj.addProperty("qreply", vo.getQreply());
-				jobj.addProperty("qdate_r", vo.getQdate_r());
-				jobj.addProperty("qstatus", vo.getQstatus());
-				jobj.addProperty("ostatus", vo.getOstatus());
-				jobj.addProperty("qtype", vo.getQtype());
+				jobj.addProperty("rno", vo.getRno());
+				jobj.addProperty("gno", vo.getGno());
+				jobj.addProperty("goods_name", vo.getGoods_name());
 				jobj.addProperty("qno", vo.getQno());
+				jobj.addProperty("email", vo.getEmail());
+				jobj.addProperty("qtype", vo.getQtype());
+				jobj.addProperty("qcontent", vo.getQcontent());
+				jobj.addProperty("qreply", vo.getQreply());
+				jobj.addProperty("qstatus", vo.getQstatus());
+				jobj.addProperty("qdate", vo.getQdate());
+				jobj.addProperty("qdate_r", vo.getQdate_r());
+				jobj.addProperty("ono", vo.getOno());
+				jobj.addProperty("ostatus", vo.getOstatus());
+				jobj.addProperty("nickname", vo.getNickname());
+				jobj.addProperty("company", vo.getCompany());
+				jobj.addProperty("selleremail", vo.getSelleremail());
+				jobj.addProperty("seller", vo.getSeller());
+				jobj.addProperty("sstatus", vo.getSstatus());
 				
 				jarry.add(jobj);
 			}
@@ -132,6 +190,9 @@ public class InteriorServiceImpl implements InteriorService{
 				jobj.addProperty("ostatus", vo.getOstatus());
 				jobj.addProperty("nickname", vo.getNickname());
 				jobj.addProperty("company", vo.getCompany());
+				jobj.addProperty("selleremail", vo.getSelleremail());
+				jobj.addProperty("seller", vo.getSeller());
+				jobj.addProperty("sstatus", vo.getSstatus());
 				
 				jarry.add(jobj);
 			}
@@ -394,7 +455,31 @@ public class InteriorServiceImpl implements InteriorService{
 		return  gson.toJson(jdata);
 	}
 	
-	
+	// store_page :: 상품 주문 리스트
+	public String getStoreMainOrderProc(String gno) {
+		
+		ArrayList<StoreIndexVO> main_order = interiorDAO.getStoreMainOrderProc(gno);
+		
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : main_order) {
+			JsonObject jobj = new JsonObject();
+			
+			jobj.addProperty("ino", vo.getIno());
+			jobj.addProperty("gno", vo.getGno());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_price", vo.getGoods_price());
+			
+			jarry.add(jobj);
+		}
+		
+		jdata.add("main_order", jarry);
+		jdata.addProperty("gno", gno);
+		
+		return gson.toJson(jdata);
+	}
 	
 
 	// store_page - top
@@ -415,27 +500,12 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		int scrap_exist = interiorDAO.getInteriorScrapExist(email, ino);
 		
-		
-		// 문의페이지
-		//ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino); 
-
-		/*
-		 * StoreIndexVO qvo = interior_question.get(0);
-		 * 
-		 * for(int i=0; i<interior_question.size(); i++ ) { qvo =
-		 * interior_question.get(i); System.out.println(qvo); }
-		 */
-		
 		mv.addObject("interior_top", interior_top);
 		mv.addObject("vo", vo); 
 		mv.addObject("ino", ino);
 		mv.addObject("email", email);
 		mv.addObject("scrap_exist", scrap_exist);
-		//mv.addObject("interior_question", interior_question);
-		//mv.addObject("qvo", qvo);
 		mv.setViewName("/store/store_page");
-		
-		//System.out.println("service-- ino ----->"+interior_top);
 		
 		return mv;
 	}
