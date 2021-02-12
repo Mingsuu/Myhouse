@@ -557,7 +557,7 @@
             </div>
             <ul>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>
             </ul>
          </nav>

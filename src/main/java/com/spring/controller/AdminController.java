@@ -79,7 +79,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/store_page_sample.do",method=RequestMethod.GET) 
 	public ModelAndView store_page(String ino, String email) {
-		return noticeService.getInteriorTop(ino, "test0@naver.com");
+		return noticeService.getInteriorTop(ino, "test@naver.com");
 	}
 	/**
 	 *  공지사항 수정 proc

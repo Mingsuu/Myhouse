@@ -18,6 +18,10 @@ public class yh_InteriorDAO {
 	private static String namespace="mapper.interior";
 	
 	
+	/** 전체 리스트 카운트 - 문의 */
+	public int getListQuestionCount(String ino) {
+		return sqlSession.selectOne(namespace+".question-count", ino); 
+	}
 	/** 전체 리스트 카운트 - 리뷰 */
 	public int getListReviewCount(String ino, String status) {
 		Map<String, String> param = new HashMap<String, String>();
@@ -72,8 +76,14 @@ public class yh_InteriorDAO {
 	}
 	
 	// 문의 페이지
-	public ArrayList<StoreIndexVO> getInteriorQeustion(String ino) {
-		List<StoreIndexVO> interior_question = sqlSession.selectList(namespace+".interior-question", ino);
+	public ArrayList<StoreIndexVO> getInteriorQeustion(String ino, int start, int end) {
+		Map<String, String> param = new HashMap<String, String>();
+		
+		param.put("ino",ino);
+		param.put("start", String.valueOf(start));
+		param.put("end", String.valueOf(end)); 
+		
+		List<StoreIndexVO> interior_question = sqlSession.selectList(namespace+".interior-question", param);
 		return (ArrayList<StoreIndexVO>)interior_question;
 	}
 	

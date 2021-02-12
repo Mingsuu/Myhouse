@@ -107,9 +107,9 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/interior_question_proc.do", method=RequestMethod.GET,
 					produces="text/plain;charset=UTF-8")
-	public String interior_question_proc(String ino) {
+	public String interior_question_proc(String ino, String qpage) {
 		System.out.println("store_index ino!!!---------->"+ino);
-		return interiorService.getInteriorQuestionProc(ino);
+		return interiorService.getInteriorQuestionProc(ino, qpage);
 	}
 	
 	
@@ -203,8 +203,6 @@ public class StoreController {
 		}else {
 			return interiorService.getStoreScrapProc(svo.getEmail(), ino); 
 		}
-		
-	
 		
 	}
 	
