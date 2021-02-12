@@ -708,7 +708,7 @@
 				</div>
 				<ul>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
@@ -746,7 +746,6 @@
 						<li class="cont-1">${MemberVO.rno}</li>
 						<li class="cont-2">
 							<a id="test1" class="cont2-btn">
-								<img src="http://localhost:9000/myhouse/images/notice_open.png" id="${status.count}" name="open" >
 								<label></label>
 							</a>
 						</li>
