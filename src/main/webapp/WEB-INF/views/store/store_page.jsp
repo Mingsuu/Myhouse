@@ -3949,20 +3949,29 @@
 		
 				var id = $(this).attr("id");
 				id = id.split("-");
-				gno[i] = id[2];
+				gno.push(id[2]);
 				e.preventDefault();
 
 			});
 		}); 
 	
-		 $(".buying-main").click(function(){
-		//	 $('.form-control option:selected').each(function(){
-			$.each(gno, function(index, item){
+
+		$(".buying-main").click(function(){
+			var ocount = new Array();
+			var cnt = '';
+			$.each(gno, function(index, item){ 
 				if($("#pro-order-"+item+" .form-control").val() != null) {
-					var ocount = $("#pro-order-"+item+" .form-control").val();
-					location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
+					 cnt = $("#pro-order-"+item+" .form-control").val();
+					 ocount.push(cnt);
+					 
 				}
 			});
+
+			alert(gno);
+			alert(ocount);
+			
+			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
+		}); 
 			
 				/* var gno = $(".main_order_gno").val();
 				alert(gno); */
@@ -3988,7 +3997,6 @@
 				 } */
 			//	});
 			 
-		 }); 
 		
 /* 		$(".selling-option-item__delete-main").each(function(i){
 			$(this).click(function(e){

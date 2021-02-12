@@ -26,6 +26,57 @@ public class yh_InteriorDAO {
 		return result;
 	}
 	
+	// 스토에서 바로구매 클릭시
+	public boolean getPayment(String email, String[] gnolist, String[] ocountlist) {
+		boolean result = false;
+		
+		Map<String, Object> order_param = new HashMap<String, Object>();
+		
+		
+		
+		order_param.put("email", email);           
+		
+		for(int i=0;i<gnolist.length;i++) {
+			
+			String gno = gnolist[i]; 
+			String ocount =ocountlist[i]; 
+
+			
+			order_param.put("gno", gno);
+			order_param.put("ocount", ocount);
+			
+		
+			System.out.println("dao"+gno);
+			System.out.println("dao"+ocount);
+		}
+		
+		
+		/*
+		 * Map<String, Object> orderMap;
+		 * 
+		 * List<Map<String, Object>> orderList = new ArrayList<Map<String, Object>>();
+		 * 
+		 * 
+		 * for(int i=0;i<gnolist.length;i++){ orderMap = new HashMap<String, Object>();
+		 * String gno = gnolist[i]; orderMap.put("gno", gno);
+		 * System.out.println("gno============>"+gno);
+		 * 
+		 * String ocount =ocountlist[i]; orderMap.put("ocount", ocount);
+		 * System.out.println("ocount============>"+ocount); orderList.add(orderMap); }
+		 * 
+		 * 
+		 * order_param.put("orderList", orderList);
+		 * System.out.println("orderList============>"+orderList);
+		 */
+		int value  = sqlSession.insert(namespace+".order-insert", order_param);
+		
+		if(value != 0) result = true;
+		
+		return result;
+	}
+	
+	
+	
 	
 	/** 전체 리스트 카운트 - 문의 */
 	public int getListQuestionCount(String ino) {

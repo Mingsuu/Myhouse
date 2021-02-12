@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,30 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		return mv;
 		
+	}
+	
+	// 스토어에서 바로구매 클릭시
+	public String getPayment(String email, String[] gnolist, String[] ocountlist) {
+		String result= "";
+		boolean dao_result = interiorDAO.getPayment(email, gnolist, ocountlist);
+		System.out.println("service====>" +email);
+		System.out.println("service====>" +gnolist);
+		System.out.println("service====>" +ocountlist);
+		
+		/*
+		 * String gnolist1 ="&gno="; String ocountlist1 ="&ocount=";
+		 * 
+		 * for(int i=0; i<gnolist.length; i++) { gnolist1 += gnolist[i]; } for(int i=0;
+		 * i<ocountlist.length; i++) { ocountlist1 += ocountlist[i]; }
+		 */
+		
+		if(dao_result) {
+			result = "redirect:/store_payment.do";
+		} else {
+			System.out.println("error");
+		}
+		
+		return result;
 	}
 	
 	
