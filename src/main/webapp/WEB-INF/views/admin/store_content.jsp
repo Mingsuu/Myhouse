@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>스윗트홈 :: 수업관리</title>
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://localhost:9000/myhouse/css/am-pagination.css">
+<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
+<script src="http://localhost:9000/myhouse/js/am-pagination.js"></script> <!-- 제이쿼리 라이브러리 -->
 <style>
 	#newsroom-main {
 		display:inline-block;
@@ -101,6 +106,7 @@
 	    float: left;
 	    width: 853px;
 	    margin-top: 15px;
+	    overflow-y: hidden; overflow-x: hidden;
 	}
 	.main-section2 .section2-title {
 	    display: inline-block;
@@ -250,7 +256,7 @@
 	    display: inline-block;
 	    float: left;
 	    width: 853px;
-	    height:10px;
+	    height:200px;
 	    margin-left:-60px;
 	}
 	.main-section3 .section-paging {
@@ -489,26 +495,58 @@
      border:none;
      font-size:14px;
     }
+    	.iframe1{
+		overflow-y: hidden; overflow-x: hidden;
+	}
 </style>
-<script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$("#accept").click(function(){
-			var link='class_contentProc.jsp?wbutton=accept&cid='+${ino};
-			location.href=link;
-		});
 		
-		$("#reject").click(function(){
-			var link='class_contentProc.jsp?wbutton=reject&cid='+${ino};
-			location.href=link;
-		});
+		 $("#reject").click(function(){
+			 var inos = "inos="+ $("#ino").val();
+	               //서버전송                         
+	               $.ajax({
+	                   url:"stateUpdate.do?"+inos,
+	                   success:function(result) {
+	                    if(result != 0) {
+	                  	  location.replace('http://localhost:9000/myhouse/store_list.do?rpage=1');
+	                    } else {
+	                  	  return false;
+	                    }
+	                      
+	                   }
+	                }); 
+	               
+	               
+	             
+	   });  //reject
+	   
+	   $("#accept").click(function(){
+	          var inos = "inos=" + $("#ino").val();
+	               //서버전송                         
+	               $.ajax({
+	                   url:"stateUpdate2.do?"+inos,
+	                   success:function(result) {
+	                    if(result != 0) {
+	                  	  location.replace('http://localhost:9000/myhouse/store_list.do?rpage=1');
+	                    } else {
+	                  	  return false;
+	                    }
+	                      
+	                   }
+	                }); 
+	               
+	               
+	             
+	   });  //reject
+		
 	});
 </script>
 </head>
 <body>
 	<!--  header  -->
 	<jsp:include page="../header1.jsp" />
-
+	<input type="hidden" id="ino" value="${ino}">
 	<div class="content">
 		<div style="width:100%; height:50px;"></div>
 		<aside class="admin_main">
@@ -519,15 +557,14 @@
 				</div>
 				<ul>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="notice_list_admin.do?rpage=1">공지사항</a></li>
-					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do">스토어관리</a></li>
+					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="store_list.do?rpage=1">스토어관리</a></li>
 					<li><img src="http://localhost:9000/myhouse/images/admin_list.png"><a href="member_list.do?rpage=1">회원관리</a></li>				</ul>
 			</nav>
 		</aside>
 		<!-- board_ newsroom201301 -->
 		<div id="newsroom-main" class="interpark-board2013">
 			<div class="main-section1" style="
-					    height: 35px;
-					    font-size: 16px;
+					    font-size: 25px;
 					    font-weight: bold;
 					    text-align: center;
 					    color: #333;
@@ -536,7 +573,7 @@
 			</div>
 
 			<div class="main-section2" id="section2">
-				<iframe width="800px"  height="800px" src="store_page_sample.do?ino=${ino}">
+				<iframe style="overflow-y: hidden; overflow-x: hidden;" width="800px"  height="800px" src="store_page_sample.do?ino=${ino}">
 				</iframe>
 				<div class="main-section3">
 				<button type=button  class="accept" id="accept">수락</button>

@@ -47,23 +47,23 @@ public class NoticeServiceImpl implements NoticeService{
 			
 			
 			// 문의페이지
-			ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino); 
+			//ArrayList<StoreIndexVO> interior_question = interiorDAO.getInteriorQeustion(ino); 
 
-			StoreIndexVO qvo = interior_question.get(0);
-			
-			for(int i=0; i<interior_question.size(); i++ ) {
-				qvo = interior_question.get(i);
-				System.out.println(qvo);
-			}
+			/*
+			 * StoreIndexVO qvo = interior_question.get(0);
+			 * 
+			 * for(int i=0; i<interior_question.size(); i++ ) { qvo =
+			 * interior_question.get(i); System.out.println(qvo); }
+			 */
 			
 			mv.addObject("interior_top", interior_top);
 			mv.addObject("vo", vo); 
 			mv.addObject("ino", ino);
 			mv.addObject("email", email);
 			mv.addObject("scrap_exist", scrap_exist);
-			mv.addObject("interior_question", interior_question);
-			mv.addObject("qvo", qvo);
-			mv.setViewName("/store/store_page");
+			//mv.addObject("interior_question", interior_question);
+			//mv.addObject("qvo", qvo);
+			mv.setViewName("/admin/store_page_sample");
 			
 			//System.out.println("service-- ino ----->"+interior_top);
 			
@@ -103,6 +103,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 		ArrayList<interiorVO> list = interiorDAO2.getInteriorList3(start,end); 
 		ArrayList<MemberVO> m_list=memberDAO.getInfo2(list);
+		System.out.println("스토어 리스트 사이즈"+list.size());
 		mv.addObject("list", list);
 		mv.addObject("m_list", m_list);
 		mv.addObject("dbCount", dbCount);
