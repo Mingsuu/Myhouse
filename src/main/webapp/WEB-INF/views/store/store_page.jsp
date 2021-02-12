@@ -4057,6 +4057,7 @@
 					</p>
 				</div> <!-- production-selling-header -->
 				<div class="production-selling-option-form production-selling-overview__option-form">
+				<form class="card-collection-form container" name="StoreBasketForm" action="store_basket_proc.do" method="post" enctype="multipart/form-data">
 					<div class="selling-option-form-content deal-selling-option-form-content production-selling-option-form__form">
 						<div class="production-select-dropdown">
 							<div class="production-select-dropdown__button">
@@ -4096,12 +4097,13 @@
 							<c:forEach var="vo" items="${interior_top }" >
 							<li class="order-list order-none" id="pro-order-${vo.gno }" ><article class="selling-option-item">
 								<h1 class="selling-option-item__production">${vo.goods_name }</h1>
-							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> -->
+							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> --> 
 								<button class="selling-option-item__delete-main" type="button" aria-label="삭제" id="order-del-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 								<div class="selling-option-item__controls">
 									<div class="selling-option-item__quantity-main">
 										<div class="input-group select-input option-count-input">
-										<select class="form-control"  id="${vo.gno }">
+										<input type="hidden" name="gno" value="${vo.gno}">
+										<select class="form-control"  id="${vo.gno }" name="bcount">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -4133,6 +4135,7 @@
 						<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
 						<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
 					</div>
+					</form>
 				</div> <!-- production-selling-option-form production-selling-overview__option-form -->
 			</div>
 			
