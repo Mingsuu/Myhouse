@@ -17,13 +17,56 @@ public class yh_InteriorDAO {
 	
 	private static String namespace="mapper.interior";
 	
-	// 주소 입력
-	public boolean getAddrInsert(String email, String addr, String addr_num, String phone) {
+	// 스토에서 바로구매 클릭시
+		public boolean getPayFinish(String email, String[] onolist) {
+			boolean result = false;
+			
+			Map<String, Object> order_param = new HashMap<String, Object>();
+			int value = 0;
+			
+			
+			order_param.put("email", email);           
+			
+			for(int i=0;i<onolist.length;i++) {
+				
+				String ono =onolist[i]; 
+				
+				order_param.put("ono", ono);
+				
+				int value2 = sqlSession.selectOne(namespace+".pay-ostatus-insert2", order_param);
+				if(value2 == 0) {
+					value = sqlSession.update(namespace+".pay-ostatus-insert", order_param);
+				}
+			}
+			if(value != 0) result = true;
+			
+			return result;
+		}
+	
+	// 주소 입력 ---- 결제 클릭시
+	public boolean getPayAddrInsert(String email, String name, String phone, String memo) {
 		boolean result = false;
 		
 		Map<String, String> param = new HashMap<String, String>();
 		
 		param.put("email", email);
+		param.put("name", name);
+		param.put("phone", phone);
+		param.put("memo", memo);
+		
+		int value = sqlSession.update(namespace+".pay-addr-insert", param);
+		if(value !=0) result = true;
+		
+		return result;
+	}
+	// 주소 입력
+	public boolean getAddrInsert(String email, String name, String addr, String addr_num, String phone) {
+		boolean result = false;
+		
+		Map<String, String> param = new HashMap<String, String>();
+		
+		param.put("email", email);
+		param.put("name", name);
 		param.put("addr", addr);
 		param.put("addr_num", addr_num);
 		param.put("phone", phone);
@@ -33,6 +76,7 @@ public class yh_InteriorDAO {
 		
 		return result;
 	}
+	
 	
 	// 스토에서 바로구매 클릭시
 	public boolean getPayment(String email, String[] gnolist, String[] ocountlist) {
@@ -68,6 +112,12 @@ public class yh_InteriorDAO {
 		if(value != 0) result = true;
 		
 		return result;
+	}
+	// 구매 페이지 - 주문자 리스트 
+	public ArrayList<StoreIndexVO> getPaymentAddrList(String email) {
+		List<StoreIndexVO> order_list = sqlSession.selectList(namespace+".order-select-addr", email);	
+		
+		return (ArrayList<StoreIndexVO>)order_list;
 	}
 	// 구매 페이지 - 리스트 
 	public ArrayList<StoreIndexVO> getPaymentList(String email, String[] gnolist) {

@@ -36,9 +36,20 @@ public class StoreController {
 	 * store_pay_fin_card 화면
 	 */
 	@RequestMapping(value="/store_pay_fin_card.do",method=RequestMethod.GET) 
-	public String store_pay_fin_card() {
+	public ModelAndView store_pay_fin_card(String email, String ono) {
 		
-		return "/store/store_pay_fin_card";
+		StringTokenizer ono_ = new StringTokenizer(ono,",");
+		
+		String[] onolist = new String[ono_.countTokens()];
+
+		for(int i=0; i<onolist.length; i++) {
+			onolist[i] = ono_.nextToken();
+		}
+		
+		return interiorService.getPayFinish(email, onolist);
+		
+		
+		//return "/store/store_pay_fin_card";
 	}
 	/*
 	 * store_pay_finish 화면
@@ -49,24 +60,89 @@ public class StoreController {
 		return "/store/store_pay_finish";
 	}
 	
+	
+	/*
+	 * store_payment - bank_pay 결제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/bank_pay.do",method=RequestMethod.GET,
+	produces="text/plain;charset=UTF-8") 
+	public String bank_pay(String email, String gno) {
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
+		}
+		return interiorService.getAmountPay(email, gnolist);
+	}
+	
+	/*
+	 * store_payment - nice_card_pay 결제
+	 */
+	@ResponseBody
+	@RequestMapping(value="/nice_card_pay.do",method=RequestMethod.GET,
+	produces="text/plain;charset=UTF-8") 
+	public String nice_card_pay(String email, String gno) {
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
+		}
+		return interiorService.getAmountPay(email, gnolist);
+	}
+	/*
+	 * store_payment - 주문금액
+	 */
+	@ResponseBody
+	@RequestMapping(value="/amount_pay.do",method=RequestMethod.GET,
+				produces="text/plain;charset=UTF-8") 
+	public String amount_pay(String email, String gno) {
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
+		}
+			return interiorService.getAmountPay(email, gnolist);
+	}
+	
+	/*
+	 * store_payment - 주소 리스트
+	 */
+	@ResponseBody
+	@RequestMapping(value="/addr_list.do",method=RequestMethod.GET,
+				produces="text/plain;charset=UTF-8") 
+	public String addr_list(String email) {
+		return interiorService.getAddrList(email);
+	}
+	/*
+	 * store_payment - 주소 입력 --- 결제하기 클릭
+	 */
+	@ResponseBody
+	@RequestMapping(value="/pay_addr_insert.do",method=RequestMethod.GET) 
+	public String addr_insert(String email, String name, String phone, String memo) {
+		System.out.println("controller!!!!!!!---->"+email);
+		System.out.println("controller!!!!!!!!!---->"+phone);
+		System.out.println("controller!!!!!!!!!---->"+memo);
+		return interiorService.getPayAddrInsert(email, name, phone, memo);
+	}
 	/*
 	 * store_payment - 주소 입력
 	 */
 	@ResponseBody
 	@RequestMapping(value="/addr_insert.do",method=RequestMethod.GET) 
-	public String addr_insert(String email, String addr, String addr_num, String phone) {
-		System.out.println("controller!!!!!!!---->"+email);
-		System.out.println("controller!!!!!!!!!!---->"+addr);
-		System.out.println("controller!!!!!!!!!---->"+addr_num);
-		System.out.println("controller!!!!!!!!!---->"+phone);
-		return interiorService.getAddrInsert(email, addr, addr_num, phone);
+	public String addr_insert(String email, String name, String addr, String addr_num, String phone) {
+		return interiorService.getAddrInsert(email, name, addr, addr_num, phone);
 	}
 	
-	/*
-	 * store_payment 화면
-	 */
+	
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
-		public ModelAndView store_payment(String email, String gno, String ocount) {
+	public ModelAndView store_payment(String email, String gno, String ocount) {
 		
 		
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
@@ -83,11 +159,9 @@ public class StoreController {
 		}
 		
 		
-			return interiorService.getPayment(email, gnolist, ocountlist);
-		}
+		return interiorService.getPayment(email, gnolist, ocountlist);
+	}
 		
-	
-	
 	/*
 	 * store_page :: question - delete
 	 */
@@ -104,7 +178,7 @@ public class StoreController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/interior_question_answer_update_proc.do", method=RequestMethod.GET,
-	produces="text/plain;charset=UTF-8")
+					produces="text/plain;charset=UTF-8")
 	public String interior_question_answer_update_proc(String qno, String ino) {
 		System.out.println("store_index qno!!!---------->"+qno);
 		System.out.println("store_index ino!!!---------->"+ino);

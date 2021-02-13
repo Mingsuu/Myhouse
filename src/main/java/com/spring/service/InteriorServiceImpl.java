@@ -23,10 +23,113 @@ public class InteriorServiceImpl implements InteriorService{
 	@Autowired
 	private yh_InteriorDAO interiorDAO;
 	
+	
+	// 스토어에서 바로구매 클릭시
+		public ModelAndView getPayFinish(String email, String[] onolist) {
+			ModelAndView mv = new ModelAndView();
+			boolean result = interiorDAO.getPayFinish(email, onolist);
+			
+			System.out.println("service====>" +email);
+			System.out.println("service====>" +onolist);
+			
+			mv.addObject("result", result);
+			mv.addObject("email", email);
+			mv.addObject("onolist", onolist);
+			mv.setViewName("/store/store_pay_fin_card");
+			
+			return mv;
+	}
+	
+	// 주문금액
+	public String getAmountPay(String email, String[] gnolist) {
+		ArrayList<StoreIndexVO> amount_pay = interiorDAO.getPaymentList(email, gnolist);
+		
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : amount_pay) {
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("rno", vo.getRno());
+			jobj.addProperty("gno", vo.getGno());
+			jobj.addProperty("ino", vo.getIno());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			jobj.addProperty("goods_price", vo.getGoods_price());
+			jobj.addProperty("ono", vo.getOno());
+			jobj.addProperty("email", vo.getEmail());
+			jobj.addProperty("ocount", vo.getOcount());
+			jobj.addProperty("ititle", vo.getItitle());
+			jobj.addProperty("company", vo.getCompany());
+			jobj.addProperty("addr", vo.getAddr());
+			jobj.addProperty("addr_num", vo.getAddr_num());
+			jobj.addProperty("memo", vo.getMemo());
+			jobj.addProperty("phone", vo.getPhone());
+			jobj.addProperty("name", vo.getName());
+			
+			jarry.add(jobj);
+		}
+		
+		jdata.add("amount_pay", jarry);
+		jdata.addProperty("email", email);
+		jdata.addProperty("gnolist", String.valueOf(gnolist));
+		
+		return gson.toJson(jdata);
+	}
+	
+	// 주소 리스트
+	public String getAddrList(String email) {
+		ArrayList<StoreIndexVO> paylist = interiorDAO.getPaymentAddrList(email);
+		
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : paylist) {
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("rno", vo.getRno());
+			jobj.addProperty("gno", vo.getGno());
+			jobj.addProperty("ino", vo.getIno());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			jobj.addProperty("goods_price", vo.getGoods_price());
+			jobj.addProperty("ono", vo.getOno());
+			jobj.addProperty("email", vo.getEmail());
+			jobj.addProperty("ocount", vo.getOcount());
+			jobj.addProperty("ititle", vo.getItitle());
+			jobj.addProperty("company", vo.getCompany());
+			jobj.addProperty("addr", vo.getAddr());
+			jobj.addProperty("addr_num", vo.getAddr_num());
+			jobj.addProperty("memo", vo.getMemo());
+			jobj.addProperty("phone", vo.getPhone());
+			jobj.addProperty("name", vo.getName());
+			
+			jarry.add(jobj);
+		}
+		
+		jdata.add("paylist", jarry);
+		jdata.addProperty("email", email);
+		
+		return gson.toJson(jdata);
+	}
+	
 	// 주소 입력하기
-	public String getAddrInsert(String email, String addr, String addr_num, String phone) {
+	public String getPayAddrInsert(String email, String name, String phone, String memo) {
 		String result="";
-		boolean dao_result = interiorDAO.getAddrInsert(email, addr, addr_num, phone);
+		boolean dao_result = interiorDAO.getPayAddrInsert(email, name, phone, memo);
+		System.out.println("s!!!!!!!---->"+email);
+		System.out.println("s!!!!!!!!!---->"+phone);
+		if(dao_result) {
+			result="redirect:/store_payment.do";
+		} else {
+			System.out.println("error");
+		}
+		
+		return result;
+		
+	}
+	// 주소 입력하기
+	public String getAddrInsert(String email, String name, String addr, String addr_num, String phone) {
+		String result="";
+		boolean dao_result = interiorDAO.getAddrInsert(email, name, addr, addr_num, phone);
 		System.out.println("s!!!!!!!---->"+email);
 		System.out.println("s!!!!!!!!!!---->"+addr);
 		System.out.println("s!!!!!!!!!---->"+addr_num);
@@ -41,11 +144,13 @@ public class InteriorServiceImpl implements InteriorService{
 		
 	}
 	
+	
 	// 스토어에서 바로구매 클릭시
 	public ModelAndView getPayment(String email, String[] gnolist, String[] ocountlist) {
 		ModelAndView mv = new ModelAndView();
 		boolean result = interiorDAO.getPayment(email, gnolist, ocountlist);
 		
+		ArrayList<StoreIndexVO> payment_addr = interiorDAO.getPaymentAddrList(email);
 		ArrayList<StoreIndexVO> payment = interiorDAO.getPaymentList(email, gnolist);
 		System.out.println("service====>" +email);
 		System.out.println("service====>" +gnolist);
@@ -56,6 +161,7 @@ public class InteriorServiceImpl implements InteriorService{
 		mv.addObject("gnolist", gnolist);
 		mv.addObject("ocountlist", ocountlist);
 		mv.addObject("payment", payment);
+		mv.addObject("payment_addr", payment_addr);
 		mv.setViewName("/store/store_payment");
 		
 		return mv;

@@ -6,6 +6,15 @@
     
 <mapper namespace="mapper.interior">
 
+<!-- 주문자 배송지 나열하기 -->
+<select id="order-select-addr" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name,
+	row_number() over(partition by o.ino order by ono asc) as RowIdx
+	from (select distinct o.gno, g.ino, goods_simage, goods_name, goods_price, ono, o.email, ocount, ostatus
+	from h_goods g, h_order o where g.gno = o.gno) o, (select distinct g.ino, ititle, company from h_interior i , h_goods g where i.ino=g.ino) i,
+	(select email, addr, addr_num, memo, phone, name from h_member) m
+	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' ) where RowIdx='1'
+</select>
 <!-- 주문 상품 나열하기 -->
 <select id="order-select" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
 	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name
@@ -19,12 +28,24 @@
 	</foreach>
 </select>
 <select id="order-select2" parameterType="map" resultType="int">
-	select count(*) from h_order where gno=#{gno} and ocount=#{ocount}
+	select count(*) from h_order where gno=#{gno} and ocount=#{ocount} and email=#{email} and ostatus='0'
 </select>
+<select id="pay-ostatus-insert2" parameterType="map" resultType="int">
+	select count(*) from h_order where ostatus='1' and ono=#{ono} and email=#{email}
+</select>
+
+<!-- 배송지 입력 :: 결제할떄!! 저장 -->
+<update id="pay-addr-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	update h_member set phone=#{phone}, name=#{name}, memo=#{memo} where email=#{email}
+</update>
+<!-- 배송지 입력 :: 결제할떄!! 저장 -->
+<update id="pay-ostatus-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	update h_order set ostatus='1', odate=sysdate where email=#{email} and ono=#{ono}
+</update>
 
 <!-- 배송지 입력 :: 저장 -->
 <update id="addr-insert" parameterType="com.myhouse.vo.StoreIndexVO">
-	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone} where email=#{email}
+	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone}, name=#{name} where email=#{email}
 </update>
 
 <!-- 바로구매 클릭 - order에 추가하기 -->
@@ -34,7 +55,12 @@
 
 <!-- 전체 리스트 카운트 - 문의 -->
 <select id="question-count" parameterType="java.lang.String" resultType="int">
-	select distinct count(qno)over(partition by ino)  from h_question q, h_goods g where q.gno=g.gno and ino=#{ino}
+	<if test="qno != null">
+	select distinct count(qno)over(partition by ino) from h_question q, h_goods g where q.gno=g.gno and ino=#{ino}
+	</if>
+	<if test="qno == null">
+	select distinct count(qno) from h_question q, h_goods g where q.gno=g.gno and ino=#{ino}
+	</if>
 </select>
 
 <!-- 전체 리스트 카운트 - 리뷰 -->
