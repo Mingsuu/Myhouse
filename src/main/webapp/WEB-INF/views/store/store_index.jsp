@@ -575,6 +575,8 @@
 	}
 	.production-item .production-item-price {
 	    margin: 2px 0 0;
+	    display:inline-block;
+	    margin-right:80px;
 	}
 	.production-item-price {
 	    display: block;
@@ -593,10 +595,12 @@
 	    margin: 3px 0 0;
 	}
 	.production-item-stats {
-	    font-size: 12px;
+	    font-size: 15px;
 	    color: #9e9e9e;
 	    line-height: 16px;
 	    font-weight: 700;
+	    display:inline-block;
+	    
 	}
 	.production-item-stats--review>.icon {
 	    width: 1.1em;
@@ -1124,9 +1128,16 @@
 <script>
 $(document).ready(function(){
 	/* 전체 index */
-	 cateList("", "", "","");
+	 cateList("", "", "","","");
 	// 스크랩 유무
 	scrap_exist();
+	
+	var status = '인기순';
+	
+	$(document).on("click","input[name='btn-filter']",function(event){
+		 status = $(this).val();
+	});
+	
 	
 	/* 사이드 카테고리 선택 */
  	if("${category}" == "0" )  {
@@ -1364,7 +1375,7 @@ $(document).ready(function(){
 				$("#chk-tag-ul").removeClass("category-filter-bar-tag-list-none");
 				$("#chk-tag-ul").addClass("category-filter-bar-tag-list");
 				
-				 cateList(tone, color, season, "");
+				 cateList(tone, color, season, "", status);
 				
 			}else{
 
@@ -1389,12 +1400,12 @@ $(document).ready(function(){
 						 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
 						 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
 						
-						 cateList(tone, color, season, "");
+						 cateList(tone, color, season, "", status);
 					} else {
 						 $("li#"+chk_val).remove();
-						 cateList(tone, color, season, "");
+						 cateList(tone, color, season, "", status);
 					}
-					 cateList(tone, color, season, "");
+					 cateList(tone, color, season, "", status);
 		}
 		
 			
@@ -1423,16 +1434,17 @@ $(document).ready(function(){
 			if($('li.category-filter-bar-tag-list__item').length == 0){   
 				 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
 				 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
-				 cateList(tone, color, season, "");
+				 cateList(tone, color, season, "", status);
 			}
 	});
 	
 	var ino = new Array();
 	
-	function cateList(tone, color, season, rpage){
+	
+	function cateList(tone, color, season, rpage, status){
 		
 		 $.ajax({
-				url:"category_list.do?category=${category}&tone="+tone+"&color="+color+"&season="+season+"&rpage="+rpage,
+				url:"category_list.do?category=${category}&tone="+tone+"&color="+color+"&season="+season+"&rpage="+rpage+"&status="+status,
 				success:function(result) {
 					
 					var jdata = JSON.parse(result);
@@ -1457,17 +1469,13 @@ $(document).ready(function(){
 						output += '<span class="production-item__header__name">'+jdata.category_list[i].ititle+'</span>';
 						output += '</h1>';
 						output += '<span class="production-item-price">';
-						output += '<span class="production-item-price__rate">39<span class="percentage">%</span></span>';
-						output += '<span class="production-item-price__price">'+jdata.category_list[i].goods_price+' 외</span>';
+						output += '<span class="production-item-price__price">'+jdata.category_list[i].goods_price+'원 외</span>';
 						output += '</span>';
 						output += '<p class="production-item-stats production-item-stats--review">';
 						output += '<svg class="icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"></path></svg>';
 						output += '<strong class="avg">'+jdata.category_list[i].star_avg+'</strong>';
 						output += '리뷰 '+jdata.category_list[i].star_count+'';
 						output += '</p>';
-						output += '<span class="production-item-badge-list">';
-						output += '<svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg>';
-						output += '</span>';
 						output += '</div>';
 						output += '</article>';
 						output += '</div>';
@@ -1482,11 +1490,12 @@ $(document).ready(function(){
 					
 					var pagee = '<div id="ampaginationsm" style="text-align:center;"></div>';
 					
+					
 					var output3 = '<p class="category-feed-filter-secondary__summary">전체'+jdata.dbcount+'개</p>';
 					output3 += '<div class="category-feed-filter-secondary__right">';
 					output3 += '<div class="category-feed-filter-secondary__right__item">';
 					output3 += '<div class="drop-down panel-drop-down">';
-					output3 += '<button class="category-filter-bar-order-button" type="button" value="인기순"  id="btn-list-2">인기순';
+					output3 += '<button class="category-filter-bar-order-button" type="button" value="인기순"  name="btn-filter" id="btn-list-2">인기순';
 					output3 += '<svg class="icon" width="8" height="8" viewBox="0 0 8 8" preserveAspectRatio="xMidYMid meet"><path fill="#BDBDBD" d="M0 2l4 4 4-4z"></path></svg></button></div>';
 					output3 += '</div>';
 					output3 += '<div class="btn-none" id="btn-orderby">';
@@ -1494,8 +1503,7 @@ $(document).ready(function(){
 					output3 += '<div class="animated-popout drop-down__content panel-drop-down__content property-filter-bar-drop-down open open-active">';
 					output3 += '<div class="drop-down-panel" data-panel-title="정렬" data-panel-parents="">';
 					output3 += '<ul class="property-filter-panel-entry-list">';
-					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
-					output3 += '<input type="radio" class="fs-4H list-chk" value="판매순"  name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">판매순</span></div></div></button></li>';
+					
 					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item selected " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
 					output3 += '<input type="radio" class="fs-4H list-chk" value="인기순" checked="" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">인기순</span></div></div></button></li>';
 					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
@@ -1504,8 +1512,6 @@ $(document).ready(function(){
 					output3 += '<input type="radio" class="fs-4H list-chk" value="높은가격순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">높은가격순</span></div></div></button></li>';
 					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
 					output3 += '<input type="radio" class="fs-4H list-chk" value="많은리뷰순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">많은리뷰순</span></div></div></button></li>';
-					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
-					output3 += '<input type="radio" class="fs-4H list-chk" value="유저사진 많은순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">유저사진 많은순</span></div></div></button></li>';
 					output3 += '<li class="property-filter-panel-entry-list__item-wrap"><button class="property-filter-panel-entry-list__item " type="button"><div class="property-filter-panel-entry-list__item__header "><div class="property-filter-panel-entry-list__item__group"><div class="_2xClz input-type">';
 					output3 += '<input type="radio" class="fs-4H list-chk" value="최신순" name="btn-filter"><span class="_2ekY2"></span></div><span class="property-filter-panel-entry-list__item__title">최신순</span></div></div></button></li></ul></div></div></div>';
 					output3 += '</div>';
@@ -1536,6 +1542,7 @@ $(document).ready(function(){
 				}
 			}); 
 	} //catelist
+	
 	
 	
 	/* 스크랩 유무에 따른 표시 여부 */
@@ -1579,7 +1586,7 @@ $(document).ready(function(){
           
           //
           jQuery("#ampaginationsm").on('am.pagination.change',function(e){
-             cateList(tone, color, season, e.page);
+             cateList(tone, color, season, e.page, status);
           });
     }//page
 	
@@ -1609,10 +1616,10 @@ $(document).ready(function(){
 					 $("li#"+chk_val).remove();
 					 $("#chk-tag-ul").addClass("category-filter-bar-tag-list-none");
 					 $("#chk-tag-ul").removeClass("category-filter-bar-tag-list");
-					 cateList(tone, color, season, "");
+					 cateList(tone, color, season, "", status);
 				} else {
 					 $("li#"+chk_val).remove();
-					 cateList(tone, color, season, "");
+					 cateList(tone, color, season, "", status);
 				}
 	}
 	});

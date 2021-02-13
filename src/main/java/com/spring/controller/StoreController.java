@@ -36,8 +36,8 @@ public class StoreController {
 	 * store_pay_fin_card 화면
 	 */
 	@RequestMapping(value="/store_pay_fin_card.do",method=RequestMethod.GET) 
-	public ModelAndView store_pay_fin_card(String email, String ono) {
-		
+	public ModelAndView store_pay_fin_card(HttpSession session, String ono) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		StringTokenizer ono_ = new StringTokenizer(ono,",");
 		
 		String[] onolist = new String[ono_.countTokens()];
@@ -45,8 +45,13 @@ public class StoreController {
 		for(int i=0; i<onolist.length; i++) {
 			onolist[i] = ono_.nextToken();
 		}
+
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getPayFinish(svo.getEmail(), onolist);
+		}
 		
-		return interiorService.getPayFinish(email, onolist);
 		
 		
 		//return "/store/store_pay_fin_card";
@@ -67,7 +72,8 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/bank_pay.do",method=RequestMethod.GET,
 	produces="text/plain;charset=UTF-8") 
-	public String bank_pay(String email, String gno) {
+	public String bank_pay(HttpSession session, String gno) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
 		
 		String[] gnolist = new String[gno_.countTokens()];
@@ -75,7 +81,13 @@ public class StoreController {
 		for(int i=0; i<gnolist.length; i++) {
 			gnolist[i] = gno_.nextToken();
 		}
-		return interiorService.getAmountPay(email, gnolist);
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getAmountPay(svo.getEmail(), gnolist);
+		}
+		
 	}
 	
 	/*
@@ -84,7 +96,8 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/nice_card_pay.do",method=RequestMethod.GET,
 	produces="text/plain;charset=UTF-8") 
-	public String nice_card_pay(String email, String gno) {
+	public String nice_card_pay(HttpSession session, String gno) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
 		
 		String[] gnolist = new String[gno_.countTokens()];
@@ -92,7 +105,14 @@ public class StoreController {
 		for(int i=0; i<gnolist.length; i++) {
 			gnolist[i] = gno_.nextToken();
 		}
-		return interiorService.getAmountPay(email, gnolist);
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getAmountPay(svo.getEmail(), gnolist);
+		}
+		
+		
 	}
 	/*
 	 * store_payment - 주문금액
@@ -100,7 +120,8 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/amount_pay.do",method=RequestMethod.GET,
 				produces="text/plain;charset=UTF-8") 
-	public String amount_pay(String email, String gno) {
+	public String amount_pay(HttpSession session, String gno) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
 		
 		String[] gnolist = new String[gno_.countTokens()];
@@ -108,7 +129,12 @@ public class StoreController {
 		for(int i=0; i<gnolist.length; i++) {
 			gnolist[i] = gno_.nextToken();
 		}
-			return interiorService.getAmountPay(email, gnolist);
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getAmountPay(svo.getEmail(), gnolist);
+		}
+		
 	}
 	
 	/*
@@ -117,33 +143,52 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/addr_list.do",method=RequestMethod.GET,
 				produces="text/plain;charset=UTF-8") 
-	public String addr_list(String email) {
-		return interiorService.getAddrList(email);
+	public String addr_list(HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getAddrList(svo.getEmail());
+		}
+		
 	}
 	/*
 	 * store_payment - 주소 입력 --- 결제하기 클릭
 	 */
 	@ResponseBody
 	@RequestMapping(value="/pay_addr_insert.do",method=RequestMethod.GET) 
-	public String addr_insert(String email, String name, String phone, String memo) {
-		System.out.println("controller!!!!!!!---->"+email);
+	public String addr_insert(HttpSession session, String name, String phone, String memo) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("controller!!!!!!!!!---->"+phone);
 		System.out.println("controller!!!!!!!!!---->"+memo);
-		return interiorService.getPayAddrInsert(email, name, phone, memo);
+		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getPayAddrInsert(svo.getEmail(), name, phone, memo);
+		}
+		
 	}
 	/*
 	 * store_payment - 주소 입력
 	 */
 	@ResponseBody
 	@RequestMapping(value="/addr_insert.do",method=RequestMethod.GET) 
-	public String addr_insert(String email, String name, String addr, String addr_num, String phone) {
-		return interiorService.getAddrInsert(email, name, addr, addr_num, phone);
+	public String addr_insert(HttpSession session, String name, String addr, String addr_num, String phone) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getAddrInsert(svo.getEmail(), name, addr, addr_num, phone);
+		}
+		
 	}
 	
 	
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
-	public ModelAndView store_payment(String email, String gno, String ocount) {
-		
+	public ModelAndView store_payment(HttpSession session, String gno, String ocount) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
 		StringTokenizer ocount_ = new StringTokenizer(ocount,",");
@@ -158,8 +203,13 @@ public class StoreController {
 			ocountlist[i] = ocount_.nextToken();
 		}
 		
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getPayment(svo.getEmail(), gnolist, ocountlist);
+		}
 		
-		return interiorService.getPayment(email, gnolist, ocountlist);
+		
 	}
 		
 	/*
@@ -212,10 +262,19 @@ public class StoreController {
 	 * store_page :: question - write
 	 */
 	@RequestMapping(value="/interior_question_insert.do", method=RequestMethod.POST)
-	public String interior_question_insert(StoreIndexVO vo) {
-		vo.setEmail("test0@naver.com");
-		return interiorService.getInteriorQuestionInsert(vo);
+	public String interior_question_insert(StoreIndexVO vo, HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		vo.setEmail(svo.getEmail());
+		
+		if(vo.getEmail() == null) {
+			return null;
+		}else {
+			return interiorService.getInteriorQuestionInsert(vo);
+		}
 	}
+	
+
+	
 	
 	/*
 	 * store_page :: question 화면
@@ -233,15 +292,22 @@ public class StoreController {
 	 * store_page :: review - write
 	 */
 	@RequestMapping(value="/interior_review_insert.do", method=RequestMethod.POST)
-	public String interior_review_insert(StoreIndexVO vo, HttpServletRequest request) {
-		
+	public String interior_review_insert(StoreIndexVO vo, HttpServletRequest request, HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		String path1 = request.getSession().getServletContext().getRealPath("/");
 		String path2 = "\\resources\\upload\\";
-		vo.setEmail("test0@naver.com");
+		vo.setEmail(svo.getEmail());
 		vo.setSavepath(path1+path2);
+		if(vo.getEmail() == null) {
+			return null;
+		} else {
+			return interiorService.getInteriorReviewInsert(vo);
+			
+		}
 		
-		return interiorService.getInteriorReviewInsert(vo);
 	}
+	
+	
 	
 	/*
 	 * store_page :: review - 상품리스트 선택
@@ -253,7 +319,6 @@ public class StoreController {
 		return interiorService.getInteriorReviewGoodsList(gno);
 	}
 	
-
 	/*
 	 * store_page :: review - 베스트순
 	 */
@@ -264,27 +329,36 @@ public class StoreController {
 		return interiorService.getInteriorReview(ino, status, rpage);
 	}
 	
-	
-	
 	/*
 	 * store_page :: 스크랩 처리 :: 삭제
 	 */
 	@RequestMapping(value="/interior_scrap_del_proc.do", method=RequestMethod.GET)
-	public ModelAndView interior_scrap_del_proc(String email, String ino) {
+	public ModelAndView interior_scrap_del_proc(HttpSession session, String ino) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("store_index---------->"+ino);
-		System.out.println("store_index---------->"+email);
-		return interiorService.getInteriorScrapDelProc("test0@naver.com", ino);
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getInteriorScrapDelProc(svo.getEmail(), ino);
+		}
 	}
 	
 	/*
 	 * store_page :: 스크랩 처리
 	 */
 	@RequestMapping(value="/interior_scrap_proc.do", method=RequestMethod.GET)
-	public ModelAndView interior_scrap_proc(String email, String ino) {
+	public ModelAndView interior_scrap_proc(HttpSession session, String ino) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("store_index---------->"+ino);
-		System.out.println("store_index---------->"+email);
-		return interiorService.getInteriorScrapProc("test0@naver.com", ino);
+		if(svo == null) {
+			return null;
+		}else {
+			return interiorService.getInteriorScrapProc(svo.getEmail(), ino);
+		}
+		 
 	}
+	
+	
 	/*
 	 * store_index :: 스크랩 처리 :: 삭제
 	 */
@@ -335,15 +409,22 @@ public class StoreController {
 			return interiorService.getStoreMainOrderProc(gno); 
 		
 	}
+
 	/*
 	 * store_page 화면
 	 */
 	@RequestMapping(value="/store_page.do",method=RequestMethod.GET) 
-	public ModelAndView store_page(String ino, String email ) {
-		System.out.println("store_index page---------->"+ino);
-		System.out.println("store_index page---------->"+email);
-		return interiorService.getInteriorTop(ino, "test0@naver.com");
+	public ModelAndView store_page(String ino, HttpSession session) {
+		SessionVO svo = (SessionVO)session.getAttribute("svo");
+		
+		if(svo == null) {
+			return null;
+		} else {
+			return interiorService.getInteriorTop(ino, svo.getEmail());
+		}
+		
 	}
+	
 	
 	/*
 	 * store_index - 상세카테고리
@@ -351,12 +432,13 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value="/category_list.do", method=RequestMethod.GET,
 				produces="text/plain;charset=UTF-8")
-	public String category_tone(String category, String tone, String color, String season, String rpage) {
+	public String category_tone(String category, String tone, String color, String season, String rpage, String status) {
 		
 		System.out.println(category);
 		System.out.println("controller---->"+tone);
 		System.out.println("controller---->"+color);
 		System.out.println("controller---->"+season);
+		System.out.println("status---->"+status);
 		System.out.println("controller + rpage---->"+rpage);
 		
 		StringTokenizer tone_ = new StringTokenizer(tone,",");
@@ -378,7 +460,7 @@ public class StoreController {
 		}
 		
 		
-		return interiorService.getListCategory(category, tonelist, colorlist, seasonlist, rpage); 
+		return interiorService.getListCategory(category, tonelist, colorlist, seasonlist, rpage, status); 
 	}
 	/*
 	 * store_index 화면 - 스크랩

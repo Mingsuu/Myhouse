@@ -5,19 +5,36 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class StoreIndexVO {
 	String email, nickname, member_spimage, selleremail, addr, addr1, addr2, 
 		   addr_num, memo, phone, hp1, hp2, hp3, name,
-		   ino, company, ititle, interior_simage, category, tone, color, season, icontent,
+		   ino, company, ititle, interior_simage, category, tone, color, season, icontent, idate,
 		   gno, goods_simage, goods_name, goods_price,
 		   vno, vcontent, review_image, review_simage, vdate, savepath,
 		   sno,
 		   qno, qtype, qcontent, qreply, qdate,qdate_r,
 		   ono, ostatus,
 		   ocount;
-	double star_avg, star_float;
-	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus;
+	double star_avg, star_float, ravg;
+	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus, star_cnt;
 	CommonsMultipartFile file1;
 	
 	
-	
+	public String getIdate() {
+		return idate;
+	}
+	public void setIdate(String idate) {
+		this.idate = idate;
+	}
+	public double getRavg() {
+		return ravg;
+	}
+	public void setRavg(double ravg) {
+		this.ravg = ravg;
+	}
+	public int getStar_cnt() {
+		return star_cnt;
+	}
+	public void setStar_cnt(int star_cnt) {
+		this.star_cnt = star_cnt;
+	}
 	public String getOcount() {
 		return ocount;
 	}

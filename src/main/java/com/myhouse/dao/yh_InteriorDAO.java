@@ -318,6 +318,27 @@ public class yh_InteriorDAO {
 	}
 	
 	// store_page - interiorTop
+	public ArrayList<StoreIndexVO> getReviewStar5(String ino) {
+		List<StoreIndexVO> review_star5 = sqlSession.selectList(namespace+".review-star5", ino);
+		return (ArrayList<StoreIndexVO>) review_star5;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar4(String ino) {
+		List<StoreIndexVO> review_star4 = sqlSession.selectList(namespace+".review-star4", ino);
+		return (ArrayList<StoreIndexVO>) review_star4;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar3(String ino) {
+		List<StoreIndexVO> review_star3 = sqlSession.selectList(namespace+".review-star3", ino);
+		return (ArrayList<StoreIndexVO>) review_star3;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar2(String ino) {
+		List<StoreIndexVO> review_star2 = sqlSession.selectList(namespace+".review-star2", ino);
+		return (ArrayList<StoreIndexVO>) review_star2;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar1(String ino) {
+		List<StoreIndexVO> review_star1 = sqlSession.selectList(namespace+".review-star1", ino);
+		return (ArrayList<StoreIndexVO>) review_star1;
+	}
+	// store_page - interiorTop
 	public ArrayList<StoreIndexVO> getInteriorTop(String ino) {
 		//System.out.println("dao----------->"+ino);
 		List<StoreIndexVO> interiror_top = sqlSession.selectList(namespace+".interior-top", ino);
@@ -345,17 +366,20 @@ public class yh_InteriorDAO {
 	
 	// store_index - list -category
 	public ArrayList<StoreIndexVO> getListCategory(String category, String[] tonelist, String[] colorlist, String[] seasonlist,
-													int start, int end){
+													int start, int end, String status){
 		Map<String, String[]> category_param = new HashMap<String, String[]>();
 		String[] category_ = new String[1] ;
 		String[] start_ = new String[1] ;
 		String[] end_ = new String[1] ;
+		String[] status_ = new String[1] ;
 		
 		category_[0] = category;
 		start_[0] = String.valueOf(start);
 		end_[0] = String.valueOf(end);
+		status_[0] = status;
 		System.out.println(category_.length);
 		category_param.put("category", category_);                                     
+		category_param.put("status", status_);                                     
 		category_param.put("tonelist", tonelist);
 		category_param.put("colorlist", colorlist);
 		category_param.put("seasonlist", seasonlist);

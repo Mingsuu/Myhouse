@@ -617,18 +617,42 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		// 상세페이지 : 상단부분 ---> 데이터 가져오기
 		ArrayList<StoreIndexVO> interior_top = interiorDAO.getInteriorTop(ino);   
+		ArrayList<StoreIndexVO> review_star5 = interiorDAO.getReviewStar5(ino);   
+		ArrayList<StoreIndexVO> review_star4 = interiorDAO.getReviewStar4(ino);   
+		ArrayList<StoreIndexVO> review_star3 = interiorDAO.getReviewStar3(ino);   
+		ArrayList<StoreIndexVO> review_star2 = interiorDAO.getReviewStar2(ino);   
+		ArrayList<StoreIndexVO> review_star1 = interiorDAO.getReviewStar1(ino);   
 		StoreIndexVO vo = interior_top.get(0);
+		StoreIndexVO rvo5 = review_star5.get(0);
+		StoreIndexVO rvo4 = review_star4.get(0);
+		StoreIndexVO rvo3 = review_star3.get(0);
+		StoreIndexVO rvo2 = review_star2.get(0);
+		StoreIndexVO rvo1 = review_star1.get(0);
 		
 		for(int i=0; i<interior_top.size(); i++ ) {
 			vo = interior_top.get(i);
-			System.out.println(vo);
 		}
+		for(int i=0; i<review_star5.size(); i++ ) { rvo5 = review_star5.get(i);}
+		for(int i=0; i<review_star4.size(); i++ ) { rvo4 = review_star4.get(i);}
+		for(int i=0; i<review_star3.size(); i++ ) { rvo3 = review_star3.get(i);}
+		for(int i=0; i<review_star2.size(); i++ ) { rvo2 = review_star2.get(i);}
+		for(int i=0; i<review_star1.size(); i++ ) { rvo1 = review_star1.get(i);}
 		
 		
 		int scrap_exist = interiorDAO.getInteriorScrapExist(email, ino);
 		
 		mv.addObject("interior_top", interior_top);
+		mv.addObject("review_star5", review_star5);
+		mv.addObject("review_star4", review_star4);
+		mv.addObject("review_star3", review_star3);
+		mv.addObject("review_star2", review_star2);
+		mv.addObject("review_star1", review_star1);
 		mv.addObject("vo", vo); 
+		mv.addObject("rvo5", rvo5); 
+		mv.addObject("rvo4", rvo4); 
+		mv.addObject("rvo3", rvo3); 
+		mv.addObject("rvo2", rvo2); 
+		mv.addObject("rvo1", rvo1); 
 		mv.addObject("ino", ino);
 		mv.addObject("email", email);
 		mv.addObject("scrap_exist", scrap_exist);
@@ -637,9 +661,10 @@ public class InteriorServiceImpl implements InteriorService{
 		return mv;
 	}
 	
+
 	
 	// store_index - category
-	public String getListCategory(String category, String[] tonelist,  String[] colorlist,  String[] seasonlist, String rpage) {
+	public String getListCategory(String category, String[] tonelist,  String[] colorlist,  String[] seasonlist, String rpage, String status) {
 		
 		  int start = 0;
 	      int end = 0;
@@ -665,7 +690,7 @@ public class InteriorServiceImpl implements InteriorService{
 	         end = pageSize;
 	      }   
 		
-		ArrayList<StoreIndexVO> category_list = interiorDAO.getListCategory(category, tonelist, colorlist, seasonlist, start, end);
+		ArrayList<StoreIndexVO> category_list = interiorDAO.getListCategory(category, tonelist, colorlist, seasonlist, start, end, status);
 		JsonArray jarry = new JsonArray();
 		JsonObject jdata = new JsonObject();
 		Gson gson = new Gson();

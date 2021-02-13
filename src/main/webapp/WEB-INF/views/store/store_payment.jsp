@@ -928,10 +928,10 @@
 					output += '<div class="_2Jn8D">';
 					output += '<div class="_3Bt8k">';
 					output += '<select class="_3ASDR _1qwAY _3K8Q8" id="addr_select">';
-					output += '<option value="0">배송시 요청사항을 선택해주세요</option>';
-					output += '<option value="1">부재시 문앞에 놓아주세요</option>';
-					output += '<option value="2">배송전에 미리 연락주세요</option><option value="3">부재시 경비실에 맡겨 주세요</option>';
-					output += '<option value="4">부재시 전화주시거나 문자 남겨 주세요</option>';
+					output += '<option value="배송시 요청사항을 선택해주세요">배송시 요청사항을 선택해주세요</option>';
+					output += '<option value="부재시 문앞에 놓아주세요">부재시 문앞에 놓아주세요</option>';
+					output += '<option value="배송전에 미리 연락주세요">배송전에 미리 연락주세요</option><option value="부재시 경비실에 맡겨 주세요">부재시 경비실에 맡겨 주세요</option>';
+					output += '<option value="부재시 전화주시거나 문자 남겨 주세요">부재시 전화주시거나 문자 남겨 주세요</option>';
 					output += '<option value="5">직접입력</option>';
 					output += '</select>';
 					output += '</div>';
@@ -1531,14 +1531,14 @@
 	    	
 	    	var phone = $("#order_payer_phone_number").val();
 	    	
-    		var memo = '';
+    		
     		var msg = $("#addr_select").val();
-    		if(msg == 5) {
+    		
+    		 if(msg == 5) {
     			memo = $("#addr_txt").val();
     		} else {
-    		    memo = $("#addr_select").text();
+    			memo = $("#addr_select").val();
     		}
-    		
     		
 	    	$.ajax({
 	    		url:"pay_addr_insert.do?email="+$("#email").val()+"&phone="+phone+"&name="+name+"&memo="+memo,
@@ -1549,7 +1549,6 @@
     	} else {
     		$("#check_img").addClass("error");
     		$("._2zG5A").css("display","block");
-    		
     	}
     });
 
