@@ -52,21 +52,22 @@ public class StoreController {
 	/*
 	 * store_payment - 주소 입력
 	 */
-	@RequestMapping(value="/addr_insert.do",method=RequestMethod.POST) 
-	public ModelAndView addr_insert(String email) {
-		
-		return interiorService.getAddrInsert(email);
+	@ResponseBody
+	@RequestMapping(value="/addr_insert.do",method=RequestMethod.GET) 
+	public String addr_insert(String email, String addr, String addr_num, String phone) {
+		System.out.println("controller!!!!!!!---->"+email);
+		System.out.println("controller!!!!!!!!!!---->"+addr);
+		System.out.println("controller!!!!!!!!!---->"+addr_num);
+		System.out.println("controller!!!!!!!!!---->"+phone);
+		return interiorService.getAddrInsert(email, addr, addr_num, phone);
 	}
 	
 	/*
 	 * store_payment 화면
 	 */
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
-		public String store_payment(String email, String gno, String ocount) {
+		public ModelAndView store_payment(String email, String gno, String ocount) {
 		
-		System.out.println("controller!!---->"+email);
-		System.out.println("controller!!---->"+gno);
-		System.out.println("controller!!---->"+ocount);
 		
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
 		StringTokenizer ocount_ = new StringTokenizer(ocount,",");

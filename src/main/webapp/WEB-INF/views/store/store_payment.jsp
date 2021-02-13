@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,9 @@
 <title>Insert title here</title>
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <style>
 	html, body {
 	    line-height: 1;
@@ -790,6 +793,74 @@
 </style> 
 <script>
 	$(document).ready(function(){
+		
+	      
+		   // 배송지 입력 완료 버튼     
+		    $("#submit").click(function(){
+		    	
+		    	var addr1 = $("#addr1").val();
+		    	var addr2 = $("#addr2").val();
+		    		$("#addr").val(addr1+","+addr2);
+		    	
+		    	var hp1 = $("#hp1").val();
+		    	var hp2 = $("#hp2").val();
+		    	var hp3 = $("#hp3").val();
+		    		$("#phone").val(hp1+"-"+hp2+"-"+hp3);
+		    	
+		    	if($("#name").val() == "") {
+		    		$("#name").css("border","1px solid red");
+		    		$("#name").focus();
+		    	} else if($("#addr_num").val() == "") {
+		    		$("#name").css("border","none");
+		    		$("#addr_num").css("border","1px solid red");
+		    		$("#addr1").css("border","1px solid red");
+		    		$("#addr_num").focus();
+		    	} else if($("#addr2").val() == "") {
+		    		$("#addr_num").css("border","none");
+		    		$("#addr1").css("border","none");
+		    		$("#addr2").css("border","1px solid red");
+		    		$("#addr2").focus();
+		    	} else if($("#hp1").val() == "") {
+		    		$("#addr2").css("border","none");
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp1").focus();
+		    	} else if($("#hp2").val() == "") {
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp2").focus();
+		    	} else if($("#hp3").val() == "") {
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp3").focus();
+		    	} else {
+		    		$("#hp1").css("border","none");
+		    		$("#hp2").css("border","none");
+		    		$("#hp3").css("border","none");
+		    		
+		    		$.ajax({
+						url:"addr_insert.do?email="+$("#email").val()+"&addr="+$("#addr").val()+"&addr_num="+$("#addr_num").val()+"&phone="+$("#phone").val(),
+						success:function(result) {
+								$("#name").val("");
+								$("#addr_num").val("");
+								$("#addr1").val("");
+								$("#addr2").val("");
+								$("#hp1").val("");
+								$("#hp2").val("");
+								$("#hp3").val("");
+								$("#address_lists").css("display","none");
+						}
+					});
+		    		
+		    	}
+		    	
+		    	
+		    });
+		
+		        
 		/* 배송 메모 - 리스트 */
 		$("#delivery_message").focus(function(){
 			//alert("focus");
@@ -931,75 +1002,8 @@
 			}
 		}).open();
 	});
-		
-		
-		//배송지 입력 완료버튼
-		$("#submit").click(function(){
-			if($("#address_lists").css("display","block")) {
-				$("#address_lists").css("display","none");
-			}else {
-				$("#address_lists").css("display","block");
-			}
-		});
-		
-	});
-	
-	
-	 $("#order_payment_method_kakaopay").click(function(){
-	        var IMP = window.IMP; // 생략가능
-	        IMP.init('imp33600107'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	        var msg;
-	        
-	        IMP.request_pay({
-	            pg : 'kakaopay',
-	            pay_method : 'card',
-	            merchant_uid : 'merchant_' + new Date().getTime(),
-	            name : '스위트홈',
-	            amount : 50000,
-	            buyer_email : 'dudghk0924@naver.com',
-	            buyer_name : '서영화',
-	            buyer_tel : '010-1234-1234',
-	            buyer_addr : '서욽특별시',
-	            buyer_postcode : '123-456',
-	            //m_redirect_url : 'http://www.naver.com'
-	        }, function(rsp) {
-	            if ( rsp.success ) {
-	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                jQuery.ajax({
-	                    url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
-	                    type: 'POST',
-	                    dataType: 'json',
-	                    data: {
-	                        imp_uid : rsp.imp_uid
-	                        //기타 필요한 데이터가 있으면 추가 전달
-	                    }
-	                }).done(function(data) {
-	                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	                    if ( everythings_fine ) {
-	                        msg = '결제가 완료되었습니다.';
-	                        msg += '\n고유ID : ' + rsp.imp_uid;
-	                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	                        msg += '\결제 금액 : ' + rsp.paid_amount;
-	                        msg += '카드 승인번호 : ' + rsp.apply_num;
-	                        
-	                        alert(msg);
-	                    } else {
-	                        //[3] 아직 제대로 결제가 되지 않았습니다.
-	                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	                    }
-	                });
-	                //성공시 이동할 페이지
-	                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
-	            } else {
-	                msg = '결제에 실패하였습니다.';
-	                msg += '에러내용 : ' + rsp.error_msg;
-	                //실패시 이동할 페이지
-	                location.href="<%=request.getContextPath()%>/order/payFail";
-	                alert(msg);
-	            }
-	        });
-	        
-	    });
+
+ });
 	
 	
 </script>
@@ -1019,26 +1023,27 @@
 	      </div>
 	      <table cellspacing="0" id="order_productions">
 	        <tbody data-hj-suppress="" data-hj-ignore-attribute="">
+	        <c:forEach var="vo" items="${payment }">
 	            <tr class="production" data-id="570295" data-cost="99000" data-count="1" data-name="[잉글랜더] [단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors">
 	              <td>
 	                <div class="information">
-	                  <img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-productions-161043210673832728.jpg/320/320" alt="320">
-	                  <div>
-	                    <div class="name">[잉글랜더] [단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
-	                    <div class="option">침대프레임 사이즈: 슈퍼싱글(매트제외) / 색상 옵션: 내츄럴원목</div>
+	                  <img src="http://localhost:9000/myhouse/images/${vo.goods_simage }" alt="320">
+	                  <div style="padding-top:15px;">
+	                    <div class="name">${vo.ititle }</div>
+	                    <div class="option">${vo.goods_name }</div>
 	                    <div class="cost_count">
-	                      <div class="cost">99,000원</div>
+	                      <div class="cost">${vo.goods_price } 원</div>
 	                      <div class="divider">|</div>
-	                      <div class="count">1개</div>
+	                      <div class="count">${vo.ocount } 개</div>
 	                    </div>
 	                  </div>
 	                </div>
 	              </td>
 	              <td class="delivery_fee" data-id="_85249289">
-	                  <div class="type">업체직접배송<br>(상품 상세정보 참고)</div>
-	                <div class="seller">(주)잉글랜더 코리아</div>
+	                <div class="seller">${vo.company }</div>
 	              </td>
 	            </tr>
+	          </c:forEach>
 	        </tbody>
 	      </table>
 	    </div> <!-- panel - 주문상품 -->
@@ -1385,8 +1390,8 @@
 	
 	    <div class="title" style="margin-top:10px;">새 배송지 등록</div>
 	    <div id="form" class="form">
-	        <form class="new_address_book" id="new_address_book" action="addr_insert.do" accept-charset="UTF-8" data-remote="true" method="post" name="addrWriteForm">
-	
+	        <form class="new_address_book" id="new_address_book" action="#" accept-charset="UTF-8" data-remote="true" method="post" name="addrWriteForm">
+				<input type="hidden" id="email" value="${email }" name="email">
 	            <div class="field address_name">
 	            </div>
 	            <div class="field name">
@@ -1407,32 +1412,112 @@
 	            <div class="field address">
 	                <div class="title">주소</div>
 	                <div class="content address">
-	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text" name="addr1" id="addr1" style="width:100%;">
-	                    <input presence="true" required="required" class="address" type="text" name="addr2" id="addr2">
+	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text"  id="addr1" style="width:100%;">
+	                    <input presence="true" required="required" class="address" type="text"  id="addr2" >
+	                    <input type="hidden" name="addr" id="addr" value="0">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title">휴대전화</div>
 	                <div class="content phone">
-	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" name="hp1" id="hp1">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" id="hp1">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number" name="hp2" id="hp2">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number"  id="hp2">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" name="hp3" id="hp3">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" id="hp3">
+	                        <input type="hidden" name="phone" id="phone" value="0">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title"></div>
 	                <div class="content button">
-		                <input type="submit" name="commit" value="등록하기" id="submit" data-disable-with="등록">
-		                <input type="button" name="cancel" value="취소하기" id="cancel" data-disable-with="취소">
+		                <input type="button" value="등록하기" id="submit" data-disable-with="등록">
+		                <input type="button" value="취소하기" id="cancel" data-disable-with="취소">
 		            </div>
 	            </div>
 			</form>    
 		</div>
 	</div>
 </div>
+
+
+<p>
+
+    <p>아임 서포트 결제 모듈 테스트 해보기</p>
+    <button id="check_module" type="button">아임 서포트 결제 모듈 테스트 해보기</button>
+</p>
+
 <!-- footer -->
 	<jsp:include page="../footer.jsp"/>
+
+<script>
+    $("#check_module").click(function () {
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp33600107'); 
+        // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        // i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+        IMP.request_pay({
+            pg: 'inicis', // version 1.1.0부터 지원.
+            /* 
+                'kakao':카카오페이, 
+                html5_inicis':이니시스(웹표준결제)
+                    'nice':나이스페이
+                    'jtnet':제이티넷
+                    'uplus':LG유플러스
+                    'danal':다날
+                    'payco':페이코
+                    'syrup':시럽페이
+                    'paypal':페이팔
+                */
+            pay_method: 'card',
+            /* 
+                'samsung':삼성페이, 
+                'card':신용카드, 
+                'trans':실시간계좌이체,
+                'vbank':가상계좌,
+                'phone':휴대폰소액결제 
+            */
+            merchant_uid: 'merchant_' + new Date().getTime(),
+            /* 
+                merchant_uid에 경우 
+                https://docs.iamport.kr/implementation/payment
+                위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+                참고하세요. 
+                나중에 포스팅 해볼게요.
+             */
+            name: '주문명:결제테스트',
+            //결제창에서 보여질 이름
+            amount: 1000, 
+            //가격 
+            buyer_email: 'iamport@siot.do',
+            buyer_name: '구매자이름',
+            buyer_tel: '010-1234-5678',
+            buyer_addr: '서울특별시 강남구 삼성동',
+            buyer_postcode: '123-456',
+            m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+            /*  
+                모바일 결제시,
+                결제가 끝나고 랜딩되는 URL을 지정 
+                (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐) 
+                */
+        }, function (rsp) {
+            console.log(rsp);
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            alert(msg);
+        });
+    });
+</script>
+
+
+	
 </body>
 </html>

@@ -55,13 +55,7 @@ public class StoreIndexVO {
 		this.hp3 = hp3;
 	}
 	public String getAddr() {
-		String str="";
-		if(addr1 != null) {
-			str=  getAddr1() + " " + getAddr2();
-		} else {
-			str = addr;
-		}
-		return str;
+		return addr;
 	}
 	public void setAddr(String addr) {
 		this.addr = addr;
@@ -79,7 +73,7 @@ public class StoreIndexVO {
 		this.memo = memo;
 	}
 	public String getPhone() {
-		return hp1 + "-" + hp2 + "-" + hp3;
+		return phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;

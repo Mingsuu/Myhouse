@@ -24,44 +24,42 @@ public class InteriorServiceImpl implements InteriorService{
 	private yh_InteriorDAO interiorDAO;
 	
 	// 주소 입력하기
-	public ModelAndView getAddrInsert(String email) {
-		ModelAndView mv = new ModelAndView();
-		boolean result = interiorDAO.getAddrInsert(email);
-		
-		if(result) {
-			mv.setViewName("redirect:/store_payment.do");
-		} else {
-			System.out.println("error");
-		}
-		
-		return mv;
-		
-	}
-	
-	// 스토어에서 바로구매 클릭시
-	public String getPayment(String email, String[] gnolist, String[] ocountlist) {
-		String result= "";
-		boolean dao_result = interiorDAO.getPayment(email, gnolist, ocountlist);
-		System.out.println("service====>" +email);
-		System.out.println("service====>" +gnolist);
-		System.out.println("service====>" +ocountlist);
-		
-		/*
-		 * String gnolist1 ="&gno="; String ocountlist1 ="&ocount=";
-		 * 
-		 * for(int i=0; i<gnolist.length; i++) { gnolist1 += gnolist[i]; } for(int i=0;
-		 * i<ocountlist.length; i++) { ocountlist1 += ocountlist[i]; }
-		 */
-		
+	public String getAddrInsert(String email, String addr, String addr_num, String phone) {
+		String result="";
+		boolean dao_result = interiorDAO.getAddrInsert(email, addr, addr_num, phone);
+		System.out.println("s!!!!!!!---->"+email);
+		System.out.println("s!!!!!!!!!!---->"+addr);
+		System.out.println("s!!!!!!!!!---->"+addr_num);
+		System.out.println("s!!!!!!!!!---->"+phone);
 		if(dao_result) {
-			result = "redirect:/store_payment.do";
+			result="redirect:/store_payment.do";
 		} else {
 			System.out.println("error");
 		}
 		
 		return result;
+		
 	}
 	
+	// 스토어에서 바로구매 클릭시
+	public ModelAndView getPayment(String email, String[] gnolist, String[] ocountlist) {
+		ModelAndView mv = new ModelAndView();
+		boolean result = interiorDAO.getPayment(email, gnolist, ocountlist);
+		
+		ArrayList<StoreIndexVO> payment = interiorDAO.getPaymentList(email, gnolist);
+		System.out.println("service====>" +email);
+		System.out.println("service====>" +gnolist);
+		System.out.println("service====>" +ocountlist);
+		
+		mv.addObject("result", result);
+		mv.addObject("email", email);
+		mv.addObject("gnolist", gnolist);
+		mv.addObject("ocountlist", ocountlist);
+		mv.addObject("payment", payment);
+		mv.setViewName("/store/store_payment");
+		
+		return mv;
+	}
 	
 		// 문의 답변하기 - 삭제
 		public String getInteriorQuestionAnswerDelete(String qno, String ino) {
@@ -510,8 +508,6 @@ public class InteriorServiceImpl implements InteriorService{
 	// store_page - top
 	public ModelAndView getInteriorTop(String ino, String email) {
 		ModelAndView mv = new ModelAndView();
-		
-		
 		
 		// 상세페이지 : 상단부분 ---> 데이터 가져오기
 		ArrayList<StoreIndexVO> interior_top = interiorDAO.getInteriorTop(ino);   

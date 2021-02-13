@@ -18,9 +18,17 @@ public class yh_InteriorDAO {
 	private static String namespace="mapper.interior";
 	
 	// 주소 입력
-	public boolean getAddrInsert(String email) {
+	public boolean getAddrInsert(String email, String addr, String addr_num, String phone) {
 		boolean result = false;
-		int value = sqlSession.update(namespace+".addr-insert", email);
+		
+		Map<String, String> param = new HashMap<String, String>();
+		
+		param.put("email", email);
+		param.put("addr", addr);
+		param.put("addr_num", addr_num);
+		param.put("phone", phone);
+		
+		int value = sqlSession.update(namespace+".addr-insert", param);
 		if(value !=0) result = true;
 		
 		return result;
@@ -31,7 +39,7 @@ public class yh_InteriorDAO {
 		boolean result = false;
 		
 		Map<String, Object> order_param = new HashMap<String, Object>();
-		
+		int value = 0;
 		
 		
 		order_param.put("email", email);           
@@ -45,37 +53,35 @@ public class yh_InteriorDAO {
 			order_param.put("gno", gno);
 			order_param.put("ocount", ocount);
 			
+			int value2 = sqlSession.selectOne(namespace+".order-select2", order_param);
+			if(value2 == 0) {
+				value = sqlSession.insert(namespace+".order-insert", order_param);
+			}
+			
 		
 			System.out.println("dao"+gno);
 			System.out.println("dao"+ocount);
 		}
-		
-		
-		/*
-		 * Map<String, Object> orderMap;
-		 * 
-		 * List<Map<String, Object>> orderList = new ArrayList<Map<String, Object>>();
-		 * 
-		 * 
-		 * for(int i=0;i<gnolist.length;i++){ orderMap = new HashMap<String, Object>();
-		 * String gno = gnolist[i]; orderMap.put("gno", gno);
-		 * System.out.println("gno============>"+gno);
-		 * 
-		 * String ocount =ocountlist[i]; orderMap.put("ocount", ocount);
-		 * System.out.println("ocount============>"+ocount); orderList.add(orderMap); }
-		 * 
-		 * 
-		 * order_param.put("orderList", orderList);
-		 * System.out.println("orderList============>"+orderList);
-		 */
-		int value  = sqlSession.insert(namespace+".order-insert", order_param);
+		System.out.println("dao gnolist"+gnolist.length);
+		System.out.println("dao ocountlist"+ocountlist.length);
 		
 		if(value != 0) result = true;
 		
 		return result;
 	}
-	
-	
+	// 구매 페이지 - 리스트 
+	public ArrayList<StoreIndexVO> getPaymentList(String email, String[] gnolist) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("email", email);           
+		param.put("gnolist", gnolist);
+		
+		System.out.println("dao gnolist---------"+gnolist.length);	
+		List<StoreIndexVO> order_list = sqlSession.selectList(namespace+".order-select", param);	
+		
+		return (ArrayList<StoreIndexVO>)order_list;
+	}
 	
 	
 	/** 전체 리스트 카운트 - 문의 */

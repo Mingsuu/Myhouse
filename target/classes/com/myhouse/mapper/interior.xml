@@ -6,17 +6,30 @@
     
 <mapper namespace="mapper.interior">
 
+<!-- 주문 상품 나열하기 -->
+<select id="order-select" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name
+	from (select distinct o.gno, g.ino, goods_simage, goods_name, goods_price, ono, o.email, ocount, ostatus
+		from h_goods g, h_order o where g.gno = o.gno) o, (select distinct g.ino, ititle, company from h_interior i , h_goods g where i.ino=g.ino) i,
+		(select email, addr, addr_num, memo, phone, name from h_member) m
+	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' )
+	where 
+	<foreach collection="gnolist" item="gno" index="index" separator='or'>
+	gno=#{gno}
+	</foreach>
+</select>
+<select id="order-select2" parameterType="map" resultType="int">
+	select count(*) from h_order where gno=#{gno} and ocount=#{ocount}
+</select>
+
 <!-- 배송지 입력 :: 저장 -->
-<update id="addr-insert" parameterType="java.lang.String">
+<update id="addr-insert" parameterType="com.myhouse.vo.StoreIndexVO">
 	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone} where email=#{email}
 </update>
 
 <!-- 바로구매 클릭 - order에 추가하기 -->
 <insert id="order-insert" parameterType="map">
-	insert into h_order values 
-		<!-- <foreach collection="orderList" item="item" index="index" separator="," open="(" close=")"> -->
-			('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
-		<!-- </foreach> -->
+	insert into h_order values ('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
 </insert>
 
 <!-- 전체 리스트 카운트 - 문의 -->
