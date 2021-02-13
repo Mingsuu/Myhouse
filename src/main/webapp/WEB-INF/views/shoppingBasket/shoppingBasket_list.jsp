@@ -73,8 +73,6 @@
 	</c:when>
 
 	<c:otherwise>
-<!-- 	<form class="card-collection-form container" name="ShoppingBasketForm" action="shopping_basket_proc.do" method="post" enctype="multipart/form-data">
- -->
  	<div class="commerce-cart-wrap">
 		<div class="container">
 			<div class="commerce-cart row">
@@ -84,21 +82,20 @@
 							data-sticky-always="false" data-sticky-ignore="true"
 							data-direction="top" data-offset="81"
 							class="sticky-container commerce-cart__header-wrap">
-							<div class="sticky-child commerce-cart__header"
+							<!-- <div class="sticky-child commerce-cart__header"
 								style="position: relative;">
-								<span class="commerce-cart__header__left"><label
-									class="_3xqzr _4VN_z"><div class="_3zqA8">
-											<input type="checkbox" class="_3UImz" value="" checked=""  id="all" onchange="allCheck()"><span
-												class="_2mDYR"><svg width="1em" height="1em"
-													viewBox="0 0 16 16" class="_2UftR">
-													<path fill="currentColor"
-														d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span>
-										</div>
+								<span class="commerce-cart__header__left">
+								<label class="_3xqzr _4VN_z">
+								<div class="_3zqA8">
+									<input type="checkbox" class="_3UImz" value="" checked=""  id="all" onchange="allCheck()">
+									<span class="_2mDYR"><svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
+									<path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span>
+								</div>
 										<span class="_1aN3J"><span
 											class="commerce-cart__header__caption">모두선택</span></span></label></span><span
 									class="commerce-cart__header__right">
 									<button class="commerce-cart__header__delete" id="btnDelete" type="button">선택삭제</button></span>
-							</div>
+							</div> -->
 						</div>
 						<ul class="commerce-cart__content__group-list">
 						<c:forEach var="row" items="${map.list}" varStatus="i">
@@ -112,20 +109,21 @@
 													<li class="commerce-cart__delivery-group__product-item"><article
 															class="carted-product">
 															<div class="carted-product__select">
-																<div class="_3zqA8">
+															<%-- 	<div class="_3zqA8">
 																	<input type="checkbox" class="_3UImz" value=""
 																		checked="" name="chk" id="${row.gno}"><span class="_2mDYR"><svg
 																			width="1em" height="1em" viewBox="0 0 16 16"
 																			class="_2UftR">
 																			<path fill="currentColor"
 																				d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span>
-																</div>
+																</div> --%>
 															</div>
 															<a class="product-small-item product-small-item--clickable"
-																href="/productions/170658/selling"><div class="product-small-item__image">
+																href="http://localhost:9000/myhouse/store_page.do?ino=${row.ino}">
+																<div class="product-small-item__image">
 																	<img src="http://localhost:9000/myhouse/images/${row.goods_simage}">
 <!-- 																		srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;webp=1 3x">
- -->																</div>
+ -->															</div>
 																<div class="product-small-item__content">
 																	<h1 class="product-small-item__title">${row.goods_name}</h1>
 																	<p class="product-small-item__caption">사장님이 미쳤습니다 무료배송</p>
@@ -142,36 +140,13 @@
 															<ul class="carted-product__option-list">
 																<li class="carted-product__option-list__item"><article
 																		class="selling-option-item">
-																<!-- 		<h2 class="selling-option-item__name">수량</h2> -->
 																		<button class="selling-option-item__delete"
 																			type="button" aria-label="삭제">
-																	<!-- 		<svg width="12" height="12" viewBox="0 0 12 12"
-																				fill="currentColor"
-																				preserveAspectRatio="xMidYMid meet">
-																				<path fill-rule="nonzero"
-																					d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg> -->
 																		</button>
 																		<div class="selling-option-item__controls">
 																			<div class="selling-option-item__quantity">
 																				<div class="input-group select-input option-count-input">
 																				수량 : ${row.bcount}개
-																					<!-- <select class="form-control">
-																					<option value="0">1</option>
-																						<option value="1">2</option>
-																						<option value="2">3</option>
-																						<option value="3">4</option>
-																						<option value="4">5</option>
-																						<option value="5">6</option>
-																						<option value="6">7</option>
-																						<option value="7">8</option>
-																						<option value="8">9</option>
-																						<option value="9">10</option>
-																						</select> -->
-																						<!-- <span class="select-input__icon"><svg
-																							class="icon" width="10" height="10"
-																							preserveAspectRatio="xMidYMid meet"
-																							style="fill: currentcolor;">
-																							<path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path></svg></span> -->
 																				</div>
 																			</div>
 																			<p class="selling-option-item__price">
@@ -193,36 +168,12 @@
 												<footer class="commerce-cart__delivery-group__footer">
 													<p class="commerce-cart__delivery-group__total">배송비
 														무료</p>
-													<!-- <p class="commerce-cart__delivery-group__group-caption">묶음배송
-														상품 5,500원 추가시 무료배송</p> -->
 												</footer>
 											</article></li>
 									</ul>
 								</article></li>
 						 </c:forEach>
 						</ul>
-						<!-- <dl class="commerce-cart__summary commerce-cart__content__summary">
-							
-						 	<div class="commerce-cart__summary__row">
-								<dt>총 배송비</dt>
-								<dd>
-									+ <span class="number">2,500</span>원
-								</dd>
-							</div>
-							<div class="commerce-cart__summary__row">
-								<dt>총 할인금액</dt>
-								<dd>
-									- <span class="number">104,100</span>원
-								</dd>
-							</div> 
-							<div class="commerce-cart__summary__row commerce-cart__summary__row--total">
-								<dt>결제금액</dt>
-								<dd>
-									<span class="number">111,800</span>원
-								</dd>
-							</div>
-						</dl>
-						 -->
 					</div>
 				</div>
 			
