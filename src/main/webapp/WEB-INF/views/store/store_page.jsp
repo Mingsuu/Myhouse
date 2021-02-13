@@ -2629,16 +2629,16 @@
 	      watchSlidesProgress: true,
 	    });
 	    var galleryTop = new Swiper('.gallery-top', {
-	      spaceBetween: 10,
-	      navigation: {
-	        nextEl: '.swiper-button-next',
-	        prevEl: '.swiper-button-prev',
-	      },
-	      thumbs: {
-	        swiper: galleryThumbs
-	      }
-	    });
-	    
+		      spaceBetween: 10,
+		      navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		      },
+		      thumbs: {
+		        swiper: galleryThumbs
+		      }
+		    });
+		    
 		/* 스크랩 유무에 따른 표시 여부 */
 		if(${scrap_exist}!=0) {
 			$("#main-scrap").addClass("production-selling-header__action__button--active");
@@ -2840,23 +2840,40 @@
 			$("#pro-select-side-0").addClass("select-none");
 			$(".production-select-button__production-sub").addClass("select-none");
 		}
-	    
-	    /* 주문상품 수량 및 가격 */
-		    $(".form-control").change(function part_sum(){
+		
+		
+		/* 주문상품 수량 및 가격 */
+		    $(".form-control").change(function (){
+		    	
+		    	var bsum = $(this).parent().parent().parent().parent().children(".main_order_h").val();
+			    	bsum = bsum.replace(/,/g, '');
+			    	bsum = parseInt(bsum);
 		    	var id = $(this).attr("id");
 		    	var cnt = $("#"+id).val();
 		    		cnt = parseInt(cnt);
-		    	var price =  $("span#"+id).text();
+		    	var price = $(this).parent().parent().parent().parent().children(".main_order").val();
 		    		price = price.replace(/,/g, '');
 		    		price = parseInt(price);
-		    	var group = 0;
-		    		group = group + cnt*price ;
+		    	var group = cnt*price;
 		    	
-		    		all_first = all_first + group - price;
+		    	
+		    	if(cnt == 1) {
+			    	all_first = all_first + price - bsum;
+		    		$(this).parent().parent().parent().parent().children(".main_order_h").val(price);
+		    	} else {
+			    	all_first = all_first + group - bsum - price;
+		    		$(this).parent().parent().parent().parent().children(".main_order_h").val(group);
+		    	}
 		    		
 		    		
 			    $("span .selling-option-form-content__price__number-main").text(comma(all_first));
 			    $("span .selling-option-form-content__price__number-sub").text(comma(all_first));
+			    
+			    
+			    if(cnt==1) {
+			    	select_false(id)				    
+			    	$("#sub-"+id).val("1").prop("selected", true);
+			    } 
 			    if(cnt==2) {
 			    	select_false(id)				    
 			    	$("#sub-"+id).val("2").prop("selected", true);
@@ -2901,24 +2918,39 @@
 		    		$("#sub-"+id).val("i").prop("selected", false);
 		    	}
 		    }
-	    
+
+		    
 	    /* 주문상품 수량 및 가격 - 사이드 */
 		    $(".form-control-sub").change(function part_sum_side(){
+		    	var bsum = $(this).parent().parent().parent().parent().children(".sub_order_h").val();
+			    	bsum = bsum.replace(/,/g, '');
+			    	bsum = parseInt(bsum);
 		    	var id_sub = $(this).attr("id");
 		    		id_sub = id_sub.split("-");
 		    	var cnt = $("#sub-"+id_sub[1]).val();
 		    		cnt = parseInt(cnt);
-		    	var price =  $("span#sub-"+id_sub[1]).text();
+		    	var price = $(this).parent().parent().parent().parent().children(".sub_order").val();
 		    		price = price.replace(/,/g, '');
 		    		price = parseInt(price);
-		    	var group = 0;
-		    		group = group + cnt*price ;
+		    	var group = cnt*price;
 		    	
-		    		all_first_sub = all_first_sub + group - price;
+		    	if(cnt == 1) {
+		    		all_first_sub = all_first_sub + price - bsum;
+			    	$(this).parent().parent().parent().parent().children(".sub_order_h").val(price);
+			    } else {
+			    	all_first_sub = all_first_sub + group - bsum - price;
+			    	$(this).parent().parent().parent().parent().children(".sub_order_h").val(group);
+			   	}
 		    		
 		    		
 			    $("span .selling-option-form-content__price__number-main").text(comma_side(all_first_sub));
 			    $("span .selling-option-form-content__price__number-sub").text(comma_side(all_first_sub));
+			    
+			    
+			    if(cnt==1) {
+			    	select_false_side(id_sub)				    
+			    	$("#"+id_sub[1]).val("1").prop("selected", true);
+			    }
 			    if(cnt==2) {
 			    	select_false_side(id_sub)				    
 			    	$("#"+id_sub[1]).val("2").prop("selected", true);
@@ -3637,11 +3669,12 @@
 			$.ajax({
 				url:"interior_question_proc.do?ino=${ino}&qpage="+qpage,
 				success: function(result) {
-					var jdata = JSON.parse(result);
+					
 					var output = '';
 					$(".production-question-feed__list").empty();
-					
-					for(var i in jdata.interior_question) {
+					 
+					var jdata = JSON.parse(result);
+					for (var i in jdata.interior_question) {
 						output += '<article class="production-question-feed__item" id="answer-wrap-'+jdata.interior_question[i].qno+'">';
 						output += '<header class="production-question-feed__item__header">';
 						if(jdata.interior_question[i].ostatus == 0) {
@@ -3653,17 +3686,20 @@
 						}
 						output += ''+jdata.interior_question[i].qtype+' |';
 						if(jdata.interior_question[i].qstatus == 0) {
-							output += '<span class="unanswered">미답변</span>';
-						} else if (jdata.interior_question[i].qtype == 1) {
-							output += '<span class="answered">답변완료</span>';
+							output += '<span class="unanswered"> 미답변</span>';
+						} else if (jdata.interior_question[i].qstatus == 1) {
+							output += '<span class="answered"> 답변완료</span>';
 						}
-						if(jdata.interior_question[i].qstatus == 0) {
-							output += '<div class="production-selling-section__right-answer" id="answer-'+jdata.interior_question[i].qno+'"><button type="button" >답변하기</button></div>';
-						}else if(jdata.interior_question[i].qstatus == 1) {
-							output += '<div class="production-selling-section__right-update" id="update-'+jdata.interior_question[i].qno+'"><button type="button" >수정</button></div>'
-							output += '<span> | </span>';
-							output += '<div class="production-selling-section__right-delete" id="delete-'+jdata.interior_question[i].qno+'"><button type="button" >삭제</button></div>';
+						if("${email}"== jdata.interior_question[i].selleremail) {
+							if(jdata.interior_question[i].qstatus == 0) {
+								output += '<div class="production-selling-section__right-answer" id="answer-'+jdata.interior_question[i].qno+'"><button type="button" >답변하기</button></div>';
+							}else if(jdata.interior_question[i].qstatus == 1) {
+								output += '<div class="production-selling-section__right-update" id="update-'+jdata.interior_question[i].qno+'"><button type="button" >수정</button></div>'
+								output += '<span> | </span>';
+								output += '<div class="production-selling-section__right-delete" id="'+jdata.interior_question[i].qno+'-delete"><button type="button" >삭제</button></div>';
+							}
 						}
+						
 						output += '</header> ';
 						output += '<p class="production-question-feed__item__author">'+jdata.interior_question[i].nickname+' | '+jdata.interior_question[i].qdate+'</p>';
 						output += '<div class="production-question-feed__item__question">';
@@ -3674,7 +3710,7 @@
 						if(jdata.interior_question[i].qstatus == 1) {
 							output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
 							output += '<p class="production-question-feed__item__answer__author">';
-							output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_question[i].qdate_r+'</span></p>';
+							output += '<span class="author">'+jdata.interior_question[i].company+'</span>&nbsp;<span class="date">'+jdata.interior_question[i].qdate_r+'</span></p>';
 							output += '<p class="production-question-feed__item__content">'+jdata.interior_question[i].qreply+'</p>';
 						}
 						output += '</div>';
@@ -3693,7 +3729,7 @@
 					$(".production-question-feed__list").after(pagee);
 
 							
-					 page2(jdata.dbcount, jdata.reqpage, jdata.pagesize)	
+					 page2(jdata.dbcount, jdata.reqpage, jdata.pagesize);	
 					
 				}	
 			});
@@ -3790,55 +3826,51 @@
 		$.ajax({
 			url:"interior_question_answer_proc.do?qno="+id[0]+"&ino=${ino}",
 			success: function(result) {
-				//alert("bbbbbbbb");
-				 $("#"+id[0]).addClass("answer-none");
-				
-				var jdata = JSON.parse(result);
-				var output = "";
-				$("#answer-wrap-"+id[0]).empty();
-				for(var i in jdata.interior_answer) {
-					//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-					output += '<header class="production-question-feed__item__header">';
-					var ostatus = "${qvo.ostatus}";
-					if(ostatus == '0') {
-						output += '비구매 | ';
-					} else if (ostatus == '1') {
-						output += '구매 | ';
-					} else if (ostatus == null) {
-						output += '비구매 | ';
+					 $("#"+id[0]).addClass("answer-none");
+					
+					var jdata = JSON.parse(result);
+					var output = "";
+					$("#answer-wrap-"+id[0]).empty();
+					for(var i in jdata.interior_answer) {
+						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
+						output += '<header class="production-question-feed__item__header">';
+						if(jdata.interior_answer[i].ostatus == '0') {
+							output += '비구매 | ';
+						} else if (jdata.interior_answer[i].ostatus == '1') {
+							output += '구매 | ';
+						} else if (jdata.interior_answer[i].ostatus == null) {
+							output += '비구매 | ';
+						}
+						output += ''+jdata.interior_answer[i].qtype+' | ';
+						 if(jdata.interior_answer[i].qstatus == 0) {
+							output += '<span class="unanswered">미답변</span>';
+							output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
+						} else if (jdata.interior_answer[i].qstatus == 1) {
+							output += '<span class="answered">답변완료</span>';
+							output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
+							output += '<span> | </span>';
+							output += '<div class="production-selling-section__right-delete" id="'+id[0]+'-delete"><button type="button" >삭제</button></div>';
+						} 
+						output += '</header>';
+						output += '<p class="production-question-feed__item__author">'+jdata.interior_answer[i].nickname+' | '+jdata.interior_answer[i].qdate+'</p>';
+						output += '<div class="production-question-feed__item__question">';
+						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
+						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">'+jdata.interior_answer[i].goods_name+'<br></span>'+jdata.interior_answer[i].qcontent+'</p>';
+						output += '</div>';
+						output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
+						if(jdata.interior_answer[i].qstatus ==1) {
+							output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+							output += '<p class="production-question-feed__item__answer__author">';
+							output += '<span class="author">'+jdata.interior_answer[i].company+'</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
+							output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
+						}
+						output += '</div>';
+						//output += '</article>';
 					}
-					output += '${qvo.qtype } | ';
-					var qstatus = "${qvo.qstatus}";
-					/* if(qstatus == 0) {
-						output += '<span class="unanswered">미답변</span>';
-						output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
-					} else if (qstatus == 1) {
-					} */
-					output += '<span class="answered">답변완료</span>';
-					output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
-					output += '<span> | </span>';
-					output += '<div class="production-selling-section__right-delete" id="delete-'+id[0]+'"><button type="button" >삭제</button></div>';
-					output += '</header>';
-					output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-					output += '<div class="production-question-feed__item__question">';
-					output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-					output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-					output += '</div>';
-					output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
-					//if(qstatus ==1) {
-						output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
-						output += '<p class="production-question-feed__item__answer__author">';
-						output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
-						output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
-					//}
-					output += '</div>';
-					//output += '</article>';
-				}
-				
-				$("#answer-wrap-"+id[0]).append(output); 
-			} 
-			
-		});
+					
+					$("#answer-wrap-"+id[0]).append(output); 
+				} 
+			});
 		
 		}
 		
@@ -3850,7 +3882,7 @@
 			var qreply = $("#qcontent-admin-"+id[1]).val();
 				
 				$.ajax({
-					url:"interior_question_answer_proc.do?qno="+id[1]+"&ino=${ino}",
+					url:"interior_question_answer_update_proc.do?qno="+id[1]+"&ino=${ino}",
 					success: function(result) {
 						var jdata = JSON.parse(result);
 						var	output = "";
@@ -3861,7 +3893,7 @@
 							output += '<form name="answerForm" class="answerForm'+id[1]+'">'
 						 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
 							output += '<div>';
-							output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>';
+							output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">'+jdata.interior_answer[i].company+'</span>';
 							output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
 							output += '</div>';
 							output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;">'+jdata.interior_answer[i].qreply+'</textarea>';
@@ -3883,50 +3915,15 @@
 		$(document).on("click",".production-selling-section__right-delete",function(event){
 			var id = $(this).attr("id");
 			id = id.split("-");
-			alert("1");
 			
 			$.ajax({
-				url:"interior_question_answer_delete.do?qno="+id[1]+"&ino=${ino}",
-				async:false,
+				url:"interior_question_answer_delete.do?qno="+id[0]+"&ino=${ino}",
 				success: function(result) {
 					var jdata = JSON.parse(result);
-					//alert(jdata);
-					//alert("delete~~");
-					$("#answer-"+id[1]).empty();
-					$("#answer-wrap-"+id[1]).empty();
-					$("#"+id[1]).addClass("answer-none");
+					$("#answer-"+id[0]).empty();
 					
-					
-						var output = "";
-						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-						output += '<header class="production-question-feed__item__header">';
-						var ostatus = "${qvo.ostatus}";
-						if(ostatus == '0') {
-							output += '비구매 | ';
-						} else if (ostatus == '1') {
-							output += '구매 | ';
-						} else if (ostatus == null) {
-							output += '비구매 | ';
-						}
-						output += '${qvo.qtype } | ';
-						var qstatus = "${qvo.qstatus}";
-						/* if(qstatus == 0) {
-							output += '<span class="unanswered">미답변</span>';
-						} else if (qstatus == 1) {
-						}  */
-						output += '<span class="unanswered">미답변</span>';
-						output += '<div class="production-selling-section__right-answer" id="answer-'+id[1]+'"><button type="button" >답변하기</button></div>';
-						output += '</header>';
-						output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-						output += '<div class="production-question-feed__item__question">';
-						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-						output += '</div>';
-						//if(qstatus ==1) {
-						//}
-						//output += '</article>';
-					
-					$("#answer-wrap-"+id[1]).append(output); 
+					answer_page(id);
+				
 				}  
 			});
 			
@@ -3939,14 +3936,83 @@
 				$("textarea#qcontent-admin-"+id[0]).val("");
 				//alert("del"+id[0]);
 		});
-
-	
 		
+		$(".form-control").change(function(){
+			var id = $(this).attr("id");
+		//	alert($("#"+id).val());
+		});
+		
+		var gno = new Array();
+		
+		$(".production-select-list__item-main-list").each(function(i){
+			$(this).click(function(e){
+		
+				var id = $(this).attr("id");
+				id = id.split("-");
+				gno.push(id[2]);
+				e.preventDefault();
+
+			});
+		}); 
+	
+
+		$(".buying-main").click(function(){
+			var ocount = new Array();
+			var cnt = '';
+			$.each(gno, function(index, item){ 
+				if($("#pro-order-"+item+" .form-control").val() != null) {
+					 cnt = $("#pro-order-"+item+" .form-control").val();
+					 ocount.push(cnt);
+					 
+				}
+			});
+
+			alert(gno);
+			alert(ocount);
+			
+			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
+		}); 
+			
+				/* var gno = $(".main_order_gno").val();
+				alert(gno); */
+				/*  $.ajax({
+					 url:"main_order.do?gno="+gno,
+			    	 success:function(result) {
+			    		var jdata = JSON.parse(result);
+			    		for(var i in jdata.main_order) {
+			    			
+			    			alert(jdata.main_order[i].gno);
+			    			/* if(!$("#pro-order-"+jdata.main_order[i].gno).hasClass("order-none")) {
+			    				alert($("#pro-order-"+jdata.main_order[i].gno).children().children().children().children().children().parent().html());
+			    				
+			    			} 
+			    		}
+			    	 }	
+				 }); */
+				 
+				 //alert(id);
+				/*  if(!$(".order-list").hasClass("order-none")) {
+					 alert($(this).val());
+					 
+				 } */
+			//	});
+			 
+		
+/* 		$(".selling-option-item__delete-main").each(function(i){
+			$(this).click(function(e){
+				var id = $(this).attr("id");
+					id = id.split("-");
+				var itemtoRemove = id[2];
+					gno.splice($.inArray(itemtoRemove, gno),1);
+				
+			});
+		}); */
+
 		
 	});
 	
 	
-  </script>
+</script>
 </head>
 <body>
 <!-- header -->
@@ -4096,14 +4162,16 @@
 						<form class="card-collection-form container" name="StoreBasketForm" action="store_basket_proc.do" method="post" enctype="multipart/form-data">
 							<c:forEach var="vo" items="${interior_top }" >
 							<li class="order-list order-none" id="pro-order-${vo.gno }" ><article class="selling-option-item">
+								<input type="hidden" class="main_order" value="${vo.goods_price }">
+								<input type="hidden" class="main_order_h" value="0">
+								<input type="hidden" class="main_order_gno" value="${vo.gno }">
 								<h1 class="selling-option-item__production">${vo.goods_name }</h1>
-							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> --> 
+							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> -->
 								<button class="selling-option-item__delete-main" type="button" aria-label="삭제" id="order-del-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 								<div class="selling-option-item__controls">
 									<div class="selling-option-item__quantity-main">
 										<div class="input-group select-input option-count-input">
-										<input type="hidden" name="gno" value="${vo.gno}">
-										<select class="form-control"  id="${vo.gno }" name="bcount">
+										<select class="form-control count-main"  id="${vo.gno }" name="count-name">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -4133,9 +4201,8 @@
 					</div>
 					<div class="production-selling-option-form__footer">
 						<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
-						<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
+						<button class="button button--color-blue button--size-55 button--shape-4 buying-main" type="button">바로구매</button>
 					</div>
-					</form>
 				</div> <!-- production-selling-option-form production-selling-overview__option-form -->
 			</div>
 			
@@ -4562,8 +4629,9 @@
 									<form class="card-collection-form container" name="uploadPhotoForm" action="upload_photo_proc.do" method="post" enctype="multipart/form-data">
 										<c:forEach var="vo" items="${interior_top }" >
 										<li class="order-list order-none" id="pro-order-side-${vo.gno }"><article class="selling-option-item">
+												<input type="hidden" class="sub_order" value="${vo.goods_price }">
+												<input type="hidden" class="sub_order_h" value="0">
 												<h1 class="selling-option-item__production">${vo.goods_name }</h1>
-												<!-- <h2 class="selling-option-item__name">매트리스 옵션: 슈퍼싱글(DH 7존 독립매트) / 색상 옵션: 빈티지브라운</h                                                                               2> -->
 												<button class="selling-option-item__delete-sub" type="button" aria-label="삭제" id="order-del-side-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 											<div class="selling-option-item__controls">
 												<div class="selling-option-item__quantity-sub">
@@ -4600,8 +4668,9 @@
 									<div class="scrap-box">
 										<button class="button button--color-gray-14-inverted button--size-55 button--shape-4 production-selling-sidebar-content__scrap" type="button" id="side-order"><svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg></button>
 									</div>
+
 									<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
-									<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
+									<button class="button button--color-blue button--size-55 button--shape-4 buying-sub" type="button">바로구매</button>
 								</div>
 							</div> <!-- production-selling-option-form production-selling-sidebar-content__option-form -->
 							</form>

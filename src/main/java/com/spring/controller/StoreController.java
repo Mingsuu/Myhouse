@@ -50,13 +50,42 @@ public class StoreController {
 	}
 	
 	/*
+	 * store_payment - 주소 입력
+	 */
+	@RequestMapping(value="/addr_insert.do",method=RequestMethod.POST) 
+	public ModelAndView addr_insert(String email) {
+		
+		return interiorService.getAddrInsert(email);
+	}
+	
+	/*
 	 * store_payment 화면
 	 */
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
-		public String store_payment() {
-			
-			return "/store/store_payment";
+		public String store_payment(String email, String gno, String ocount) {
+		
+		System.out.println("controller!!---->"+email);
+		System.out.println("controller!!---->"+gno);
+		System.out.println("controller!!---->"+ocount);
+		
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		StringTokenizer ocount_ = new StringTokenizer(ocount,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		String[] ocountlist = new String[ocount_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
 		}
+		for(int i=0; i<ocountlist.length; i++) {
+			ocountlist[i] = ocount_.nextToken();
+		}
+		
+		
+			return interiorService.getPayment(email, gnolist, ocountlist);
+		}
+		
+	
 	
 	/*
 	 * store_page :: question - delete
@@ -67,6 +96,18 @@ public class StoreController {
 		System.out.println("store_index qno!!!!!!!!!!!!---------->"+qno);
 		System.out.println("store_index ino!!!!!!!!!!!!!!---------->"+ino);
 		return interiorService.getInteriorQuestionAnswerDelete(qno, ino);
+	}
+	
+	/*
+	 * store_page :: question - answer :: 화면
+	 */
+	@ResponseBody
+	@RequestMapping(value="/interior_question_answer_update_proc.do", method=RequestMethod.GET,
+	produces="text/plain;charset=UTF-8")
+	public String interior_question_answer_update_proc(String qno, String ino) {
+		System.out.println("store_index qno!!!---------->"+qno);
+		System.out.println("store_index ino!!!---------->"+ino);
+		return interiorService.getInteriorQuestionAnswerProc(qno, ino);
 	}
 	
 	/*
@@ -206,7 +247,19 @@ public class StoreController {
 		
 	}
 	
-
+	/*
+	 * store_page 화면 :: 상품 주문 화면
+	 */
+	@ResponseBody
+	@RequestMapping(value="/main_order.do", method=RequestMethod.GET,
+			produces="text/plain;charset=UTF-8")
+	public String main_order(String gno) {
+		
+		System.out.println("gnoooo---------->"+ gno);
+		
+			return interiorService.getStoreMainOrderProc(gno); 
+		
+	}
 	/*
 	 * store_page 화면
 	 */

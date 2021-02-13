@@ -6,6 +6,18 @@
     
 <mapper namespace="mapper.interior">
 
+<!-- 배송지 입력 :: 저장 -->
+<update id="addr-insert" parameterType="java.lang.String">
+	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone} where email=#{email}
+</update>
+
+<!-- 바로구매 클릭 - order에 추가하기 -->
+<insert id="order-insert" parameterType="map">
+	insert into h_order values 
+		<!-- <foreach collection="orderList" item="item" index="index" separator="," open="(" close=")"> -->
+			('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
+		<!-- </foreach> -->
+</insert>
 
 <!-- 전체 리스트 카운트 - 문의 -->
 <select id="question-count" parameterType="java.lang.String" resultType="int">
@@ -24,8 +36,19 @@
 
 <!-- 문의답변 화면 -->
 <select id="interior-question-answer-proc" parameterType="java.lang.String"  resultType="com.myhouse.vo.StoreIndexVO">
-	  select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
-		from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+) and qno=#{qno}
+	  select * from ( select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
+         TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company, s.email selleremail, s.seller, s.status sstatus
+      from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+         from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+         from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+          from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno )
+            where ino='i_1') q, h_member m, h_interior i, 
+            (select h_member.email, seller, h_interior.status, ino 
+              from h_member, h_interior 
+              where  h_member.email in (select distinct h_member.email from h_interior, h_member 
+                                        where h_interior.ino in (select distinct ino from h_goods , h_question where h_goods.gno = h_question.gno)) 
+            and h_interior.email = h_member.email and seller =1 and h_interior.status=1)s
+      where q.email = m.email and i.ino = q.ino and s.ino = q.ino order by qno desc) where qno=#{qno}
 </select>
 
 <!-- 문의답변 입력 및 수정-->
@@ -40,14 +63,19 @@
 
 <!-- 문의하기 -->
 <select id="interior-question" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
-	select * from ( select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
-			TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company
-		from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
-			from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
-			from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
-			from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno order by ino asc)
-			where ino=#{ino}) q, h_member m, h_interior i
-		where q.email = m.email and i.ino = q.ino order by qno desc )
+	select * from ( select * from ( select rno, gno, q.ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, TO_CHAR(qdate, 'YYYY/MM/DD HH:MI:SS PM') qdate, 
+         TO_CHAR(qdate_r, 'YYYY/MM/DD HH:MI:SS PM') qdate_r, ono, ostatus, nickname, company, s.email selleremail, s.seller, s.status sstatus
+      from(select rownum rno, gno, ino, goods_name, qno, email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+         from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
+         from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
+          from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno )
+            where ino=#{ino}) q, h_member m, h_interior i, 
+            (select h_member.email, seller, h_interior.status, ino 
+              from h_member, h_interior 
+              where  h_member.email in (select distinct h_member.email from h_interior, h_member 
+                                        where h_interior.ino in (select distinct ino from h_goods , h_question where h_goods.gno = h_question.gno)) 
+            and h_interior.email = h_member.email and seller =1 and h_interior.status=1)s
+      where q.email = m.email and i.ino = q.ino and s.ino = q.ino order by qno desc))
 	where rno between #{start} and #{end}
 </select>
 
@@ -103,6 +131,11 @@
 <insert id="interior-scrap-insert" parameterType="map">
 	insert into h_scrap values('s_'||seq_h_scrap.nextval,#{email},'',#{ino},sysdate)
 </insert>
+
+<!-- 상세페이지 - 상품 주문 리스트 -->
+<select id="main-order" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select gno, ino, goods_name, goods_simage, to_char(goods_price,'999,999,999,999') goods_price from h_goods where gno=#{gno}
+</select>
 
 <!-- 상세페이지 : 상단부분 -->
 <select id="interior-top" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
