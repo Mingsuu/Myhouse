@@ -128,8 +128,7 @@ $(document).ready(function(){
 			<div data-sticky-enabled="false" data-sticky-disabled="false"
 				data-sticky-always="false" data-sticky-ignore="false"
 				data-direction="top" data-offset="81"
-				class="sticky-container collection-feed__navi"
-				style="position: sticky; top: 81px;">
+				class="sticky-container collection-feed__navi">
 				<div class="sticky-child" style="position: relative;">
 					<nav class="page-navigation collection-book-nav">
 						<ul style="transform: translateX(0px);">
@@ -148,8 +147,7 @@ $(document).ready(function(){
 			<div data-sticky-enabled="false" data-sticky-disabled="false"
 				data-sticky-always="false" data-sticky-ignore="false"
 				data-direction="top" data-offset="142"
-				class="sticky-container collection-feed__edit-panel"
-				style="position: sticky; top: 142px;">
+				class="sticky-container collection-feed__edit-panel">
 				<div class="sticky-child" style="position: relative;">
 					<div class="collection-feed__edit-panel__wrap">
 						<div class="collection-feed__edit-panel__left">
