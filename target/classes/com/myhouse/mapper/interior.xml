@@ -8,12 +8,11 @@
 
 <!-- 주문자 배송지 나열하기 -->
 <select id="order-select-addr" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name,
-	row_number() over(partition by o.ino order by ono asc) as RowIdx
+	select * from (select distinct rownum rno, gno, o.ino, goods_simage, goods_name, goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name
 	from (select distinct o.gno, g.ino, goods_simage, goods_name, goods_price, ono, o.email, ocount, ostatus
 	from h_goods g, h_order o where g.gno = o.gno) o, (select distinct g.ino, ititle, company from h_interior i , h_goods g where i.ino=g.ino) i,
 	(select email, addr, addr_num, memo, phone, name from h_member) m
-	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' ) where RowIdx='1'
+	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' ) where rno=1
 </select>
 <!-- 주문 상품 나열하기 -->
 <select id="order-select" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">

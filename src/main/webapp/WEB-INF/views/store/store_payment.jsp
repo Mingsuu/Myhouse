@@ -898,7 +898,7 @@
 						
 					} */
 
-					if(jdata.paylist[0].name == null) {
+					 if(jdata.paylist[0].name == null||jdata.paylist[0].name=='undefined') {
 						$("#addr_list").empty();  
 						$("#orderer").empty(); 
 						
@@ -1003,7 +1003,7 @@
 					} else {
 						$("#addr_list").empty();  
 						$("#orderer").empty(); 
-						
+						var addr = jdata.paylist[0].addr;
 							addr = addr.split("/");
 						
 						output += ' <div class="title" ><div class="title">배송지</div></div>';

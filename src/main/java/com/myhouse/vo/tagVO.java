@@ -1,7 +1,7 @@
 package com.myhouse.vo;
 
 public class tagVO {
-	String tno,pno,gno,t_location, company, goods_name, goods_price, goods_simage;
+	String tno,pno,gno,t_location, company, goods_name, goods_price, goods_simage,ititle;
 
 	public String getTno() {
 		return tno;
@@ -65,6 +65,14 @@ public class tagVO {
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+	public String getItitle() {
+		return ititle;
+	}
+
+	public void setItitle(String ititle) {
+		this.ititle = ititle;
 	}
 	
 }
