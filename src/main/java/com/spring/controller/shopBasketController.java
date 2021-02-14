@@ -74,8 +74,7 @@ public class shopBasketController  {
 	    System.out.println("장바구니 목록 세션:"+svo.getEmail());
         Map<String, Object> map = new HashMap<String, Object>();
         List<basketVO> list = ShoppingBasketService.listCart(svo.getEmail()); // 장바구니 정보 
-   
-        int sumMoney = ShoppingBasketService.sumMoney(svo.getEmail()); // 장바구니 전체 금액 호출
+        String sumMoney = ShoppingBasketService.sumMoney(svo.getEmail()); // 장바구니 전체 금액 호출
         map.put("list", list);                // 장바구니 정보를 map에 저장
         map.put("count", list.size());        // 장바구니 상품의 유무
         map.put("sumMoney", sumMoney);        // 장바구니 전체 금액

@@ -18,8 +18,7 @@
             g.gno As gno,
             g.goods_name AS goods_name, 
             b.bcount, 
-            g.goods_price AS goods_price, 
-            (goods_price * bcount) money,
+ 			to_char(g.goods_price,'999,999,999,999') AS goods_price,to_char((goods_price * bcount),'999,999,999,999') money,
             g.goods_simage
         FROM
             h_member m, h_goods g, h_basket b
@@ -31,8 +30,8 @@
 
     </select>
     <!-- 3. 장바구니 전체 금액 -->
-    <select id="sumMoney" resultType="int">
-        SELECT NVL(SUM(goods_price * bcount), 0) money
+    <select id="sumMoney" resultType="String">
+        SELECT NVL(to_char(SUM(goods_price * bcount),'999,999,999,999'), 0) money
         FROM h_basket b, h_goods g
         WHERE b.gno = g.gno AND b.email = #{email}
     </select>
