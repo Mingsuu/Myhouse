@@ -124,6 +124,13 @@ public class Mypagecontroller {
 		return mypageService.getreviewproc(ino);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/mypage_review_proc1.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public String review_proc1(String ino) {
+		return mypageService.getreviewproc1(ino);
+	}
+	
+	
 	
 	@RequestMapping(value="/mypage_review.do", method=RequestMethod.GET)
 	public ModelAndView rivew(HttpSession session) {

@@ -37,7 +37,6 @@ $(document).ready(function(){
 			
 			
 			var pno = $(this).parent().children("#liking").val();
-			alert(pno);
 			$.ajax({
 				url:"mypage_picture_delete.do?pno="+pno,
 				success:function(result){
@@ -70,7 +69,6 @@ $(document).ready(function(){
 			
 			
 			var pno1 = $(this).parent().children("#scraping").val();
-			alert(pno1);
 			$.ajax({
 				url:"mypage_picture_scrap.do?pno="+pno1,
 				success:function(result){
@@ -94,7 +92,6 @@ $(document).ready(function(){
 			$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
 			
 			var pno1 = $(this).parent().children("#scraping").val();
-			alert(pno1);
 			$.ajax({
 				url:"mypage_picture_scrapdelete.do?pno="+pno1,
 				success:function(result){

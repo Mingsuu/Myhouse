@@ -153,7 +153,7 @@
 				<c:if test="${vo.status == 0 }">
 					<div class="panbox2"><span class="panmeb">판매상태</span><span class="pan">대기중</span></div>
 				</c:if>
-				<c:if test="${vo.status != 0 }">
+				<c:if test="${vo.status == 1 }">
 					<div class="panbox2"><span class="panmeb">판매상태</span><span class="pan">판매중</span></div>
 				</c:if>
 				<hr class="textbar">

@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import com.myhouse.dao.MypagePhotoDAO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.SessionVO;
 import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.interiorVO;
 import com.myhouse.vo.likeVO;
@@ -287,11 +288,12 @@ public class MypageServiceImpl implements MypageService{
 			JsonObject jobj = new JsonObject();
 			jobj.addProperty("ino", gvo.getIno());
 			jobj.addProperty("company", gvo.getCompany());
-			jobj.addProperty("ititle", gvo.getItitle());
+			jobj.addProperty("goods_name", gvo.getGoods_name());
 			jobj.addProperty("goods_simage", gvo.getGoods_simage());
 			jobj.addProperty("gno", gvo.getGno());
 			jobj.addProperty("star", gvo.getStar());
 			jobj.addProperty("vcontent", gvo.getVcontent());
+			
 			
 			
 			
@@ -304,6 +306,37 @@ public class MypageServiceImpl implements MypageService{
 		return gson.toJson(jdata);
 	}
 	
+	
+	@Override
+	public String getreviewproc1(String ino) {
+		System.out.println("ino= "+ino);
+		goodsVO gvo = mypagephotoDAO.getreviewproc1(ino);
+		
+		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson =new Gson();
+		
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("ino", gvo.getIno());
+			jobj.addProperty("company", gvo.getCompany());
+			jobj.addProperty("goods_name", gvo.getGoods_name());
+			jobj.addProperty("goods_simage", gvo.getGoods_simage());
+			jobj.addProperty("gno", gvo.getGno());
+			jobj.addProperty("star", gvo.getStar());
+			jobj.addProperty("vcontent", gvo.getVcontent());
+			
+			
+			
+			
+			jarry.add(jobj);
+			
+		
+			jdata.add("jlist", jobj);
+		
+		
+		return gson.toJson(jdata);
+	}
 	
 	
 	
@@ -517,9 +550,10 @@ public class MypageServiceImpl implements MypageService{
 		  ModelAndView mv = new ModelAndView(); 
 		  String delete = "";
 		  boolean result = mypagephotoDAO.getmemberdelete(email);
-	  
+		  
+		  
 		  if(result) {
-		    delete = "redirect:/index.do";
+		    delete = "redirect:/logout";
 		  }
 	  
 	  

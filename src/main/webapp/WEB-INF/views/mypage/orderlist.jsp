@@ -470,7 +470,7 @@
 	<c:forEach var="vo" items="${list}">
 	 <div class="order-list__item__title">
 		<div class="order-list__item__title__order">${vo.ino} | ${vo.idate}</div>
-		<a class="order-list__item__title__link" href="#">상세보기</a>
+		<a class="order-list__item__title__link" href="store_page.do?ino=${vo.ino}">상세보기</a>
 	</div>
 	<div class="order-list__item__production">
 	<div class="order-list__item__production__wrap">

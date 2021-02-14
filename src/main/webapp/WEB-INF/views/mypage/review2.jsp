@@ -206,7 +206,7 @@
 				var ino = $(this).attr("id");
 				/* alert(ino); */
 				$.ajax({
-					url:"mypage_review_proc.do?ino="+ino,
+					url:"mypage_review_proc1.do?ino="+ino,
 					success:function(result){
 						var jdata = JSON.parse(result);
 						var output ="";
@@ -228,7 +228,7 @@
 						output += "<img class='review-modal__form__product__image' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist.goods_simage+"'>";
 						output += "<div class='review-modal__form__product__contents'>";
 						output += "<div class='review-modal__form__product__contents__brand'>"+jdata.jlist.company+"</div>";
-						output += "<div class='review-modal__form__product__contents__name'>"+jdata.jlist.ititle+"</div>";
+						output += "<div class='review-modal__form__product__contents__name'>"+jdata.jlist.goods_name+"</div>";
 						output += "<div class='review-modal__form__product__contents__options'></div>";
 						output += "</div>"
 						output += "</div>";

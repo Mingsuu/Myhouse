@@ -18,6 +18,7 @@
 			alert("작성하고있는 내용이 유실됩니다. 정말 종료하시겠습니까?");
 			$("#modal").css("display","none");
 			
+			
 		});//click
 
 		
@@ -250,7 +251,7 @@
 						output += "<img class='review-modal__form__product__image' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist.goods_simage+"'>";
 						output += "<div class='review-modal__form__product__contents'>";
 						output += "<div class='review-modal__form__product__contents__brand'>"+jdata.jlist.company+"</div>";
-						output += "<div class='review-modal__form__product__contents__name'>"+jdata.jlist.ititle+"</div>";
+						output += "<div class='review-modal__form__product__contents__name'>"+jdata.jlist.goods_name+"</div>";
 						output += "<div class='review-modal__form__product__contents__options'></div>";
 						output += "</div>"
 						output += "</div>";

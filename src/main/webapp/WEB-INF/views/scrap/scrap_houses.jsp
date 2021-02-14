@@ -73,6 +73,16 @@ $(document).ready(function(){
 .collection-book-owner__link{
 	margin-left:18px;
 }
+.likenone1 {
+	text-align:center;
+	font-size:15px;
+	color:#424242;
+	width:1200px;
+}
+.likenone span {
+	display:inline-block;
+	margin-top:60px;
+}
 </style>
 <body>
 <!-- header -->
@@ -152,6 +162,10 @@ $(document).ready(function(){
 			</div>
 			<div class="virtualized-list collection-feed-collections row"
 				style="padding-top: 0px; padding-bottom: 0px; transform: translateY(0px);">
+				<c:if test="${hcount == 0 }">
+					<div class="likenone1"><span>아직 스크랩한 콘텐츠가 없습니다.<br>
+							마음에 드는 콘텐츠를 발견하면 스크랩을 눌러보세요!</span></div>
+				</c:if>	
 				<c:forEach var="vo" items="${list }">
 				<div class="col-6 col-md-4">
 					<div class="collection__wrap">
