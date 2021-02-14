@@ -57,6 +57,8 @@
 	<beans:bean class="com.spring.service1.MemberServiceImpl" id="memberService"></beans:bean>
  	<beans:bean class="com.myhouse.dao.H_UploadPhotoDAO" id="uploadDAO"></beans:bean>
 	<beans:bean class="com.spring.service.UploadPhotoServiceImpl" id="uploadService"></beans:bean>
+ 	<beans:bean class="com.myhouse.dao.H_basketDAO" id="basketDAO"></beans:bean>
+	<beans:bean class="com.spring.service.ShoppingBasketImpl" id="ShoppingBasketService"></beans:bean>
 	
 	<beans:bean class="com.spring.service.CommunityServcieImpl" id="communityService"></beans:bean>
 	<beans:bean class="com.spring.service.SalesApplicationServiceImpl" id="salesService"></beans:bean>
