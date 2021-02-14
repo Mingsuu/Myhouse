@@ -3309,7 +3309,7 @@
 					$(".review-list-goods").empty();
 					for(var i in jdata.interior_review_goods_list) {
 								output += '<div class="review-list-goods-wrap" id="'+jdata.gno+'">';
-								output += '<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/images/'+jdata.interior_review_goods_list[i].goods_simage+'">';
+								output += '<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/resources/upload/'+jdata.interior_review_goods_list[i].goods_simage+'">';
 								output += '<div class="review-modal__form__product__contents">';
 								output += '<div class="review-modal__form__product__contents__brand">'+jdata.interior_review_goods_list[i].company+'</div>';
 								output += '<div class="review-modal__form__product__contents__brand">'+jdata.interior_review_goods_list[i].ititle+'</div>';
@@ -4069,7 +4069,7 @@
 					  <div class="swiper-container gallery-top">
 					    <div class="swiper-wrapper main">
 					        <c:forEach var="vo" items="${interior_top }" >
-							      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage})"></div>
+							      <div class="swiper-slide" style="background-image:url(http://localhost:9000/myhouse/resources/upload/${vo.goods_simage})"></div>
 					    	  </c:forEach>
 					    </div>
 					    <!-- Add Arrows -->
@@ -4077,7 +4077,7 @@
 					  <div class="swiper-container gallery-thumbs">
 						  <ul class="swiper-wrapper thumb">
 						 	 <c:forEach var="vo" items="${interior_top }" >
-							      <li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage}); width:70px;"></li>
+							      <li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}); width:70px;"></li>
 					    	  </c:forEach>
 						  	
 						  </ul>
@@ -4170,7 +4170,7 @@
 									<c:forEach var="vo" items="${interior_top }" >
 									<div class="production-select-button__production-box select-none" id="pro-select-${vo.gno }">
 										<div class="production-select-button__production__index">${vo.rno }</div>
-										<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+										<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}"></div>
 										<div class="production-select-button__production__text">${vo.goods_name }</div>
 										<div class="production-select-button__production__icon"><svg width="1em" height="1em" viewBox="0 0 16 16" preserveAspectRatio="xMidYMid meet"><path fill="currentColor" fill-rule="evenodd" d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"></path></svg></div>
 									</div>
@@ -4183,7 +4183,7 @@
 									<li class="production-select-list__item-main-list" id="select-item-${vo.gno }">
 										<button class="production-select-item" type="button">
 											<div class="production-select-item__index">${vo.rno }</div>
-											<div class="production-select-item__image"><img class="image" alt="" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+											<div class="production-select-item__image"><img class="image" alt="" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}"></div>
 											<div class="production-select-item__contents"><span class="production-select-item__contents__name">${vo.goods_name }</span>
 											<span class="production-item-price production-select-item__contents__price"><span class="production-item-price__rate">56<span class="percentage">% </span></span>
 											<span class="production-item-price__price">${vo.goods_price }</span></span>
@@ -4269,7 +4269,7 @@
 								<%-- <li>${vo.icontent }</li> --%>	
 							</ul>
 							<div class="production-selling-description__content">
-								<img src="http://localhost:9000/myhouse/images/${vo.interior_simage }">
+								<img src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage }">
 							</div>
 						</div> <!-- 상품정보::사진  -->
 					</section>
@@ -4450,7 +4450,7 @@
 									<article class="production-review-item">
 										<div class="production-review-item__writer">
 											<a href="http://localhost:9000/myhouse/mypage_profile1.do">
-												<img src="http://localhost:9000/myhouse/images/${rvo.member_spimage }" class="production-review-item__writer__img" >
+												<img src="http://localhost:9000/myhouse/resources/upload/${rvo.member_spimage }" class="production-review-item__writer__img" >
 											</a>
 											<div class="production-review-item__writer__info">
 												<p class="production-review-item__writer__info__name">${rvo.nickname }</p>
@@ -4502,7 +4502,7 @@
 										<div class="production-review-item__name">${rvo.goods_name }</div>
 										<c:if test="${rvo.review_simage ne null}">
 										<button type="button" class="production-review-item__img__btn">
-											<img class="production-review-item__img" src="http://localhost:9000/myhouse/images/${rvo.review_simage }">
+											<img class="production-review-item__img" src="http://localhost:9000/myhouse/resources/upload/${rvo.review_simage }">
 										</button>
 										</c:if>
 										<p class="production-review-item__description">${rvo.vcontent }</p>
@@ -4584,7 +4584,7 @@
 													<c:forEach var="vo" items="${interior_top }" >
 													<div class="production-select-button__production-sub select-none" id="pro-select-side-${vo.gno }">
 														<div class="production-select-button__production__index">${vo.rno }</div>
-														<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+														<div class="production-select-button__production__image--wrap"><img class="production-select-button__production__image" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}"></div>
 														<div class="production-select-button__production__text">${vo.goods_name }</div>
 													</div>
 													</c:forEach>
@@ -4597,7 +4597,7 @@
 												<li class="production-select-list__item-sub-list" id="select-side-item-${vo.gno }">
 													<button class="production-select-item" type="button">
 														<div class="production-select-item__index">${vo.rno }</div>
-														<div class="production-select-item__image"><img class="image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}"></div>
+														<div class="production-select-item__image"><img class="image" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}"></div>
 														<div class="production-select-item__contents">
 															<span class="production-select-item__contents__name">${vo.goods_name }</span>
 															<span class="production-item-price production-select-item__contents__price">
