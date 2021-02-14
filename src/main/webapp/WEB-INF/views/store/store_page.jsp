@@ -164,7 +164,7 @@
 	}
 	.production-selling-cover-image-container {
 	    position: relative;
-	    width:450px;
+	    width:520px;
 	    height:400px;
 	    padding-left:80px;
 	}
@@ -237,6 +237,8 @@
     .swiper-slide-thumb-active {
     	border:2px solid #35c5f0;
     }
+    
+    
     .col-lg-5 {
 	    padding-right: 10px;
 	    margin-left:-30px;
@@ -2629,16 +2631,16 @@
 	      watchSlidesProgress: true,
 	    });
 	    var galleryTop = new Swiper('.gallery-top', {
-	      spaceBetween: 10,
-	      navigation: {
-	        nextEl: '.swiper-button-next',
-	        prevEl: '.swiper-button-prev',
-	      },
-	      thumbs: {
-	        swiper: galleryThumbs
-	      }
-	    });
-	    
+		      spaceBetween: 10,
+		      navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		      },
+		      thumbs: {
+		        swiper: galleryThumbs
+		      }
+		    });
+		    
 		/* 스크랩 유무에 따른 표시 여부 */
 		if(${scrap_exist}!=0) {
 			$("#main-scrap").addClass("production-selling-header__action__button--active");
@@ -2840,23 +2842,40 @@
 			$("#pro-select-side-0").addClass("select-none");
 			$(".production-select-button__production-sub").addClass("select-none");
 		}
-	    
-	    /* 주문상품 수량 및 가격 */
-		    $(".form-control").change(function part_sum(){
+		
+		
+		/* 주문상품 수량 및 가격 */
+		    $(".form-control").change(function (){
+		    	
+		    	var bsum = $(this).parent().parent().parent().parent().children(".main_order_h").val();
+			    	bsum = bsum.replace(/,/g, '');
+			    	bsum = parseInt(bsum);
 		    	var id = $(this).attr("id");
 		    	var cnt = $("#"+id).val();
 		    		cnt = parseInt(cnt);
-		    	var price =  $("span#"+id).text();
+		    	var price = $(this).parent().parent().parent().parent().children(".main_order").val();
 		    		price = price.replace(/,/g, '');
 		    		price = parseInt(price);
-		    	var group = 0;
-		    		group = group + cnt*price ;
+		    	var group = cnt*price;
 		    	
-		    		all_first = all_first + group - price;
+		    	
+		    	if(cnt == 1) {
+			    	all_first = all_first + price - bsum;
+		    		$(this).parent().parent().parent().parent().children(".main_order_h").val(price);
+		    	} else {
+			    	all_first = all_first + group - bsum - price;
+		    		$(this).parent().parent().parent().parent().children(".main_order_h").val(group);
+		    	}
 		    		
 		    		
 			    $("span .selling-option-form-content__price__number-main").text(comma(all_first));
 			    $("span .selling-option-form-content__price__number-sub").text(comma(all_first));
+			    
+			    
+			    if(cnt==1) {
+			    	select_false(id)				    
+			    	$("#sub-"+id).val("1").prop("selected", true);
+			    } 
 			    if(cnt==2) {
 			    	select_false(id)				    
 			    	$("#sub-"+id).val("2").prop("selected", true);
@@ -2901,24 +2920,39 @@
 		    		$("#sub-"+id).val("i").prop("selected", false);
 		    	}
 		    }
-	    
+
+		    
 	    /* 주문상품 수량 및 가격 - 사이드 */
 		    $(".form-control-sub").change(function part_sum_side(){
+		    	var bsum = $(this).parent().parent().parent().parent().children(".sub_order_h").val();
+			    	bsum = bsum.replace(/,/g, '');
+			    	bsum = parseInt(bsum);
 		    	var id_sub = $(this).attr("id");
 		    		id_sub = id_sub.split("-");
 		    	var cnt = $("#sub-"+id_sub[1]).val();
 		    		cnt = parseInt(cnt);
-		    	var price =  $("span#sub-"+id_sub[1]).text();
+		    	var price = $(this).parent().parent().parent().parent().children(".sub_order").val();
 		    		price = price.replace(/,/g, '');
 		    		price = parseInt(price);
-		    	var group = 0;
-		    		group = group + cnt*price ;
+		    	var group = cnt*price;
 		    	
-		    		all_first_sub = all_first_sub + group - price;
+		    	if(cnt == 1) {
+		    		all_first_sub = all_first_sub + price - bsum;
+			    	$(this).parent().parent().parent().parent().children(".sub_order_h").val(price);
+			    } else {
+			    	all_first_sub = all_first_sub + group - bsum - price;
+			    	$(this).parent().parent().parent().parent().children(".sub_order_h").val(group);
+			   	}
 		    		
 		    		
 			    $("span .selling-option-form-content__price__number-main").text(comma_side(all_first_sub));
 			    $("span .selling-option-form-content__price__number-sub").text(comma_side(all_first_sub));
+			    
+			    
+			    if(cnt==1) {
+			    	select_false_side(id_sub)				    
+			    	$("#"+id_sub[1]).val("1").prop("selected", true);
+			    }
 			    if(cnt==2) {
 			    	select_false_side(id_sub)				    
 			    	$("#"+id_sub[1]).val("2").prop("selected", true);
@@ -3100,7 +3134,7 @@
 						} 
 						output += '</span>';
 						output += '<svg class="production-review-item__writer__info__total-star__down-icon" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"></path></svg></button>';
-						output += '<span class="production-review-item__writer__info__date">'+ jdata.interior_review[i].vdate +' ∙ 오늘의집 구매</span>';
+						output += '<span class="production-review-item__writer__info__date">'+ jdata.interior_review[i].vdate +' ∙ 스위트홈 구매</span>';
 						output += '</div>';
 						output += '</div>';
 						output += '<div class="production-review-item__name">'+ jdata.interior_review[i].goods_name +'</div>';
@@ -3135,10 +3169,10 @@
 							$("#review-photo").addClass("production-review-feed__filter__order");
 							$("#review-photo").removeClass("production-review-feed__filter__order--active");
 						} else if (status == '사진리뷰') {
-							$("#review-photo").addClass("production-review-feed__filter__order--active");
 							$("#review-photo").removeClass("production-review-feed__filter__order");
-							$("#review-recently").addClass("production-review-feed__filter__order");
+							$("#review-photo").addClass("production-review-feed__filter__order--active");
 							$("#review-recently").removeClass("production-review-feed__filter__order--active");
+							$("#review-recently").addClass("production-review-feed__filter__order");
 							$("#review-best").removeClass("production-review-feed__filter__order--active"); 
 							$("#review-best").addClass("production-review-feed__filter__order"); 
 						}
@@ -3165,6 +3199,7 @@
 		/* 사진리뷰 */
 		$("#review-photo").click(function photo(rpage){
 			status = $(this).text();
+			status = $.trim(status)
 			best_ajax("", status);
 		});
 		
@@ -3194,40 +3229,43 @@
 	    
 		
 		// 스크롤 위치마다 border-bottom 주기 
-		var information =$('#production-selling-information').scrollTop();
-		var review =$('#production-selling-review').scrollTop() +1500;
-		var question =$('#production-selling-question').scrollTop() +4000;
-		var delivery =$('#production-selling-delivery').scrollTop() + 5500;
-	
-		$(window).scroll(function() {
-			
-			var scroll = $(window).scrollTop();
-			
-			if (scroll < review) 
-			{
-				remove_list();
-			  $("#scroll-pro").addClass("production-selling-navigation__item--active");
-			} 
-			else if (review <= scroll && scroll< question) 
-			{
-				remove_list();
-			  $("#scroll-review").addClass("production-selling-navigation__item--active");
-			} 
-			else if (question <= scroll && scroll < delivery) 
-			{
-				remove_list();
-			  $("#scroll-q-a").addClass("production-selling-navigation__item--active");
-			}
-			else if (delivery <= scroll)
-			{
-				remove_list();
-			  $("#scroll-delivery").addClass("production-selling-navigation__item--active");
-			} else {
-				remove_list();
-				$("#scroll-pro").addClass("production-selling-navigation__item--active");
-			}
 		
+		
+		var isVisible1 = false;
+		var isVisible2 = false;
+		var isVisible3 = false;
+		var isVisible4 = false;
+		
+		$(window).on('scroll',function() {
+		    if (checkVisible($('#production-selling-information'))&&!isVisible1) {
+		    	remove_list();
+				$("#scroll-pro").addClass("production-selling-navigation__item--active");
+		        isVisible1=true; isVisible2 = false; isVisible3 = false; isVisible4 = false;
+		    } else if (checkVisible($('#production-selling-review'))&&!isVisible2) {
+		    	remove_list();
+				  $("#scroll-review").addClass("production-selling-navigation__item--active");
+		        isVisible2=true; isVisible1 = false; isVisible3 = false; isVisible4 = false;
+		    } else if (checkVisible($('#production-selling-question'))&&!isVisible3) {
+		    	remove_list(); 
+				  $("#scroll-q-a").addClass("production-selling-navigation__item--active");
+		        isVisible3=true; isVisible2 = false; isVisible1 = false; isVisible4 = false;
+		    } else if (checkVisible($('#production-selling-delivery'))&&!isVisible4) {
+		    	remove_list();
+				  $("#scroll-delivery").addClass("production-selling-navigation__item--active");
+		        isVisible4=true; isVisible2 = false; isVisible3 = false; isVisible1 = false;
+		    }
 		});
+		
+		function checkVisible( elm, eval ) {
+		    eval = eval || "object visible";
+		    var viewportHeight = $(window).height(), // Viewport Height
+		        scrolltop = $(window).scrollTop(), // Scroll Top
+		        y = $(elm).offset().top,
+		        elementHeight = $(elm).height();   
+		    
+		    if (eval == "object visible") return ((y < (viewportHeight + scrolltop)) && (y > (scrolltop - elementHeight)));
+		    if (eval == "above") return ((y < (viewportHeight + scrolltop)));
+		} 
 		
 		function remove_list() {
 			$("#scroll-pro").removeClass("production-selling-navigation__item--active");
@@ -3637,11 +3675,12 @@
 			$.ajax({
 				url:"interior_question_proc.do?ino=${ino}&qpage="+qpage,
 				success: function(result) {
-					var jdata = JSON.parse(result);
+					
 					var output = '';
 					$(".production-question-feed__list").empty();
-					
-					for(var i in jdata.interior_question) {
+					 
+					var jdata = JSON.parse(result);
+					for (var i in jdata.interior_question) {
 						output += '<article class="production-question-feed__item" id="answer-wrap-'+jdata.interior_question[i].qno+'">';
 						output += '<header class="production-question-feed__item__header">';
 						if(jdata.interior_question[i].ostatus == 0) {
@@ -3653,17 +3692,20 @@
 						}
 						output += ''+jdata.interior_question[i].qtype+' |';
 						if(jdata.interior_question[i].qstatus == 0) {
-							output += '<span class="unanswered">미답변</span>';
-						} else if (jdata.interior_question[i].qtype == 1) {
-							output += '<span class="answered">답변완료</span>';
+							output += '<span class="unanswered"> 미답변</span>';
+						} else if (jdata.interior_question[i].qstatus == 1) {
+							output += '<span class="answered"> 답변완료</span>';
 						}
-						if(jdata.interior_question[i].qstatus == 0) {
-							output += '<div class="production-selling-section__right-answer" id="answer-'+jdata.interior_question[i].qno+'"><button type="button" >답변하기</button></div>';
-						}else if(jdata.interior_question[i].qstatus == 1) {
-							output += '<div class="production-selling-section__right-update" id="update-'+jdata.interior_question[i].qno+'"><button type="button" >수정</button></div>'
-							output += '<span> | </span>';
-							output += '<div class="production-selling-section__right-delete" id="delete-'+jdata.interior_question[i].qno+'"><button type="button" >삭제</button></div>';
+						if("${email}"== jdata.interior_question[i].selleremail) {
+							if(jdata.interior_question[i].qstatus == 0) {
+								output += '<div class="production-selling-section__right-answer" id="answer-'+jdata.interior_question[i].qno+'"><button type="button" >답변하기</button></div>';
+							}else if(jdata.interior_question[i].qstatus == 1) {
+								output += '<div class="production-selling-section__right-update" id="update-'+jdata.interior_question[i].qno+'"><button type="button" >수정</button></div>'
+								output += '<span> | </span>';
+								output += '<div class="production-selling-section__right-delete" id="'+jdata.interior_question[i].qno+'-delete"><button type="button" >삭제</button></div>';
+							}
 						}
+						
 						output += '</header> ';
 						output += '<p class="production-question-feed__item__author">'+jdata.interior_question[i].nickname+' | '+jdata.interior_question[i].qdate+'</p>';
 						output += '<div class="production-question-feed__item__question">';
@@ -3674,7 +3716,7 @@
 						if(jdata.interior_question[i].qstatus == 1) {
 							output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
 							output += '<p class="production-question-feed__item__answer__author">';
-							output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_question[i].qdate_r+'</span></p>';
+							output += '<span class="author">'+jdata.interior_question[i].company+'</span>&nbsp;<span class="date">'+jdata.interior_question[i].qdate_r+'</span></p>';
 							output += '<p class="production-question-feed__item__content">'+jdata.interior_question[i].qreply+'</p>';
 						}
 						output += '</div>';
@@ -3693,7 +3735,7 @@
 					$(".production-question-feed__list").after(pagee);
 
 							
-					 page2(jdata.dbcount, jdata.reqpage, jdata.pagesize)	
+					 page2(jdata.dbcount, jdata.reqpage, jdata.pagesize);	
 					
 				}	
 			});
@@ -3724,7 +3766,7 @@
 	    }//page
 		
 		/* 문의답변 - 답변하기 클릭시 */
-		$(document).on("click",".production-selling-section__right-answer",function(){
+		$(document).on("click",".production-selling-section__right-answer",function(event){
 			var id = $(this).attr("id");
 				id = id.split("-");
 				
@@ -3790,55 +3832,51 @@
 		$.ajax({
 			url:"interior_question_answer_proc.do?qno="+id[0]+"&ino=${ino}",
 			success: function(result) {
-				//alert("bbbbbbbb");
-				 $("#"+id[0]).addClass("answer-none");
-				
-				var jdata = JSON.parse(result);
-				var output = "";
-				$("#answer-wrap-"+id[0]).empty();
-				for(var i in jdata.interior_answer) {
-					//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-					output += '<header class="production-question-feed__item__header">';
-					var ostatus = "${qvo.ostatus}";
-					if(ostatus == '0') {
-						output += '비구매 | ';
-					} else if (ostatus == '1') {
-						output += '구매 | ';
-					} else if (ostatus == null) {
-						output += '비구매 | ';
+					 $("#"+id[0]).addClass("answer-none");
+					
+					var jdata = JSON.parse(result);
+					var output = "";
+					$("#answer-wrap-"+id[0]).empty();
+					for(var i in jdata.interior_answer) {
+						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
+						output += '<header class="production-question-feed__item__header">';
+						if(jdata.interior_answer[i].ostatus == '0') {
+							output += '비구매 | ';
+						} else if (jdata.interior_answer[i].ostatus == '1') {
+							output += '구매 | ';
+						} else if (jdata.interior_answer[i].ostatus == null) {
+							output += '비구매 | ';
+						}
+						output += ''+jdata.interior_answer[i].qtype+' | ';
+						 if(jdata.interior_answer[i].qstatus == 0) {
+							output += '<span class="unanswered">미답변</span>';
+							output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
+						} else if (jdata.interior_answer[i].qstatus == 1) {
+							output += '<span class="answered">답변완료</span>';
+							output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
+							output += '<span> | </span>';
+							output += '<div class="production-selling-section__right-delete" id="'+id[0]+'-delete"><button type="button" >삭제</button></div>';
+						} 
+						output += '</header>';
+						output += '<p class="production-question-feed__item__author">'+jdata.interior_answer[i].nickname+' | '+jdata.interior_answer[i].qdate+'</p>';
+						output += '<div class="production-question-feed__item__question">';
+						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
+						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">'+jdata.interior_answer[i].goods_name+'<br></span>'+jdata.interior_answer[i].qcontent+'</p>';
+						output += '</div>';
+						output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
+						if(jdata.interior_answer[i].qstatus ==1) {
+							output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
+							output += '<p class="production-question-feed__item__answer__author">';
+							output += '<span class="author">'+jdata.interior_answer[i].company+'</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
+							output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
+						}
+						output += '</div>';
+						//output += '</article>';
 					}
-					output += '${qvo.qtype } | ';
-					var qstatus = "${qvo.qstatus}";
-					/* if(qstatus == 0) {
-						output += '<span class="unanswered">미답변</span>';
-						output += '<div class="production-selling-section__right-answer" id="answer-'+id[0]+'"><button type="button" >답변하기</button></div>';
-					} else if (qstatus == 1) {
-					} */
-					output += '<span class="answered">답변완료</span>';
-					output += '<div class="production-selling-section__right-update" id="update-'+id[0]+'"><button type="button" >수정</button></div>';
-					output += '<span> | </span>';
-					output += '<div class="production-selling-section__right-delete" id="delete-'+id[0]+'"><button type="button" >삭제</button></div>';
-					output += '</header>';
-					output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-					output += '<div class="production-question-feed__item__question">';
-					output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-					output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-					output += '</div>';
-					output += '<div class="production-question-feed__item__answer" id="answer-'+id[0]+'">';
-					//if(qstatus ==1) {
-						output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
-						output += '<p class="production-question-feed__item__answer__author">';
-						output += '<span class="author">${qvo.company }</span>&nbsp;<span class="date">'+jdata.interior_answer[i].qdate_r+'</span></p>';
-						output += '<p class="production-question-feed__item__content">'+jdata.interior_answer[i].qreply+'</p>';
-					//}
-					output += '</div>';
-					//output += '</article>';
-				}
-				
-				$("#answer-wrap-"+id[0]).append(output); 
-			} 
-			
-		});
+					
+					$("#answer-wrap-"+id[0]).append(output); 
+				} 
+			});
 		
 		}
 		
@@ -3850,7 +3888,7 @@
 			var qreply = $("#qcontent-admin-"+id[1]).val();
 				
 				$.ajax({
-					url:"interior_question_answer_proc.do?qno="+id[1]+"&ino=${ino}",
+					url:"interior_question_answer_update_proc.do?qno="+id[1]+"&ino=${ino}",
 					success: function(result) {
 						var jdata = JSON.parse(result);
 						var	output = "";
@@ -3861,7 +3899,7 @@
 							output += '<form name="answerForm" class="answerForm'+id[1]+'">'
 						 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
 							output += '<div>';
-							output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>';
+							output += '<span class="author" style="width:50%; margin-right:8px; font-weight:700;">'+jdata.interior_answer[i].company+'</span>';
 							output += '<div class="product-question__wrap__sub-title" id="question-content-admin-'+id[1]+'" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>';
 							output += '</div>';
 							output += '<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin-'+id[1]+'" name="qreply" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;">'+jdata.interior_answer[i].qreply+'</textarea>';
@@ -3883,50 +3921,19 @@
 		$(document).on("click",".production-selling-section__right-delete",function(event){
 			var id = $(this).attr("id");
 			id = id.split("-");
-			alert("1");
 			
 			$.ajax({
-				url:"interior_question_answer_delete.do?qno="+id[1]+"&ino=${ino}",
-				async:false,
+				url:"interior_question_answer_delete.do?qno="+id[0]+"&ino=${ino}",
 				success: function(result) {
 					var jdata = JSON.parse(result);
-					//alert(jdata);
-					//alert("delete~~");
-					$("#answer-"+id[1]).empty();
-					$("#answer-wrap-"+id[1]).empty();
-					$("#"+id[1]).addClass("answer-none");
 					
-					
-						var output = "";
-						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
-						output += '<header class="production-question-feed__item__header">';
-						var ostatus = "${qvo.ostatus}";
-						if(ostatus == '0') {
-							output += '비구매 | ';
-						} else if (ostatus == '1') {
-							output += '구매 | ';
-						} else if (ostatus == null) {
-							output += '비구매 | ';
-						}
-						output += '${qvo.qtype } | ';
-						var qstatus = "${qvo.qstatus}";
-						/* if(qstatus == 0) {
-							output += '<span class="unanswered">미답변</span>';
-						} else if (qstatus == 1) {
-						}  */
-						output += '<span class="unanswered">미답변</span>';
-						output += '<div class="production-selling-section__right-answer" id="answer-'+id[1]+'"><button type="button" >답변하기</button></div>';
-						output += '</header>';
-						output += '<p class="production-question-feed__item__author">${vo.nickname } | ${qvo.qdate }</p>';
-						output += '<div class="production-question-feed__item__question">';
-						output += '<span class="production-question-feed__item__badge">Q&nbsp;</span>';
-						output += '<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>';
-						output += '</div>';
-						//if(qstatus ==1) {
-						//}
-						//output += '</article>';
-					
-					$("#answer-wrap-"+id[1]).append(output); 
+					if(!$("#"+id[0]).hasClass("answer-none")) {
+						 $("#"+id[0]).addClass("answer-none");
+					}
+
+					$("#answer-"+id[0]).empty();
+					q_ajax("");
+				
 				}  
 			});
 			
@@ -3939,14 +3946,85 @@
 				$("textarea#qcontent-admin-"+id[0]).val("");
 				//alert("del"+id[0]);
 		});
-
-	
 		
+		$(".form-control").change(function(){
+			var id = $(this).attr("id");
+		//	alert($("#"+id).val());
+		});
+		
+		var gno = new Array();
+		
+		$(".production-select-list__item-main-list").each(function(i){
+			$(this).click(function(e){
+		
+				var id = $(this).attr("id");
+				id = id.split("-");
+				gno.push(id[2]);
+				e.preventDefault();
+
+			});
+		}); 
+		$(".production-select-list__item-sub-list").each(function(i){
+			$(this).click(function(e){
+		
+				var id = $(this).attr("id");
+				id = id.split("-");
+				gno.push(id[3]);
+				e.preventDefault();
+
+			});
+		}); 
+	
+
+		$(".selling-option-item__delete-main").each(function(i){
+			$(this).click(function(e){
+				var id = $(this).attr("id");
+					id = id.split("-");
+				var itemtoRemove = id[2];
+					gno.splice($.inArray(itemtoRemove, gno),1);
+				
+			});
+		});
+
+
+		$(".buying-main").click(function(){
+			var ocount = new Array();
+			var cnt = '';
+			$.each(gno, function(index, item){ 
+				if($("#pro-order-"+item+" .form-control").val() != null) {
+					 cnt = $("#pro-order-"+item+" .form-control").val();
+					 ocount.push(cnt);
+					 
+				}
+			});
+
+			alert(gno);
+			alert(ocount);
+			
+			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
+		}); 
+		$(".buying-sub").click(function(){
+			var ocount = new Array();
+			var cnt = '';
+			$.each(gno, function(index, item){ 
+				if($("#pro-order-"+item+" .form-control").val() != null) {
+					 cnt = $("#pro-order-"+item+" .form-control").val();
+					 ocount.push(cnt);
+					 
+				}
+			});
+
+			alert(gno);
+			alert(ocount);
+			
+			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
+		}); 
+			
 		
 	});
 	
 	
-  </script>
+</script>
 </head>
 <body>
 <!-- header -->
@@ -3954,9 +4032,9 @@
 <div class="production-selling">
 	<div class="production-selling-overview container">
 		<nav class="commerce-category-breadcrumb-wrap production-selling-overview__category">
-			<ol class="commerce-category-breadcrumb">
+			<!-- <ol class="commerce-category-breadcrumb">
 				<li class="commerce-category-breadcrumb__entry"><a class="link" href="/store/category?category=0&amp;affect_type= ProductSaleDetail&amp;affect_id=647815">가구</a>
-			</ol>
+			</ol> -->
 		</nav>
 		<div class="production-selling-overview__container row">
 			<div class="production-selling-overview__cover-image-wrap col-12 col-md-6 col-lg-7">
@@ -3973,7 +4051,7 @@
 					  <div class="swiper-container gallery-thumbs">
 						  <ul class="swiper-wrapper thumb">
 						 	 <c:forEach var="vo" items="${interior_top }" >
-							      <li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage})"></li>
+							      <li class=" swiper-slide thumb-sub" style="background-image:url(http://localhost:9000/myhouse/images/${vo.goods_simage}); width:70px;"></li>
 					    	  </c:forEach>
 						  	
 						  </ul>
@@ -4044,11 +4122,9 @@
 						</P> <!-- production-selling-header__review-wrap -->
 						<p class="production-selling-header__price">
 							<span class="production-selling-header__price__row">
-								<span class="production-selling-header__price__discount">
-									<span class="number">55</span><span class="percent">%</span>&nbsp;</span>
 								<span class="production-selling-header__price__price-wrap">
 									<span class="production-selling-header__price__price">
-										<span class="number">${vo.goods_price}</span><span class="won">원</span><span class="won"> 외</span><span class="production-selling-header__price__badge"><svg class="icon" aria-label="특가" width="30" height="20" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet"><rect width="30" height="20" fill="#F77" rx="4"></rect><path fill="#fff" d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></span></span></span>
+										<span class="number">${vo.goods_price}</span><span class="won"> 원</span><span class="won"> 외</span>
 							</span> <!-- production-selling-header__price__row -->
 						</p>
 					</div>
@@ -4057,7 +4133,6 @@
 					</p>
 				</div> <!-- production-selling-header -->
 				<div class="production-selling-option-form production-selling-overview__option-form">
-				<form class="card-collection-form container" name="StoreBasketForm" action="store_basket_proc.do" method="post" enctype="multipart/form-data">
 					<div class="selling-option-form-content deal-selling-option-form-content production-selling-option-form__form">
 						<div class="production-select-dropdown">
 							<div class="production-select-dropdown__button">
@@ -4096,14 +4171,16 @@
 						<ul class="selling-option-form-content__list select-none" id="pro-order-0">
 							<c:forEach var="vo" items="${interior_top }" >
 							<li class="order-list order-none" id="pro-order-${vo.gno }" ><article class="selling-option-item">
+								<input type="hidden" class="main_order" value="${vo.goods_price }">
+								<input type="hidden" class="main_order_h" value="0">
+								<input type="hidden" class="main_order_gno" value="${vo.gno }">
 								<h1 class="selling-option-item__production">${vo.goods_name }</h1>
-							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> --> 
+							<!-- 	<h2 class="selling-option-item__name">침대프레임 사이즈: 퀸(매트제외) / 색상 옵션: 내츄럴원목</h2> -->
 								<button class="selling-option-item__delete-main" type="button" aria-label="삭제" id="order-del-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 								<div class="selling-option-item__controls">
 									<div class="selling-option-item__quantity-main">
 										<div class="input-group select-input option-count-input">
-										<input type="hidden" name="gno" value="${vo.gno}">
-										<select class="form-control"  id="${vo.gno }" name="bcount">
+										<select class="form-control count-main"  id="${vo.gno }" name="count-name">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -4133,9 +4210,8 @@
 					</div>
 					<div class="production-selling-option-form__footer">
 						<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="submit">장바구니</button>
-						<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
+						<button class="button button--color-blue button--size-55 button--shape-4 buying-main" type="button">바로구매</button>
 					</div>
-					</form>
 				</div> <!-- production-selling-option-form production-selling-overview__option-form -->
 			</div>
 			
@@ -4157,7 +4233,7 @@
 			<div class="production-selling__detail__content col-12 col-lg-8">
 				<div class="production-selling-content">
 					<a id="production-selling-information"></a>
-					<section class="production-selling-section">
+					<section class="idx production-selling-section">
 						<div class="production-selling-description production-selling-description--notice production-selling-description--open">
 							<ul class="production-selling-description__delivery-notice">
 								<li><b>배송까지 <span class="red">최대 15일</span> (주말과 공휴일 제외) 소요됩니다.</b></li>
@@ -4171,7 +4247,7 @@
 						</div> <!-- 상품정보::사진  -->
 					</section>
 					<a id="production-selling-review"></a>
-					<section class="production-selling-section">
+					<section class="idx production-selling-section">
 						<header class="production-selling-section__header">
 							<h1 class="production-selling-section__title">리뷰 <span class="count">${vo.review_cnt}</span></h1>
 							<div class="production-selling-section__right"><button type="button">리뷰쓰기</button></div>
@@ -4242,8 +4318,8 @@
 													<clipPath id="star-clip-115"><rect x="0" y="0" width="16" height="16"></rect></clipPath></defs><use xlink:href="#star-path-115" fill="#DBDBDB"></use>
 													<use clip-path="url(#star-clip-115)" xlink:href="#star-path-115"></use></svg>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<div class="production-review-feed__header-v2__stars__avg__label">5점</div>
-												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;151<span>&nbsp;&nbsp;개</span></div>
+												<div class="production-review-feed__header-v2__stars__avg__label" id="star_5">5점</div>
+												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${rvo5.star_cnt }<span>&nbsp;&nbsp;개</span></div>
 											</div>
 											<div class="production-review-feed__header-v2__stars__avg__container">
 												<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-115" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
@@ -4262,8 +4338,8 @@
 													<clipPath id="star-clip-444"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-444" fill="#DBDBDB"></use>
 													<use clip-path="url(#star-clip-444)" xlink:href="#star-path-444"></use></svg>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<div class="production-review-feed__header-v2__stars__avg__label">4점</div>
-												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;84<span>&nbsp;&nbsp;개</span></div>
+												<div class="production-review-feed__header-v2__stars__avg__label" id="star_4">4점</div>
+												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${rvo4.star_cnt }<span>&nbsp;&nbsp;개</span></div>
 											</div>
 											<div class="production-review-feed__header-v2__stars__avg__container">
 												<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-115" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
@@ -4282,8 +4358,8 @@
 													<clipPath id="star-clip-444"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-444" fill="#DBDBDB"></use>
 													<use clip-path="url(#star-clip-444)" xlink:href="#star-path-444"></use></svg>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<div class="production-review-feed__header-v2__stars__avg__label">3점</div>
-												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19<span>&nbsp;&nbsp;개</span></div>
+												<div class="production-review-feed__header-v2__stars__avg__label" id="star_3">3점</div>
+												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${rvo3.star_cnt }<span>&nbsp;&nbsp;개</span></div>
 											</div>
 											<div class="production-review-feed__header-v2__stars__avg__container">
 												<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-115" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
@@ -4302,8 +4378,8 @@
 													<clipPath id="star-clip-444"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-444" fill="#DBDBDB"></use>
 													<use clip-path="url(#star-clip-444)" xlink:href="#star-path-444"></use></svg>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<div class="production-review-feed__header-v2__stars__avg__label">2점</div>
-												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5<span>&nbsp;&nbsp;개</span></div>
+												<div class="production-review-feed__header-v2__stars__avg__label" id="star_2">2점</div>
+												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${rvo2.star_cnt }<span>&nbsp;&nbsp;개</span></div>
 											</div>
 											<div class="production-review-feed__header-v2__stars__avg__container">
 												<svg fill="#35C5F0" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><defs><path id="star-path-115" d="M8 13.54l-4.37 1.85c-.5.22-.88-.06-.83-.6l.4-4.73L.1 6.47c-.37-.41-.22-.85.32-.98l4.62-1.07L7.48.36c.29-.48.75-.47 1.04 0l2.44 4.06 4.62 1.07c.54.13.68.57.32.98l-3.1 3.59.4 4.72c.05.55-.33.83-.83.61L8 13.54z"></path>
@@ -4322,8 +4398,8 @@
 													<clipPath id="star-clip-444"><rect x="0" y="0" width="0" height="16"></rect></clipPath></defs><use xlink:href="#star-path-444" fill="#DBDBDB"></use>
 													<use clip-path="url(#star-clip-444)" xlink:href="#star-path-444"></use></svg>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<div class="production-review-feed__header-v2__stars__avg__label">1점</div>
-												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<span>&nbsp;&nbsp;개</span></div>
+												<div class="production-review-feed__header-v2__stars__avg__label" id="star_1">1점</div>
+												<div class="production-review-feed__header-v2__stars__avg__number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${rvo1.star_cnt }<span>&nbsp;&nbsp;개</span></div>
 											</div>
 										</div>
 									</div> <!-- 별점 준 인운수 -->
@@ -4412,69 +4488,20 @@
 						</div>
 					</section>
 					<a id="production-selling-question"></a>
-					<section class="production-selling-section">
+					<section class="idx production-selling-section">
 						<header class="production-selling-section__header">
 							<h1 class="production-selling-section__title">문의 <span class="count">${vo.qno_count }</span></h1>
 							<div class="production-selling-section__right-q"><button>문의하기</button></div>
 						</header>
 						<div class="production-question-feed">
 							<div class="production-question-feed__list" >
-							<%-- <c:forEach var="qvo" items="${interior_question}">
-								<article class="production-question-feed__item" id="answer-wrap-${qvo.qno}">
-									<header class="production-question-feed__item__header">
-										<c:choose>
-											<c:when test="${qvo.ostatus eq '0'}">비구매 | </c:when>
-											<c:when test="${qvo.ostatus eq null}">비구매 | </c:when>
-											<c:when test="${qvo.ostatus eq '1'}">구매 | </c:when>
-										</c:choose>
-										 ${qvo.qtype } | 
-										 <c:choose>
-										 	<c:when test="${qvo.qstatus eq 0}"><span class="unanswered">미답변</span></c:when>
-										 	<c:when test="${qvo.qstatus eq 1}"><span class="answered">답변완료</span></c:when>
-										 </c:choose>
-										 <c:choose>
-										 	<c:when test="${qvo.qstatus eq 0}"><div class="production-selling-section__right-answer" id="answer-${qvo.qno}"><button type="button" >답변하기</button></div></c:when>
-										 	<c:when test="${qvo.qstatus eq 1}"><div class="production-selling-section__right-update" id="update-${qvo.qno}"><button type="button" >수정</button></div>
-										 										<span> | </span>
-										 										<div class="production-selling-section__right-delete" id="delete-${qvo.qno}"><button type="button" >삭제</button></div></c:when>
-										 </c:choose>
-									 </header> 
-									<p class="production-question-feed__item__author">${qvo.nickname } | ${qvo.qdate }</p>
-									<div class="production-question-feed__item__question">
-										<span class="production-question-feed__item__badge">Q&nbsp;</span>
-										<p class="production-question-feed__item__content"><span class="production-question-feed__item__content__option-name">${qvo.goods_name }<br></span>${qvo.qcontent }</p>
-									</div>
-									<div class="production-question-feed__item__answer" id="answer-${qvo.qno }"> <!-- production-question-feed__item__answer-chk  -->
-									<c:if test="${qvo.qstatus eq 1}">
-										<span class="production-question-feed__item__badge">A&nbsp;</span>
-										<p class="production-question-feed__item__answer__author">
-											<span class="author">${qvo.company }</span>&nbsp;<span class="date">${qvo.qdate_r }</span></p>
-											<p class="production-question-feed__item__content">${qvo.qreply }</p>
-									</c:if>
-									</div>
-									
-										<div class="production-question-feed__item__answer-write answer-none" id="${qvo.qno}">
-											<input type="hidden" value="${vo.ino}">
-												<span class="production-question-feed__item__badge">A&nbsp;</span>
-												<div>
-													<span class="author" style="width:50%; margin-right:8px; font-weight:700;">${qvo.company }</span>
-													<div class="product-question__wrap__sub-title" id="question-content-admin" style="display:inline-block; font-size:14px;">[ 문의답변 ]</div>
-												</div>
-												<textarea placeholder="문의 내용을 입력하세요" maxlength="1000" id="qcontent-admin" name="qcontent-admin" class="form-control text-area-input product-question__wrap__question-admin" style="height: 39px;"></textarea>
-												<div class="product-question__wrap__buttons" style="display:block; margin:16px auto; ">
-													<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-fin" id="${qvo.qno}" type="button" style="width:49%; margin-right:5px;">작성완료</button>
-													<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="${qvo.qno}" type="button" style="width:49%;">작성취소</button>
-												</div>
-										</div> 
-									
-								</article>
-							</c:forEach> --%>
+					
 							</div> <!-- production-question-feed__list -->
 							<!-- <div id="ampaginationsm"></div> -->
 						</div> <!-- production-question-feed -->
 					</section> <!-- 문의하기  -->
 					<a id="production-selling-delivery"></a>
-					<section class="production-selling-section">
+					<section class="idx production-selling-section">
 						<header class="production-selling-section__header"><h1 class="production-selling-section__title">배송</h1></header>
 						<table class="production-selling-table">
 							<tbody>
@@ -4560,8 +4587,9 @@
 									<ul class="selling-option-form-content__list select-none" id="pro-order-side-0">
 										<c:forEach var="vo" items="${interior_top }" >
 										<li class="order-list order-none" id="pro-order-side-${vo.gno }"><article class="selling-option-item">
+												<input type="hidden" class="sub_order" value="${vo.goods_price }">
+												<input type="hidden" class="sub_order_h" value="0">
 												<h1 class="selling-option-item__production">${vo.goods_name }</h1>
-												<!-- <h2 class="selling-option-item__name">매트리스 옵션: 슈퍼싱글(DH 7존 독립매트) / 색상 옵션: 빈티지브라운</h                                                                               2> -->
 												<button class="selling-option-item__delete-sub" type="button" aria-label="삭제" id="order-del-side-${vo.gno }"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path fill-rule="nonzero" d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"></path></svg></button>
 											<div class="selling-option-item__controls">
 												<div class="selling-option-item__quantity-sub">
@@ -4599,7 +4627,7 @@
 										<button class="button button--color-gray-14-inverted button--size-55 button--shape-4 production-selling-sidebar-content__scrap" type="button" id="side-order"><svg class="icon--stroke" aria-label="스크랩" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M11.53 18.54l-8.06 4.31A1 1 0 0 1 2 21.97V3.5A1.5 1.5 0 0 1 3.5 2h17A1.5 1.5 0 0 1 22 3.5v18.47a1 1 0 0 1-1.47.88l-8.06-4.31a1 1 0 0 0-.94 0z"></path></svg></button>
 									</div>
 									<button class="button button--color-blue-inverted button--size-55 button--shape-4" type="button">장바구니</button>
-									<button class="button button--color-blue button--size-55 button--shape-4" type="button">바로구매</button>
+									<button class="button button--color-blue button--size-55 button--shape-4 buying-sub" type="button">바로구매</button>
 								</div>
 							</div> <!-- production-selling-option-form production-selling-sidebar-content__option-form -->
 						</section>
@@ -4700,9 +4728,9 @@
 							</label>
 						</div>
 					</div>
-					<div class="review-modal__form__policy-none"  id="review-modal__form__policy">오늘의집은 비교적 정보를 얻기 힘든 가구와 인테리어 제품의 정보 공유를 위해 직접 사용한 유저들의 생생하고 진실된 리뷰 문화를 만들어 가고자 합니다. 
-따라서 오늘의집의 유저라면 오늘의집에서 직접 구매하지 않은 제품도 사용 경험을 공유하고 포인트를 적립받으실 수 있습니다. 
-단, 다음과 같은 리뷰의 경우 블라인드 및 통보 없이 삭제 될 수 있으며, 공정위의 &lt;추천·보증 등에 관한 표시·광고 심사지침(이하 지침)&gt; 및 오늘의집 서비스 이용 약관 제 14조에 따라 처벌 받을 수 있습니다. 
+					<div class="review-modal__form__policy-none"  id="review-modal__form__policy">스위트홈은 비교적 정보를 얻기 힘든 가구와 인테리어 제품의 정보 공유를 위해 직접 사용한 유저들의 생생하고 진실된 리뷰 문화를 만들어 가고자 합니다. 
+따라서 스위트홈의 유저라면 오늘의집에서 직접 구매하지 않은 제품도 사용 경험을 공유하고 포인트를 적립받으실 수 있습니다. 
+단, 다음과 같은 리뷰의 경우 블라인드 및 통보 없이 삭제 될 수 있으며, 공정위의 &lt;추천·보증 등에 관한 표시·광고 심사지침(이하 지침)&gt; 및 스위트홈 서비스 이용 약관 제 14조에 따라 처벌 받을 수 있습니다. 
 1. 리뷰를 작성하는 조건으로 금전적 또는 물질적 대가를 제공받은 경우 
 2. 리뷰의 대상 업체 또는 경쟁업체의 관계자이거나 해당 업체와 개인적/사업적으로 관련 있는 경우 
 3. 해당 상품에 대한 허위의 내용을 작성한 경우 

@@ -56,6 +56,8 @@
 </style>
 </head>
 <body>
+<!-- header -->
+	<jsp:include page="../header1.jsp" />
 <div id="order_result" data-cost="7900" data-new="Old">
       <div class="image success_card"></div>
 
@@ -63,5 +65,7 @@
         <div class="icon">주문현황보기</div>
 </a>  
 </div>
+<!-- footer -->
+	<jsp:include page="../footer.jsp"/>
 </body>
 </html>
