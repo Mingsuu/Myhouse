@@ -1554,7 +1554,7 @@
 								</div>
 								<div class ="col-8">
 									<div class="sales_form_control_wrap">
-										<input type="text" name="company" id="sales_application_company" class="form_control" placeholder='오늘의집' value="">
+										<input type="text" name="company" id="sales_application_company" class="form_control" placeholder='스위트홈' value="">
 									</div>
 								</div>
 							</div>
@@ -1585,7 +1585,7 @@
 								</div>
 								<div class ="col-8">
 									<div class="sales_form_control_wrap">
-										<input type="text" id="sales_application_homepage" class="form_control" placeholder='www.ohou.se' value="">
+										<input type="text" id="sales_application_homepage" class="form_control" placeholder='sweethome.co.kr' value="">
 									</div>
 								</div>
 							</div>
