@@ -6,22 +6,56 @@
     
 <mapper namespace="mapper.interior">
 
+<!-- 주문자 배송지 나열하기 -->
+<select id="order-select-addr" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name,
+	row_number() over(partition by o.ino order by ono asc) as RowIdx
+	from (select distinct o.gno, g.ino, goods_simage, goods_name, goods_price, ono, o.email, ocount, ostatus
+	from h_goods g, h_order o where g.gno = o.gno) o, (select distinct g.ino, ititle, company from h_interior i , h_goods g where i.ino=g.ino) i,
+	(select email, addr, addr_num, memo, phone, name from h_member) m
+	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' ) where RowIdx='1'
+</select>
+<!-- 주문 상품 나열하기 -->
+<select id="order-select" parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
+	select * from(select distinct rownum rno, gno, o.ino, goods_simage, goods_name, to_char(goods_price,'999,999,999,999') goods_price, ono, m.email, ocount, ostatus, ititle, company, addr, addr_num, memo, phone, name
+	from (select distinct o.gno, g.ino, goods_simage, goods_name, goods_price, ono, o.email, ocount, ostatus
+		from h_goods g, h_order o where g.gno = o.gno) o, (select distinct g.ino, ititle, company from h_interior i , h_goods g where i.ino=g.ino) i,
+		(select email, addr, addr_num, memo, phone, name from h_member) m
+	where o.ino = i.ino and o.email = m.email and m.email=#{email} and ostatus='0' )
+	where 
+	<foreach collection="gnolist" item="gno" index="index" separator='or'>
+	gno=#{gno}
+	</foreach>
+</select>
+<select id="order-select2" parameterType="map" resultType="int">
+	select count(*) from h_order where gno=#{gno} and ocount=#{ocount} and email=#{email} and ostatus='0'
+</select>
+<select id="pay-ostatus-insert2" parameterType="map" resultType="int">
+	select count(*) from h_order where ostatus='1' and ono=#{ono} and email=#{email}
+</select>
+
+<!-- 배송지 입력 :: 결제할떄!! 저장 -->
+<update id="pay-addr-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	update h_member set phone=#{phone}, name=#{name}, memo=#{memo} where email=#{email}
+</update>
+<!-- 배송지 입력 :: 결제할떄!! 저장 -->
+<update id="pay-ostatus-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	update h_order set ostatus='1', odate=sysdate where email=#{email} and ono=#{ono}
+</update>
+
 <!-- 배송지 입력 :: 저장 -->
-<update id="addr-insert" parameterType="java.lang.String">
-	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone} where email=#{email}
+<update id="addr-insert" parameterType="com.myhouse.vo.StoreIndexVO">
+	update h_member set addr=#{addr}, addr_num=#{addr_num}, phone=#{phone}, name=#{name} where email=#{email}
 </update>
 
 <!-- 바로구매 클릭 - order에 추가하기 -->
 <insert id="order-insert" parameterType="map">
-	insert into h_order values 
-		<!-- <foreach collection="orderList" item="item" index="index" separator="," open="(" close=")"> -->
-			('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
-		<!-- </foreach> -->
+	insert into h_order values ('o_'||seq_h_order.nextval , #{email}, #{gno}, #{ocount}, '0', sysdate)
 </insert>
 
 <!-- 전체 리스트 카운트 - 문의 -->
 <select id="question-count" parameterType="java.lang.String" resultType="int">
-	select distinct count(qno)over(partition by ino)  from h_question q, h_goods g where q.gno=g.gno and ino=#{ino}
+	select distinct count(*) from h_question q ,h_goods g where q.gno = g.gno and ino=#{ino}
 </select>
 
 <!-- 전체 리스트 카운트 - 리뷰 -->
@@ -76,7 +110,7 @@
                                         where h_interior.ino in (select distinct ino from h_goods , h_question where h_goods.gno = h_question.gno)) 
             and h_interior.email = h_member.email and seller =1 and h_interior.status=1)s
       where q.email = m.email and i.ino = q.ino and s.ino = q.ino order by qno desc))
-	where rno between #{start} and #{end}
+	where rno between #{start} and #{end} order by rno asc
 </select>
 
 <!-- 리뷰작성하기 -->
@@ -137,6 +171,23 @@
 	select gno, ino, goods_name, goods_simage, to_char(goods_price,'999,999,999,999') goods_price from h_goods where gno=#{gno}
 </select>
 
+<!-- 리뷰 별 갯수 -->
+<select id="review-star5" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO" >
+	select count(star) star_cnt from h_review v, h_goods g where v.gno = g.gno and star='5' and ino=#{ino}
+</select>
+<select id="review-star4" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO" >
+	select count(star) star_cnt from h_review v, h_goods g where v.gno = g.gno and star='4' and ino=#{ino}
+</select>
+<select id="review-star3" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO" >
+	select count(star) star_cnt from h_review v, h_goods g where v.gno = g.gno and star='3' and ino=#{ino}
+</select>
+<select id="review-star2" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO" >
+	select count(star) star_cnt from h_review v, h_goods g where v.gno = g.gno and star='2' and ino=#{ino}
+</select>
+<select id="review-star1" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO" >
+	select count(star) star_cnt from h_review v, h_goods g where v.gno = g.gno and star='1' and ino=#{ino}
+</select>
+
 <!-- 상세페이지 : 상단부분 -->
 <select id="interior-top" parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
 	select distinct rno, ino, company, ititle, interior_simage, category, gno, goods_simage, goods_name, goods_price, sno, scrap_cnt, review_cnt, 
@@ -158,13 +209,13 @@
 <!-- store_index - 상세카테고리 -->
 <select id="category_list"  parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
 select * from (select * from
-(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count
-from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
-	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
+(select distinct rno, idate, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count,ravg
+from (select rownum rno, idate, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count,ravg
+	from(select ino, idate, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, avg(star)over(partition by ino) ravg,
 		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
-		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from(select idate, i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
-	where RowIdx='1' and  
+	where RowIdx='1' and 
 	<foreach collection="category" item="category" index="index">
 	category=#{category}
 	</foreach>
@@ -195,6 +246,21 @@ from (select rownum rno, ino, company, ititle, category, tone, color, gno, seaso
 	<foreach collection="end" item="enddo" index="index">
 		#{enddo}
 	</foreach>
+	<if test="status == '인기순'">
+		 order by ravg desc
+	</if>
+	<if test="status == '낮은가격순'">
+		order by goods_price
+	</if>
+	<if test="status == '높은가격순'">
+		order by goods_price desc
+	</if>
+	<if test="status == '많은리뷰순'">
+		order by star_count desc
+	</if>
+	<if test="status == '최신순'">
+		order by idate
+	</if>
 </select>
 <!-- store_index - 상세카테고리 - 리스트 카운트!! -->
 <select id="category_list_count"  parameterType="map" resultType="int">

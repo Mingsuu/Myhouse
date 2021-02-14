@@ -28,4 +28,9 @@ public interface MypageService {
 	String getpicturescrap(String pno,String email);//스크랩누를시 인서트
 	String getpscrapdelete(String pno,String email);//스크랩 다시한번 누를시 삭제
 	String getmember_delete(String email); //회원탈퇴
+	String getreviewproc(String ino); // 리뷰작성 (ajax)
+	String getreviewproc1(String ino); //리뷰수정 (ajax)
+	ModelAndView getreviewinsert(Object vo); //리뷰 insert
+	ModelAndView getreviewupdate(Object vo); //리뷰 update
+	
 }

@@ -1,14 +1,40 @@
 package com.myhouse.vo;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class reviewVO {
-	String vno,email,gno,vcontent,date,company,ino,ititle,nickname,vdate,interior_simage;
+	String vno,email,gno,vcontent,date,company,ino,ititle,nickname,vdate,interior_simage,savepath,review_image,review_simage;
 	int star;
 	
 	
+	CommonsMultipartFile file1;
 	
 	
 	
-	
+	public String getReview_image() {
+		return review_image;
+	}
+	public void setReview_image(String review_image) {
+		this.review_image = review_image;
+	}
+	public String getReview_simage() {
+		return review_simage;
+	}
+	public void setReview_simage(String review_simage) {
+		this.review_simage = review_simage;
+	}
+	public String getSavepath() {
+		return savepath;
+	}
+	public void setSavepath(String savepath) {
+		this.savepath = savepath;
+	}
+	public CommonsMultipartFile getFile1() {
+		return file1;
+	}
+	public void setFile1(CommonsMultipartFile file1) {
+		this.file1 = file1;
+	}
 	public String getInterior_simage() {
 		return interior_simage;
 	}

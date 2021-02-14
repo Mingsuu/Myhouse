@@ -416,7 +416,12 @@
 				<img src="http://localhost:9000/myhouse/images/mypage/naver.PNG" class="img3"></a>
 			</div>
 		</div>
-		<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
+		<c:if test="${prof.member_spimage != null }">
+			<img src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}" class="pro">
+		</c:if>
+		<c:if test="${prof.member_spimage == null }">
+			<img src="http://localhost:9000/myhouse/resources/upload/pro.png" class="pro">
+		</c:if>
 		<div class="leftbox">
 			<span>${prof.nickname}</span>
 				<c:if test="${prof.follower != null }">
