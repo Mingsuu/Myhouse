@@ -100,7 +100,7 @@
 															<a class="product-small-item product-small-item--clickable"
 																href="http://localhost:9000/myhouse/store_page.do?ino=${row.ino}">
 																<div class="product-small-item__image">
-																	<img src="http://localhost:9000/myhouse/images/${row.goods_simage}">
+																	<img src="http://localhost:9000/myhouse/resources/upload/${row.goods_simage}">
 <!-- 																		srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/160214145393593291.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;webp=1 3x">
  -->															</div>
 																<div class="product-small-item__content">
