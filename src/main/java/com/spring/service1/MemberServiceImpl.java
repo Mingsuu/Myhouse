@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 		//1페이지(1~10), 2페이지(11~20) ...
 		int start = 0;
 		int end = 0;
-		int pageSize = 3; // 한 페이지당 출력되는 row
+		int pageSize = 6; // 한 페이지당 출력되는 row
 		int pageCount = 1; // 전체 페이지 수 : 전체 리스트 row / 한 페이지당 출력되는 row
 		int dbCount = memberDAO.getListCount(); // DB연동 후 전체 row 수 출력
 		int reqPage = 1; // 요청 페이지
