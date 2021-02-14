@@ -46,17 +46,18 @@
           	$('div.card-collection-form__card-image').css('display','none')
 		});
     	  
-    	  $("#btnUploadPhoto").click(function(){
-          	if($('label.card-collection-form__card-image-upload').css('display')=='block'){
-  				$("label.card-collection-form__card-image-upload").css("border","2px solid red");
-  				return false;
-  			}else{
-  				updatePhotoForm.submit();		
-  			}
-		});
     	  
-    	 function popup(){
-              var url = "product_tag.do";
+    	 $("#btnUploadPhoto").click(function(){
+           	if($('label.card-collection-form__card-image-upload').css('display')=='block'){
+   				$("label.card-collection-form__card-image-upload").css("border","2px solid red");
+   				return false;
+   			}else{
+   				updatePhotoForm.submit();		
+   			}
+ 		});
+    	  
+    	  function popup(){
+              var url = "tag.do";
               var name = "상품태그하기";
               var option = "width = 350, height = 500, top = 100, left = 200, location = no"
               window.open(url, name, option);
@@ -67,10 +68,37 @@
     	 
     	$(document).on("click","button#gname",function(){
     	 	$(this).parent().remove();
+    	 	var tag = $('#ptag').val();
+    	 	var gno = $(this).parent().children('#tag_gno').val()+",";
+			tag =  tag.replace(gno, "");
+			$('#ptag').val(tag);
     	 });
     	  
-    	});    
     
+	    $("#btn_sch").click(function() {
+	    	if ($("#inp_sch").val() == ""){
+				alert("검색할 데이터를 입력해주세요");
+				$("#inp_sch").focus();
+				return false; 
+			} else {
+				var inp_sch = $("#inp_sch").val();
+				var btn_sch = $("#btn_sch").val();
+				var value = $("#inp_sch").val();
+				/* alert(inp_sch);  */
+				var popupWidth =1300;
+				var popupHeight =700;
+				var popupX = (window.screen.width / 2) - (popupWidth / 2);
+				var popupY= (window.screen.height / 2) - (popupHeight / 2);
+				
+				var win = window.open('http://localhost:9000/myhouse/product_review.do?value='+value, "PopupWin", 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
+				
+			}
+		});
+
+		$("#inp_sch").keydown(function(key) {
+		 	var value=$(this).val();
+		});
+	    
         function handleImgFileSelect(e) {
             var files = e.target.files;
             var filesArr = Array.prototype.slice.call(files);
@@ -90,6 +118,7 @@
                 reader.readAsDataURL(f);
             });
         }
+    }); 
 </script>
 	
 <style>		
@@ -421,10 +450,9 @@
 		text-align: center;
 		transition: color .1s,background-color .1s,border-color .1s;
 		cursor: pointer;
-		
 		display: block;
 		padding: 1px 8px 3px;
-		font-size: 13px;
+		font-size: 14px;
 		line-height: 18px;
 		font-weight: 700;
 		border-radius: 26px;
@@ -443,7 +471,34 @@
 		padding:5px 0;
 	}
 	
-
+	.input-file-button{
+		    padding: 6px 25px;
+		    background-color:#35c5f0;
+		    border-radius: 4px;
+		    color: white;
+		    cursor: pointer;
+		}
+		.layout-navigation-search__input__text{
+			display:inline;
+		}
+		.review-my-home__search__form__button{
+			padding: 9px 25px;
+			outline:0;
+		    background-color:#35c5f0;
+		    border-radius: 4px;
+		    color: white;
+		    cursor: pointer;
+		    display:inline;
+		}
+		 #ptag{
+			/* display:none;  */
+			float: right;
+			width:150px;
+		} 
+		
+		button{
+			border: 1px solid transparent;
+		}
 	
 </style>
 </head>
@@ -533,14 +588,33 @@
 										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 200px;">${pvo.pcontent }</textarea>
 								</div>
 								<div class="card-collection-form__card-item__content__row">
-									<div class="keyword-input">
+									<!-- <div class="keyword-input">
 										<button id='tag_btn' class='tag_btn' type='button'>
 										상품 태그하기
-										</button>
-										<div class="goods_list_wrap">
+										</button> -->
+									
+									<div id="search_btn"class="layout-navigation-search__combobox" role="combobox"
+									aria-haspopup="listbox" aria-expanded="false">
+										<div class="layout-navigation-search__input">
+											<input type="text" class="layout-navigation-search__input__text" value=""
+												autocomplete="off" size="1" id="inp_sch"
+												aria-autocomplete="list" placeholder="스토어 물품추가"
+												aria-label="스위트홈 통합검색">
+											<button class="review-my-home__search__form__button" type="button" id="btn_sch">검색</button>
+											<svg class="layout-navigation-search__input__icon" width="24"
+												height="24" viewBox="0 0 24 24" fill="none"
+												stroke="currentColor" stroke-width="2"
+												preserveAspectRatio="xMidYMid meet">
+													<path d="M22 22l-5-5"></path>
+													<circle cx="11" cy="11" r="8"></circle></svg>
+												<input type="hidden" id="ptag" name="ptag" value="${pvo.ptag}">
+										</div>
+									</div>
+									<div class="goods_list_wrap">
 											<ul id="goods_list">
 											 <c:forEach var="tag" items="${taglist}"> 
-												<li><button id='gname' class='filter_bar_tag' type='button'>${tag.goods_name}
+													<li><input type="hidden" id="tag_gno" value="${tag.gno}">
+												<button id='gname' class='filter_bar_tag' type='button'>${tag.ititle}
 														<svg class='tagIcon' width='12' height='12' viewBox='0 0 12 12' fill='currentColor' preserveAspectRatio='xMidYMid meet'>"
 															<path d='M6 4.94L3.879 2.817l-1.061 1.06L4.939 6 2.818 8.121l1.06 1.061L6 7.061l2.121 2.121 1.061-1.06L7.061 6l2.121-2.121-1.06-1.061L6 4.939zM6 12A6 6 0 1 1 6 0a6 6 0 0 1 0 12z'></path>"
 														</svg>
@@ -549,7 +623,6 @@
 											</c:forEach>
 											</ul>
 										</div>
-									</div>
 								</div>
 							</div>
 						</div></li>

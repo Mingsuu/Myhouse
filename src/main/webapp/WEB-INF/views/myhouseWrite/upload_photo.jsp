@@ -67,6 +67,15 @@
           	$('label.card-collection-form__card-image-upload').css('display','');
           	$('div.card-collection-form__card-image').css('display','none')
 		});
+    	 
+    	 $(document).on("click","button#gname",function(){
+     	 	$(this).parent().remove();
+     	 	var tag = $('#ptag').val();
+     	 	var gno = $(this).parent().children('#tag_gno').val()+",";
+ 			tag =  tag.replace(gno, "");
+ 			$('#ptag').val(tag);
+     	 });
+     	  
     	  	 
     	  $("#btnUploadPhoto").click(function(){
 	          	if($("#ptype").val()=="주거형태"){
@@ -149,7 +158,7 @@
 		    cursor: pointer;
 		    display:inline;
 		}
-			input.hidden_input{
+		input.hidden_input{
 		margin: 0;
 		padding: 0;
 		font-family: inherit;
@@ -162,6 +171,320 @@
 			float: right;
 			width:150px;
 		} 
+		
+		div.card-collection-form-logo-wrap{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0 auto -10px;
+		text-align: left;
+		padding: 20px 20px 0;
+	}
+	
+	a.card-collection-form-logo{
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		text-align: left;
+		-webkit-tap-highlight-color: transparent;
+		color: inherit;
+		text-decoration: none;
+		cursor: pointer;
+		touch-action: manipulation;
+	}
+	
+	h1.card-collection-form__title{
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 40px;
+		font-weight: 700;
+		color: #000;
+		font-size: 30px;
+	}
+	
+	form.card-collection-form{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		margin-right: auto;
+		margin-left: auto;
+		width: 1136px;
+		box-sizing: border-box;
+		min-height: 1px;
+		position: relative;
+		margin-top: 40px;
+		max-width: 943px;
+	}
+	
+	div.card-collection-form__metadata{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		-webkit-box-pack: justify;
+		justify-content: space-between;
+		-webkit-box-align: center;
+		align-items: center;
+		margin: 0 -5px 30px;
+	}
+	
+	div.card-collection-form__metadata__left{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		margin: 0;
+		padding: 0;
+		-webkit-box-flex: 0;
+		flex: 0 1 auto;
+		min-width: 1px;
+		max-width: 100%;
+	}
+	
+	div.input-group{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		-webkit-tap-highlight-color: transparent;
+		padding: 0;
+		-webkit-box-flex: 1;
+		flex: 1 0 auto;
+		position: relative;
+		display: inline-block;
+		margin: 0 5px 10px;
+		width: auto;
+	}
+	
+	select.form-control_selected{
+		-webkit-font-smoothing: antialiased;
+		-webkit-tap-highlight-color: transparent;
+		font-family: inherit;
+		font-weight: inherit;
+		-webkit-box-flex: 1;
+		flex: 1 0 auto;
+		transition: .2s border-color, .2s box-shadow, .2s background-color;
+		display: block;
+		box-sizing: border-box;
+		height: 40px;
+		padding: 0 15px;
+		line-height: 40px;
+		border-radius: 4px;
+		border: solid 1px #dbdbdb;
+		background-color: #ffffff;
+		color: #424242;
+		outline: 0;
+		padding-right: 30px;
+		background-image: none;
+		font-size: 15px;
+		width: 100%;
+	}
+	
+	span.select-input__icon{
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		-webkit-tap-highlight-color: transparent;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		padding: 5px;
+		font-size: 0;
+		cursor: default;
+		color: rgba(0,0,0,.3);
+		pointer-events: none;
+	}
+	
+	span.select-input__icon svg path{
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 0;
+		cursor: default;
+		color: rgba(0,0,0,.3);
+		pointer-events: none;
+		fill: currentColor;
+		fill-rule: evenodd;
+		d: path("M 0 3 l 5 5 l 5 -5 Z");
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	.card-collection-form__card-item{
+		color: #424242;
+		line-height: 1;
+		font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.4px;
+		font-size: 15px;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		position: relative;
+		margin: 0 -12px;
+		padding: 0 0 40px;
+		display: flex;
+		-webkit-box-align: stretch;
+		align-items: stretch;
+	}
+		
+	.card-collection-form__card-image-upload{
+		-webkit-font-smoothing: antialiased;
+		list-style: none;
+		-webkit-tap-highlight-color: transparent;
+		cursor: pointer;
+		touch-action: manipulation;
+		font-size: inherit;
+		display: block;
+		position: relative;
+		width: 100%;
+		margin: 0;
+		border: none;
+		background: #f5f5f5;
+		border-radius: 8px;
+		font-family: inherit;
+		transition: opacity .1s;
+		opacity: .7;
+		height: 100%;
+	}
+	
+	span.content{
+		-webkit-font-smoothing: antialiased;
+		list-style: none;
+		cursor: pointer;
+		font-family: inherit;
+		-webkit-tap-highlight-color: transparent;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		font-size: 0;
+		text-align:center;
+	}
+	span.ptext{
+		-webkit-font-smoothing: antialiased;
+		list-style: none;
+		cursor: pointer;
+		font-family: inherit;
+		-webkit-tap-highlight-color: transparent;
+		display: block;
+		font-size: 15px;
+		font-weight: 900;
+		line-height: 20px;
+		color: #757575;
+	}
+	svg.sicon{
+		-webkit-font-smoothing: antialiased;
+		list-style: none;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: 0;
+		fill: currentcolor;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 48px;
+		height: 48px;
+		margin: 0 auto 10px;
+		color: #bdbdbd;
+	}
+	
+	svg.sion > path{
+		-webkit-font-smoothing: antialiased;
+		list-style: none;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: 0;
+		color: #bdbdbd;
+		d: path("M 11.952 9.778 l 2.397 -5.994 A 1.778 1.778 0 0 1 16 2.667 h 16 c 0.727 0 1.38 0.442 1.65 1.117 l 2.398 5.994 h 10.174 c 0.982 0 1.778 0.796 1.778 1.778 v 32 c 0 0.981 -0.796 1.777 -1.778 1.777 H 1.778 A 1.778 1.778 0 0 1 0 43.556 v -32 c 0 -0.982 0.796 -1.778 1.778 -1.778 h 10.174 Z M 24 38 c 6.075 0 11 -4.925 11 -11 s -4.925 -11 -11 -11 s -11 4.925 -11 11 s 4.925 11 11 11 Z");
+		-webkit-tap-highlight-color: transparent;
+	}
+	button.tag_btn{
+		list-style: none;
+		touch-action: manipulation;
+		user-select: none;
+		margin: 0;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		background: none;
+		font-family: inherit;
+		text-decoration: none;
+		text-align: center;
+		transition: color .1s,background-color .1s,border-color .1s;
+		cursor: pointer;
+		background-color: #35c5f0;
+		border-color: #35c5f0;
+		color: #fff;
+		display: block;
+		padding: 1px 8px 3px;
+		font-size: 13px;
+		line-height: 18px;
+		font-weight: 700;
+		border-radius: 26px;
+	}
+	button.filter_bar_tag{
+		list-style: none;
+		touch-action: manipulation;
+		user-select: none;
+		margin: 0;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		background: none;
+		font-family: inherit;
+		text-decoration: none;
+		text-align: center;
+		transition: color .1s,background-color .1s,border-color .1s;
+		cursor: pointer;
+		display: block;
+		padding: 1px 8px 3px;
+		font-size: 14px;
+		line-height: 18px;
+		font-weight: 700;
+		border-radius: 26px;
+	}
+	svg.tagIcon{
+		width: 12;
+		height: 12;
+		fill: currentcolor;
+		margin: 0 -4px 0 7px;
+		vertical-align: -1px;
+	}
+	div.goods_list_wrap{
+		padding:10px 0;
+	}
+	div#gname{
+		padding:5px 0;
+	} 
+	button{
+			border: 1px solid transparent;
+		}
 </style>
 </head>
 
@@ -250,10 +573,8 @@
 
 							<div class="card-collection-form__card-item__content">
 								<div class="card-collection-form__card-item__content__row">
-									<div class="input-group select-input">
 										<textarea placeholder="사진에 대해서 설명해주세요."
-										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 300px;"></textarea>
-									</div>
+										class="form-control text-area-input" id="pcontent" name="pcontent" style="height: 200px;"></textarea>
 								</div>
 								<div class="card-collection-form__card-item__content__row">
 									<div id="search_btn"class="layout-navigation-search__combobox" role="combobox"
@@ -272,6 +593,9 @@
 													<circle cx="11" cy="11" r="8"></circle></svg>
 											<input type="text" id="ptag" name="ptag">
 										</div>
+									</div>
+									<div class="goods_list_wrap">
+											<ul id="goods_list"></ul>
 									</div>
 								</div>
 								

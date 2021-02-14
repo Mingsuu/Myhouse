@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.myhouse.dao.CommunityDAO;
+import com.myhouse.dao.H_UploadPhotoDAO;
 import com.myhouse.dao.photo_commentDAO;
 import com.myhouse.dao.yk_MemberDAO;
 import com.myhouse.dao.yk_PhotoDAO;
@@ -22,6 +23,7 @@ import com.myhouse.dao.yk_tagDAO;
 import com.myhouse.vo.CommunityVO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.StoreIndexVO;
 import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.photo_commentVO;
 import com.myhouse.vo.tagVO;
@@ -45,6 +47,8 @@ public class CommunityServcieImpl implements CommunityService{
 	private yk_goodsDAO ykgoodsDAO;
 	@Autowired
 	private yk_tagDAO yktagDAO;
+	@Autowired	
+	private H_UploadPhotoDAO uploadDAO; 
 	
 	/** 커뮤니티 리스트 카테고리 **/
 	@Override
@@ -199,7 +203,21 @@ public class CommunityServcieImpl implements CommunityService{
 	
 	/** 상품 가져오기 **/
 	@Override
-	public String getGoodsList(String gname) {
+	public ModelAndView getGoodsList(String value) {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<StoreIndexVO> interior_list = uploadDAO.getInteriorList(value); 
+		ArrayList<String> img_list = new ArrayList<String>();
+				
+		mv.addObject("interior_list", interior_list);
+		mv.addObject("img_list", img_list);
+		mv.addObject("value", value);
+	    mv.setViewName("/community/product_tag");
+		
+		return mv;
+	}
+
+	@Override
+	public String getGoods(String gname) {
 		ArrayList<goodsVO> list = ykgoodsDAO.getGoodsList(gname);
 		
 		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
@@ -221,7 +239,6 @@ public class CommunityServcieImpl implements CommunityService{
 		
 		return gson.toJson(jdata);
 	}
-
 	/** 사진 수정 **/
 	@Override
 	public ModelAndView getUpdate(String pno) {
@@ -252,6 +269,8 @@ public class CommunityServcieImpl implements CommunityService{
 	      }
 		 
 		 result = photoDAO.getUpdate(pvo);
+		 result = yktagDAO.getDeleteTag(pvo.getPno());
+		 result = yktagDAO.getInsertTag(pvo.getPno(),pvo.getPtag());
 		 
 		 if(result) {
 	            // upload 폴더에 새파일 저장
@@ -261,12 +280,13 @@ public class CommunityServcieImpl implements CommunityService{
 	            } catch (Exception e) {
 	               e.printStackTrace();
 	            }
-	            
 	            mv.setViewName("redirect:/community_page.do?pno="+pvo.getPno());
+	        
+	         }else {
+	 		    mv.setViewName("redirect:/community_page.do?pno="+pvo.getPno());
 	            
-	         } else {
-	            mv.setViewName("errorPage");
-	         }
+	 		}
+		 
 	      return mv;
 		
 	}
