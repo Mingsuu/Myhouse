@@ -280,7 +280,8 @@ $(document).ready(function(){
 .mybtn1 {
 	color:black;
 	text-decoration:none;
-	margin-left:1px;
+	margin-left:5px;
+	margin-right:6px;
 }
 .mybtn1:hover {
 	opacity:0.7;
