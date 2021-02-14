@@ -4012,7 +4012,6 @@
 			
 			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
 		}); 
-<<<<<<< HEAD
 			
 		$(".basket-main").click(function(){
 			var bcount = new Array();
@@ -4047,29 +4046,6 @@
 			    		}
 			    	 }	
 				 }); */
-				 
-				 //alert(id);
-				/*  if(!$(".order-list").hasClass("order-none")) {
-					 alert($(this).val());
-=======
-		$(".buying-sub").click(function(){
-			var ocount = new Array();
-			var cnt = '';
-			$.each(gno, function(index, item){ 
-				if($("#pro-order-"+item+" .form-control").val() != null) {
-					 cnt = $("#pro-order-"+item+" .form-control").val();
-					 ocount.push(cnt);
->>>>>>> refs/heads/main
-					 
-				}
-			});
-
-			alert(gno);
-			alert(ocount);
-			
-			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
-		}); 
-			
 		
 	});
 	
