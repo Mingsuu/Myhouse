@@ -888,6 +888,7 @@
 			$.ajax({
 				url:"addr_list.do?email=${email}",
 				success:function(result) {
+					alert("aaaaaaaaaa");
 					var jdata = JSON.parse(result);
 					var output = '';
 					var output2 = '';
