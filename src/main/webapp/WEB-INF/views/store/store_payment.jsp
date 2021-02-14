@@ -898,7 +898,7 @@
 						
 					} */
 
-					if(jdata.paylist[0].name == null) {
+					 if(jdata.paylist[0].name == null||jdata.paylist[0].name=='undefined') {
 						$("#addr_list").empty();  
 						$("#orderer").empty(); 
 						

@@ -173,15 +173,14 @@
 		$("button#btn_like").click(function(){
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
+				$(this).removeClass("btn_action");
+				$(this).addClass("btn_action_active");
+				$(this).children('span.count').text(count+1);
 				$.ajax({
 						url :"like_proc.do?pno=${pvo.pno}",
 						success:function(result){
 							if(result=="") {
 								location.href="http://localhost:9000/myhouse/login.do";
-							}else{
-								$(this).removeClass("btn_action");
-								$(this).addClass("btn_action_active");
-								$(this).children('span.count').text(count+1);
 							}
 						}
 				});
@@ -202,27 +201,26 @@
 		$("button#btn_scrap").click(function(){
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("btn_action")){
+				$(this).removeClass("btn_action");
+				$(this).addClass("btn_action_active");
+				var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
+				output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
+				output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
+				output +="<div class='toast-message__body'>스크랩했습니다</div>"
+				output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
+				output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
+				if($('div.toast-message').length == 1){
+					$('div.toast-message').first().remove();
+				}
+				$(this).children('span.count').text(count+1);
+				$("div.toast-message-root").append(output);
+				$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
+				
 				$.ajax({
 					url :"scrap_proc.do?pno=${pvo.pno}",
 					success:function(result){
 						if(result==""){
 							location.href="http://localhost:9000/myhouse/login.do";
-						}else{
-							$(this).removeClass("btn_action");
-							$(this).addClass("btn_action_active");
-							var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
-							output +="<svg class='toast-message__footer__close__icon' width='24' height='24' viewBox='0 0 24 24' preserveAspectRatio='xMidYMid meet'>"
-							output +="<path fill='#bdbdbd' d='M11.8 9.7l7.8-7.8 2 2.1-7.7 7.8 7.8 7.8-2.1 2-7.8-7.7L4 21.7l-2.1-2.1 7.8-7.8L1.9 4 4 1.9z'></path></svg></div></button>"
-							output +="<div class='toast-message__body'>스크랩했습니다</div>"
-							output +="<a class='button button--color-blue-inverted button--size-40 button--shape-4 toast-message__button' href='/users/11910649/collections'>스크랩북 보기</a>"
-							output +="<button class='button button--color-blue button--size-40 button--shape-4 toast-message__button toast-message__button--last'>폴더에 담기</button></div>"
-							if($('div.toast-message').length == 1){
-								$('div.toast-message').first().remove();
-							}
-							$(this).children('span.count').text(count+1);
-							$("div.toast-message-root").append(output);
-							$('div.toast-message').fadeOut(5000).fadeTo(5000, 0.5);
-							
 						}
 					}
 				});
@@ -256,16 +254,14 @@
 		
 		$("button#btn_follow").click(function(){
 			if ($(this).hasClass("card_detail_writer_follow")){
+				$(this).removeClass("card_detail_writer_follow");
+				$(this).addClass("card_detail_writer_following");
+				$(this).html("팔로잉");
 				$.ajax({
 					url :"follow_proc.do?w_email=${pvo.email}",
 					success:function(result){
 						if(result==""){
 							location.href="http://localhost:9000/myhouse/login.do";
-						}else{
-							$(this).removeClass("card_detail_writer_follow");
-							$(this).addClass("card_detail_writer_following");
-							$(this).html("팔로잉");
-							
 						}
 					}
 				});
@@ -2179,7 +2175,7 @@
 						      	<div class="production_tag_scoller_item">
 									<a href="#" class="production_tag_scoller_item_link">
 										<div class="production_tag_scoller_item_content">
-											<img class="production_tag_scoller_item_image" src="http://localhost:9000/myhouse/resources/upload/${tag.goods_simage}" alt="${tag.goods_name}">
+											<img class="production_tag_scoller_item_image" src="http://localhost:9000/myhouse/resources/upload/${tag.goods_simage}" alt="${tag.ititle}">
 											<input type="hidden" class="company" value="${tag.company}">
 											<input type="hidden" class="price" value="${tag.goods_price}">
 										</div>
@@ -2563,7 +2559,7 @@
 											</a>
 											<p class="card_detail_writer_intro">${member.intro}</p>
 										</div>
-										<c:if test="${cvo[i].getwrite >0}">
+										<c:if test="${getwriter == 0}">
 											<c:if test="${isfollow != null}">
 												<button id="btn_following" class="card_detail_writer_following" type="button">팔로잉</button>
 											</c:if>

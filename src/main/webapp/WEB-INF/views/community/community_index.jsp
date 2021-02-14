@@ -152,6 +152,9 @@
 			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
+				$(this).removeClass("card_action");
+				$(this).addClass("card_action_active");
+				$(this).children('span.count').text(count+1);
 				$.ajax({
 						url :"like_proc.do?pno="+pno,
 						success:function(result){
@@ -160,19 +163,16 @@
 							}
 						}
 					});
-				$(this).removeClass("card_action");
-				$(this).addClass("card_action_active");
-				$(this).children('span.count').text(count+1);
 			
 			}else{
+				$(this).removeClass("card_action_active");
+				$(this).addClass("card_action");
+				$(this).children('span.count').text(count-1);
 				$.ajax({
 					url :"like_cancel_proc.do?pno="+pno,
 					success:function(result){
 					}
 					});
-				$(this).removeClass("card_action");
-				$(this).addClass("card_action_active");
-				$(this).children('span.count').text(count+1);
 				
 			}
 		});
@@ -181,15 +181,6 @@
 			var pno = $(this).parent().parent().parent().parent().children('.pno').val();
 			var count = parseInt($(this).children('span.count').text());
 			if ($(this).hasClass("card_action")){
-				$.ajax({
-					url :"scrap_proc.do?pno="+pno,
-					success:function(result){
-						if(result==""){
-							location.href="http://localhost:9000/myhouse/login.do";
-						}
-					}
-				});
-				
 				$(this).removeClass("card_action");
 				$(this).addClass("card_action_active");
 				var output="<div class='toast-message toast-message-transition-enter-done'><button class='toast-message__footer' type='button' id='taost-none2'><div class='toast-message__footer__close'>"
@@ -204,6 +195,16 @@
 				$(this).children('span.count').text(count+1);
 				$("div.toast-message-root").append(output);
 				$('div.toast-message').fadeOut(3800);
+				
+				$.ajax({
+					url :"scrap_proc.do?pno="+pno,
+					success:function(result){
+						if(result==""){
+							location.href="http://localhost:9000/myhouse/login.do";
+						}
+					}
+				});
+				
 				
 			}else{
 				$(this).removeClass("card_action_active");
@@ -235,15 +236,13 @@
 		$(document).on("click","button#follow",function(){
 			var email = $(this).parent().parent().parent().parent().parent().children('.email').val();
 			if ($(this).hasClass("card_item_follow")){
+				$(this).removeClass("card_item_follow");
+				$(this).addClass("card_item_following");
+				$(this).html('팔로잉');
 				$.ajax({
 					url :"follow_proc.do?w_email="+email,
 					success:function(result){
 						if(result=="") location.href="http://localhost:9000/myhouse/login.do";
-						else{
-								$(this).removeClass("card_item_follow");
-								$(this).addClass("card_item_following");
-								$(this).html('팔로잉');
-							}
 					}
 				});
 				
@@ -295,14 +294,7 @@
 							output += "<div class='card_item_text'><div class='card_item_desciption'>"+jdata.jlist[i].pcontent+"</div></div>";
 						}
 						output +="<div class='card_item_image'><div class='card_item_image2'>";
-						/* var imgs = jdata.jlist[i].photo_simage;
-						const img = imgs.split(","); */
 						output +="<img class='card_img' src='http://localhost:9000/myhouse/resources/upload/"+jdata.jlist[i].photo_simage+"'>"
-						/* if(img.length>1){
-							output += "<span class='card_collection'><svg class='comm_icon' width='18' height='18' viewBox='0 0 18 18' preserveAspectRatio='xMidYMid meet'><g fill='none' fill-rule='evenodd'>";
-							output += "<path stroke='#000' stroke-opacity='.14' stroke-width='.75' d='M14.27 3.85H15a2.62 2.62 0 0 1 2.62 2.63V15A2.62 2.62 0 0 1 15 17.63H6.49A2.62 2.62 0 0 1 3.85 15v-.73h7.8a2.63 2.63 0 0 0 2.62-2.62v-7.8zM.37 3A2.62 2.62 0 0 1 3 .37h8.52A2.62 2.62 0 0 1 14.15 3v8.52a2.62 2.62 0 0 1-2.63 2.63H3a2.62 2.62 0 0 1-2.63-2.63V3z'></path>";
-							output += "<path fill='#FFF' fill-opacity='.74' d='M14.64 4.22H15c1.25 0 2.26 1 2.26 2.26V15c0 1.24-1 2.25-2.25 2.25H6.48c-1.25 0-2.26-1-2.26-2.25v-.35h7.43a3 3 0 0 0 3-3V4.22zM.75 3C.75 1.76 1.75.75 3 .75h8.52c1.25 0 2.26 1 2.26 2.25v8.52c0 1.25-1 2.26-2.26 2.26H3c-1.24 0-2.25-1-2.25-2.26V3z'></path></g></svg></span>";
-						} */
 						output += "<span class='card_img_count'>조회수 "+jdata.jlist[i].phits+"</span></div></div><aside class='card_item_action'>";
 						if(jdata.jlist[i].islike == 1){
 							output +="<button id='card_action1' class='card_action_active'>";

@@ -7,7 +7,8 @@ public interface CommunityService {
 	ModelAndView getContent(String pno,String email);
 	ModelAndView getUpdate(String pno);
 	ModelAndView getResultUpdate(Object vo);
-	String getGoodsList(String gname);
+	ModelAndView getGoodsList(String value);
+	String getGoods(String gname);
 	String getDelete(String pno);
 	String getFollow(String w_email,String email);
 	String deleteFollow(String w_email,String email);
