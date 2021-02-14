@@ -108,7 +108,7 @@
 							<li class="list_item">
 							<input type="checkbox" id="${vo.gno}">
 										<a href="http://localhost:9000/myhouse/store_page.do?gno=${vo.gno}"></a>
-											<img class="image" src="http://localhost:9000/myhouse/images/${vo.goods_simage}">
+											<img class="image" src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}">
 											<div class="production-item-image__dark-overlay"></div>
 										<div class="info">
 											<h1 class="production-item__header">
