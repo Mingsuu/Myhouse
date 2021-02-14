@@ -120,14 +120,14 @@ public class Mypagecontroller {
 	
 	@ResponseBody
 	@RequestMapping(value="/mypage_review_proc.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
-	public String review_proc(String ino) {
-		return mypageService.getreviewproc(ino);
+	public String review_proc(String gno) {
+		return mypageService.getreviewproc(gno);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/mypage_review_proc1.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
-	public String review_proc1(String ino) {
-		return mypageService.getreviewproc1(ino);
+	public String review_proc1(String gno) {
+		return mypageService.getreviewproc1(gno);
 	}
 	
 	

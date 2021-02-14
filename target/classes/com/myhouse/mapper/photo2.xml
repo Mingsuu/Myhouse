@@ -9,6 +9,19 @@
 <mapper namespace="mapper.photo2">
 	
 	
+	<!-- id=fcount  -->
+	<select id="fcount" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM (SELECT FOLLOWER FROM H_MEMBER WHERE EMAIL=#{email})WHERE FOLLOWER IS NOT NULL
+	</select>
+	
+	
+	<!-- id=fcount1  -->
+	<select id="fcount1" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM (SELECT FOLLOWING FROM H_MEMBER WHERE EMAIL=#{email}) WHERE FOLLOWING IS NOT NULL
+	</select>
+	
+	
+	
 	
 	<!-- id=reviewupdate -->
 	<update id="reviewupdate" parameterType="com.myhouse.vo.reviewVO" >
@@ -31,14 +44,14 @@
 	
 	<!-- id=.reviewproc1 -->
 	<select id="reviewproc1" parameterType="java.lang.String" resultType="com.myhouse.vo.goodsVO">
-		SELECT ODS.INO,ODS.GNO,IOR.COMPANY,GOODS_NAME,GOODS_SIMAGE,VCONTENT,STAR FROM H_GOODS ODS, H_INTERIOR IOR, H_REVIEW IEW WHERE ODS.INO=IOR.INO AND ODS.GNO=IEW.GNO AND ODS.INO=#{ino}
+		SELECT ODS.INO,ODS.GNO,IOR.COMPANY,GOODS_NAME,GOODS_SIMAGE,VCONTENT,STAR FROM H_GOODS ODS, H_INTERIOR IOR, H_REVIEW IEW WHERE ODS.INO=IOR.INO AND ODS.GNO=IEW.GNO AND ODS.GNO=#{gno}
 	</select>
 	
 	
 	
 	<!-- id=reviewproc -->
 	<select id="reviewproc" parameterType="java.lang.String" resultType="com.myhouse.vo.goodsVO">
-		SELECT GNO,INO,GOODS_SIMAGE,GOODS_NAME,GOODS_PRICE,COMPANY FROM (SELECT GNO,ODS.INO,GOODS_SIMAGE,GOODS_NAME,GOODS_PRICE,COMPANY FROM H_GOODS ODS, H_INTERIOR IOR WHERE ODS.INO=IOR.INO) WHERE INO=#{ino}
+		SELECT GNO,INO,GOODS_SIMAGE,GOODS_NAME,GOODS_PRICE,COMPANY FROM (SELECT GNO,ODS.INO,GOODS_SIMAGE,GOODS_NAME,GOODS_PRICE,COMPANY FROM H_GOODS ODS, H_INTERIOR IOR WHERE ODS.INO=IOR.INO) WHERE GNO=#{gno}
 	</select>
 	
 	
