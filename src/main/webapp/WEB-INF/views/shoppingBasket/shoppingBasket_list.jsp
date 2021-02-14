@@ -82,20 +82,6 @@
 							data-sticky-always="false" data-sticky-ignore="true"
 							data-direction="top" data-offset="81"
 							class="sticky-container commerce-cart__header-wrap">
-							<!-- <div class="sticky-child commerce-cart__header"
-								style="position: relative;">
-								<span class="commerce-cart__header__left">
-								<label class="_3xqzr _4VN_z">
-								<div class="_3zqA8">
-									<input type="checkbox" class="_3UImz" value="" checked=""  id="all" onchange="allCheck()">
-									<span class="_2mDYR"><svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR">
-									<path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span>
-								</div>
-										<span class="_1aN3J"><span
-											class="commerce-cart__header__caption">모두선택</span></span></label></span><span
-									class="commerce-cart__header__right">
-									<button class="commerce-cart__header__delete" id="btnDelete" type="button">선택삭제</button></span>
-							</div> -->
 						</div>
 						<ul class="commerce-cart__content__group-list">
 						<c:forEach var="row" items="${map.list}" varStatus="i">
@@ -109,14 +95,7 @@
 													<li class="commerce-cart__delivery-group__product-item"><article
 															class="carted-product">
 															<div class="carted-product__select">
-															<%-- 	<div class="_3zqA8">
-																	<input type="checkbox" class="_3UImz" value=""
-																		checked="" name="chk" id="${row.gno}"><span class="_2mDYR"><svg
-																			width="1em" height="1em" viewBox="0 0 16 16"
-																			class="_2UftR">
-																			<path fill="currentColor"
-																				d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span>
-																</div> --%>
+														
 															</div>
 															<a class="product-small-item product-small-item--clickable"
 																href="http://localhost:9000/myhouse/store_page.do?ino=${row.ino}">
