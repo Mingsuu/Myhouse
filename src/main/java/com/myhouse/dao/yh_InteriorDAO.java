@@ -17,21 +17,73 @@ public class yh_InteriorDAO {
 	
 	private static String namespace="mapper.interior";
 	
-	// 주소 입력
-	public boolean getAddrInsert(String email) {
+	// 스토에서 바로구매 클릭시
+		public boolean getPayFinish(String email, String[] onolist) {
+			boolean result = false;
+			
+			Map<String, Object> order_param = new HashMap<String, Object>();
+			int value = 0;
+			
+			
+			order_param.put("email", email);           
+			
+			for(int i=0;i<onolist.length;i++) {
+				
+				String ono =onolist[i]; 
+				
+				order_param.put("ono", ono);
+				
+				int value2 = sqlSession.selectOne(namespace+".pay-ostatus-insert2", order_param);
+				if(value2 == 0) {
+					value = sqlSession.update(namespace+".pay-ostatus-insert", order_param);
+				}
+			}
+			if(value != 0) result = true;
+			
+			return result;
+		}
+	
+	// 주소 입력 ---- 결제 클릭시
+	public boolean getPayAddrInsert(String email, String name, String phone, String memo) {
 		boolean result = false;
-		int value = sqlSession.update(namespace+".addr-insert", email);
+		
+		Map<String, String> param = new HashMap<String, String>();
+		
+		param.put("email", email);
+		param.put("name", name);
+		param.put("phone", phone);
+		param.put("memo", memo);
+		
+		int value = sqlSession.update(namespace+".pay-addr-insert", param);
 		if(value !=0) result = true;
 		
 		return result;
 	}
+	// 주소 입력
+	public boolean getAddrInsert(String email, String name, String addr, String addr_num, String phone) {
+		boolean result = false;
+		
+		Map<String, String> param = new HashMap<String, String>();
+		
+		param.put("email", email);
+		param.put("name", name);
+		param.put("addr", addr);
+		param.put("addr_num", addr_num);
+		param.put("phone", phone);
+		
+		int value = sqlSession.update(namespace+".addr-insert", param);
+		if(value !=0) result = true;
+		
+		return result;
+	}
+	
 	
 	// 스토에서 바로구매 클릭시
 	public boolean getPayment(String email, String[] gnolist, String[] ocountlist) {
 		boolean result = false;
 		
 		Map<String, Object> order_param = new HashMap<String, Object>();
-		
+		int value = 0;
 		
 		
 		order_param.put("email", email);           
@@ -45,37 +97,41 @@ public class yh_InteriorDAO {
 			order_param.put("gno", gno);
 			order_param.put("ocount", ocount);
 			
+			int value2 = sqlSession.selectOne(namespace+".order-select2", order_param);
+			if(value2 == 0) {
+				value = sqlSession.insert(namespace+".order-insert", order_param);
+			}
+			
 		
 			System.out.println("dao"+gno);
 			System.out.println("dao"+ocount);
 		}
-		
-		
-		/*
-		 * Map<String, Object> orderMap;
-		 * 
-		 * List<Map<String, Object>> orderList = new ArrayList<Map<String, Object>>();
-		 * 
-		 * 
-		 * for(int i=0;i<gnolist.length;i++){ orderMap = new HashMap<String, Object>();
-		 * String gno = gnolist[i]; orderMap.put("gno", gno);
-		 * System.out.println("gno============>"+gno);
-		 * 
-		 * String ocount =ocountlist[i]; orderMap.put("ocount", ocount);
-		 * System.out.println("ocount============>"+ocount); orderList.add(orderMap); }
-		 * 
-		 * 
-		 * order_param.put("orderList", orderList);
-		 * System.out.println("orderList============>"+orderList);
-		 */
-		int value  = sqlSession.insert(namespace+".order-insert", order_param);
+		System.out.println("dao gnolist"+gnolist.length);
+		System.out.println("dao ocountlist"+ocountlist.length);
 		
 		if(value != 0) result = true;
 		
 		return result;
 	}
-	
-	
+	// 구매 페이지 - 주문자 리스트 
+	public ArrayList<StoreIndexVO> getPaymentAddrList(String email) {
+		List<StoreIndexVO> order_list = sqlSession.selectList(namespace+".order-select-addr", email);	
+		
+		return (ArrayList<StoreIndexVO>)order_list;
+	}
+	// 구매 페이지 - 리스트 
+	public ArrayList<StoreIndexVO> getPaymentList(String email, String[] gnolist) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("email", email);           
+		param.put("gnolist", gnolist);
+		
+		System.out.println("dao gnolist---------"+gnolist.length);	
+		List<StoreIndexVO> order_list = sqlSession.selectList(namespace+".order-select", param);	
+		
+		return (ArrayList<StoreIndexVO>)order_list;
+	}
 	
 	
 	/** 전체 리스트 카운트 - 문의 */
@@ -262,6 +318,27 @@ public class yh_InteriorDAO {
 	}
 	
 	// store_page - interiorTop
+	public ArrayList<StoreIndexVO> getReviewStar5(String ino) {
+		List<StoreIndexVO> review_star5 = sqlSession.selectList(namespace+".review-star5", ino);
+		return (ArrayList<StoreIndexVO>) review_star5;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar4(String ino) {
+		List<StoreIndexVO> review_star4 = sqlSession.selectList(namespace+".review-star4", ino);
+		return (ArrayList<StoreIndexVO>) review_star4;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar3(String ino) {
+		List<StoreIndexVO> review_star3 = sqlSession.selectList(namespace+".review-star3", ino);
+		return (ArrayList<StoreIndexVO>) review_star3;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar2(String ino) {
+		List<StoreIndexVO> review_star2 = sqlSession.selectList(namespace+".review-star2", ino);
+		return (ArrayList<StoreIndexVO>) review_star2;
+	}
+	public ArrayList<StoreIndexVO> getReviewStar1(String ino) {
+		List<StoreIndexVO> review_star1 = sqlSession.selectList(namespace+".review-star1", ino);
+		return (ArrayList<StoreIndexVO>) review_star1;
+	}
+	// store_page - interiorTop
 	public ArrayList<StoreIndexVO> getInteriorTop(String ino) {
 		//System.out.println("dao----------->"+ino);
 		List<StoreIndexVO> interiror_top = sqlSession.selectList(namespace+".interior-top", ino);
@@ -289,17 +366,20 @@ public class yh_InteriorDAO {
 	
 	// store_index - list -category
 	public ArrayList<StoreIndexVO> getListCategory(String category, String[] tonelist, String[] colorlist, String[] seasonlist,
-													int start, int end){
+													int start, int end, String status){
 		Map<String, String[]> category_param = new HashMap<String, String[]>();
 		String[] category_ = new String[1] ;
 		String[] start_ = new String[1] ;
 		String[] end_ = new String[1] ;
+		String[] status_ = new String[1] ;
 		
 		category_[0] = category;
 		start_[0] = String.valueOf(start);
 		end_[0] = String.valueOf(end);
+		status_[0] = status;
 		System.out.println(category_.length);
 		category_param.put("category", category_);                                     
+		category_param.put("status", status_);                                     
 		category_param.put("tonelist", tonelist);
 		category_param.put("colorlist", colorlist);
 		category_param.put("seasonlist", seasonlist);

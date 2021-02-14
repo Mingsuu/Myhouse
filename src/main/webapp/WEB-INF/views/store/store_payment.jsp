@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,9 @@
 <title>Insert title here</title>
 <script src="http://localhost:9000/myhouse/js/jquery-3.5.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <style>
 	html, body {
 	    line-height: 1;
@@ -354,7 +358,7 @@
 	    height: 14px;
 	    background-size: 14px;
 	    opacity: 0;
-	    background-image: url(http://localhost:9000/myhouse/images/sms_chk.png);
+	    background-image: url(http://localhost:9000/myhouse/images/ic-checkbox2.png);
 	}
 	#pre_order>form>.panel>.cost {
 	    font-size: 15px;
@@ -787,9 +791,272 @@
 	    right: 15px;
 	    user-select: none;
 	}
+	.form-check .form-check-label .check-img.error {
+		border: 1px solid #f77;
+	}
+	._2zG5A {
+	    padding-bottom: 12px;
+	    color: #f77;
+	    font-weight: 700;
+	    font-size: 12px;
+	    line-height: 14px;
+	}
 </style> 
 <script>
 	$(document).ready(function(){
+		addr_ajax();
+		amount_ajax();
+		   // 배송지 입력 완료 버튼     
+		    $("#submit").click(function(){
+		    	
+		    	var name = $("#name_input").val();
+		    		$("#name").val(name);
+		    	
+		    	var addr1 = $("#addr1").val();
+		    	var addr2 = $("#addr2").val();
+		    		$("#addr").val(addr1+"/"+addr2);
+		    	
+		    	var hp1 = $("#hp1").val();
+		    	var hp2 = $("#hp2").val();
+		    	var hp3 = $("#hp3").val();
+		    		$("#phone").val(hp1+"-"+hp2+"-"+hp3);
+		    	
+		    	if($("#name").val() == "") {
+		    		$("#name").css("border","1px solid red");
+		    		$("#name").focus();
+		    	} else if($("#addr_num").val() == "") {
+		    		$("#name").css("border","none");
+		    		$("#addr_num").css("border","1px solid red");
+		    		$("#addr1").css("border","1px solid red");
+		    		$("#addr_num").focus();
+		    	} else if($("#addr2").val() == "") {
+		    		$("#addr_num").css("border","none");
+		    		$("#addr1").css("border","none");
+		    		$("#addr2").css("border","1px solid red");
+		    		$("#addr2").focus();
+		    	} else if($("#hp1").val() == "") {
+		    		$("#addr2").css("border","none");
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp1").focus();
+		    	} else if($("#hp2").val() == "") {
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp2").focus();
+		    	} else if($("#hp3").val() == "") {
+		    		$("#hp1").css("border","1px solid red");
+		    		$("#hp2").css("border","1px solid red");
+		    		$("#hp3").css("border","1px solid red");
+		    		$("#hp3").focus();
+		    	} else {
+		    		$("#hp1").css("border","none");
+		    		$("#hp2").css("border","none");
+		    		$("#hp3").css("border","none");
+		    		
+		    		$.ajax({
+						url:"addr_insert.do?email="+$("#email").val()+"&addr="+$("#addr").val()+"&addr_num="+$("#addr_num").val()+"&phone="+$("#phone").val()+"&name="+$("#name").val(),
+						success:function(result) {
+							if(result == "") {
+								location.href="http://localhost:9000/myhouse/login.do";
+							}else {
+								$("#name").val("");
+								$("#addr_num").val("");
+								$("#addr1").val("");
+								$("#addr2").val("");
+								$("#hp1").val("");
+								$("#hp2").val("");
+								$("#hp3").val("");
+								
+								$("#address_lists").css("display","none");
+							}
+								
+						}
+					});
+		    		
+		    		addr_ajax();
+		    		
+		    	}
+		    	
+		    	
+		    });
+		
+		/* 배송지 --- 가져오기 */
+		function addr_ajax() {
+			
+			$.ajax({
+				url:"addr_list.do?email=${email}",
+				success:function(result) {
+					var jdata = JSON.parse(result);
+					var output = '';
+					var output2 = '';
+					var addr = jdata.paylist[0].addr;
+					addr = addr.split("/");
+					
+					$("#addr_list").empty();  
+					$("#orderer").empty(); 
+					output += ' <div class="title" ><div class="title">배송지</div></div>';
+					output += '<div class="input">';
+					output += '<div class="field">';
+					output += '<div class="label">받는분</div>';
+					output += '<div class="input">';
+					output += '<input class="non_edit can_copy half" presence="true" readonly="readonly" value="'+jdata.paylist[0].name+'" data-hj-suppress="" type="text" name="order[recipient]" id="order_recipient">';
+					output += '<input type="hidden" name="order[received_name]" id="order_received_name">';
+					output += '</div>';
+					output += '</div>';
+					output += '<div class="field">';
+					output += '<div class="label">우편번호</div>';
+					output += '<div class="input">';
+					output += '<input class="non_edit quarter" presence="true" readonly="readonly" value="'+jdata.paylist[0].addr_num+'" data-hj-suppress="" type="text" name="order[received_zip_code]" id="order_received_zip_code">';
+					output += '<a data-remote="true" id="select-addr" href="#"><span id="select_address">배송지입력</span></a>';
+					output += '</div>';
+					output += '</div>';
+					output += '<div class="field">';
+					output += '<div class="label">주소</div>';
+					output += '<div class="input vertical">';
+					output += '<input presence="true" readonly="readonly" class="non_edit full" value="'+addr[0]+'" data-hj-suppress="" type="text" name="order[received_at]" id="order_received_at">';
+					output += '<input presence="true" readonly="readonly" class="non_edit full" value="'+addr[1]+'" data-hj-suppress="" type="text" name="order[received_at_detail]" id="order_received_at_detail">';
+					output += '<input presence="true" value="서울" data-hj-suppress="" class="full" type="hidden" name="order[received_at_sido]" id="order_received_at_sido">';
+					output += '<input presence="true" value="000-000" data-hj-suppress="" class="full" type="hidden" name="order[received_at_post_code6]" id="order_received_at_post_code6">';
+					output += '</div>';
+					output += '</div>';
+					output += '<div class="field">';
+					output += '<div class="label">휴대전화</div>';
+					output += '<div class="input phone">';
+					output += '<input class="non_edit" readonly="readonly" presence="true" value="'+jdata.paylist[0].phone+'" data-hj-suppress="" type="text" name="order[received_phone_number]" id="order_received_phone_number">';
+					output += '</div>';
+					output += '</div>';
+					output += '<div class="field">';
+					output += '<div class="label vertical">배송 메모</div>';
+					output += '<div class="input vertical">';
+					output += '<div class="_2Jn8D">';
+					output += '<div class="_3Bt8k">';
+					output += '<select class="_3ASDR _1qwAY _3K8Q8" id="addr_select">';
+					output += '<option value="배송시 요청사항을 선택해주세요">배송시 요청사항을 선택해주세요</option>';
+					output += '<option value="부재시 문앞에 놓아주세요">부재시 문앞에 놓아주세요</option>';
+					output += '<option value="배송전에 미리 연락주세요">배송전에 미리 연락주세요</option><option value="부재시 경비실에 맡겨 주세요">부재시 경비실에 맡겨 주세요</option>';
+					output += '<option value="부재시 전화주시거나 문자 남겨 주세요">부재시 전화주시거나 문자 남겨 주세요</option>';
+					output += '<option value="5">직접입력</option>';
+					output += '</select>';
+					output += '</div>';
+					output += '<div class="_3wKau txt_none" style="margin-top:10px;">';
+					output += '<textarea class="_3ASDR _1qwAY _1FAgO _17HFC" id="addr_txt" placeholder="배송 요청사항을 입력해주세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>';
+					output += '<div class="_2CKA7" id="addr-count">0<span> / 50</span></div>';
+					output += '</div>';
+					output += '</div>';
+					output += '</div>';
+					output += '</div>';
+					
+					
+					output2 += '<div class="title">';
+					output2 += '<div class="title">주문자</div>';
+					output2 += '</div>';
+					output2 += '<div class="input">';
+					output2 += '<div class="field">';
+					output2 += '<div class="label">이름</div>';
+					output2 += '<div class="input">';
+					output2 += '<input presence="true" value="'+jdata.paylist[0].name+'" autocomplete="off" data-hj-suppress="" class="half" type="text" name="order[payer_name]" id="order_payer_name">';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '<div class="field">';
+					output2 += '<div class="label">이메일</div>';
+					output2 += '<div class="input email">';
+					output2 += '<input presence="true" value="'+jdata.paylist[0].email+'" autocomplete="off" data-hj-suppress="" type="text" name="order[payer_email]" id="order_payer_email">';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '<div class="field">';
+					output2 += '<div class="label">휴대전화</div>';
+					output2 += '<div class="input phone">';
+					output2 += ' <input presence="true" value="'+jdata.paylist[0].phone+'" data-hj-suppress="" type="text" name="order[payer_phone_number]" id="order_payer_phone_number">';
+					output2 += '<div id="verified_phone_number">';
+					output2 += '<div class="verified_phone_number" data-value="01087149034" data-verified="true"></div>';
+					output2 += '<div class="need_verified" style="display: none;">';
+					output2 += '<div id="do_verified_phone_number">인증받기</div>';
+					output2 += '<div id="verified_inputs">';
+					output2 += '<input id="verified_input" class="donot_check_before_payment" placeholder="인증번호" autocomplete="off" type="text" data-hj-suppress="" size="6">';
+					output2 += '<div id="check_verified">확인</div>';
+					output2 += '<div id="resend_verified_number">재전송</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '<div class="field">';
+					output2 += '<div class="label"></div>';
+					output2 += '<div class="input">';
+					output2 += '<div class="form-check sms_agreement">';
+					output2 += '<label class="form-check-label" for="order_sms_aggrement">';
+					output2 += '<input name="order[sms_aggrement]" type="hidden" value="0"><input class="form-check" type="checkbox" value="1" checked="checked" name="order[sms_aggrement]" id="order_sms_aggrement">';
+					output2 += '<span class="check-img"></span>SMS 수신동의 <span> (배송 정보를 SMS로 보내드립니다.)</span>';
+					output2 += '</label>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					output2 += '</div>';
+					
+					
+			         $("#addr_list").append(output); 
+			         $("#orderer").append(output2);
+				}
+			});
+		}   
+		
+		
+		
+		/* 주문 총 결제금액 */
+		function amount_ajax() {
+				 var gno = new Array();
+					$("input.gno").each(function(){
+						gno.push($(this).val());
+					});
+		
+			 $.ajax({
+				url:"amount_pay.do?email=${email}&gno="+gno,
+				success:function(result) {
+
+					var jdata = JSON.parse(result);
+					var output = '';
+					var group = 0;
+					
+					$("#amount_pay").empty();
+					for(var i in jdata.amount_pay) {
+						var goods_price = jdata.amount_pay[i].goods_price;
+							goods_price = goods_price.replace(/,/g, '');
+							goods_price = parseInt(goods_price);
+						var ocount = jdata.amount_pay[i].ocount;
+							ocount = parseInt(ocount);
+						var amount = goods_price * ocount;
+						    group  +=  amount;
+						
+ 					}
+					
+					output += '<div class="title">최종 결제 금액</div>';
+					output += '<div class="cost">';
+					output += '<div class="cost_panel">';
+					output += '<div class="title">총 상품 금액</div>';
+					output += '<div class="amount" id="preview_product_cost" data-hj-suppress="">'+comma(group)+' 원</div>';
+					output += '</div>';
+					output += '<div class="total cost_panel">';
+					output += '<div class="amount" id="preview_selling_cost" data-hj-suppress=""></div>';
+					output += '</div>';
+					output += '</div>';
+					
+				     $("#amount_pay").append(output);
+				      
+				}
+				
+			}); 
+			
+		}
+		function comma(group) {
+			group = String(group);
+			return group.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+			 
+		
+		
+		
 		/* 배송 메모 - 리스트 */
 		$("#delivery_message").focus(function(){
 			//alert("focus");
@@ -845,7 +1112,7 @@
 		});
 		
 		/* 배송지 변경 버튼 클릭 */
-		$("#select-addr").click(function(){
+		$(document).on("click","#select-addr",function(){
 			if($("#address_lists").css("display","none")) {
 				$("#address_lists").css("display","block");
 			} else {
@@ -863,7 +1130,7 @@
 		})
 		
 		/* 배송지 직접입력 클릭 */
-		$("#addr_select").change(function(){
+		$(document).on("change","#addr_select",function(){
 			if($(this).val()==5) {
 				if($("._3wKau").hasClass("txt_none")) {
 					$("._3wKau").removeClass("txt_none");
@@ -874,7 +1141,7 @@
 		});
 		
 		/* 배송지 textarea */
-		$("#addr_txt").keyup(function(e){
+		$(document).on("keyup","#addr_txt",function(e){
 			var inputlength = $(this).val().length;
 			$("#addr-count").html(inputlength);
 			if (inputlength > 50) {
@@ -931,75 +1198,8 @@
 			}
 		}).open();
 	});
-		
-		
-		//배송지 입력 완료버튼
-		$("#submit").click(function(){
-			if($("#address_lists").css("display","block")) {
-				$("#address_lists").css("display","none");
-			}else {
-				$("#address_lists").css("display","block");
-			}
-		});
-		
-	});
-	
-	
-	 $("#order_payment_method_kakaopay").click(function(){
-	        var IMP = window.IMP; // 생략가능
-	        IMP.init('imp33600107'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	        var msg;
-	        
-	        IMP.request_pay({
-	            pg : 'kakaopay',
-	            pay_method : 'card',
-	            merchant_uid : 'merchant_' + new Date().getTime(),
-	            name : '스위트홈',
-	            amount : 50000,
-	            buyer_email : 'dudghk0924@naver.com',
-	            buyer_name : '서영화',
-	            buyer_tel : '010-1234-1234',
-	            buyer_addr : '서욽특별시',
-	            buyer_postcode : '123-456',
-	            //m_redirect_url : 'http://www.naver.com'
-	        }, function(rsp) {
-	            if ( rsp.success ) {
-	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                jQuery.ajax({
-	                    url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
-	                    type: 'POST',
-	                    dataType: 'json',
-	                    data: {
-	                        imp_uid : rsp.imp_uid
-	                        //기타 필요한 데이터가 있으면 추가 전달
-	                    }
-	                }).done(function(data) {
-	                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-	                    if ( everythings_fine ) {
-	                        msg = '결제가 완료되었습니다.';
-	                        msg += '\n고유ID : ' + rsp.imp_uid;
-	                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	                        msg += '\결제 금액 : ' + rsp.paid_amount;
-	                        msg += '카드 승인번호 : ' + rsp.apply_num;
-	                        
-	                        alert(msg);
-	                    } else {
-	                        //[3] 아직 제대로 결제가 되지 않았습니다.
-	                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	                    }
-	                });
-	                //성공시 이동할 페이지
-	                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
-	            } else {
-	                msg = '결제에 실패하였습니다.';
-	                msg += '에러내용 : ' + rsp.error_msg;
-	                //실패시 이동할 페이지
-	                location.href="<%=request.getContextPath()%>/order/payFail";
-	                alert(msg);
-	            }
-	        });
-	        
-	    });
+
+ });
 	
 	
 </script>
@@ -1019,195 +1219,69 @@
 	      </div>
 	      <table cellspacing="0" id="order_productions">
 	        <tbody data-hj-suppress="" data-hj-ignore-attribute="">
+	        <c:forEach var="vo" items="${payment }">
+	        	<input type="hidden"  class="gno" value="${vo.gno }">
+	        	<input type="hidden"  class="ono" value="${vo.ono }">
+	        	<input type="hidden"  class="ocount" value="${vo.ocount }">
 	            <tr class="production" data-id="570295" data-cost="99000" data-count="1" data-name="[잉글랜더] [단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors">
 	              <td>
 	                <div class="information">
-	                  <img src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-productions-161043210673832728.jpg/320/320" alt="320">
-	                  <div>
-	                    <div class="name">[잉글랜더] [단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
-	                    <div class="option">침대프레임 사이즈: 슈퍼싱글(매트제외) / 색상 옵션: 내츄럴원목</div>
+	                  <img src="http://localhost:9000/myhouse/images/${vo.goods_simage }" alt="320">
+	                  <div style="padding-top:15px;">
+	                    <div class="name">${vo.ititle }</div>
+	                    <div class="option">${vo.goods_name }</div>
 	                    <div class="cost_count">
-	                      <div class="cost">99,000원</div>
+	                      <div class="cost goods_cost" id="goods_cost" value="${vo.goods_price }">${vo.goods_price } 원</div>
 	                      <div class="divider">|</div>
-	                      <div class="count">1개</div>
+	                      <div class="count">${vo.ocount } 개</div>
 	                    </div>
 	                  </div>
 	                </div>
 	              </td>
 	              <td class="delivery_fee" data-id="_85249289">
-	                  <div class="type">업체직접배송<br>(상품 상세정보 참고)</div>
-	                <div class="seller">(주)잉글랜더 코리아</div>
+	                <div class="seller">${vo.company }</div>
 	              </td>
 	            </tr>
+	          </c:forEach>
 	        </tbody>
 	      </table>
 	    </div> <!-- panel - 주문상품 -->
-	    <div class="panel">
-	      <div class="title"><div class="title">배송지</div></div>
-	      <div class="input">
-		        <div class="field">
-		          <div class="label">받는분</div>
-		          <div class="input">
-		              <input class="non_edit can_copy half" presence="true" readonly="readonly" value="" data-hj-suppress="" type="text" name="order[recipient]" id="order_recipient">
-		            <input type="hidden" name="order[received_name]" id="order_received_name">
-		          </div>
-		        </div>
-		        <div class="field">
-		          <div class="label">우편번호</div>
-		          <div class="input">
-		              <input class="non_edit quarter" presence="true" readonly="readonly" value="" data-hj-suppress="" type="text" name="order[received_zip_code]" id="order_received_zip_code">
-		              <a data-remote="true" id="select-addr" href="#"><span id="select_address">배송지입력</span></a>          
-		              <a data-remote="true" id="select-addr" href="#" style="display:none;"><span id="select_address">배송지변경</span></a>          
-		          </div>
-		        </div>
-		        <div class="field">
-		          <div class="label">주소</div>
-		          <div class="input vertical">
-		              <input presence="true" readonly="readonly" class="non_edit full" value="" data-hj-suppress="" type="text" name="order[received_at]" id="order_received_at">
-		              <input presence="true" readonly="readonly" class="non_edit full" value="" data-hj-suppress="" type="text" name="order[received_at_detail]" id="order_received_at_detail">
-		            <input presence="true" value="서울" data-hj-suppress="" class="full" type="hidden" name="order[received_at_sido]" id="order_received_at_sido">
-		            <input presence="true" value="000-000" data-hj-suppress="" class="full" type="hidden" name="order[received_at_post_code6]" id="order_received_at_post_code6">
-		          </div>
-		        </div>
-		        <div class="field">
-		          <div class="label">휴대전화</div>
-		          <div class="input phone">
-		              <input class="non_edit" readonly="readonly" presence="true" value="" data-hj-suppress="" type="text" name="order[received_phone_number]" id="order_received_phone_number">
-		          </div>
-		        </div>
-		        <div class="field">
-		          <div class="label vertical">배송 메모</div>
-		          <div class="input vertical">
-		                 <div class="_2Jn8D">
-		                  	<div class="_3Bt8k">
-		                  		<select class="_3ASDR _1qwAY _3K8Q8" id="addr_select">
-			                  		<option value="0">배송시 요청사항을 선택해주세요</option><option value="1">부재시 문앞에 놓아주세요</option>
-			                  		<option value="2">배송전에 미리 연락주세요</option><option value="3">부재시 경비실에 맡겨 주세요</option>
-			                  		<option value="4">부재시 전화주시거나 문자 남겨 주세요</option>
-			                  		<option value="5">직접입력</option>
-		                  		</select>
-		                  	</div>
-		                 	<div class="_3wKau txt_none" style="margin-top:10px;">
-		                 		<textarea class="_3ASDR _1qwAY _1FAgO _17HFC" id="addr_txt" placeholder="배송 요청사항을 입력해주세요" rows="1" style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
-		                 		<div class="_2CKA7" id="addr-count">0<span> / 50</span></div>
-		                 	</div>
-		                  </div>
-		            <div id="delivery_messages" style="display: none;">
-		                <div class="delivery_message first">
-		                  <div class="product_name">[잉글랜더][단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors</div>
-		                  <input class="delivery_each_memo donot_check_before_payment full view_delivery_preset" autocomplete="off" data-hj-suppress="" type="text" name="order[order_productions_attributes][0][delivery_memo]" id="order_order_productions_attributes_0_delivery_memo">
-		                </div>
-		                <input class="products_delivery_is_backwoods" type="hidden" value="false" name="order[order_productions_attributes][0][is_backwoods]" id="order_order_productions_attributes_0_is_backwoods">
-						<input type="hidden" value="85249289" name="order[order_productions_attributes][0][id]" id="order_order_productions_attributes_0_id">            
-					</div>
-		          </div> <!-- input vertical -->
-		        </div>
-	      </div>
-    </div> <!-- panel - 배송지  -->
-    <div class="panel">
-      <div class="title">
-	       <div class="title">주문자</div>
-	      </div>
-	      <div class="input">
-	        <div class="field">
-	          <div class="label">이름</div>
-	          <div class="input">
-	            <input presence="true" value="" autocomplete="off" data-hj-suppress="" class="half" type="text" name="order[payer_name]" id="order_payer_name">
-	          </div>
-	        </div> <!-- 이름 -->
-	        <div class="field">
-	          <div class="label">이메일</div>
-	          <div class="input email">
-	            <input presence="true" value="" autocomplete="off" data-hj-suppress="" type="text" name="order[payer_email]" id="order_payer_email">
-	          </div>
-	        </div> <!-- 이메일 -->
-	        <div class="field">
-	          <div class="label">휴대전화</div>
-	          <div class="input phone">
-	            <input presence="true" value="" data-hj-suppress="" type="text" name="order[payer_phone_number]" id="order_payer_phone_number">
-	            <div id="verified_phone_number">
-	              <div class="verified_phone_number" data-value="01087149034" data-verified="true"></div>
-	              <div class="need_verified" style="display: none;">
-	                <div id="do_verified_phone_number">인증받기</div>
-	                <div id="verified_inputs">
-	                  <input id="verified_input" class="donot_check_before_payment" placeholder="인증번호" autocomplete="off" type="text" data-hj-suppress="" size="6">
-	                  <div id="check_verified">확인</div>
-	                  <div id="resend_verified_number">재전송</div>
-	                </div>
-	              </div>
-	            </div>
-	          </div>
-	        </div> <!-- 휴대전화  -->
-	        <div class="field">
-	          <div class="label"></div>
-	          <div class="input">
-	            <div class="form-check sms_agreement">
-	              <label class="form-check-label" for="order_sms_aggrement">
-	                <input name="order[sms_aggrement]" type="hidden" value="0"><input class="form-check" type="checkbox" value="1" checked="checked" name="order[sms_aggrement]" id="order_sms_aggrement">
-	                <span class="check-img"></span>SMS 수신동의 <span> (배송 정보를 SMS로 보내드립니다.)</span>
-				  </label>            
-			 	</div>
-          	  </div>
-       	    </div> <!-- SMS 수신동의 -->
-     	 </div>
+	    <div class="panel"id="addr_list">
+	     
+	      
+    	</div> <!-- panel - 배송지  -->
+    <div class="panel" id="orderer">
+      
      </div> <!-- 주문자 -->
-     <div class="panel">
-	      <div class="title">최종 결제 금액</div>
-	      <div class="cost">
-	        <div class="cost_panel">
-	          <div class="title">총 상품 금액</div>
-	          <div class="amount" id="preview_product_cost" data-hj-suppress="">99,000</div>
-	        </div>
-	        <div class="cost_panel">
-	          <div class="title">배송비</div>
-	          <div class="amount" id="preview_delivery_cost" data-hj-suppress="">0</div>
-	        </div>
-	        <div class="total cost_panel">
-	          <div class="amount" id="preview_selling_cost" data-hj-suppress="">99,000원</div>
-	        </div>
-	      </div>
-	      <input type="hidden" name="order[imp_uid]" id="order_imp_uid">
-	      <input type="hidden" name="order[apply_number]" id="order_apply_number">
-	      <input type="hidden" name="order[receipt_url]" id="order_receipt_url">
-	      <input type="hidden" value="bp_p11910649_000045262550" name="order[merchant_uid]" id="order_merchant_uid">
-	      <input type="hidden" name="order[vbank_num]" id="order_vbank_num">
-	      <input type="hidden" name="order[vbank_name]" id="order_vbank_name">
-	      <input type="hidden" name="order[vbank_holder]" id="order_vbank_holder">
-	      <input type="hidden" name="order[vbank_date]" id="order_vbank_date">
-	      <input type="hidden" value="0" name="order[real_pay_cost]" id="order_real_pay_cost">
-	      <input type="hidden" value="0" name="order[delivery_cost]" id="order_delivery_cost">
-	      <input value="0" type="hidden" name="order[mileage_cost]" id="order_mileage_cost">
-	      <input value="0" type="hidden" name="order[coupon_cost]" id="order_coupon_cost">
-	      <input type="hidden" value="Web" name="order[os_type]" id="order_os_type">
-	      <input type="hidden" name="coupon_id" id="coupon_id" value="0">
-	      <input type="hidden" value="false" name="order[from_cart]" id="order_from_cart">
+     <div class="panel amount_pay" id ="amount_pay">
+	     
     </div> <!-- 최종결제금액 -->
     <div class="panel">
       <div class="title light">결제 수단</div>
       <div class="pay_method">
         <div class="payment_panel">
               <input type="radio" value="kcp_credit_card" name="order[payment_method]" id="order_payment_method_kcp_credit_card">
-            <label class="first  top " data-start-at="" data-end-at="" for="order_payment_method_kcp_credit_card">
+            <label class="first  top " id="nice_card" data-start-at="" data-end-at="" for="order_payment_method_kcp_credit_card">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_card.png" alt="Img card">
               <div class="title">카드</div>
                 <div class="event" data-title="" data-detail1="" data-detail2=""></div>
 			</label>              
-			<input type="radio" value="without_bankbook" name="order[payment_method]" id="order_payment_method_without_bankbook">
-            <label class=" top " data-start-at="" data-end-at="" for="order_payment_method_without_bankbook">
+			<!-- <input type="radio" value="without_bankbook" name="order[payment_method]" id="order_payment_method_without_bankbook">
+            <label class=" top " id="bank" data-start-at="" data-end-at="" for="order_payment_method_without_bankbook">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_vbank.png" alt="Img vbank">
               <div class="title">무통장입금</div>
                 <div class="event" data-title="" data-detail1="" data-detail2=""></div>
-			</label>              
+			</label> -->              
 			<input type="radio" value="kakaopay" name="order[payment_method]" id="order_payment_method_kakaopay">
             <label class=" top " data-start-at="" data-end-at="" for="order_payment_method_kakaopay">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_kakaopay.png" alt="Img kakaopay">
               <div class="title">카카오페이</div>
 			</label>              
-			<input type="radio" value="chai" name="order[payment_method]" id="order_payment_method_chai">
+			<!-- <input type="radio" value="chai" name="order[payment_method]" id="order_payment_method_chai">
             <label class=" top " data-start-at="" data-end-at="" for="order_payment_method_chai">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_chai.png" alt="Img chai">
               <div class="title">차이</div>
-			</label>              
+			</label>   -->            
 			<input type="radio" value="payco" name="order[payment_method]" id="order_payment_method_payco">
             <label class=" top " data-start-at="" data-end-at="" for="order_payment_method_payco">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_payco.png" alt="Img payco">
@@ -1223,20 +1297,23 @@
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_toss.png" alt="Img toss">
               <div class="title">토스</div>
 			</label>              
-			<input type="radio" value="phone" name="order[payment_method]" id="order_payment_method_phone">
+			<!-- <input type="radio" value="phone" name="order[payment_method]" id="order_payment_method_phone">
             <label class=" top " data-start-at="" data-end-at="" for="order_payment_method_phone">
               <img class="img" width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/img_phone.png" alt="Img phone">
               <div class="title">핸드폰</div>
-			</label>
+			</label> -->
         </div> <!-- payment_panel -->
       </div>
     </div> <!-- 결제수단  -->
     <div id="confirm_checkbox">
       <div class="form-check check_agree_policy">
         <label class="form-check-label" for="check_agree_policy">
-          <input type="checkbox" id="check_agree_policy" class="form-check">
-          <span class="check-img"></span>결제 진행 필수사항 동의
+          <input type="checkbox" name="check_img" id="check_agree_policy" class="form-check">
+          <span class="check-img" id="check_img"></span>결제 진행 필수사항 동의
         </label>
+        <div class="open expanded" style="overflow: hidden;">
+        	<div class="_2zG5A" style="display:none;">결제 진행 필수사항을 동의해주세요</div>
+        </div>
       </div>
       <div class="all_policy">
         <div class="title">개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</div>
@@ -1331,68 +1408,73 @@
 	    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" alt="닫기 버튼">
 	</div>
 	<div class="address_list" >
-	    <div class="title first" style="display:none;">배송지 선택<div class="close_popup"></div></div>
+	 <c:forEach var="vo" items="${payment_addr}">
+		 <c:if test="${vo.addr_num ne null}">
+	    <div class="title first" style="margin-bottom:10px;">기존 배송지<div class="close_popup"></div></div>
+		    <table id="addresses"  cellspacing="0" data-number="1">
+		        <tbody>
+		            <tr class="name ">
+		                <td class="title">배송지명</td>
+		                <td class="content">
+		                </td>
+		                <td class="button" rowspan="5">
+		                    <!-- <div class="select" data-id="6637995">선택</div> -->
+		                </td>
+		            </tr>
+		
+		            <tr class="recipient address_6637995">
+		                <td class="title">받는분</td>
+		                <td class="content">
+		                    <div class="recipient">${vo.name }</div>
+		                </td>
+		            </tr>
+		
+		            <tr class="post_code address_6637995">
+		                <td class="title">우편번호</td>
+		                <td class="content">
+		                    <div class="post_code">${vo.addr_num }</div>
+		                </td>
+		            </tr>
+		
+		            <tr class="address address_6637995">
+		                <td class="title">주소</td>
+		                <td class="content">
+		                    <div class="address">${fn:replace(vo.addr,',','&nbsp;')}</div>
+		                    <div class="address_pre" style="display: none;">서울 강남구 가로수길 5 (신사동) </div>
+		                    <div class="address_extra" style="display: none;">1층</div>
+		                    <div class="address_sido" style="display: none;">서울</div>
+		                    <div class="address_post_code6" style="display: none;">000-000</div>
+		                </td>
+		            </tr>
+		
+		            <tr class="number address_6637995">
+		                <td class="title">전화번호</td>
+		                <td class="content">
+		                    <div class="number">${vo.phone }</div>
+		
+		                    <div class="phone1" style="display: none;">010</div>
+		                    <div class="phone2" style="display: none;">4512</div>
+		                    <div class="phone3" style="display: none;">3698</div>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    </c:if>
+	 </c:forEach>
 	
-	    <table id="addresses" style="display:none;" cellspacing="0" data-number="1">
-	        <tbody>
-	            <tr class="name address_6637995">
-	                <td class="title">배송지명</td>
-	                <td class="content">
-	                </td>
-	                <td class="button" rowspan="5">
-	                    <div class="select" data-id="6637995">선택</div>
-	                </td>
-	            </tr>
 	
-	            <tr class="recipient address_6637995">
-	                <td class="title">받는분</td>
-	                <td class="content">
-	                    <div class="recipient">서영화</div>
-	                </td>
-	            </tr>
-	
-	            <tr class="post_code address_6637995">
-	                <td class="title">우편번호</td>
-	                <td class="content">
-	                    <div class="post_code">06035</div>
-	                </td>
-	            </tr>
-	
-	            <tr class="address address_6637995">
-	                <td class="title">주소</td>
-	                <td class="content">
-	                    <div class="address">서울 강남구 가로수길 5 (신사동)  1층</div>
-	                    <div class="address_pre" style="display: none;">서울 강남구 가로수길 5 (신사동) </div>
-	                    <div class="address_extra" style="display: none;">1층</div>
-	                    <div class="address_sido" style="display: none;">서울</div>
-	                    <div class="address_post_code6" style="display: none;">000-000</div>
-	                </td>
-	            </tr>
-	
-	            <tr class="number address_6637995">
-	                <td class="title">전화번호</td>
-	                <td class="content">
-	                    <div class="number">010-4512-3698</div>
-	
-	                    <div class="phone1" style="display: none;">010</div>
-	                    <div class="phone2" style="display: none;">4512</div>
-	                    <div class="phone3" style="display: none;">3698</div>
-	                </td>
-	            </tr>
-	        </tbody>
-	    </table>
-	
-	
-	    <div class="title" style="margin-top:10px;">새 배송지 등록</div>
+	    <div class="title" style="margin-top:15px;">새 배송지 등록</div>
 	    <div id="form" class="form">
-	        <form class="new_address_book" id="new_address_book" action="addr_insert.do" accept-charset="UTF-8" data-remote="true" method="post" name="addrWriteForm">
-	
+	        <form class="new_address_book" id="new_address_book" action="#" accept-charset="UTF-8" data-remote="true" method="post" name="addrWriteForm"
+	        		style="margin-top:-20px;">
+				<input type="hidden" id="email" value="${email }" name="email">
 	            <div class="field address_name">
 	            </div>
 	            <div class="field name">
 	                <div class="title">받는분</div>
 	                <div class="content name">
-	                    <input presence="true" required="required" type="text" name="name" id="name">
+	                    <input presence="true" required="required" type="text" id="name_input">
+	                    <input type="hidden" name="name" id="name" value="0">
 	                </div>
 	            </div>
 	            <div class="field post_code">
@@ -1407,32 +1489,195 @@
 	            <div class="field address">
 	                <div class="title">주소</div>
 	                <div class="content address">
-	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text" name="addr1" id="addr1" style="width:100%;">
-	                    <input presence="true" required="required" class="address" type="text" name="addr2" id="addr2">
+	                    <input presence="true" required="required" readonly="readonly" class="address non_edit" type="text"  id="addr1" style="width:100%;">
+	                    <input presence="true" required="required" class="address" type="text"  id="addr2" >
+	                    <input type="hidden" name="addr" id="addr" value="0">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title">휴대전화</div>
 	                <div class="content phone">
-	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" name="hp1" id="hp1">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{2,3}$" type="number" id="hp1">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number" name="hp2" id="hp2">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{3,4}$" type="number"  id="hp2">
 	                        <div>-</div>
-	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" name="hp3" id="hp3">
+	                        <input required="required" presence="true" class="phone" pattern="^\d{4}$" type="number" id="hp3">
+	                        <input type="hidden" name="phone" id="phone" value="0">
 	                </div>
 	            </div>
 	            <div class="field">
 	                <div class="title"></div>
 	                <div class="content button">
-		                <input type="submit" name="commit" value="등록하기" id="submit" data-disable-with="등록">
-		                <input type="button" name="cancel" value="취소하기" id="cancel" data-disable-with="취소">
+		                <input type="button" value="등록하기" id="submit" data-disable-with="등록">
+		                <input type="button" value="취소하기" id="cancel" data-disable-with="취소">
 		            </div>
 	            </div>
 			</form>    
 		</div>
 	</div>
 </div>
+
 <!-- footer -->
 	<jsp:include page="../footer.jsp"/>
+
+<script>
+    $("#do_payment").click(function () {
+    	if($("input:checkbox[name='check_img']").is(":checked") == true) {
+    		$("#check_img").removeClass("error");
+    		$("._2zG5A").css("display","none");
+	    	pay_way();
+	    	
+	    	
+	    	var name = $("#order_payer_name").val();
+    	
+	    	var addr1 = $("#addr1").val();
+	    	var addr2 = $("#addr2").val();
+	    		$("#addr").val(addr1+"/"+addr2);
+	    	
+	    	var phone = $("#order_payer_phone_number").val();
+	    	
+    		
+    		var msg = $("#addr_select").val();
+    		
+    		 if(msg == 5) {
+    			memo = $("#addr_txt").val();
+    		} else {
+    			memo = $("#addr_select").val();
+    		}
+    		
+	    	$.ajax({
+	    		url:"pay_addr_insert.do?email="+$("#email").val()+"&phone="+phone+"&name="+name+"&memo="+memo,
+	    		success:function(result) {
+	    		}
+	    	});
+	    	
+    	} else {
+    		$("#check_img").addClass("error");
+    		$("._2zG5A").css("display","block");
+    	}
+    });
+
+    function pay_way() {
+    	
+   	 var gno = new Array();
+		$("input.gno").each(function(){
+			gno.push($(this).val());
+		});
+   	
+
+	$.ajax({
+		url:"nice_card_pay.do?email=${email}&gno="+gno,
+		success:function(result) {
+	
+			var jdata = JSON.parse(result);
+			var output = '';
+			var group = 0;
+			var addr = ''
+				
+			for(var i in jdata.amount_pay) {
+				var goods_price = jdata.amount_pay[i].goods_price;
+					goods_price = goods_price.replace(/,/g, '');
+					goods_price = parseInt(goods_price);
+				var ocount = jdata.amount_pay[i].ocount;
+					ocount = parseInt(ocount);
+				var amount = goods_price * ocount;
+				    group  +=  amount;
+				
+				    addr = jdata.amount_pay[i].addr;
+				    addr = addr.split("/");
+			}
+			
+		    var IMP = window.IMP; // 생략가능
+	        IMP.init('imp33600107'); 
+	        // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	        // i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+	        IMP.request_pay({
+	            pg: 'inicis', // version 1.1.0부터 지원.
+	            /* 
+	                'kakao':카카오페이, 
+	                html5_inicis':이니시스(웹표준결제)
+	                    'nice':나이스페이
+	                    'jtnet':제이티넷
+	                    'uplus':LG유플러스
+	                    'danal':다날
+	                    'payco':페이코
+	                    'syrup':시럽페이
+	                    'paypal':페이팔
+	                */
+	            pay_method: 'card',
+	            /* 
+	                'samsung':삼성페이, 
+	                'card':신용카드, 
+	                'trans':실시간계좌이체,
+	                'vbank':가상계좌,
+	                'phone':휴대폰소액결제 
+	            */
+	            merchant_uid: 'merchant_' + new Date().getTime(),
+	            /* 
+	                merchant_uid에 경우 
+	                https://docs.iamport.kr/implementation/payment
+	                위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+	                참고하세요. 
+	                나중에 포스팅 해볼게요.
+	             */
+	            name: jdata.amount_pay[0].name ,
+	            //결제창에서 보여질 이름
+	            amount: group, 
+	            //가격 
+	            buyer_email: jdata.amount_pay[0].email,
+	            buyer_name: jdata.amount_pay[0].name,
+	            buyer_tel: jdata.amount_pay[0].phone,
+	            buyer_addr: addr[0]+" "+addr[1],
+	            buyer_postcode: jdata.amount_pay[0].addr_num,
+	            m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+	            /*  
+	                모바일 결제시,
+	                결제가 끝나고 랜딩되는 URL을 지정 
+	                (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐) 
+	                */
+	        }, function (rsp) {
+	            console.log(rsp);
+	            if (rsp.success) {
+	                var msg = '결제가 완료되었습니다.';
+	                msg += '고유ID : ' + rsp.imp_uid;
+	                msg += '상점 거래ID : ' + rsp.merchant_uid;
+	                msg += '결제 금액 : ' + rsp.paid_amount;
+	                msg += '카드 승인번호 : ' + rsp.apply_num;
+	                
+	                order_ajax();
+	                
+	            } else {
+	                var msg = '결제에 실패하였습니다.';
+	                msg += '에러내용 : ' + rsp.error_msg;
+	            }
+	            alert(msg);
+	        });
+			
+		      
+		}
+		
+	}); 
+    	
+    }
+    
+    function order_ajax() {
+    	 var ono = new Array();
+ 		$("input.ono").each(function(){
+ 			ono.push($(this).val());
+ 		});
+        		location.href="http://localhost:9000/myhouse/store_pay_fin_card.do?email=${email}&ono="+ono;
+    /* 	$.ajax({
+        	url:"store_pay_finish.do?email=${email}&ono="+ono,
+        	success:function(result) {
+        		alert("결제 완료!");
+        	}
+        });
+    	 */
+    }
+
+</script>
+
+
+	
 </body>
 </html>

@@ -23,45 +23,149 @@ public class InteriorServiceImpl implements InteriorService{
 	@Autowired
 	private yh_InteriorDAO interiorDAO;
 	
-	// 주소 입력하기
-	public ModelAndView getAddrInsert(String email) {
-		ModelAndView mv = new ModelAndView();
-		boolean result = interiorDAO.getAddrInsert(email);
-		
-		if(result) {
-			mv.setViewName("redirect:/store_payment.do");
-		} else {
-			System.out.println("error");
-		}
-		
-		return mv;
-		
-	}
 	
 	// 스토어에서 바로구매 클릭시
-	public String getPayment(String email, String[] gnolist, String[] ocountlist) {
-		String result= "";
-		boolean dao_result = interiorDAO.getPayment(email, gnolist, ocountlist);
-		System.out.println("service====>" +email);
-		System.out.println("service====>" +gnolist);
-		System.out.println("service====>" +ocountlist);
+		public ModelAndView getPayFinish(String email, String[] onolist) {
+			ModelAndView mv = new ModelAndView();
+			boolean result = interiorDAO.getPayFinish(email, onolist);
+			
+			System.out.println("service====>" +email);
+			System.out.println("service====>" +onolist);
+			
+			mv.addObject("result", result);
+			mv.addObject("email", email);
+			mv.addObject("onolist", onolist);
+			mv.setViewName("/store/store_pay_fin_card");
+			
+			return mv;
+	}
+	
+	// 주문금액
+	public String getAmountPay(String email, String[] gnolist) {
+		ArrayList<StoreIndexVO> amount_pay = interiorDAO.getPaymentList(email, gnolist);
 		
-		/*
-		 * String gnolist1 ="&gno="; String ocountlist1 ="&ocount=";
-		 * 
-		 * for(int i=0; i<gnolist.length; i++) { gnolist1 += gnolist[i]; } for(int i=0;
-		 * i<ocountlist.length; i++) { ocountlist1 += ocountlist[i]; }
-		 */
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : amount_pay) {
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("rno", vo.getRno());
+			jobj.addProperty("gno", vo.getGno());
+			jobj.addProperty("ino", vo.getIno());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			jobj.addProperty("goods_price", vo.getGoods_price());
+			jobj.addProperty("ono", vo.getOno());
+			jobj.addProperty("email", vo.getEmail());
+			jobj.addProperty("ocount", vo.getOcount());
+			jobj.addProperty("ititle", vo.getItitle());
+			jobj.addProperty("company", vo.getCompany());
+			jobj.addProperty("addr", vo.getAddr());
+			jobj.addProperty("addr_num", vo.getAddr_num());
+			jobj.addProperty("memo", vo.getMemo());
+			jobj.addProperty("phone", vo.getPhone());
+			jobj.addProperty("name", vo.getName());
+			
+			jarry.add(jobj);
+		}
 		
+		jdata.add("amount_pay", jarry);
+		jdata.addProperty("email", email);
+		jdata.addProperty("gnolist", String.valueOf(gnolist));
+		
+		return gson.toJson(jdata);
+	}
+	
+	// 주소 리스트
+	public String getAddrList(String email) {
+		ArrayList<StoreIndexVO> paylist = interiorDAO.getPaymentAddrList(email);
+		
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson = new Gson();
+		for(StoreIndexVO vo : paylist) {
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("rno", vo.getRno());
+			jobj.addProperty("gno", vo.getGno());
+			jobj.addProperty("ino", vo.getIno());
+			jobj.addProperty("goods_simage", vo.getGoods_simage());
+			jobj.addProperty("goods_name", vo.getGoods_name());
+			jobj.addProperty("goods_price", vo.getGoods_price());
+			jobj.addProperty("ono", vo.getOno());
+			jobj.addProperty("email", vo.getEmail());
+			jobj.addProperty("ocount", vo.getOcount());
+			jobj.addProperty("ititle", vo.getItitle());
+			jobj.addProperty("company", vo.getCompany());
+			jobj.addProperty("addr", vo.getAddr());
+			jobj.addProperty("addr_num", vo.getAddr_num());
+			jobj.addProperty("memo", vo.getMemo());
+			jobj.addProperty("phone", vo.getPhone());
+			jobj.addProperty("name", vo.getName());
+			
+			jarry.add(jobj);
+		}
+		
+		jdata.add("paylist", jarry);
+		jdata.addProperty("email", email);
+		
+		return gson.toJson(jdata);
+	}
+	
+	// 주소 입력하기
+	public String getPayAddrInsert(String email, String name, String phone, String memo) {
+		String result="";
+		boolean dao_result = interiorDAO.getPayAddrInsert(email, name, phone, memo);
+		System.out.println("s!!!!!!!---->"+email);
+		System.out.println("s!!!!!!!!!---->"+phone);
 		if(dao_result) {
-			result = "redirect:/store_payment.do";
+			result="redirect:/store_payment.do";
 		} else {
 			System.out.println("error");
 		}
 		
 		return result;
+		
+	}
+	// 주소 입력하기
+	public String getAddrInsert(String email, String name, String addr, String addr_num, String phone) {
+		String result="";
+		boolean dao_result = interiorDAO.getAddrInsert(email, name, addr, addr_num, phone);
+		System.out.println("s!!!!!!!---->"+email);
+		System.out.println("s!!!!!!!!!!---->"+addr);
+		System.out.println("s!!!!!!!!!---->"+addr_num);
+		System.out.println("s!!!!!!!!!---->"+phone);
+		if(dao_result) {
+			result="redirect:/store_payment.do";
+		} else {
+			System.out.println("error");
+		}
+		
+		return result;
+		
 	}
 	
+	
+	// 스토어에서 바로구매 클릭시
+	public ModelAndView getPayment(String email, String[] gnolist, String[] ocountlist) {
+		ModelAndView mv = new ModelAndView();
+		boolean result = interiorDAO.getPayment(email, gnolist, ocountlist);
+		
+		ArrayList<StoreIndexVO> payment_addr = interiorDAO.getPaymentAddrList(email);
+		ArrayList<StoreIndexVO> payment = interiorDAO.getPaymentList(email, gnolist);
+		System.out.println("service====>" +email);
+		System.out.println("service====>" +gnolist);
+		System.out.println("service====>" +ocountlist);
+		
+		mv.addObject("result", result);
+		mv.addObject("email", email);
+		mv.addObject("gnolist", gnolist);
+		mv.addObject("ocountlist", ocountlist);
+		mv.addObject("payment", payment);
+		mv.addObject("payment_addr", payment_addr);
+		mv.setViewName("/store/store_payment");
+		
+		return mv;
+	}
 	
 		// 문의 답변하기 - 삭제
 		public String getInteriorQuestionAnswerDelete(String qno, String ino) {
@@ -511,22 +615,44 @@ public class InteriorServiceImpl implements InteriorService{
 	public ModelAndView getInteriorTop(String ino, String email) {
 		ModelAndView mv = new ModelAndView();
 		
-		
-		
 		// 상세페이지 : 상단부분 ---> 데이터 가져오기
 		ArrayList<StoreIndexVO> interior_top = interiorDAO.getInteriorTop(ino);   
+		ArrayList<StoreIndexVO> review_star5 = interiorDAO.getReviewStar5(ino);   
+		ArrayList<StoreIndexVO> review_star4 = interiorDAO.getReviewStar4(ino);   
+		ArrayList<StoreIndexVO> review_star3 = interiorDAO.getReviewStar3(ino);   
+		ArrayList<StoreIndexVO> review_star2 = interiorDAO.getReviewStar2(ino);   
+		ArrayList<StoreIndexVO> review_star1 = interiorDAO.getReviewStar1(ino);   
 		StoreIndexVO vo = interior_top.get(0);
+		StoreIndexVO rvo5 = review_star5.get(0);
+		StoreIndexVO rvo4 = review_star4.get(0);
+		StoreIndexVO rvo3 = review_star3.get(0);
+		StoreIndexVO rvo2 = review_star2.get(0);
+		StoreIndexVO rvo1 = review_star1.get(0);
 		
 		for(int i=0; i<interior_top.size(); i++ ) {
 			vo = interior_top.get(i);
-			System.out.println(vo);
 		}
+		for(int i=0; i<review_star5.size(); i++ ) { rvo5 = review_star5.get(i);}
+		for(int i=0; i<review_star4.size(); i++ ) { rvo4 = review_star4.get(i);}
+		for(int i=0; i<review_star3.size(); i++ ) { rvo3 = review_star3.get(i);}
+		for(int i=0; i<review_star2.size(); i++ ) { rvo2 = review_star2.get(i);}
+		for(int i=0; i<review_star1.size(); i++ ) { rvo1 = review_star1.get(i);}
 		
 		
 		int scrap_exist = interiorDAO.getInteriorScrapExist(email, ino);
 		
 		mv.addObject("interior_top", interior_top);
+		mv.addObject("review_star5", review_star5);
+		mv.addObject("review_star4", review_star4);
+		mv.addObject("review_star3", review_star3);
+		mv.addObject("review_star2", review_star2);
+		mv.addObject("review_star1", review_star1);
 		mv.addObject("vo", vo); 
+		mv.addObject("rvo5", rvo5); 
+		mv.addObject("rvo4", rvo4); 
+		mv.addObject("rvo3", rvo3); 
+		mv.addObject("rvo2", rvo2); 
+		mv.addObject("rvo1", rvo1); 
 		mv.addObject("ino", ino);
 		mv.addObject("email", email);
 		mv.addObject("scrap_exist", scrap_exist);
@@ -535,9 +661,10 @@ public class InteriorServiceImpl implements InteriorService{
 		return mv;
 	}
 	
+
 	
 	// store_index - category
-	public String getListCategory(String category, String[] tonelist,  String[] colorlist,  String[] seasonlist, String rpage) {
+	public String getListCategory(String category, String[] tonelist,  String[] colorlist,  String[] seasonlist, String rpage, String status) {
 		
 		  int start = 0;
 	      int end = 0;
@@ -563,7 +690,7 @@ public class InteriorServiceImpl implements InteriorService{
 	         end = pageSize;
 	      }   
 		
-		ArrayList<StoreIndexVO> category_list = interiorDAO.getListCategory(category, tonelist, colorlist, seasonlist, start, end);
+		ArrayList<StoreIndexVO> category_list = interiorDAO.getListCategory(category, tonelist, colorlist, seasonlist, start, end, status);
 		JsonArray jarry = new JsonArray();
 		JsonObject jdata = new JsonObject();
 		Gson gson = new Gson();

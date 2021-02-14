@@ -5,19 +5,42 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class StoreIndexVO {
 	String email, nickname, member_spimage, selleremail, addr, addr1, addr2, 
 		   addr_num, memo, phone, hp1, hp2, hp3, name,
-		   ino, company, ititle, interior_simage, category, tone, color, season, icontent,
+		   ino, company, ititle, interior_simage, category, tone, color, season, icontent, idate,
 		   gno, goods_simage, goods_name, goods_price,
 		   vno, vcontent, review_image, review_simage, vdate, savepath,
 		   sno,
 		   qno, qtype, qcontent, qreply, qdate,qdate_r,
 		   ono, ostatus,
 		   ocount;
-	double star_avg, star_float;
-	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus;
+	double star_avg, star_float, ravg;
+	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus, star_cnt, istatus;
 	CommonsMultipartFile file1;
 	
 	
-	
+	public int getIstatus() {
+		return istatus;
+	}
+	public void setIstatus(int istatus) {
+		this.istatus = istatus;
+	}
+	public String getIdate() {
+		return idate;
+	}
+	public void setIdate(String idate) {
+		this.idate = idate;
+	}
+	public double getRavg() {
+		return ravg;
+	}
+	public void setRavg(double ravg) {
+		this.ravg = ravg;
+	}
+	public int getStar_cnt() {
+		return star_cnt;
+	}
+	public void setStar_cnt(int star_cnt) {
+		this.star_cnt = star_cnt;
+	}
 	public String getOcount() {
 		return ocount;
 	}
@@ -55,13 +78,7 @@ public class StoreIndexVO {
 		this.hp3 = hp3;
 	}
 	public String getAddr() {
-		String str="";
-		if(addr1 != null) {
-			str=  getAddr1() + " " + getAddr2();
-		} else {
-			str = addr;
-		}
-		return str;
+		return addr;
 	}
 	public void setAddr(String addr) {
 		this.addr = addr;
@@ -79,7 +96,7 @@ public class StoreIndexVO {
 		this.memo = memo;
 	}
 	public String getPhone() {
-		return hp1 + "-" + hp2 + "-" + hp3;
+		return phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;

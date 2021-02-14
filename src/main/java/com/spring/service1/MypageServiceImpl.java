@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.myhouse.dao.MypagePhotoDAO;
 import com.myhouse.vo.MemberVO;
 import com.myhouse.vo.PhotoVO;
+import com.myhouse.vo.SessionVO;
 import com.myhouse.vo.goodsVO;
 import com.myhouse.vo.interiorVO;
 import com.myhouse.vo.likeVO;
@@ -91,6 +95,7 @@ public class MypageServiceImpl implements MypageService{
 		int count = mypagephotoDAO.getproduct_count(email);
 		int hcount = mypagephotoDAO.getscrap_house_count(email);
 		int acount = mypagephotoDAO.getscrap_allcount(email);
+		
 		
 		mv.addObject("acount", acount);
 		mv.addObject("list", list);
@@ -184,6 +189,153 @@ public class MypageServiceImpl implements MypageService{
 		mv.setViewName("mypage/review");
 		
 		return mv;
+	}
+	
+	@Override
+	public ModelAndView getreviewinsert(Object vo) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println("서비스임플!");
+		//파일체크 유: 새로운 파일수정/무:기존파일 유지
+		reviewVO rvo = (reviewVO)vo;
+		boolean result =false;
+		
+		if(rvo.getFile1().getSize() != 0) {
+			//새로운 파일 선택
+			//bfile, bsfile --> bvo추가
+			UUID uuid = UUID.randomUUID();
+			rvo.setReview_image(rvo.getFile1().getOriginalFilename());
+			rvo.setReview_simage(uuid+"_"+rvo.getFile1().getOriginalFilename());
+			System.out.println("파일있음");
+		}
+		//DB연동
+		result = mypagephotoDAO.getreviewinsert(rvo);
+		
+		
+		if(result) {
+			File file = new File(rvo.getSavepath()+rvo.getReview_simage());
+			System.out.println("파일 = "+file);
+			try {
+				rvo.getFile1().transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			mv.setViewName("redirect:/mypage_review.do");
+			System.out.println("수정 성공~!!");
+		}else {
+			mv.setViewName("redirect:/mypage_review.do");
+			System.out.println("선택파일이 없습니다.");
+		}
+		
+		return mv;
+	}
+	
+	
+	
+	
+	@Override
+	public ModelAndView getreviewupdate(Object vo) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println("서비스임플!");
+		//파일체크 유: 새로운 파일수정/무:기존파일 유지
+		reviewVO rvo = (reviewVO)vo;
+		boolean result =false;
+		
+		if(rvo.getFile1().getSize() != 0) {
+			//새로운 파일 선택
+			//bfile, bsfile --> bvo추가
+			UUID uuid = UUID.randomUUID();
+			rvo.setReview_image(rvo.getFile1().getOriginalFilename());
+			rvo.setReview_simage(uuid+"_"+rvo.getFile1().getOriginalFilename());
+			System.out.println("파일있음");
+		}
+		//DB연동
+		result = mypagephotoDAO.getreviewupdate(rvo);
+		
+		
+		if(result) {
+			File file = new File(rvo.getSavepath()+rvo.getReview_simage());
+			System.out.println("파일 = "+file);
+			try {
+				rvo.getFile1().transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			mv.setViewName("redirect:/mypage_review2.do");
+			System.out.println("수정 성공~!!");
+		}else {
+			mv.setViewName("redirect:/mypage_review2.do");
+			System.out.println("선택파일이 없습니다.");
+		}
+		
+		return mv;
+	}
+	
+	
+	
+	
+	@Override
+	public String getreviewproc(String ino) {
+		System.out.println("ino= "+ino);
+		goodsVO gvo = mypagephotoDAO.getreviewproc(ino);
+		
+		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson =new Gson();
+		
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("ino", gvo.getIno());
+			jobj.addProperty("company", gvo.getCompany());
+			jobj.addProperty("goods_name", gvo.getGoods_name());
+			jobj.addProperty("goods_simage", gvo.getGoods_simage());
+			jobj.addProperty("gno", gvo.getGno());
+			jobj.addProperty("star", gvo.getStar());
+			jobj.addProperty("vcontent", gvo.getVcontent());
+			
+			
+			
+			
+			jarry.add(jobj);
+			
+		
+			jdata.add("jlist", jobj);
+		
+		
+		return gson.toJson(jdata);
+	}
+	
+	
+	@Override
+	public String getreviewproc1(String ino) {
+		System.out.println("ino= "+ino);
+		goodsVO gvo = mypagephotoDAO.getreviewproc1(ino);
+		
+		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
+		JsonArray jarry = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		Gson gson =new Gson();
+		
+			JsonObject jobj = new JsonObject();
+			jobj.addProperty("ino", gvo.getIno());
+			jobj.addProperty("company", gvo.getCompany());
+			jobj.addProperty("goods_name", gvo.getGoods_name());
+			jobj.addProperty("goods_simage", gvo.getGoods_simage());
+			jobj.addProperty("gno", gvo.getGno());
+			jobj.addProperty("star", gvo.getStar());
+			jobj.addProperty("vcontent", gvo.getVcontent());
+			
+			
+			
+			
+			jarry.add(jobj);
+			
+		
+			jdata.add("jlist", jobj);
+		
+		
+		return gson.toJson(jdata);
 	}
 	
 	
@@ -398,9 +550,10 @@ public class MypageServiceImpl implements MypageService{
 		  ModelAndView mv = new ModelAndView(); 
 		  String delete = "";
 		  boolean result = mypagephotoDAO.getmemberdelete(email);
-	  
+		  
+		  
 		  if(result) {
-		    delete = "redirect:/index.do";
+		    delete = "redirect:/logout";
 		  }
 	  
 	  
