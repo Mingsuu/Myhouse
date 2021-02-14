@@ -55,7 +55,7 @@ public class H_basketDAO extends DBConn{
 	        sqlSession.update("basket.modifyCart", vo);
 	    }
 	    // 5. 장바구니 금액 합계
-	    public int sumMoney(String email) {
+	    public String sumMoney(String email) {
 	        return sqlSession.selectOne(namespace+".sumMoney", email);
 	    }
 	    // 6. 장바구니 동일한 상품 레코드 확인

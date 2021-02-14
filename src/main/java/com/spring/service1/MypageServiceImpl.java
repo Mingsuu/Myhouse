@@ -276,9 +276,9 @@ public class MypageServiceImpl implements MypageService{
 	
 	
 	@Override
-	public String getreviewproc(String ino) {
-		System.out.println("ino= "+ino);
-		goodsVO gvo = mypagephotoDAO.getreviewproc(ino);
+	public String getreviewproc(String gno) {
+		System.out.println("ino= "+gno);
+		goodsVO gvo = mypagephotoDAO.getreviewproc(gno);
 		
 		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
 		JsonArray jarry = new JsonArray();
@@ -497,7 +497,14 @@ public class MypageServiceImpl implements MypageService{
 		int lcount = mypagephotoDAO.getlikecount(email);
 		MemberVO prof = mypagephotoDAO.getprofile(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		System.out.println("팔로워"+fcount);
+		System.out.println("팔로잉"+fcount1);
+		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
@@ -517,7 +524,11 @@ public class MypageServiceImpl implements MypageService{
 		int lcount = mypagephotoDAO.getlikecount(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
 		int pcount = mypagephotoDAO.getphotocount(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("pcount", pcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
@@ -535,7 +546,11 @@ public class MypageServiceImpl implements MypageService{
 		MemberVO prof = mypagephotoDAO.getprofile(email);
 		int lcount = mypagephotoDAO.getlikecount(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
