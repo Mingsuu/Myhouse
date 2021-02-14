@@ -30,11 +30,11 @@
 				$(".category-filter-bar-tag-list__item").remove();
 				$("input:checkbox[name='cate-chk']").prop("checked",false);
 				$(".category-filter-bar-tag-list").addClass("category-filter-bar-tag-list-none");
-				if($('input[name=category]:checked').val() == "가구"){
+				if($('input[name=category]:checked').val() == "0"){
 					$('div.furniture').css('display','block');
 					$('div.fabric').css('display','none');
 					$('div.others').css('display','none');
-				}else if($('input[name=category]:checked').val() == "패브릭"){
+				}else if($('input[name=category]:checked').val() == "1"){
 					$('div.furniture').css('display','none');
 					$('div.fabric').css('display','block');
 					$('div.others').css('display','none');
