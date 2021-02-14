@@ -383,8 +383,9 @@ public class MypagePhotoDAO extends DBConn{
 	/**
 	 * ÆÈ·Î¿ö ÆÈ·Î¿ö Ä«¿îÆ®
 	 */
-	public MemberVO getfcount(String email) {
-		MemberVO fcount = sqlSession.selectOne(namespace+".fcount",email);
+	public int getfcount(String email) {
+		int fcount = sqlSession.selectOne(namespace+".fcount",email);
+		System.out.println("ÆÈ·Î¿ö"+fcount);
 		return fcount;
 		
 	}
@@ -392,9 +393,10 @@ public class MypagePhotoDAO extends DBConn{
 	/**
 	 * ÆÈ·Î¿ö ÆÈ·ÎÀ× Ä«¿îÆ®
 	 */
-	public MemberVO getfcount1(String email) {
-		MemberVO fcount = sqlSession.selectOne(namespace+".fcount1",email);
-		return fcount;
+	public int getfcount1(String email) {
+		int fcount1 = sqlSession.selectOne(namespace+".fcount1",email);
+		System.out.println("ÆÈ·Î¿ö"+fcount1);
+		return fcount1;
 		
 	}
 	

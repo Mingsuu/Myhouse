@@ -497,8 +497,11 @@ public class MypageServiceImpl implements MypageService{
 		int lcount = mypagephotoDAO.getlikecount(email);
 		MemberVO prof = mypagephotoDAO.getprofile(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
-		MemberVO fcount = mypagephotoDAO.getfcount(email);
-		MemberVO fcount1 = mypagephotoDAO.getfcount1(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
+		
+		System.out.println("ÆÈ·Î¿ö"+fcount);
+		System.out.println("ÆÈ·ÎÀ×"+fcount1);
 		
 		mv.addObject("fcount1", fcount1);
 		mv.addObject("fcount", fcount);
@@ -521,7 +524,11 @@ public class MypageServiceImpl implements MypageService{
 		int lcount = mypagephotoDAO.getlikecount(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
 		int pcount = mypagephotoDAO.getphotocount(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("pcount", pcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
@@ -539,7 +546,11 @@ public class MypageServiceImpl implements MypageService{
 		MemberVO prof = mypagephotoDAO.getprofile(email);
 		int lcount = mypagephotoDAO.getlikecount(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
+		int fcount = mypagephotoDAO.getfcount(email);
+		int fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);

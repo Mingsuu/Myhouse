@@ -430,17 +430,17 @@
 		</c:if>
 		<div class="leftbox">
 			<span>${prof.nickname}</span>
-				<c:if test="${fcount != 1 }">
+				<c:if test="${fcount != 0 }">
 					<a href="#" class="mybtn1">팔로워 ${fcount}</a>
 				</c:if>
-				<c:if test="${fcount == 1 }">
+				<c:if test="${fcount == 0 }">
 					<a href="#" class="mybtn1">팔로워 0</a>
 				</c:if>
 				<div></div>
-				<c:if test="${fcount1 != 1 }">
+				<c:if test="${fcount1 != 0 }">
 					<a href="#" class="mybtn1">팔로잉 ${fcount1}</a>
 				</c:if>
-				<c:if test="${fcount == 1 }">
+				<c:if test="${fcount == 0 }">
 					<a href="#" class="mybtn1">팔로잉 0</a>
 				</c:if>
 			
