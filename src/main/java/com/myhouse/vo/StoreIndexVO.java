@@ -13,10 +13,16 @@ public class StoreIndexVO {
 		   ono, ostatus,
 		   ocount;
 	double star_avg, star_float, ravg;
-	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus, star_cnt;
+	int rno, star_count, review_cnt, scrap_cnt, gno_cnt, star, qstatus, qno_count,seller,sstatus, star_cnt, istatus;
 	CommonsMultipartFile file1;
 	
 	
+	public int getIstatus() {
+		return istatus;
+	}
+	public void setIstatus(int istatus) {
+		this.istatus = istatus;
+	}
 	public String getIdate() {
 		return idate;
 	}

@@ -188,6 +188,7 @@ public class StoreController {
 	
 	@RequestMapping(value="/store_payment.do",method=RequestMethod.GET) 
 	public ModelAndView store_payment(HttpSession session, String gno, String ocount) {
+		ModelAndView mv = new ModelAndView();
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		
 		StringTokenizer gno_ = new StringTokenizer(gno,",");
@@ -204,7 +205,8 @@ public class StoreController {
 		}
 		
 		if(svo == null) {
-			return null;
+			mv.setViewName("/login/login");
+			return mv;
 		}else {
 			return interiorService.getPayment(svo.getEmail(), gnolist, ocountlist);
 		}
@@ -266,13 +268,13 @@ public class StoreController {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		vo.setEmail(svo.getEmail());
 		
-		if(vo.getEmail() == null) {
-			return null;
+		if(svo.getEmail()== null) {
+			System.out.println("nulllllllllllll!!!!!!");
+			return "/login/login";
 		}else {
 			return interiorService.getInteriorQuestionInsert(vo);
 		}
 	}
-	
 
 	
 	
@@ -298,15 +300,14 @@ public class StoreController {
 		String path2 = "\\resources\\upload\\";
 		vo.setEmail(svo.getEmail());
 		vo.setSavepath(path1+path2);
-		if(vo.getEmail() == null) {
-			return null;
+		if(vo.getEmail()== "") {
+			return "/login/login";
 		} else {
 			return interiorService.getInteriorReviewInsert(vo);
 			
 		}
 		
 	}
-	
 	
 	
 	/*
@@ -337,7 +338,7 @@ public class StoreController {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("store_index---------->"+ino);
 		if(svo == null) {
-			return null;
+			return interiorService.getInteriorScrapDelProc("", ino);
 		}else {
 			return interiorService.getInteriorScrapDelProc(svo.getEmail(), ino);
 		}
@@ -351,7 +352,7 @@ public class StoreController {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		System.out.println("store_index---------->"+ino);
 		if(svo == null) {
-			return null;
+			return interiorService.getInteriorScrapProc("", ino);
 		}else {
 			return interiorService.getInteriorScrapProc(svo.getEmail(), ino);
 		}
@@ -371,7 +372,7 @@ public class StoreController {
 		System.out.println("store_index~!~!~!~! sovooo---------->"+svo);
 		
 		if(svo == null) {
-			return null;
+			return null; 
 		}else {
 			return interiorService.getStoreScrapDelProc(svo.getEmail(), ino); 
 		}
@@ -389,7 +390,7 @@ public class StoreController {
 		System.out.println("store_index~!~!~svo!~!---------->"+svo);
 		
 		if(svo == null) {
-			return null;
+			return null; 
 		}else {
 			return interiorService.getStoreScrapProc(svo.getEmail(), ino); 
 		}
@@ -418,7 +419,7 @@ public class StoreController {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		
 		if(svo == null) {
-			return null;
+			return interiorService.getInteriorTop(ino, "");
 		} else {
 			return interiorService.getInteriorTop(ino, svo.getEmail());
 		}
@@ -472,7 +473,7 @@ public class StoreController {
 		System.out.println("inooooo"+ino);
 		System.out.println("emailll svo"+svo);
 		if(svo == null) {
-			return null;
+			return null; 
 		}else {
 			return interiorService.getScrapProc(svo.getEmail(),ino ); 
 		}
