@@ -276,9 +276,9 @@ public class MypageServiceImpl implements MypageService{
 	
 	
 	@Override
-	public String getreviewproc(String ino) {
-		System.out.println("ino= "+ino);
-		goodsVO gvo = mypagephotoDAO.getreviewproc(ino);
+	public String getreviewproc(String gno) {
+		System.out.println("ino= "+gno);
+		goodsVO gvo = mypagephotoDAO.getreviewproc(gno);
 		
 		//list객체의 데이터를 JSON 객체로 변환작업 필요 ---> JSON 라이브러리 설치(gson)
 		JsonArray jarry = new JsonArray();

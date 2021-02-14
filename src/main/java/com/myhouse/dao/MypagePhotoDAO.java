@@ -55,8 +55,8 @@ public class MypagePhotoDAO extends DBConn{
 	/**
 	 * 리뷰수정 ino로 수정할데이터값 받아오기
 	 */
-	public goodsVO getreviewproc1(String ino){
-		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc1",ino);
+	public goodsVO getreviewproc1(String gno){
+		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc1",gno);
 		System.out.println("여기는 다오");
 		return vo;
 	}
@@ -64,8 +64,8 @@ public class MypagePhotoDAO extends DBConn{
 	/**
 	 * 리뷰작성 ino로 데이터값 받아오기
 	 */
-	public goodsVO getreviewproc(String ino){
-		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc",ino);
+	public goodsVO getreviewproc(String gno){
+		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc",gno);
 		System.out.println("여기는 다오");
 		return vo;
 	}
