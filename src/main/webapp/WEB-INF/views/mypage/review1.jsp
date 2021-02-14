@@ -1968,8 +1968,13 @@ input[id="check1"]:checked + label {
 		</div>
 		<c:forEach var="vo" items="${list}">
 		<div class="review2">
-			<img src ="http://localhost:9000/myhouse/resources/upload/${vo.review_simage}" class="sangpum">
-			<div class="simsa"><span>리뷰 후기</span><a href="#" id="${vo.gno}" class="sujung">수정</a></div>
+			<c:if test="${vo.review_simage != null }">
+				<img src ="http://localhost:9000/myhouse/resources/upload/${vo.review_simage}" class="sangpum">
+			</c:if>
+			<c:if test="${vo.review_simage == null }">
+				<img src ="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}" class="sangpum">
+			</c:if>
+			<div class="simsa"><span>리뷰 후기</span><a id="${vo.gno}" class="sujung">수정</a></div>
 			<div class="simsa1"><a href="#">[${vo.company }] ${vo.ino}  + ${vo.ititle}</a></div>
 			<div class="simsa2">
 				<div class="review-modal__form__star__value1">

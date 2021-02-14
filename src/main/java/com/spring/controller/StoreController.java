@@ -52,9 +52,6 @@ public class StoreController {
 			return interiorService.getPayFinish(svo.getEmail(), onolist);
 		}
 		
-		
-		
-		//return "/store/store_pay_fin_card";
 	}
 	/*
 	 * store_pay_finish 화면
@@ -210,8 +207,6 @@ public class StoreController {
 		}else {
 			return interiorService.getPayment(svo.getEmail(), gnolist, ocountlist);
 		}
-		
-		
 	}
 		
 	/*
@@ -275,8 +270,6 @@ public class StoreController {
 			return interiorService.getInteriorQuestionInsert(vo);
 		}
 	}
-
-	
 	
 	/*
 	 * store_page :: question 화면
@@ -308,7 +301,6 @@ public class StoreController {
 		}
 		
 	}
-	
 	
 	/*
 	 * store_page :: review - 상품리스트 선택
@@ -368,9 +360,6 @@ public class StoreController {
 	public String store_scrap_del_proc(HttpSession session, String ino) {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
 		
-		System.out.println("store_index~!~!~---------->"+ino);
-		System.out.println("store_index~!~!~!~! sovooo---------->"+svo);
-		
 		if(svo == null) {
 			return null; 
 		}else {
@@ -385,9 +374,6 @@ public class StoreController {
 	@RequestMapping(value="/store_scrap_proc.do", method=RequestMethod.GET)
 	public String store_scrap_proc(HttpSession session, String ino) {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");
-		
-		System.out.println("store_index~!~!~!~!---------->"+ ino);
-		System.out.println("store_index~!~!~svo!~!---------->"+svo);
 		
 		if(svo == null) {
 			return null; 
@@ -404,8 +390,6 @@ public class StoreController {
 	@RequestMapping(value="/main_order.do", method=RequestMethod.GET,
 			produces="text/plain;charset=UTF-8")
 	public String main_order(String gno) {
-		
-		System.out.println("gnoooo---------->"+ gno);
 		
 			return interiorService.getStoreMainOrderProc(gno); 
 		

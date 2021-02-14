@@ -255,7 +255,7 @@
 }
 .poto {
 	display:inline-block;
-	width:700px;
+	width:690px;
 	height:60px;
 	border:1px solid lightgray;
 	border-radius:5px;
@@ -263,7 +263,7 @@
 	font-size:13px;
 	font-weight:bold;
 	color:#757575;
-	margin-left:40px;
+	margin-left:-55px;
 	text-decoration:none;
 	margin-bottom:15px;
 	padding-top:20px;

@@ -152,9 +152,6 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		ArrayList<StoreIndexVO> payment_addr = interiorDAO.getPaymentAddrList(email);
 		ArrayList<StoreIndexVO> payment = interiorDAO.getPaymentList(email, gnolist);
-		System.out.println("service====>" +email);
-		System.out.println("service====>" +gnolist);
-		System.out.println("service====>" +ocountlist);
 		
 		mv.addObject("result", result);
 		mv.addObject("email", email);
@@ -171,7 +168,7 @@ public class InteriorServiceImpl implements InteriorService{
 		public String getInteriorQuestionAnswerDelete(String qno, String ino) {
 			boolean result = interiorDAO.getInteriorQuestionAnswerDelete(qno);
 			
-			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno);
+			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno, ino);
 			JsonArray jarry = new JsonArray();
 			JsonObject jdata = new JsonObject();
 			Gson gson = new Gson();
@@ -226,16 +223,13 @@ public class InteriorServiceImpl implements InteriorService{
 				mv.setViewName("redirect:/store_page.do");
 			} 
 			
-			System.out.println("service-- qno ----->"+qno);
-			System.out.println("service-- qreply ----->"+qreply);
-			System.out.println("service-- ino ----->"+ino);
 			return mv;
 		}
 	
 	// 문의 답변하기 - 화면
 		public String getInteriorQuestionAnswerProc(String qno, String ino) {
 			
-			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno);
+			ArrayList<StoreIndexVO> interior_answer = interiorDAO.getInteriorQuestionAnswerProc(qno, ino);
 			JsonArray jarry = new JsonArray();
 			JsonObject jdata = new JsonObject();
 			Gson gson = new Gson();
@@ -490,8 +484,6 @@ public class InteriorServiceImpl implements InteriorService{
 			mv.setViewName("redirect:/store_page.do");
 		} 
 		
-		System.out.println("service-- ino ----->"+ino);
-		System.out.println("service-- email ----->"+email);
 		return mv;
 	}
 	
@@ -517,8 +509,6 @@ public class InteriorServiceImpl implements InteriorService{
 			mv.setViewName("redirect:/store_page.do");
 		} 
 		
-		System.out.println("service-- ino ----->"+ino);
-		System.out.println("service-- email ----->"+email);
 		return mv;
 	}
 	
@@ -541,8 +531,6 @@ public class InteriorServiceImpl implements InteriorService{
 			result = "redirect:/store_page.do";
 		} 
 		
-		System.out.println("service-- ino ----->"+ino);
-		System.out.println("service-- email ----->"+email);
 		return result;
 	}
 	
@@ -564,8 +552,6 @@ public class InteriorServiceImpl implements InteriorService{
 			result = "redirect:/store_page.do";
 		} 
 		
-		System.out.println("service-- ino ----->"+ino);
-		System.out.println("service-- email ----->"+email);
 		return result;
 	}
 	
@@ -668,7 +654,7 @@ public class InteriorServiceImpl implements InteriorService{
 		
 		  int start = 0;
 	      int end = 0;
-	      int pageSize = 9; //한 페이지당 출력되는 row
+	      int pageSize = 20; //한 페이지당 출력되는 row
 	      int pageCount = 1; //전체 페이지 수  : 전체 리스트 row /한 페이지당 출력되는 row
 	      int dbCount = interiorDAO.getIndexListCount(category, tonelist, colorlist, seasonlist); //DB연동 후 전체로우수 출력
 	      int reqPage = 1; //요청페이지

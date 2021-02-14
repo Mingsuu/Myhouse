@@ -3023,7 +3023,7 @@
 			
 			all_first = all_first - group;
 			select_false(click_id);
-			alert(all_first);
+			//alert(all_first);
 			$("#pro-order-"+click_id[2]).addClass("order-none");
 			$("#pro-order-side-"+click_id[2]).addClass("order-none");
 			
@@ -3062,7 +3062,7 @@
 			
 	    		all_first_sub = all_first_sub - group;
 				select_false_side(click_id);
-				alert(all_first_sub);
+				//alert(all_first_sub);
 				$("#pro-order-side-"+click_id[3]).addClass("order-none");
 				$("#pro-order-"+click_id[3]).addClass("order-none");
 				
@@ -3334,7 +3334,7 @@
 			            reader.onload = function (e) {
 			          	$('.select-picture img').attr('src', e.target.result);
 			            $("#review-image-input").show();
-			            alert("file");
+			            //alert("file");
 			           }                   
 			            reader.readAsDataURL(input.files[0]);
 			        }
@@ -3503,7 +3503,7 @@
 			if($("input[type=checkbox]").is(":checked")) {
 				$(".review-modal__section__title-question").removeClass("review-modal__section__title--error");
 				$(".checkbox-input").removeClass("errored"); 
-				alert("aaaa");
+				//alert("aaaa");
 			} else {
 				$(".review-modal__section__title-question").addClass("review-modal__section__title--error");
 				$(".checkbox-input").addClass("errored"); 
@@ -3824,8 +3824,7 @@
 				$.ajax({
 					url:"interior_question_answer.do?qno="+id[0]+"&qreply="+qreply+"&ino=${ino}",
 					success: function(result) {
-						//alert("aaaaaaaaaa");
-						answer_page(id);
+						q_ajax("");
 						
 					} 
 				});
@@ -3845,7 +3844,7 @@
 					
 					var jdata = JSON.parse(result);
 					var output = "";
-					$("#answer-wrap-"+id[0]).empty();
+					//$("#answer-wrap-"+id[0]).empty();
 					for(var i in jdata.interior_answer) {
 						//output +='<article class="production-question-feed__item" data-qna-id="2637633">';
 						output += '<header class="production-question-feed__item__header">';
@@ -3902,9 +3901,12 @@
 						var jdata = JSON.parse(result);
 						var	output = "";
 						$("#answer-"+id[1]).empty();
+						//$("#"+id[1]).remove();
 						$("#"+id[1]).removeClass("answer-none");
+						$("#"+id[1]).empty();
 						//alert("aaaaaaaaaa-update");
 						for(var i in jdata.interior_answer) {
+							//output += '<div class="production-question-feed__item__answer-write" id='+id[1]+'>';
 							output += '<form name="answerForm" class="answerForm'+id[1]+'">'
 						 	output += '<span class="production-question-feed__item__badge">A&nbsp;</span>';
 							output += '<div>';
@@ -3917,8 +3919,9 @@
 							output += '<button class="button button--color-blue button--size-50 button--shape-4 product-question__wrap__buttons__submit-cancel" id="'+id[1]+'-del" type="button" style="width:49%;">작성취소</button>';
 							output += '</div>';
 							output += '</form>';
+							//output += '</div>';
 						}
-						$("#answer-"+id[1]).append(output);
+						$("#"+id[1]).append(output);
 						
 					} 
 				});
@@ -4007,8 +4010,8 @@
 				}
 			});
 
-			alert(gno);
-			alert(ocount);
+			//alert(gno);
+			//alert(ocount);
 			
 			location.href="http://localhost:9000/myhouse/store_payment.do?email=${email}&gno="+gno+"&ocount="+ocount;
 		}); 
@@ -4030,22 +4033,7 @@
 			location.href="http://localhost:9000/myhouse/store_basket_proc.do?email=${email}&gno="+gno+"&bcount="+bcount;
 		}); 
 			
-				/* var gno = $(".main_order_gno").val();
-				alert(gno); */
-				/*  $.ajax({
-					 url:"main_order.do?gno="+gno,
-			    	 success:function(result) {
-			    		var jdata = JSON.parse(result);
-			    		for(var i in jdata.main_order) {
-			    			
-			    			alert(jdata.main_order[i].gno);
-			    			/* if(!$("#pro-order-"+jdata.main_order[i].gno).hasClass("order-none")) {
-			    				alert($("#pro-order-"+jdata.main_order[i].gno).children().children().children().children().children().parent().html());
-			    				
-			    			} 
-			    		}
-			    	 }	
-				 }); */
+			
 		
 	});
 	
