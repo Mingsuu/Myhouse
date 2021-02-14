@@ -91,7 +91,7 @@
 .mid {
 	display:inline-block;
 	width:1136px;
-	height:596px;
+	height:auto;
 }
 .left {
 	border:1px solid lightgray;
@@ -231,7 +231,7 @@
 .right {
 	display:inline-block;
 	width:750px;
-	height:540px;
+	height:auto;
 	margin-top:20px;
 	float:right;
 }
@@ -298,7 +298,7 @@
 .pic2 {
 	display:inline-block;
 	width:750px;
-	height:160px;
+	height:auto;
 	border-radius:5px;
 	text-align:center;
 	font-size:13px;
@@ -306,14 +306,16 @@
 	color:#757575;
 	margin-left:40px;
 	text-decoration:none;
-	margin-bottom:30px;
+	margin-bottom:50px;
 	padding-top:20px;
+	padding-bottom:50px;
 }
 .poto1 {
 	width:150px;
 	height:150px;
 	margin-right:30px;
 	margin-top:-5px;
+	margin-bottom:30px;
 	background-color:#f5f5f5;
 	border:none;
 	border-radius:5px;
@@ -376,7 +378,10 @@
 	color:#35c5f0;
 	margin-left:30px;
 }
-
+.potobox{
+	display:inline-block;
+	margin-bottom:100px;
+}
 
 </style>
 </head>
@@ -459,20 +464,22 @@
 		<h5 class="mytitle">사진 <p>${count}</p></h5><a href="mypage_picture.do"><span class="allsee">전체보기</span></a>
 		<div class="pic2">
 		<c:if test="${count == 0}">
-			<a href="#" class="pic1">
+			<a href="http://localhost:9000/myhouse/upload_photo.do" class="pic1">
 			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
 		</c:if>
-	<c:forEach var ="vo" items="${list}" begin="0" end="4" step="1">
+	<c:forEach var ="vo" items="${list}">
 			<a href="community_page.do?pno=${vo.pno}"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno})"></div></a>
 	</c:forEach>	
 			<!-- <a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
 			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
 			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a> -->
-		</div>
+		<div class="potobox">
 		<c:if test="${count != 0}">
-			<a href="#" class="poto">
+			<a href="http://localhost:9000/myhouse/upload_photo.do" class="poto">
 			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 사진 올리기</a>
 		</c:if>
+		</div>
+		</div>
 	</div>
 
 

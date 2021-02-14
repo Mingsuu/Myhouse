@@ -88,7 +88,7 @@
 .mid {
 	display:inline-block;
 	width:1136px;
-	height:596px;
+	height:auto;
 }
 .left {
 	border:1px solid lightgray;
