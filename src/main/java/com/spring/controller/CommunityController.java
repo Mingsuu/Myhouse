@@ -55,15 +55,19 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="/product_tag.do", method=RequestMethod.GET)
+	public ModelAndView product_tag(String value) {
+		return communityService.getGoodsList(value);
+	}
+	@RequestMapping(value="/tag.do", method=RequestMethod.GET)
 	public String product_tag() {
-		return "/community/product_tag";
+		return "/community/tag";
 	}
 	
 	/** 상품 가져오기 **/
 	@ResponseBody
 	@RequestMapping(value="/find_goods.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	public String find_goods(String gname) {
-		return communityService.getGoodsList(gname);
+		return communityService.getGoods(gname);
 	}
 	
 	/** 사진수정 **/
@@ -71,6 +75,7 @@ public class CommunityController {
 	public ModelAndView photo_update(String pno) {
 		return communityService.getUpdate(pno);
 	}
+	
 	/** 사진수정 처리 **/
 	@RequestMapping(value="/update_photo_proc.do", method=RequestMethod.POST)
 	public ModelAndView photo_update(PhotoVO vo, HttpServletRequest request) {
