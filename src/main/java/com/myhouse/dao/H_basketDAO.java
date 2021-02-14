@@ -15,8 +15,32 @@ public class H_basketDAO extends DBConn{
 	private static String namespace="mapper.basket";	
 	
 		  // 1. 장바구니 추가
-	    public void insert(basketVO vo) {
-	        sqlSession.insert(namespace+".insertCart", vo);
+	    public boolean insert(String email, String[] gnolist, String[] bcountlist) {
+	    	boolean result = false;
+			
+			Map<String, Object> order_param = new HashMap<String, Object>();
+			
+			order_param.put("email", email);           
+			
+			for(int i=0;i<gnolist.length;i++) {
+				
+				String gno = gnolist[i]; 
+				String bcount =bcountlist[i]; 
+
+				
+				order_param.put("gno", gno);
+				order_param.put("bcount", bcount);
+				
+			
+				System.out.println("dao"+gno);
+				System.out.println("dao"+bcount);
+			}
+			int value  = sqlSession.insert(namespace+".insertCart", order_param);
+
+	    	
+	    	if(value != 0) result = true;
+			
+			return result;
 	    }
 	    // 2. 장바구니 목록
 	    public List<basketVO> listCart(String email) {

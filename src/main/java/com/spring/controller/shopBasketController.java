@@ -3,6 +3,7 @@ package com.spring.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,27 +26,45 @@ public class shopBasketController  {
 	private ShoppingBasketImpl ShoppingBasketService;
 	
 	// 1. 장바구니 추가
-	@RequestMapping(value="/store_basket_proc.do",method=RequestMethod.POST)
-    public String store_basket_proc(basketVO vo, HttpSession session){
-		//세션 email 작성자 저장
-		SessionVO svo = (SessionVO)session.getAttribute("svo");
-		String email = svo.getEmail();
-		vo.setEmail(email);
-        System.out.println("장바구니:"+vo.getEmail());
-        System.out.println("gno:"+vo.getGno());
-        System.out.println("bcount:"+vo.getBcount());
-        
-        // 장바구니에 기존 상품이 있는지 검사
-        int count = ShoppingBasketService.countCart(vo.getGno(), email);
-        System.out.println("장바구니 갯수:"+count);
-        if(count == 0){
-            // 없으면 insert
-        	ShoppingBasketService.insert(vo);
-		} else { // 있으면 update 
-			ShoppingBasketService.updateCart(vo); 
-			
-		 }
-        return "redirect://index.do";
+	@RequestMapping(value="/store_basket_proc.do",method=RequestMethod.GET)
+    public String store_basket_proc(String email, String gno, String bcount){
+		System.out.println("controller!!---->"+email);
+		System.out.println("controller!!---->"+gno);
+		System.out.println("controller!!---->"+bcount);
+		
+		StringTokenizer gno_ = new StringTokenizer(gno,",");
+		StringTokenizer bcount_ = new StringTokenizer(bcount,",");
+		
+		String[] gnolist = new String[gno_.countTokens()];
+		String[] bcountlist = new String[bcount_.countTokens()];
+		
+		for(int i=0; i<gnolist.length; i++) {
+			gnolist[i] = gno_.nextToken();
+		}
+		for(int i=0; i<bcountlist.length; i++) {
+			bcountlist[i] = bcount_.nextToken();
+		}
+		
+		
+		/*
+		 * //세션 email 작성자 저장 SessionVO svo = (SessionVO)session.getAttribute("svo");
+		 * String email = svo.getEmail(); vo.setEmail(email);
+		 * 
+		 * System.out.println("장바구니:"+vo.getEmail());
+		 * System.out.println("gno:"+vo.getGno());
+		 * System.out.println("bcount:"+vo.getBcount());
+		 * 
+		 * // 장바구니에 기존 상품이 있는지 검사 int count =
+		 * ShoppingBasketService.countCart(vo.getGno(), email);
+		 * System.out.println("장바구니 갯수:"+count); if(count == 0){ // 없으면 insert
+		 * ShoppingBasketService.insert(vo); } else { // 있으면 update
+		 * ShoppingBasketService.updateCart(vo);
+		 * 
+		 * }
+           return "redirect://index.do";
+		 * 
+		 */
+		return ShoppingBasketService.insert(email, gnolist, bcountlist);
     }
 
     // 2. 장바구니 목록

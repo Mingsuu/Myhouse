@@ -15,7 +15,28 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+<style>
+@media (min-width: 768px) {
+    #kakao-talk-channel-chat-button {
+    position: fixed;
+    z-index: 999;
+    right: 30px; /* 화면 오른쪽으로부터의 거리, 숫자만 변경 */
+    bottom: 30px; /* 화면 아래쪽으로부터의 거리, 숫자만 변경 */
+    }
+}
+/* 모바일 화면 */
+@media (max-width:767px) {
+    #kakao-talk-channel-chat-button {
+    position: fixed;
+    z-index: 999;
+    right: 15px; /* 화면 오른쪽으로부터의 거리, 숫자만 변경 */
+    bottom: 30px; /* 화면 아래쪽으로부터의 거리, 숫자만 변경 */
+    }
+}
+</style>
 <body>
 <jsp:include page="../header_login.jsp" />
 
@@ -38,9 +59,26 @@
 									<br>전화 :&nbsp;<a href="tel:1670-0876"
 										style="text-decoration: underline;">1670-0876</a>
 								</address>
-								<button
-									class="btn btn-md btn-priority customer-center__contact__btn-inquiry"
-									type="button">1:1 채팅 상담하기</button>
+								<!-- <button class="btn btn-md btn-priority customer-center__contact__btn-inquiry"
+										 id="create-channel-add-button"
+											type="button">1:1 채팅 상담하기</button> -->
+									
+									<div id="kakao-talk-channel-chat-button">
+									
+									</div>
+									
+<script type='text/javascript'>
+  //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('ab2d5ce0761d730ac796362cd2ceaac0');
+    // 카카오톡 채널 1:1채팅 버튼을 생성합니다.
+    Kakao.Channel.createChatButton({
+      container: '#kakao-talk-channel-chat-button',
+      channelPublicId: '_xlRxlkK' // 카카오톡 채널 홈 URL에 명시된 ID
+    });
+  //]]>
+</script>
+									
 							</section>
 							<section class="col-12 col-md-6 customer-center__faq">
 								<ul class="customer-center__faq__list">
@@ -60,11 +98,12 @@
 					<section class="col-12 customer-center__contact--mobile">
 						<p class="customer-center__contact--mobile__operating">운영시간 :
 							평일 09:00 ~ 18:00 (주말 &amp; 공휴일 제외)</p>
-						<button
-							class="btn btn-xs btn-normal customer-center__contact--mobile__button"
+						<button class="btn btn-xs btn-normal customer-center__contact--mobile__button"  id="kakao-talk-channel-chat-button"
 							type="button">1:1 채팅 상담하기</button>
-						<a
-							class="btn btn-xs btn-normal customer-center__contact--mobile__button"
+					
+							
+							
+						<a class="btn btn-xs btn-normal customer-center__contact--mobile__button"
 							href="/contacts/new">이메일 문의하기</a><a href="tel:1670-0876"
 							class="btn btn-xs btn-normal customer-center__contact--mobile__button">전화
 							문의하기</a>

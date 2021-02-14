@@ -217,10 +217,10 @@
 			</div>
 		</div>
 	</div>
+<jsp:include page="../footer.jsp" /> 
 	<!-- </form> -->
 	</c:otherwise>
 </c:choose>
 
-<jsp:include page="../footer.jsp" /> 
 </body>
 </html>
