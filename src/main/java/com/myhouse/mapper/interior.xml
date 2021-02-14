@@ -75,7 +75,7 @@
          from(select q.gno, ino, goods_name, qno, q.email, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ostatus
          from h_goods g,(select qno, q.email, q.gno, qtype, qcontent, qreply, qstatus, qdate, qdate_r, ono, ocount, ostatus 
           from h_question q, h_order o where q.gno = o.gno(+) and q.email = o.email(+)) q where g.gno = q.gno )
-            where ino='i_1') q, h_member m, h_interior i, 
+            where ino=#{ino}) q, h_member m, h_interior i, 
             (select h_member.email, seller, h_interior.status, ino 
               from h_member, h_interior 
               where  h_member.email in (select distinct h_member.email from h_interior, h_member 
@@ -310,7 +310,7 @@ from (select rownum rno,istatus, idate, ino, company, ititle, category, tone, co
 
 <!-- 카테고리별 인테리어게시물 총 갯수 -->
 <select id="interior-list-count" parameterType="java.lang.String" resultType="int">
-	select count(*) from h_interior where category=#{category}
+	select count(*) from h_interior where category=#{category} and status =1
 </select>
 
 

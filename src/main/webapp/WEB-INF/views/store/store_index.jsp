@@ -1576,7 +1576,7 @@ $(document).ready(function(){
     function page(dbcount, reqpage, pagesize){
        //페이지 번호 및  링크
           var pager = jQuery("#ampaginationsm").pagination({
-             maxSize : 5,
+             maxSize : 20,
              totals:dbcount,
              page : reqpage,
              pageSize : pagesize,

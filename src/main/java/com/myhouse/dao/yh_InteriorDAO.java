@@ -101,13 +101,7 @@ public class yh_InteriorDAO {
 			if(value2 == 0) {
 				value = sqlSession.insert(namespace+".order-insert", order_param);
 			}
-			
-		
-			System.out.println("dao"+gno);
-			System.out.println("dao"+ocount);
 		}
-		System.out.println("dao gnolist"+gnolist.length);
-		System.out.println("dao ocountlist"+ocountlist.length);
 		
 		if(value != 0) result = true;
 		
@@ -127,7 +121,6 @@ public class yh_InteriorDAO {
 		param.put("email", email);           
 		param.put("gnolist", gnolist);
 		
-		System.out.println("dao gnolist---------"+gnolist.length);	
 		List<StoreIndexVO> order_list = sqlSession.selectList(namespace+".order-select", param);	
 		
 		return (ArrayList<StoreIndexVO>)order_list;
@@ -150,8 +143,6 @@ public class yh_InteriorDAO {
 		
 		boolean result = false;
 		
-		System.out.println("insert-scrap====>eeee@qno:"+qno);
-		
 		int value = sqlSession.update(namespace+".interior-question-answer-delete", qno);
 		if(value != 0) result = true;
 		
@@ -165,18 +156,18 @@ public class yh_InteriorDAO {
 		
 		boolean result = false;
 		
-		
-		System.out.println("insert-scrap====>qno:"+qno);
-		System.out.println("insert-scrap====>qreply:"+qreply);
-		
 		int value = sqlSession.update(namespace+".interior-question-answer", a_param);
 		if(value != 0) result = true;
 		
 		return result;
 	}
 	// 문의 답변하기 :: 화면
-		public ArrayList<StoreIndexVO> getInteriorQuestionAnswerProc(String qno) {
-			List<StoreIndexVO> interior_answer = sqlSession.selectList(namespace+".interior-question-answer-proc", qno);
+		public ArrayList<StoreIndexVO> getInteriorQuestionAnswerProc(String qno, String ino) {
+			Map<String, String> param = new HashMap<String, String>();
+			
+			param.put("qno",qno);
+			param.put("ino",ino);
+			List<StoreIndexVO> interior_answer = sqlSession.selectList(namespace+".interior-question-answer-proc", param);
 			return (ArrayList<StoreIndexVO>)interior_answer;
 		}
 	
@@ -238,9 +229,6 @@ public class yh_InteriorDAO {
 		s_insert_param.put("email", email);
 		s_insert_param.put("ino", ino);
 		
-		System.out.println("insert-scrap-exist====>email:"+email);
-		System.out.println("insert-scrap-exist====>ino:"+ino);
-		
 		return sqlSession.selectOne(namespace+".interior-scrap-exist", s_insert_param);
 	}
 	
@@ -251,9 +239,6 @@ public class yh_InteriorDAO {
 		Map<String, String> s_insert_param = new HashMap<String, String>();
 		s_insert_param.put("email", email);
 		s_insert_param.put("ino", ino);
-		
-		System.out.println("insert-scrap====>email:"+email);
-		System.out.println("insert-scrap====>ino:"+ino);
 		
 		int value = sqlSession.insert(namespace+".interior-scrap-delete", s_insert_param);
 		if(value != 0) result = true;
@@ -269,9 +254,6 @@ public class yh_InteriorDAO {
 		s_insert_param.put("email", email);
 		s_insert_param.put("ino", ino);
 		
-		System.out.println("insert-scrap====>email:"+email);
-		System.out.println("insert-scrap====>ino:"+ino);
-		
 		int value = sqlSession.insert(namespace+".interior-scrap-insert", s_insert_param);
 		if(value != 0) result = true;
 		
@@ -284,9 +266,6 @@ public class yh_InteriorDAO {
 		Map<String, String> s_insert_param = new HashMap<String, String>();
 		s_insert_param.put("email", email);
 		s_insert_param.put("ino", ino);
-		
-		System.out.println("insert-scrap====>email:"+email);
-		System.out.println("insert-scrap====>ino:"+ino);
 		
 		int value = sqlSession.insert(namespace+".interior-scrap-delete", s_insert_param);
 		if(value != 0) result = true;
@@ -301,9 +280,6 @@ public class yh_InteriorDAO {
 		Map<String, String> s_insert_param = new HashMap<String, String>();
 		s_insert_param.put("email", email);
 		s_insert_param.put("ino", ino);
-		
-		System.out.println("insert-scrap====>email:"+email);
-		System.out.println("insert-scrap====>ino:"+ino);
 		
 		int value = sqlSession.insert(namespace+".interior-scrap-insert", s_insert_param);
 		if(value != 0) result = true;
@@ -357,10 +333,6 @@ public class yh_InteriorDAO {
 		category_param.put("colorlist", colorlist);
 		category_param.put("seasonlist", seasonlist);
 		
-		System.out.println("tonelist !! "+tonelist.length);
-		System.out.println("colorlist !!  "+colorlist.length);
-		System.out.println("seasonlist  !! "+seasonlist.length);
-		
 		return sqlSession.selectOne(namespace+".category_list_count", category_param);
 	}
 	
@@ -377,7 +349,7 @@ public class yh_InteriorDAO {
 		start_[0] = String.valueOf(start);
 		end_[0] = String.valueOf(end);
 		status_[0] = status;
-		System.out.println(category_.length);
+
 		category_param.put("category", category_);                                     
 		category_param.put("status", status_);                                     
 		category_param.put("tonelist", tonelist);
@@ -387,9 +359,6 @@ public class yh_InteriorDAO {
 		category_param.put("start", start_);
 		category_param.put("end", end_);
 		
-		//System.out.println("tonelist  "+tonelist.length);
-		//System.out.println("colorlist   "+colorlist.length);
-		//System.out.println("seasonlist  "+seasonlist.length);
 		
 		List<StoreIndexVO> category_list = sqlSession.selectList(namespace+".category_list", category_param);
 		return (ArrayList<StoreIndexVO>)category_list;
@@ -402,8 +371,6 @@ public class yh_InteriorDAO {
 	
 	// 카테고리별 인테리어게시물 총 갯수
 	public int getInteriorListCount(String category) {
-		//System.out.println("interior-list-count--->");
-		//System.out.println("dao---------->"+category); 
 		return sqlSession.selectOne(namespace + ".interior-list-count", category);
 	}
 	

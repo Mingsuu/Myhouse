@@ -1339,7 +1339,7 @@
 	            <tr class="production" data-id="570295" data-cost="99000" data-count="1" data-name="[잉글랜더] [단독] 고흐 무헤드 원목 침대(매트리스 제외) SS/Q 2colors">
 	              <td>
 	                <div class="information">
-	                  <img src="http://localhost:9000/myhouse/images/${vo.goods_simage }" alt="320">
+	                  <img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }" alt="320">
 	                  <div style="padding-top:15px;">
 	                    <div class="name">${vo.ititle }</div>
 	                    <div class="option">${vo.goods_name }</div>
@@ -1763,7 +1763,7 @@
 	                var msg = '결제에 실패하였습니다.';
 	                msg += '에러내용 : ' + rsp.error_msg;
 	            }
-	            alert(msg);
+	            //alert(msg);
 	        });
 			
 		      
