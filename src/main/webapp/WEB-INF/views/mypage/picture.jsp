@@ -809,7 +809,7 @@ div.card_item_content{
 					</div>
 					<div class="card-item__image">
 						<div class="card-item-image">
-							<img class="image" src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}">
+							<img class="image" src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno}">
 							<span class="card-item-image__view-count">조회수 <!-- -->${vo.phits }</span>
 						</div>
 					</div>

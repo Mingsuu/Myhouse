@@ -120,7 +120,7 @@
 			<c:forEach var="vo" items="${list }">
 			<c:if test="${vo.photo_simage != null }">
 				<a href="#"><div class="textbox">
-					<div class="imgbox"><img src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage }"></div>
+					<div class="imgbox"><img src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage }"></div>
 					<div class="messagebox"> 사진 을 <span>좋아요</span> 했어요.</div>
 					<!-- <div class="datebox">2021년 1월 14일 23시 15분</div> -->
 					<hr class="textbar">

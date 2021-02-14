@@ -1942,7 +1942,7 @@ input[id="check1"]:checked + label {
 	<div class="rewrite">
 		<input type="hidden" value="${vo.ino }" id="ino">
 		<img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }?ino=${vo.ino}" class="reimg">
-		<div class="rebox"><span class="renum">상품 번호&nbsp;</span>  <span>&nbsp;&nbsp;${vo.gno}</span> <div class="rebox2"><a href="#"><span id="${vo.ino }" class="gum">리뷰 작성</span></a></div> </div>
+		<div class="rebox"><span class="renum">상품 번호&nbsp;</span>  <span>&nbsp;&nbsp;${vo.gno}</span> <div class="rebox2"><span id="${vo.ino }" class="gum">리뷰 작성</span></div> </div>
 		<div class="rebox1"><span class="renum1">회사명&nbsp;</span><span>:&nbsp;${vo.company }</span></div>
 		<div class="rebox1"><span class="renum1">상품명&nbsp;</span><span>:&nbsp;${vo.ititle }</span></div>
 		<div class="rebox1-1"><span class="renum2">가격&nbsp;</span><span>:&nbsp;${vo.goods_price} 원</span></div>

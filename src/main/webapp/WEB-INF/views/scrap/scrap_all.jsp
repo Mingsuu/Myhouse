@@ -179,12 +179,12 @@ $(document).ready(function(){
 								<div class="collection__image-wrap">
 								<c:if test="${vo.pno != null }">
 									<img class="collection__image"
-										src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}"
+										src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno}"
 										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 								</c:if>
 								<c:if test="${vo.pno == null }">
 									<img class="collection__image"
-										src="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage}?ino=${vo.ino}"
+										src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}?ino=${vo.ino}"
 										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 								</c:if>
 								</div>
