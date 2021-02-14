@@ -4,7 +4,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class goodsVO {
 
-	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath,email,company,ititle,ostatus,vcontent;
+	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath,email,company,ititle,ostatus,vcontent,interior_simage;
 	
 	int star;
 	
@@ -14,6 +14,16 @@ public class goodsVO {
 	
 	
 	
+	
+	
+	public String getInterior_simage() {
+		return interior_simage;
+	}
+
+	public void setInterior_simage(String interior_simage) {
+		this.interior_simage = interior_simage;
+	}
+
 	public String getVcontent() {
 		return vcontent;
 	}

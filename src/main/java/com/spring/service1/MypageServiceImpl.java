@@ -411,6 +411,7 @@ public class MypageServiceImpl implements MypageService{
 		ArrayList<reviewVO> list = mypagephotoDAO.getreview(email);
 		int rcount = mypagephotoDAO.getreviewcount1(email);
 		
+		
 		mv.addObject("rcount", rcount);
 		mv.addObject("list", list);
 		mv.setViewName("/mypage/review2");

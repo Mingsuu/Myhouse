@@ -178,7 +178,7 @@ $(document).ready(function(){
 					<div class="collection__wrap">
 						<article class="production-item">
 							<a class="production-item__overlay"
-								href="/productions/154487/selling"></a>
+								href="store_page.do?ino=${vo.ino}"></a>
 							<div class="production-item-image production-item__image">
 								<img class="image" alt=""
 									src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}?ino=${vo.ino}"
