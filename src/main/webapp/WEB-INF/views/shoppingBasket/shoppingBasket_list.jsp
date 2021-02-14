@@ -58,7 +58,7 @@
     </script>
 </head>
 <body>
-<jsp:include page="../header_login.jsp" />
+<jsp:include page="../header1.jsp" />
 <c:choose>
 	<c:when test="${map.count == 0}">
 	 	<div class="commerce-cart-empty">

@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: User
 Build-Jdk: 14
+=======
+Built-By: Rim
+Build-Jdk: 1.8.0_261
+>>>>>>> 9aabec4923f3dd8aade1a18dd06597db7e41e294
 Created-By: Maven Integration for Eclipse
 
