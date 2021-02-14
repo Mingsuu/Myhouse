@@ -12,7 +12,11 @@
 	
 	<!-- id=reviewupdate -->
 	<update id="reviewupdate" parameterType="com.myhouse.vo.reviewVO" >
-		UPDATE H_REVIEW SET STAR=#{star},VCONTENT=#{vcontent},REVIEW_IMAGE=#{review_image},REVIEW_SIMAGE=#{review_simage} WHERE GNO=#{gno}
+		UPDATE H_REVIEW SET STAR=#{star},VCONTENT=#{vcontent}
+		<if test="review_image != null">
+				,REVIEW_IMAGE=#{review_image},REVIEW_SIMAGE=#{review_simage} 
+		</if>
+		WHERE GNO=#{gno}
 	</update>
 	
 	
