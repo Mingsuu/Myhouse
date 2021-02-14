@@ -463,7 +463,7 @@
 			<img src="http://localhost:9000/myhouse/images/mypage/plus.png"> 첫 번째 사진을 올려보세요</a>
 		</c:if>
 	<c:forEach var ="vo" items="${list}" begin="0" end="4" step="1">
-			<a href="community_page.do?pno=${vo.pno}"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno})"></div></a>
+			<a href="community_page.do?pno=${vo.pno}"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno})"></div></a>
 	</c:forEach>	
 			<!-- <a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
 			<a href="#"><div class="poto1" style="background-image:url(http://localhost:9000/myhouse/images/mypage/)"></div></a>
