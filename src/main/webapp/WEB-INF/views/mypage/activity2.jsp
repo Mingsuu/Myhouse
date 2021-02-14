@@ -145,7 +145,7 @@
 						판매할 물건들을 한번 판매해보세요!</span></div>
 			</c:if>
 			<c:forEach var="vo" items="${list}">
-			<a href="#"><div class="textbox">
+			<a href="store_page.do?ino=${vo.ino}"><div class="textbox">
 				<div class="panmebox"><img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }"></div>
 				<div class="panbox1"><span class="panmeb1">상품번호</span><span class="pan1">${vo.ino}</span></div>
 				<div class="panbox2"><span class="panmeb">회사명</span><span class="pan">${vo.company }</span><span class="panmeb2">컬러</span><span class="pan">${vo.color }</span></div>
