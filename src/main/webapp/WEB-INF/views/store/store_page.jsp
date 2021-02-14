@@ -4024,8 +4024,8 @@
 				}
 			});
 
-			alert(gno);
-			alert(bcount);
+			/* alert(gno);
+			alert(bcount); */
 			
 			location.href="http://localhost:9000/myhouse/store_basket_proc.do?email=${email}&gno="+gno+"&bcount="+bcount;
 		}); 
