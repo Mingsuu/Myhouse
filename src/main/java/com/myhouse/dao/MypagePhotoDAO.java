@@ -380,6 +380,26 @@ public class MypagePhotoDAO extends DBConn{
 		return prof;
 	}
 	
+	/**
+	 * 팔로워 팔로워 카운트
+	 */
+	public MemberVO getfcount(String email) {
+		MemberVO fcount = sqlSession.selectOne(namespace+".fcount",email);
+		return fcount;
+		
+	}
+	
+	/**
+	 * 팔로워 팔로잉 카운트
+	 */
+	public MemberVO getfcount1(String email) {
+		MemberVO fcount = sqlSession.selectOne(namespace+".fcount1",email);
+		return fcount;
+		
+	}
+	
+	
+	
 	
 	/**
 	 * 사진 불러오기(사진)

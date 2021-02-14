@@ -9,6 +9,19 @@
 <mapper namespace="mapper.photo2">
 	
 	
+	<!-- id=fcount  -->
+	<select id="fcount" parameterType="com.myhouse.vo.memberVO">
+		SELECT COUNT(*) FROM (SELECT FOLLOWER FROM H_MEMBER WHERE EMAIL=#{email});
+	</select>
+	
+	
+	<!-- id=fcount1  -->
+	<select id="fcount1" parameterType="com.myhouse.vo.memberVO">
+		SELECT COUNT(*) FROM (SELECT FOLLOWING FROM H_MEMBER WHERE EMAIL=#{email})
+	</select>
+	
+	
+	
 	
 	<!-- id=reviewupdate -->
 	<update id="reviewupdate" parameterType="com.myhouse.vo.reviewVO" >

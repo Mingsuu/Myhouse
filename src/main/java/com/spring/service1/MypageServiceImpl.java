@@ -497,7 +497,11 @@ public class MypageServiceImpl implements MypageService{
 		int lcount = mypagephotoDAO.getlikecount(email);
 		MemberVO prof = mypagephotoDAO.getprofile(email);
 		int scount = mypagephotoDAO.getscrapcount(email);
+		MemberVO fcount = mypagephotoDAO.getfcount(email);
+		MemberVO fcount1 = mypagephotoDAO.getfcount1(email);
 		
+		mv.addObject("fcount1", fcount1);
+		mv.addObject("fcount", fcount);
 		mv.addObject("scount", scount);
 		mv.addObject("lcount", lcount);
 		mv.addObject("prof", prof);
