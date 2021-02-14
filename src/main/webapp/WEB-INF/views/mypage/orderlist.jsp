@@ -476,7 +476,7 @@
 	<div class="order-list__item__production__wrap">
 		<div class="order-list__item__production__item">
 			<div class="order-list__item__production__item__wrap">
-				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/images/mypage/${vo.interior_simage }">
+				<img class="order-list__item__production__item__img" src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage }">
 				<div class="order-list__item__production__item__info">
 					<div class="order-list__item__production__item__info__wrap">
 						<a class="order-list__item__production__item__info__brand" href="#">${vo.company }</a>

@@ -159,7 +159,7 @@
 			</c:if>
 			<c:forEach var="vo" items="${list}">
 			<a href="#"><div class="textbox">
-				<div class="QAimgbox"><img src="http://localhost:9000/myhouse/images/mypage/${vo.goods_simage }"></div>
+				<div class="QAimgbox"><img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }"></div>
 				<div class="QAbox2"><span>상품번호 </span><span>${vo.gno }</span></div>
 				<div class="QAbox"><span class="blue-1">Q</span><span>${vo.qcontent }</span><p class="QAdate">${vo.qdate }</p></div>
 				<div class="QAbox1"><span class="red-1">A</span><span>${vo.qreply }</span><p class="QAdate">${vo.qdate_r }</p></div>

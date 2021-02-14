@@ -173,7 +173,7 @@ $(document).ready(function(){
 						<div class="collection collection--project">
 								<div class="collection__image-wrap">
 									<img class="collection__image"
-										src="http://localhost:9000/myhouse/images/mypage/${vo.photo_simage}?pno=${vo.pno}"
+										src="http://localhost:9000/myhouse/resources/upload/${vo.photo_simage}?pno=${vo.pno}"
 										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=512&amp;h=342&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=720&amp;h=480&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/projects/cover_images/159366961454694010.jpg?gif=1&amp;w=1024&amp;h=683&amp;c=c&amp;webp=1 3x">
 								</div>
 								<div class="collection__info">
