@@ -1552,14 +1552,19 @@ $(document).ready(function(){
 			success:function(result) {
 				var jdata = JSON.parse(result);
 				//alert("ino::"+ino+"jdata::"+jdata.scrap_exist);
-				if(jdata.scrap_exist!=0) {
-					$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge");
-					$("#pro-scrap-"+ino).addClass("production-item-scrap-badge--active");
-					
+				if(result == "") {
+					location.href="http://localhost:9000/myhouse/login.do";
 				} else {
-					$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge--active");
-					$("#pro-scrap-"+ino).addClass("production-item-scrap-badge");
-				} 
+					if(jdata.scrap_exist!=0) {
+						$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge");
+						$("#pro-scrap-"+ino).addClass("production-item-scrap-badge--active");
+						
+					} else {
+						$("#pro-scrap-"+ino).removeClass("production-item-scrap-badge--active");
+						$("#pro-scrap-"+ino).addClass("production-item-scrap-badge");
+					} 
+				}
+				
 			}
 		});
 	} 
@@ -1736,15 +1741,22 @@ $(document).ready(function(){
 				$.ajax({
 					url:"store_scrap_proc.do?email=${email}&ino="+id[2],
 					success: function(result) {
-						if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge")) {
-							$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge--active");
-							$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge");
-							$("#scrap-add-"+id[2]).removeClass("toast-message-transition-enter-done");
-							$("#scrap-add-"+id[2]).addClass("toast-message");
-							$("#scrap-del-"+id[2]).addClass("toast-message-transition-enter-done");
-							$("#scrap-del-"+id[2]).removeClass("toast-message");
-							$("#scrap-add-"+id[2]).fadeOut(3800);
-						} 
+						
+						if(result == "") {
+							location.href="http://localhost:9000/myhouse/login.do";
+						}else {
+							if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge")) {
+								$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge--active");
+								$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge");
+								$("#scrap-add-"+id[2]).removeClass("toast-message-transition-enter-done");
+								$("#scrap-add-"+id[2]).addClass("toast-message");
+								$("#scrap-del-"+id[2]).addClass("toast-message-transition-enter-done");
+								$("#scrap-del-"+id[2]).removeClass("toast-message");
+								$("#scrap-add-"+id[2]).fadeOut(3800);
+							} 
+						}
+						
+						
 					
 					} 
 				});	
@@ -1756,15 +1768,22 @@ $(document).ready(function(){
 				$.ajax({
 					url:"store_scrap_del_proc.do?email=${email}&ino="+id[2],
 					success: function(result) {
-						if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge--active")) {
-							$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge");
-							$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge--active");
-							$("#scrap-add-"+id[2]).addClass("toast-message-transition-enter-done");
-							$("#scrap-add-"+id[2]).removeClass("toast-message");
-							$("#scrap-del-"+id[2]).removeClass("toast-message-transition-enter-done");
-							$("#scrap-del-"+id[2]).addClass("toast-message");
-							$("#scrap-del-"+id[2]).fadeOut(3800);
-						} 
+						
+						if(result == "") {
+							location.href="http://localhost:9000/myhouse/login.do";
+						}else {
+							if($("#pro-scrap-"+id[2]).hasClass("production-item-scrap-badge--active")) {
+								$("#pro-scrap-"+id[2]).addClass("production-item-scrap-badge");
+								$("#pro-scrap-"+id[2]).removeClass("production-item-scrap-badge--active");
+								$("#scrap-add-"+id[2]).addClass("toast-message-transition-enter-done");
+								$("#scrap-add-"+id[2]).removeClass("toast-message");
+								$("#scrap-del-"+id[2]).removeClass("toast-message-transition-enter-done");
+								$("#scrap-del-"+id[2]).addClass("toast-message");
+								$("#scrap-del-"+id[2]).fadeOut(3800);
+							} 
+						}
+						
+						
 					}
 				});
 			
