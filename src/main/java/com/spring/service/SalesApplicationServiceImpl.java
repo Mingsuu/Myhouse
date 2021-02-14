@@ -187,7 +187,7 @@ public class SalesApplicationServiceImpl {
 	    	  }
 	      }
 	      
-	      return  "redirect:/salesApplication.do";
+	      return  "redirect:/mypage_activity2.do";
 	   }
 	
 }
