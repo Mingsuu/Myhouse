@@ -82,14 +82,6 @@
 					</div>
 				</div>
 				<%if(svo ==null && sessionId==null){ %>
-				<a class="layout-navigation-bar-icon" title="장바구니" aria-label="장바구니"
-					href="http://localhost:9000/myhouse/shoppingBasket_list.do"><svg class="icon"
-						width="24" height="24" viewBox="0 0 24 24" stroke="currentColor"
-						fill="none" stroke-linejoin="round" stroke-width="2"
-						preserveAspectRatio="xMidYMid meet">
-							<path stroke-linecap="round"
-							d="M4 5h18l-2.6 10.5a2 2 0 0 1-2 1.5H8.6a2 2 0 0 1-2-1.5L4 5zm4 15.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0zm7 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0z"></path>
-							<path d="M1 2h3v3"></path></svg></a>
 				<div class="layout-navigation-bar-login">
 					<a class="layout-navigation-bar-login__item"
 						href="http://localhost:9000/myhouse/login">로그인</a><a
@@ -111,7 +103,7 @@
 			<div class="animated-popout drop-down__content open open-active">
 				<div class="_2TAbe navigation-upload-dropdown-content">
 					<a class="navigation-upload-dropdown-content-item"
-						href="http://localhost:9000/myhouse/upload_photo.do"><div
+						href="http://localhost:9000/myhouse/login"><div
 							class="navigation-upload-dropdown-content-item__icon">
 							<svg width="36" height="36" viewBox="0 0 36 36"
 								preserveAspectRatio="xMidYMid meet">
@@ -239,19 +231,6 @@
 							d="M3 20.967zm0 0V2.5a.5.5 0 01.5-.5h17a.5.5 0 01.5.5v18.467l-8.057-4.309a2 2 0 00-1.886 0L3 20.968z">
 						</path>
 					</svg>
-				</a> <a
-					class="layout-navigation-bar-icon layout-navigation-bar-icon--hide-mobile"
-					title="알림" aria-label="알림" href="http://localhost:9000/myhouse/allam_mynews.do"> <svg
-						class="icon" width="24" height="24" viewBox="0 0 24 24"
-						preserveAspectRatio="xMidYMid meet">
-						<path fill="none" stroke="currentColor" stroke-linecap="round"
-							stroke-linejoin="round" stroke-width="2"
-							d="M10.04 4.19C10.16 3.16 10.6 2 12.05 2c1.35 0 1.78 1.11 1.9 2.13C21.05 5.25 21 13.43 21 19H3c0-5.48-.05-13.48 7.04-14.81zM10 19c0 1.66.9 3 2 3s2-1.34 2-3">
-						</path>
-					</svg> 
-					<!-- 
-					<span class="layout-navigation-bar-icon__ticker">1</span>
-					 -->
 				</a> <a class="layout-navigation-bar-icon" title="장바구니"
 					aria-label="장바구니" href="http://localhost:9000/myhouse/shoppingBasket_list.do">
 					<svg class="icon" width="24" height="24" viewBox="0 0 24 24"

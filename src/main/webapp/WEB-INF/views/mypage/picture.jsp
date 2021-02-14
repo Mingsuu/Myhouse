@@ -22,7 +22,7 @@ $(document).ready(function(){
 			$(this).children('span.count').text(count+1);
 			
 			var pno = $(this).parent().children("#liking").val();
-			alert(pno);
+			/* alert(pno); */
 			$.ajax({
 				url:"mypage_picture_proc.do?pno="+pno,
 				success:function(result){
@@ -197,7 +197,7 @@ $(document).ready(function(){
 .mid {
 	display:inline-block;
 	width:1136px;
-	height:596px;
+	height:auto;
 }
 .left {
 	border:1px solid lightgray;
