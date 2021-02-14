@@ -17,10 +17,6 @@ import com.myhouse.vo.StoreIndexVO;
 public class UploadPhotoServiceImpl implements UploadPhotoService{
 	@Autowired	
 	private H_UploadPhotoDAO uploadDAO; 
-	/*
-	 * @Autowired private yj_InteriorDAO interiorDAO2;
-	 */
-	
 	
 	/**글쓰기 처리**/
 	@Override
