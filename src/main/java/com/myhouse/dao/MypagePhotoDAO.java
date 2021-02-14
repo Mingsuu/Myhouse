@@ -24,6 +24,52 @@ public class MypagePhotoDAO extends DBConn{
 	private SqlSessionTemplate sqlSession;
 	private static String namespace="mapper.photo2";
 
+	
+	
+	/**
+	 * 리뷰 업데이트
+	 */
+	public boolean getreviewupdate(reviewVO vo) {
+		boolean result = false;
+		
+		int value = sqlSession.update(namespace+".reviewupdate",vo);
+		if(value != 0)  result = true;
+		return result;
+	}
+	
+	
+	
+	
+	/**
+	 * 리뷰 인서트
+	 */
+	public boolean getreviewinsert(reviewVO vo) {
+		boolean result = false;
+		
+		int value = sqlSession.insert(namespace+".reviewinsert",vo);
+		if(value != 0) result = true;
+		return result;
+	}
+	
+	
+	/**
+	 * 리뷰수정 ino로 수정할데이터값 받아오기
+	 */
+	public goodsVO getreviewproc1(String ino){
+		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc1",ino);
+		System.out.println("여기는 다오");
+		return vo;
+	}
+	
+	/**
+	 * 리뷰작성 ino로 데이터값 받아오기
+	 */
+	public goodsVO getreviewproc(String ino){
+		goodsVO vo = sqlSession.selectOne(namespace+".reviewproc",ino);
+		System.out.println("여기는 다오");
+		return vo;
+	}
+	
 		
 	/**
 	 * 스크랩 또누를시 삭제
@@ -189,6 +235,9 @@ public class MypagePhotoDAO extends DBConn{
 		
 		return (ArrayList<goodsVO>)list;
 	}
+	
+	
+	
 	
 	/**
 	 * 문의답변(내물품에 문의한 답변의 총갯수)

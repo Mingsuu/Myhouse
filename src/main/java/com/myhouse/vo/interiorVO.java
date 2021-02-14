@@ -5,10 +5,21 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class interiorVO {
 
 	String rno,ino,email,company,ititle,interior_image,interior_simage,
-	idate,category,tone,color,price,season,detail_category,savepath,status,nickname;
+	idate,category,tone,color,price,season,detail_category,savepath,status,nickname,goods_price;
 	
 	CommonsMultipartFile interior_file;
 	
+	
+	
+	
+	public String getGoods_price() {
+		return goods_price;
+	}
+
+	public void setGoods_price(String goods_price) {
+		this.goods_price = goods_price;
+	}
+
 	public String getStatus() {
 		return status;
 	}

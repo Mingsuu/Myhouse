@@ -4,12 +4,32 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class goodsVO {
 
-	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath,email,company,ititle,ostatus;
+	String gno,ino,goods_image,goods_simage,goods_name,goods_price,savepath,email,company,ititle,ostatus,vcontent;
+	
+	int star;
 	
 	CommonsMultipartFile gfile1, gfile2, gfile3, gfile4, gfile5;
 
 	
 	
+	
+	
+	public String getVcontent() {
+		return vcontent;
+	}
+
+	public void setVcontent(String vcontent) {
+		this.vcontent = vcontent;
+	}
+
+	public int getStar() {
+		return star;
+	}
+
+	public void setStar(int star) {
+		this.star = star;
+	}
+
 	public String getEmail() {
 		return email;
 	}

@@ -72,6 +72,16 @@ $(document).ready(function(){
 .collection-book-owner__link{
 	margin-left:18px;
 }
+.likenone1 {
+	text-align:center;
+	font-size:15px;
+	color:#424242;
+	width:1200px;
+}
+.likenone span {
+	display:inline-block;
+	margin-top:60px;
+}
 </style>
 <body>
 <!-- header -->
@@ -85,7 +95,12 @@ $(document).ready(function(){
 					<p class="collection-book-owner">
 						<a class="collection-book-owner__link" href="mypage_profile1.do"><img
 							class="profile-image"
-							src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}"
+							<c:if test="${prof.member_spimage != null }">
+								src="http://localhost:9000/myhouse/resources/upload/${prof.member_spimage}"
+							</c:if>
+							<c:if test="${prof.member_spimage == null }">
+								src="http://localhost:9000/myhouse/resources/upload/pro.png"
+							</c:if>
 							srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=72&amp;h=72&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/default_images/avatar.png?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1 3x"><span
 							class="collection-book-owner__name">${prof.nickname }</span></a>
 					</p>
@@ -144,15 +159,7 @@ $(document).ready(function(){
 										<ul class="collection-book-control-list__left">
 											<li class="collection-book-control-list__item"><div
 													class="drop-down panel-drop-down filter-bar-control">
-													<!-- <button
-														class="button button--color-gray-4 button--size-50 button--shape-4 filter-bar-control__button">
-														카테고리
-														<svg class="icon" width="12" height="12"
-															viewBox="0 0 12 12" fill="currentColor"
-															preserveAspectRatio="xMidYMid meet">
-															<path
-																d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"></path></svg>
-													</button> -->
+													
 												</div></li>
 										</ul>
 									</div>
@@ -164,6 +171,10 @@ $(document).ready(function(){
 			</div>
 			<div class="virtualized-list collection-feed-collections row"
 				style="padding-top: 0px; padding-bottom: 100px; transform: translateY(0px);">
+				<c:if test="${count == 0 }">
+					<div class="likenone1"><span>아직 스크랩한 콘텐츠가 없습니다.<br>
+						마음에 드는 콘텐츠를 발견하면 스크랩을 눌러보세요!</span></div>
+				</c:if>	
 				<c:forEach var="vo" items="${list}">
 				<div class="col-6 col-md-4 col-lg-3" style="">
 					<div class="collection__wrap">
