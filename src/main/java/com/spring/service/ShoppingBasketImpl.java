@@ -51,7 +51,7 @@ public class ShoppingBasketImpl {
     	basketDAO.modifyCart(vo);
     }
     // 5. 장바구니 금액 합계
-    public int sumMoney(String email) {
+    public String sumMoney(String email) {
         return basketDAO.sumMoney(email);
     }
     // 6. 장바구니 상품 확인

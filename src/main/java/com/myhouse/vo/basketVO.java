@@ -1,15 +1,22 @@
 package com.myhouse.vo;
 
 public class basketVO {
-	String bno,email,ino,gno,goods_name,goods_simage;
-	int bcount,money,goods_price;
+	String bno,email,ino,gno,goods_name,goods_simage,money,goods_price;
+	int bcount;
 	
 	
-	public int getMoney() {
+
+	public String getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
+	public void setMoney(String money) {
 		this.money = money;
+	}
+	public String getGoods_price() {
+		return goods_price;
+	}
+	public void setGoods_price(String goods_price) {
+		this.goods_price = goods_price;
 	}
 	public String getBno() {
 		return bno;
@@ -28,12 +35,6 @@ public class basketVO {
 	}
 	public void setGoods_simage(String goods_simage) {
 		this.goods_simage = goods_simage;
-	}
-	public int getGoods_price() {
-		return goods_price;
-	}
-	public void setGoods_price(int goods_price) {
-		this.goods_price = goods_price;
 	}
 	public String getEmail() {
 		return email;
