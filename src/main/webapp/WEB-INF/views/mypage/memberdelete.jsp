@@ -19,7 +19,7 @@
 				}else if($("input[name='choice']:checked").length == 0){
 					alert("필수체크가 되지않았습니다 위 약관을 읽고 체크해주세요.");
 					$("#chk").focus();
-					
+					return false;
 				}
 				
 			});
@@ -363,7 +363,7 @@
 <div class="mid">
 	<div class="review">
 		<div class="option">
-		<form name="memberdelete" action="member_delete_proc.do" method="post">
+		<form name="memberdelete" action="mypage_member_delete_proc.do" method="post">
 			<div class="member"><span>회원탈퇴 신청</span></div>
 			<div class="member1"><span>회원 탈퇴 신청에 앞서 아래 내용을 반드시 확인해 주세요.</span></div>
 			<div class="member2">
@@ -418,7 +418,7 @@
   			</div>
 			<div class="member7">
 				<button type="submit" class="mem7" id="memdel">탈퇴신청</button>
-				<button type="button" class="mem8">취소하기</button>
+				<a href="mypage_profile1.do"><button type="button" class="mem8">취소하기</button></a>
 			</div>
 			</form>
 		</div>
