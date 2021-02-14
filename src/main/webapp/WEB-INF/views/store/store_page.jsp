@@ -2662,26 +2662,35 @@
 				$.ajax({
 					url:"interior_scrap_proc.do?email=${email}&ino=${ino}",
 					success: function(result) {
-						$("#main-scrap").addClass("production-selling-header__action__button--active");
-						$("#scrap-add").css("display","flex");
-						$("#scrap-del").css("display","none");
-						$("#scrap-add").fadeOut(3800);
-						
-						$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
-						$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+						if("${email}" == "") {
+							location.href="http://localhost:9000/myhouse/login.do";
+						} else {
+							$("#main-scrap").addClass("production-selling-header__action__button--active");
+							$("#scrap-add").css("display","flex");
+							$("#scrap-del").css("display","none");
+							$("#scrap-add").fadeOut(3800);
+							
+							$("#side-order").addClass("production-selling-sidebar-content__scrap--active");
+							$("#side-order").removeClass("production-selling-sidebar-content__scrap");
+						}
 					} 
 				});	
 			} else {
 				$.ajax({
 					url:"interior_scrap_del_proc.do?email=${email}&ino=${ino}",
 					success: function(result) {
-						$("#main-scrap").removeClass("production-selling-header__action__button--active");
-						$("#scrap-add").css("display","none");
-						$("#scrap-del").css("display","flex");
-						$("#scrap-del").fadeOut(3800);
+						if("${email}" == "") {
+							location.href="http://localhost:9000/myhouse/login.do";
+						} else {
+							$("#main-scrap").removeClass("production-selling-header__action__button--active");
+							$("#scrap-add").css("display","none");
+							$("#scrap-del").css("display","flex");
+							$("#scrap-del").fadeOut(3800);
+							
+							$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
+							$("#side-order").addClass("production-selling-sidebar-content__scrap");
+						}
 						
-						$("#side-order").removeClass("production-selling-sidebar-content__scrap--active");
-						$("#side-order").addClass("production-selling-sidebar-content__scrap");
 					}
 				});
 				
@@ -4661,17 +4670,7 @@
 						</div>
 						<div class="review-modal__form__product">
 							<div class="review-list-goods" >
-								<%-- <c:forEach var="vo" items="${interior_top }">
-								<div class="review-list-goods-wrap" id="${vo.gno }">
-									<img class="review-modal__form__product__image" src="http://localhost:9000/myhouse/images/${vo.goods_simage }">
-									<div class="review-modal__form__product__contents">
-										<div class="review-modal__form__product__contents__brand">${vo.company }</div>
-										<div class="review-modal__form__product__contents__brand">${vo.ititle }</div>
-										<div class="review-modal__form__product__contents__name">${vo.goods_name }</div>
-										<div class="review-modal__form__product__contents__options"></div>
-									</div>
-								</div>
-								</c:forEach>  --%>
+								
 							</div>
 						</div>
 					</div>

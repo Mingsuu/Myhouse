@@ -209,13 +209,13 @@
 <!-- store_index - 상세카테고리 -->
 <select id="category_list"  parameterType="map" resultType="com.myhouse.vo.StoreIndexVO">
 select * from (select * from
-(select distinct rno, idate, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count,ravg
-from (select rownum rno, idate, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count,ravg
-	from(select ino, idate, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, avg(star)over(partition by ino) ravg,
+(select distinct rno, istatus, idate, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count,ravg
+from (select rownum rno,istatus, idate, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count,ravg
+	from(select ino, idate,istatus, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, avg(star)over(partition by ino) ravg,
 		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
-		from(select idate, i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from(select idate, i.ino, company, status istatus, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
-	where RowIdx='1' and 
+	where RowIdx='1' and
 	<foreach collection="category" item="category" index="index">
 	category=#{category}
 	</foreach>
@@ -246,6 +246,7 @@ from (select rownum rno, idate, ino, company, ititle, category, tone, color, gno
 	<foreach collection="end" item="enddo" index="index">
 		#{enddo}
 	</foreach>
+	and istatus = 1 
 	<if test="status == '인기순'">
 		 order by ravg desc
 	</if>
@@ -261,21 +262,22 @@ from (select rownum rno, idate, ino, company, ititle, category, tone, color, gno
 	<if test="status == '최신순'">
 		order by idate
 	</if>
+	
 </select>
 <!-- store_index - 상세카테고리 - 리스트 카운트!! -->
 <select id="category_list_count"  parameterType="map" resultType="int">
-select count(*) from
-(select distinct rno, ino, company, ititle, category, tone, color, season, gno, goods_simage, goods_price, star_avg, star_count
-from (select rownum rno, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count
-	from(select ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, 
+select count(*) from 
+(select distinct rno, istatus, idate, ino, company, ititle, category, tone, color, season, gno, goods_simage, to_char(goods_price,'999,999,999,999') goods_price, star_avg, star_count,ravg
+from (select rownum rno,istatus, idate, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count,ravg
+	from(select ino, idate,istatus, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, avg(star)over(partition by ino) ravg,
 		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
-		from(select i.ino, company, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
+		from(select idate, i.ino, company, status istatus, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
 	where RowIdx='1' and
 	<foreach collection="category" item="category" index="index">
 	category=#{category}
 	</foreach>
-	)
+	and istatus=1 )
 	<if test="tonelist.length != 0">
 			where 
 			<foreach collection="tonelist" item="tone" index="index" separator='or'>
@@ -299,12 +301,12 @@ from (select rownum rno, ino, company, ititle, category, tone, color, gno, seaso
 
 <!-- store_index - list -->
 <select id="interior-list"  parameterType="java.lang.String" resultType="com.myhouse.vo.StoreIndexVO">
-	select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price, star_avg, star_count
-	from(select ino, company, ititle, category, tone, color, gno, goods_simage, goods_price,  ceil(avg(star)over(partition by ino)) as star_avg, 
-		count(star)over(partition by ino) as star_count, row_number() over(partition by ititle order by goods_simage asc) as RowIdx
-		from(select i.ino, company, ititle, interior_simage, category, tone, color, g.gno, goods_simage, goods_name,  to_char(goods_price,'999,999,999,999') goods_price, vno, star
+	select rownum rno,istatus, idate, ino, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, star_avg, star_count,ravg
+	from(select ino, idate,istatus, company, ititle, category, tone, color, gno, season, goods_simage, goods_price, ceil(avg(star)over(partition by ino)) as star_avg, avg(star)over(partition by ino) ravg,
+		count(star)over(partition by ino) as star_count, row_number() over(partition by ino order by goods_simage asc) as RowIdx
+		from(select idate, i.ino, company, status istatus, ititle, interior_simage, category, tone, color, season, g.gno, goods_simage, goods_name, goods_price, vno, star
 		from h_interior i, h_goods g, h_review v where i.ino(+) = g.ino and g.gno = v.gno(+)))
-	where RowIdx='1' and category=#{category}
+	where RowIdx='1' and  category=#{category} and istatus=1
 </select>
 
 <!-- 카테고리별 인테리어게시물 총 갯수 -->

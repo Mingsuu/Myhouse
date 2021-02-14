@@ -858,6 +858,9 @@
 		    		$.ajax({
 						url:"addr_insert.do?email="+$("#email").val()+"&addr="+$("#addr").val()+"&addr_num="+$("#addr_num").val()+"&phone="+$("#phone").val()+"&name="+$("#name").val(),
 						success:function(result) {
+							if(result == "") {
+								location.href="http://localhost:9000/myhouse/login.do";
+							}else {
 								$("#name").val("");
 								$("#addr_num").val("");
 								$("#addr1").val("");
@@ -867,6 +870,8 @@
 								$("#hp3").val("");
 								
 								$("#address_lists").css("display","none");
+							}
+								
 						}
 					});
 		    		
