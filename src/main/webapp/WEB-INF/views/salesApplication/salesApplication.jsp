@@ -1743,7 +1743,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="밝은 톤" name="tone">
+																				<input type="checkbox" class="_3UImz cate-chk" value="밝은톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">밝은 톤</span></div></div></button></li>
@@ -1752,7 +1752,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="중간 톤" name="tone">
+																				<input type="checkbox" class="_3UImz cate-chk" value="중간톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">중간 톤</span></div></div></button></li>
@@ -1761,7 +1761,7 @@
 																	<div class="property-filter-panel-entry-list__item__header">
 																		<div class="property-filter-panel-entry-list__item__group">
 																			<div class="_3zqA8 input-type">
-																				<input type="checkbox" class="_3UImz cate-chk" value="어두운 톤" name="tone">
+																				<input type="checkbox" class="_3UImz cate-chk" value="어두운톤" name="tone">
 																				<span class="_2mDYR">
 																					<svg width="1em" height="1em" viewBox="0 0 16 16" class="_2UftR"><path fill="currentColor" d="M6.185 10.247l7.079-7.297 1.435 1.393-8.443 8.703L1.3 8.432l1.363-1.464z"></path></svg></span></div>
 																			<span class="property-filter-panel-entry-list__item__title">어두운 톤</span></div></div></button></li>

@@ -381,10 +381,11 @@
 			var gimg = $(this).children().children().children("img").attr("src");
 			var company = $(this).children().children().children(".company").val();
 			var gprice = $(this).children().children().children(".price").val();
+			var ino = $(this).children().children().children(".ino").val();
 			$('.pop').remove();
 			$(this).addClass('tag_active');
 			var output="<div class='pop'><div class='popout popout--prepared popout--axis-1 popout--dir-2 popout--cross-dir-1' data-popout='true'>"
-				output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='/productions/106089/selling'>"
+				output += "<div class='_3nN5n open open-active'><div class='_2TAbe _1__Mp tag-item-content'><a class='tag-item-content__link' axis='1' direction='0,1' overflown='false,false' index='0' href='http://localhost:9000/myhouse/store_page.do?ino="+ino+"'>"
 				output += "<div class='_20T1P tag-item-content__item'><div class='asUT1'><picture>"
 				output += "<source type='image/webp' src='https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156654428209403860.jpg?w=256&h=256&c=c'>"
 				output += "<img class='_2TSZD' src='"+gimg+"'>"
@@ -2176,6 +2177,7 @@
 									<a href="#" class="production_tag_scoller_item_link">
 										<div class="production_tag_scoller_item_content">
 											<img class="production_tag_scoller_item_image" src="http://localhost:9000/myhouse/resources/upload/${tag.goods_simage}" alt="${tag.ititle}">
+											<input type="hidden" class="ino" value="${tag.ino}">
 											<input type="hidden" class="company" value="${tag.company}">
 											<input type="hidden" class="price" value="${tag.goods_price}">
 										</div>
