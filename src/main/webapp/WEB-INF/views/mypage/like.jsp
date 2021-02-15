@@ -147,8 +147,8 @@
 }
 .leftbox a {
 	font-size:13px;
-	padding-left:11px;
-	padding-right:11px;
+	padding-left:10px;
+	padding-right:10px;
 	float:left;
 }
 .mybtn {
@@ -172,7 +172,7 @@
 	color:black;
 	text-decoration:none;
 	margin-left:5px;
-	margin-right:6px;
+	margin-right:5px;
 }
 .mybtn1:hover {
 	opacity:0.7;

@@ -185,7 +185,7 @@ $(document).ready(function(){
 								<c:if test="${vo.pno == null }">
 								<a href="store_page.do?ino=${vo.ino}">
 									<img class="collection__image"
-										src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}?ino=${vo.ino}"
+										src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}?ino=${vo.ino}"
 										srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=960&amp;h=960&amp;c=c&amp;webp=1 3x">
 								</a>
 								</c:if>

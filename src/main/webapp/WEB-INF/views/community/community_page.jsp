@@ -274,7 +274,6 @@
 				$.ajax({
 					url :"follow_cancel_proc.do?w_email=${pvo.email}",
 					success:function(result){
-						alert(result);
 					}
 				});
 			} 
@@ -356,9 +355,10 @@
 		$(document).on("click","button#reply_del",function(){
 			var cno=$(this).parent().children('.cno').val();
 			var m_cno= $(this).parent().parent().parent().parent().parent().parent().children('footer').children('.cno').val();
+			var m_content= $(this).parent().parent().parent().parent().parent().parent().children('footer').children('.content').val();
 			var rcount= $(this).parent().parent().parent().parent().parent().parent().children('footer').children('.rcount').val();
 			var choice = confirm("댓글을 삭제하시겠습니까? 삭제한 댓글은 되돌릴 수 없습니다.");
-			if(rcount == 1){
+			if(rcount == 1 && m_content==""){
 				$.ajax({
 					url :"comment_delete_proc.do?cno="+m_cno,
 					success:function(result){
@@ -2327,6 +2327,7 @@
 												</c:if>
 											</c:if>
 												<input type="hidden" class="cno" value="${cvo[i].cno}">
+												<input type="hidden" class="content" value="${cvo[i].c_content}">
 												<input type="hidden" class="rcount" value="${cvo[i].rcount}">
 											</footer>
 											
@@ -2563,7 +2564,7 @@
 										</div>
 										<c:if test="${getwriter == 0}">
 											<c:if test="${isfollow != null}">
-												<button id="btn_following" class="card_detail_writer_following" type="button">팔로잉</button>
+												<button id="btn_follow" class="card_detail_writer_following" type="button">팔로잉</button>
 											</c:if>
 											<c:if test="${isfollow == null}">
 												<button id="btn_follow" class="card_detail_writer_follow" type="button">팔로우</button>
