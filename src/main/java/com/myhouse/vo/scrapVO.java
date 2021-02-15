@@ -2,7 +2,7 @@ package com.myhouse.vo;
 
 public class scrapVO {
 
-	String sno,email,pno,ino,company,ititle,interior_simage,price,photo_simage,pstyle,ptype,pcontent;
+	String sno,email,pno,ino,company,ititle,interior_simage,price,photo_simage,pstyle,ptype,pcontent,goods_simage;
 
 
 	
@@ -12,6 +12,14 @@ public class scrapVO {
 	
 	
 	
+	public String getGoods_simage() {
+		return goods_simage;
+	}
+
+	public void setGoods_simage(String goods_simage) {
+		this.goods_simage = goods_simage;
+	}
+
 	public String getPhoto_simage() {
 		return photo_simage;
 	}

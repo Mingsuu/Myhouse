@@ -16,7 +16,7 @@
 		
 		$(document).on("click","button.review-modal__close",function(){
 			alert("작성하고있는 내용이 유실됩니다. 정말 종료하시겠습니까?");
-			$("#modal").css("display","none");
+			$("#modal").remove();
 			
 			
 		});//click
@@ -48,10 +48,10 @@
 		
 			}); */
 		
-		$("span.gum").click(function(){
+		/* $("span.gum").click(function(){
 			var ino = $(this).attr("id");
 				$("#modal").css("display","block");
-		}); 
+		});  */
 		
 		
 		
