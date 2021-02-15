@@ -181,7 +181,7 @@ $(document).ready(function(){
 								href="store_page.do?ino=${vo.ino}"></a>
 							<div class="production-item-image production-item__image">
 								<img class="image" alt=""
-									src="http://localhost:9000/myhouse/resources/upload/${vo.interior_simage}?ino=${vo.ino}"
+									src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}?ino=${vo.ino}"
 									srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/156394555029295351.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x">
 								<div class="production-item-image__dark-overlay"></div>
 							</div>
@@ -189,16 +189,10 @@ $(document).ready(function(){
 								<h1 class="production-item__header">
 									<span class="production-item__header__brand">${vo.company } </span><span
 										class="production-item__header__name">${vo.ititle }
-										3type</span>
+										</span>
 								</h1>
 								<span class="production-item-price"><span
 									class="production-item-price__price">${vo.price }</span></span>
-								<span class="production-item-badge-list"><svg
-										class="icon" aria-label="특가" width="30" height="20"
-										viewBox="0 0 30 20" preserveAspectRatio="xMidYMid meet">
-										<rect width="30" height="20" fill="#F77" rx="4"></rect>
-										<path fill="#fff"
-											d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"></path></svg></span>
 							</div>
 						</article>
 					</div>

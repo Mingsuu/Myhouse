@@ -761,7 +761,7 @@ div.card_item_content{
 				<c:if test="${fcount1 != 0 }">
 					<a href="#" class="mybtn1">팔로잉 ${fcount1}</a>
 				</c:if>
-				<c:if test="${fcount == 0 }">
+				<c:if test="${fcount1 == 0 }">
 					<a href="#" class="mybtn1">팔로잉 0</a>
 				</c:if>
 			

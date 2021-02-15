@@ -423,7 +423,7 @@
 				<c:if test="${fcount1 != 0 }">
 					<a href="#" class="mybtn1">팔로잉 ${fcount1}</a>
 				</c:if>
-				<c:if test="${fcount == 0 }">
+				<c:if test="${fcount1 == 0 }">
 					<a href="#" class="mybtn1">팔로잉 0</a>
 				</c:if>
 			<a href="mypage_option.do" class="mybtn">설정</a>
