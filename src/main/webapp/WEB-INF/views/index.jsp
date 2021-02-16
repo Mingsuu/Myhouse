@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>스위트홈</title>
 <link rel="stylesheet" href="http://localhost:9000/myhouse/css/yj.css">
 <link rel="stylesheet"
 	href="http://localhost:9000/myhouse/css/carousel.css">
@@ -488,7 +488,7 @@
 												class="img-wrap square home-production-item__wrapper">
 												<div class="home-production-item__image">
 													<img class="home-production-item__image"
-														src="http://localhost:9000/myhouse/images/${vo.goods_simage}"
+														src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage}"
 														srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1554432441250_K6wX5dopzz.jpg?gif=1&amp;w=360&amp;webp=1 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1554432441250_K6wX5dopzz.jpg?gif=1&amp;w=480&amp;webp=1 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1554432441250_K6wX5dopzz.jpg?gif=1&amp;w=720&amp;webp=1 3x">
 												</div>
 											</div>

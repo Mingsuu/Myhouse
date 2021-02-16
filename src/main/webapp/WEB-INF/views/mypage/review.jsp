@@ -1829,7 +1829,7 @@ font-weight: 700;
 	background-color:#35c5f0;
 	border-radius:2px;
 	color:white;
-	width:74px;
+	width:79px;
 	height:20px;
 	padding-left:8px;
 	padding-top:1px;

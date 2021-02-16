@@ -61,7 +61,7 @@
 <div id="order_result" data-cost="7900" data-new="Old">
       <div class="image success_card"></div>
 
-      <a href="/user_shopping_pages/order_list">
+      <a href="mypage_orderlist.do">
         <div class="icon">주문현황보기</div>
 </a>  
 </div>
