@@ -95,7 +95,7 @@
 }
 .panmeb2{
 	display:inline-block;
-	margin-left:40px;
+	margin-left:36px;
 }
 .pan{
 	float:left;
@@ -147,15 +147,15 @@
 			<c:forEach var="vo" items="${list}">
 			<a href="store_page.do?ino=${vo.ino}"><div class="textbox">
 				<div class="panmebox"><img src="http://localhost:9000/myhouse/resources/upload/${vo.goods_simage }"></div>
-				<div class="panbox1"><span class="panmeb1">상품번호 :</span><span class="pan1">${vo.ino}</span></div>
-				<div class="panbox2"><span class="panmeb">회사명 :</span><span class="pan">${vo.company }</span><span class="panmeb2">컬러 :</span><span class="pan">${vo.color }</span></div>
-				<div class="panbox2"><span class="panmeb">상품이름 :</span><span class="pan">${vo.ititle }</span></div>
+				<div class="panbox1"><span class="panmeb1">상품번호 :</span><span class="pan1">${vo.gno}</span></div>
+				<div class="panbox2"><span class="panmeb">상품이름 :</span><span class="pan">${vo.goods_name }</span></div>
 				<c:if test="${vo.status == 0 }">
 					<div class="panbox2"><span class="panmeb">판매상태 :</span><span class="pan">대기중</span><span class="panmeb2">가격 :</span><span class="pan">${vo.goods_price }</span></div>
 				</c:if>
 				<c:if test="${vo.status == 1 }">
 					<div class="panbox2"><span class="panmeb">판매상태 :</span><span class="pan">판매중</span><span class="panmeb2">가격 :</span><span class="pan">${vo.goods_price }</span></div>
 				</c:if>
+				<div class="panbox2"><span class="panmeb2">컬러 :</span><span class="pan">${vo.color }</span></div>
 				<hr class="textbar">
 			</div></a>
 			</c:forEach>

@@ -5,7 +5,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class interiorVO {
 
 	String rno,ino,email,company,ititle,interior_image,interior_simage,
-	idate,category,tone,color,price,season,detail_category,savepath,status,nickname,goods_price,goods_simage;
+	idate,category,tone,color,price,season,detail_category,savepath,status,nickname,goods_price,goods_simage,goods_name,gno;
 	
 	CommonsMultipartFile interior_file;
 	
@@ -14,6 +14,22 @@ public class interiorVO {
 	
 	
 	
+	public String getGno() {
+		return gno;
+	}
+
+	public void setGno(String gno) {
+		this.gno = gno;
+	}
+
+	public String getGoods_name() {
+		return goods_name;
+	}
+
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
+	}
+
 	public String getGoods_simage() {
 		return goods_simage;
 	}
